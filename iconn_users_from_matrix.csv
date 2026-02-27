@@ -1,0 +1,25 @@
+name,login,email,password,departments,roles_seen
+Adarsh,adarsh@mail.com,adarsh@mail.com,123,Sales; Sales Executive,Sales Executive; Sales: Own Documents Only
+Alicia Liew,alicia.liew@mail.com,alicia.liew@mail.com,123,Operations; Sales Operations,"Inventory, Purchase; Inventory, Purchase, Sales; Sales Operations; Sales: All Documents"
+Alma,alma@mail.com,alma@mail.com,123,Sales; Sales Executive,Sales Executive; Sales: Own Documents Only
+Barry,barry@mail.com,barry@mail.com,123,Operations; Warehouse,"Inventory; Inventory, Purchase; Inventory: User; Warehouse Assistant"
+David,david@mail.com,david@mail.com,123,Sales; Sales Executive,Sales Executive; Sales: Own Documents Only
+DM,dm@mail.com,dm@mail.com,123,Marketing,Email Marketing
+Federick,federick@mail.com,federick@mail.com,123,Warehouse,Inventory: User; Warehouse Controller
+Hemanth,hemanth@mail.com,hemanth@mail.com,123,Sales; Sales Executive; Solution Eng.,"Project, Timesheet; Sales Executive; Sales: Own Documents Only"
+Iman,iman@mail.com,iman@mail.com,123,Marketing,Email Marketing; Marketing Officer
+Jenny,jenny@mail.com,jenny@mail.com,123,Finance / HR Support,Finance Processing; Invoicing: Billing
+Keith Goh,keith.goh@mail.com,keith.goh@mail.com,123,Executive; Finance / Executive,Administration: Settings; Administrator; All Modules; Semua Modul
+Kewei,kewei@mail.com,kewei@mail.com,123,Finance; Finance Staff,Finance Officer; Invoicing; Invoicing: Billing Admin
+Louise,louise@mail.com,louise@mail.com,123,Operations; Purchasing,Purchase: User; Sales Operations
+Lyvian,lyvian@mail.com,lyvian@mail.com,123,Customer Service; Operations; Purchasing; Sales/CS,"Purchase: User; Purchasing Officer; Sales, CRM; Sales, Helpdesk*"
+Margaret,margaret@mail.com,margaret@mail.com,123,Customer Service; Sales/CS,"Customer Service Officer; Sales, CRM; Sales, Helpdesk*; Sales: Own Documents Only"
+Naidu,naidu@mail.com,naidu@mail.com,123,Sales; Sales Executive,Sales Executive; Sales: Own Documents Only
+Nick,nick@mail.com,nick@mail.com,123,Sales; Sales Management; Solution Eng; Solution Eng.,"Project, Sales; Project, Timesheet; Sales Manager; Sales: All Documents"
+Rajesh,rajesh@mail.com,rajesh@mail.com,123,Sales; Sales Management,Sales Manager; Sales: All Documents
+Rashim,rashim@mail.com,rashim@mail.com,123,Operations; Warehouse,"Inventory; Inventory, Purchase"
+Ray,ray@mail.com,ray@mail.com,123,Sales; Sales Executive,Sales Executive; Sales: Own Documents Only
+Shermaine,shermaine@mail.com,shermaine@mail.com,123,Finance; Finance / HR Support; Finance Staff,Finance Processing; Invoicing; Invoicing: Billing
+SK,sk@mail.com,sk@mail.com,123,Finance,Invoicing; Invoicing: Billing Admin
+Veena,veena@mail.com,veena@mail.com,123,Customer Service; Operations; Sales Operations,"Sales Operations; Sales, Helpdesk*; Sales: All Documents"
+Yeoh,yeoh@mail.com,yeoh@mail.com,123,Sales; Sales Executive,Sales Executive; Sales: Own Documents Only
