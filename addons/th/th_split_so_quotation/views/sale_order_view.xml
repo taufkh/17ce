@@ -7,33 +7,30 @@
             <xpath expr="//header" position="inside">
                 <button name="action_open_extract_wizard" string="Extract Quotation" type="object"
                     class="btn-secondary" groups="th_split_so_quotation.group_split_extract_quotation"
-                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    invisible="state != 'draft'"/>
                 <button name="action_open_split_wizard" string="Split Quotation" type="object"
                     class="btn-secondary" groups="th_split_so_quotation.group_split_extract_quotation"
-                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    invisible="state != 'draft'"/>
             </xpath>
 
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button class="oe_stat_button" type="object" name="action_view_split_children"
-                    attrs="{'invisible': [('split_count', '=', 0)]}" icon="fa-code-fork">
-                    <field name="split_count" string="Splited" widget="statinfo"/>
+                    invisible="split_count == 0" icon="fa-code-fork">
+                    <field name="split_count" string="Split" widget="statinfo"/>
                 </button>
                 <button class="oe_stat_button" type="object" name="action_view_extracted_children"
-                    attrs="{'invisible': [('extracted_count', '=', 0)]}" icon="fa-external-link">
+                    invisible="extracted_count == 0" icon="fa-external-link">
                     <field name="extracted_count" string="Extracted" widget="statinfo"/>
                 </button>
             </xpath>
 
-            <xpath expr="//page[@name='other_information']//group" position="inside">
+            <xpath expr="//field[@name='origin']" position="after">
                 <field name="extracted_from_id" readonly="1"/>
-            </xpath>
-
-            <xpath expr="//page[@name='other_information']//field[@name='origin']" position="after">
                 <field name="split_from_id" string="Source Quotation" readonly="1"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']" position="before">
-                <div class="o_row" attrs="{'invisible': [('state', '!=', 'draft')]}">
+                <div class="o_row" invisible="state != 'draft'">
                     <button name="action_select_all_split_lines" type="object" icon="fa-check"
                         class="btn btn-secondary btn-sm"
                         groups="th_split_so_quotation.group_split_extract_quotation"/>
@@ -43,13 +40,13 @@
                 </div>
             </xpath>
 
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
+            <xpath expr="//field[@name='order_line']/*[self::tree or self::list]/field[@name='product_id']" position="before">
                 <field name="x_split_select" string="Select Product" widget="boolean_toggle"
                     groups="th_split_so_quotation.group_split_extract_quotation"
-                    attrs="{'readonly': [('order_state', '!=', 'draft')]}"/>
+                    readonly="order_state != 'draft'"/>
             </xpath>
 
-            <xpath expr="//field[@name='order_line']/tree" position="inside">
+            <xpath expr="//field[@name='order_line']/*[self::tree or self::list]" position="inside">
                 <field name="order_state" invisible="1"/>
             </xpath>
         </field>

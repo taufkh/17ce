@@ -24,9 +24,9 @@
                 </sheet>
                 <footer>
                     <button string="Split" type="object" name="action_confirm"
-                        class="btn-primary" attrs="{'invisible': [('mode', '!=', 'split')]}"/>
+                        class="btn-primary" invisible="mode != 'split'"/>
                     <button string="Extract" type="object" name="action_confirm"
-                        class="btn-primary" attrs="{'invisible': [('mode', '!=', 'extract')]}"/>
+                        class="btn-primary" invisible="mode != 'extract'"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
