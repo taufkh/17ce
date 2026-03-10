@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="odes_custom_report_expense_sheet" inherit_id="hr_expense.report_expense_sheet">
+        <xpath expr="//tr[hasclass('border-black')]" position="after">
+            <tr class="border-black">
+                <td><strong>SGD Total</strong></td>
+                <td class="text-right">
+                    <span t-field="o.sgd_total"
+                        t-options='{"widget": "monetary", "display_currency": o.sgd_currency_id}'/>
+                </td>
+            </tr>
+            <tr class="border-black" t-if="o.line_currency_id and o.line_currency_id not in (o.currency_id, o.sgd_currency_id)">
+                <td><strong><span t-field="o.line_currency_id.name"/> Total</strong></td>
+                <td class="text-right">
+                    <span t-field="o.line_total"
+                        t-options='{"widget": "monetary", "display_currency": o.line_currency_id}'/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
+</odoo>

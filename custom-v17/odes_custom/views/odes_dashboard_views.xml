@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="odes_dashboard" model="ir.actions.client">
+            <field name="name">CRM Dashboard</field>
+            <field name="tag">odes_dashboard</field>
+        </record>
+
+        <record id="odes_dashboard_second" model="ir.actions.client">
+            <field name="name">ODES Dashboard</field>
+            <field name="tag">odes_dashboard_second</field>
+        </record>
+
+        <record id="ir_actions_crm_dashboard" model="ir.actions.server">
+            <field name="name">CRM Dashboard</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_dashboard_redirect()</field>
+        </record>
+
+        <record id="ir_actions_crm_dashboard_2" model="ir.actions.server">
+            <field name="name">CRM Dashboard</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.env.ref('odes_custom.odes_dashboard').sudo().read()[0]</field>
+        </record>
+
+        <record id="ir_actions_crm_dashboard_2_second" model="ir.actions.server">
+            <field name="name">ODES Dashboard</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.env.ref('odes_custom.odes_dashboard_second').sudo().read()[0]</field>
+        </record>
+
+        <menuitem id="menu_crm_dashboard_2" parent="crm.crm_menu_root"
+            sequence="0" name="Dashboard"/>
+
+        <menuitem id="submenu_crm_dashboard_2" parent="menu_crm_dashboard_2" groups="odes_custom.group_mccoy_company"
+            sequence="5" name="CRM Dashboard"
+            action="ir_actions_crm_dashboard_2"/>
+
+        <menuitem id="submenu_crm_dashboard_2_second" parent="menu_crm_dashboard_2" groups="odes_custom.group_odes_company"
+            sequence="1" name="ODES Dashboard"
+            action="ir_actions_crm_dashboard_2_second"/>
+
+
+        <!-- CRM Dashboard Button -->
+        <record id="action_crm_active_lead" model="ir.actions.server">
+            <field name="name">CRM Active Leads</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_active_lead()</field>
+        </record>
+        <record id="action_crm_active_lead_l7" model="ir.actions.server">
+            <field name="name">CRM Active Leads &lt;= 7</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_active_lead_l7()</field>
+        </record>
+        <record id="action_crm_active_lead_g7" model="ir.actions.server">
+            <field name="name">CRM Active Leads &gt; 7</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_active_lead_g7()</field>
+        </record>
+        <record id="action_crm_active_opportunity" model="ir.actions.server">
+            <field name="name">CRM Active Opportunity</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_active_opportunity()</field>
+        </record>
+        <record id="action_crm_active_opportunity_l7" model="ir.actions.server">
+            <field name="name">CRM Active Opportunity &lt;= 7</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_active_opportunity_l7()</field>
+        </record>
+        <record id="action_crm_active_opportunity_g7" model="ir.actions.server">
+            <field name="name">CRM Active Opportunity &gt; 7</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_active_opportunity_g7()</field>
+        </record>
+        <record id="action_crm_outstanding_won" model="ir.actions.server">
+            <field name="name">CRM Won</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_outstanding_won()</field>
+        </record>
+        <record id="action_crm_outstanding_lost" model="ir.actions.server">
+            <field name="name">CRM Lost</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_crm_outstanding_lost()</field>
+        </record>
+
+        <record id="odes_action_crm_active_lead" model="ir.actions.server">
+            <field name="name">ODES CRM Active Leads</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_active_lead()</field>
+        </record>
+        <record id="odes_action_crm_active_lead_l7" model="ir.actions.server">
+            <field name="name">ODES CRM Active Leads &lt;= 7</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_active_lead_l7()</field>
+        </record>
+        <record id="odes_action_crm_active_lead_g7" model="ir.actions.server">
+            <field name="name">ODES CRM Active Leads &gt; 7</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_active_lead_g7()</field>
+        </record>
+        <record id="odes_action_lead_lost" model="ir.actions.server">
+            <field name="name">ODES Lead Lost</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_lead_lost()</field>
+        </record>
+        <record id="odes_action_crm_active_prospect" model="ir.actions.server">
+            <field name="name">ODES CRM Active Prospect</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_active_prospect()</field>
+        </record>
+        <record id="odes_action_crm_active_opportunity" model="ir.actions.server">
+            <field name="name">ODES CRM Active Opportunity</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_active_opportunity()</field>
+        </record>
+        <record id="odes_action_crm_active_report" model="ir.actions.server">
+            <field name="name">ODES CRM Active Report</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_active_report()</field>
+        </record>
+        <record id="odes_action_crm_active_pending" model="ir.actions.server">
+            <field name="name">ODES CRM Active Pending</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_active_pending()</field>
+        </record>
+        <record id="odes_action_crm_outstanding_won" model="ir.actions.server">
+            <field name="name">CRM Won</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_outstanding_won()</field>
+        </record>
+        <record id="odes_action_crm_outstanding_lost" model="ir.actions.server">
+            <field name="name">CRM Lost</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">action = model.odes_action_crm_outstanding_lost()</field>
+        </record>
+    </data>
+</odoo>

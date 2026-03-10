@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="report_quotation_mccoy_doc">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="web.html_container">
+          <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+            <div class="page">
+              <div class="row mt32 mb32">
+                <div class="col-auto">
+                  <img style="width : 100%; max-height:43mm; max-width:43mm;margin-top:4mm;"
+                    src="/iconnexion_custom/static/src/img/icon.png" />
+
+
+                </div>
+                <div class="col-auto" style="margin-top : 12px !important;">
+                   <t t-if="len(o.order_line.filtered(lambda line: line.is_lower_margin)) == 0 ">
+                      <h4 style="text-align: right;margin-top : 8px;">OFFICIAL QUOTATION</h4>
+                  </t>
+                  <t t-if="len(o.order_line.filtered(lambda line: line.is_lower_margin)) >= 1 ">
+                      <h4 style="text-align: right;margin-top : 8px;">DRAFT QUOTATION</h4>
+                    </t>
+
+                </div>
+              </div>
+              <br />
+
+              <div class="row mt32 mb32">
+                <div class="col-auto">
+                  <div><span style="font-size: 12px; text-decoration: underline; font-weight: bold;"
+                      t-field="o.company_id.name" /></div>
+                  <div style="font-size: 12px;"><span t-field="o.company_id.street" /> </div>
+                  <div style="font-size : 12px;"><span t-field="o.company_id.street2" /> </div>
+                  <div style="font-size: 12px;"> <span t-field="o.company_id.country_id" /> <span
+                      t-field="o.company_id.zip" /> </div>
+                  <div style="font-size: 12px;">Tel : <span t-field="o.company_id.phone" /></div>
+                  <div style="font-size: 12px;">Fax : <span t-field="o.company_id.fax" /></div>
+                </div>
+                <div style="font-size: 12px;" class="col-auto">
+
+                  <div class="row mt32 mb32">
+                    <div class="col-auto" style="text-align : right;">
+                      DATE :
+                    </div>
+                    <div class="col-auto" style="text-align : right;">
+                      <span class="text-uppercase" t-esc="o.date_order.strftime('%d.%m.%Y')" />
+                    </div>
+
+                  </div>
+                  <div class="row mt32 mb32">
+                    <div class="col-auto" style="text-align : right;">
+                      QUOTATION NO :
+                    </div>
+                    <div class="col-auto" style="text-align : right;">
+
+                      <span class="text-uppercase" t-field="o.name" />
+                    </div>
+
+                  </div>
+
+                  <div class="row mt32 mb32">
+                    <div class="col-auto" style="text-align : right;">
+                      TO :
+                    </div>
+                    <div class="col-auto" style="text-align : right;">
+                      <span t-if="o.partner_id.parent_id" t-field="o.partner_id.parent_id.name" />
+                      <span t-else="" t-field="o.partner_id" />
+                    </div>
+
+                  </div>
+                  <div class="row mt32 mb32">
+                    <div class="col-auto" style="text-align : right;">
+                      ATTN :
+                    </div>
+                    <div class="col-auto" style="text-align : right;">
+                      <span t-field="o.contact_id.name" />&amp;nbsp;
+                      <!--<span class="text-nowrap" t-if="o.partner_id.phone">(<span t-field="o.partner_id.phone"/>)</span>-->
+                    </div>
+
+                  </div>
+                  <div class="row mt32 mb32">
+                    <div class="col-auto" style="text-align : right;">
+                      ADDRESS :
+                    </div>
+                    <div class="col-auto" style="text-align : right;">
+                      <span t-if="o.partner_id.parent_id" t-field="o.partner_id.parent_id"
+                        t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}" />
+                      <span t-else="" t-field="o.partner_id"
+                        t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}" />
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+              <br />
+              <div class="row mt32 mb32">
+                <div class="col-auto">
+
+                  <span style="padding-left: 20px; text-align:left; font-size: 12px;"> We are pleased to submit our
+                    quotation for the following products : </span>
+                  <div style="min-height : 100px">
+                    <table style=" margin-top : 8px;" class="table table-sm o_main_table" name="invoice_line_table">
+                      <thead style="font-size: 12px;">
+                        <tr style="background-color: lightgrey;">
+                          <th name="th_description" class="text-center"><span>Brand</span></th>
+                          <th name="th_mpn" class="text-left"><span>MPN</span></th>
+                          <th width="30%" name="th_desc" class="text-left"><span>Description</span></th>
+                          <th name="th_qty" class="text-center"><span>QTY <br />(EAU)</span></th>
+                          <th name="th_uom" class="text-center"><span>UOM</span></th>
+                          <th name="th_moq" class="text-center"><span>MOQ</span></th>
+                          <th name="th_spq" class="text-center"><span>SPQ</span></th>
+                          <th name="th_unit_price" class="text-center"><span>U/Price</span></th>
+                          <th name="th_total" class="text-center"><span> Total Price <br />(<span t-if="o.currency_id"
+                                t-field="o.currency_id" />)</span></th>
+                          <th name="th_total" class="text-center"><span> L/T <br />(ARO)</span></th>
+
+                        </tr>
+                      </thead>
+                      <tbody style="font-size: 12px;" class="invoice_tbody">
+                        <t t-set="current_subtotal" t-value="0" />
+                        <t t-set="line_count" t-value="0" />
+                        <t t-set="sgd_subtotal" t-value="0" />
+                        <t t-set="sgd_tax" t-value="0" />
+
+                        <t t-set="lines" t-value="o.order_line" />
+
+                        <t t-foreach="lines" t-as="line">
+                          <t t-set="line_count" t-value="line_count + 1" />
+                          <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                            groups="account.group_show_line_subtotals_tax_excluded" />
+                          <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                            groups="account.group_show_line_subtotals_tax_included" />
+                          <t t-if="line.tax_id">
+                            <t t-set="sgd_tax"
+                              t-value="sgd_tax+(o.get_usd_total_value(line.quote_price_unit, line.product_uom_qty)*0.07)" />
+                          </t>
+
+                          <tr
+                            t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                            <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                              <td name="account_invoice_line_name"><span t-field="line.product_id.product_brand_id.name"
+                                  t-options="{'widget': 'text'}" /></td>
+                              <td class="text-left"><span t-field="line.product_id.name"
+                                  t-options="{'widget': 'text'}" /></td>
+                              <td class="text-left">
+                                <span t-field="line.product_id.description_mpn" t-options="{'widget': 'text'}" />
+                                <br />
+                                <span>COO : </span> <span t-field="line.product_id.product_tmpl_id.coo_id" />
+                              </td>
+                              <td class="text-center">
+                                <span class="text-nowrap" t-field="line.product_uom_qty"
+                                  groups="account.group_show_line_subtotals_tax_excluded"
+                                  t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}" />
+                                <!-- <span class="text-nowrap" t-esc="o.get_usd_value(line.price_total)" groups="account.group_show_line_subtotals_tax_included" t-options='{"widget": "float", "precision": 2}'/> -->
+                              </td>
+
+                              <td class="text-center">
+                                <span t-field="line.product_id.uom_id" />
+                              </td>
+                              <td class="text-center">
+                                <span t-field="line.moq"
+                                  t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}" />
+                              </td>
+                              <td class="text-center">
+                                <span t-field="line.spq"
+                                  t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}" />
+                              </td>
+
+                              <td class="text-center">
+                                <span t-field="line.quote_price_unit" />
+                                <!-- <span t-field="line.quote_price_unit" t-options='{"widget": "float", "precision": 2}'/> -->
+                              </td>
+                              <!--<td class="text-center">-->
+                              <!--    <span class="text-nowrap" t-esc="o.get_usd_value(line.quote_price_unit)" groups="account.group_show_line_subtotals_tax_excluded" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 3}"/>-->
+                              <!--    <span class="text-nowrap" t-esc="o.get_usd_value(line.price_total)" groups="account.group_show_line_subtotals_tax_included" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 3}"/>-->
+                              <!--</td>-->
+                              <td class="text-center o_price_total">
+                                <span t-field="line.price_subtotal" />
+                                <!--<span class="text-nowrap" t-esc="o.get_usd_total_value(line.quote_price_unit, line.product_uom_qty)" groups="account.group_show_line_subtotals_tax_excluded" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 3}"/>-->
+                                <!--<span class="text-nowrap" t-esc="o.get_usd_value(line.price_total)" groups="account.group_show_line_subtotals_tax_included" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 3}"/>-->
+                                <!--<t t-set="sgd_subtotal" t-value="sgd_subtotal+o.get_usd_total_value(line.quote_price_unit, line.product_uom_qty)"/>-->
+                              </td>
+                              <td class="text-center o_lead_time">
+                                <span t-esc="int(line.sale_delay)" /> Wks
+                              </td>
+                            </t>
+                            <t t-if="line.display_type == 'line_section'">
+                              <td colspan="99">
+                                <span t-field="line.name" t-options="{'widget': 'text'}" />
+                              </td>
+                              <t t-set="current_section" t-value="line" />
+                              <t t-set="current_subtotal" t-value="0" />
+                            </t>
+                            <t t-if="line.display_type == 'line_note'">
+                              <td colspan="99">
+                                <span t-field="line.name" t-options="{'widget': 'text'}" />
+                              </td>
+                            </t>
+                          </tr>
+
+                          <t
+                            t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                            <tr class="is-subtotal text-right">
+                              <td colspan="99">
+                                <!-- <strong class="mr16">Subtotal</strong>
+                                                  US$ 
+                                                  <span t-esc="o.get_usd_value(current_subtotal)" t-options='{"widget": "float", "precision": 2}'/> -->
+                                <strong class="mr16">Subtotal</strong>
+                                <span t-if="o.currency_id" t-field="o.currency_id" />$
+                                <span t-esc="sgd_subtotal"
+                                  t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 3}" />
+                              </td>
+                            </tr>
+                          </t>
+                        </t>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-auto">
+
+                    <table class="table" style="  font-size: 12px; font-weight : 700; width:40%; float : right;">
+                      <tr class="border-black o_total" style="border: 1px solid #000 !important;">
+                        <td
+                          style="padding: 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important;">
+                          <strong style="padding-left : 8px;">SUBTOTAL</strong></td>
+                        <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+
+                          <strong><span t-if="o.currency_id" t-field="o.currency_id" />$ <span t-esc="o.amount_untaxed"
+                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" /></strong>
+                        </td>
+                      </tr>
+                      <tr style="border: 1px solid #000 !important;" t-if="o.amount_tax">
+                        <td
+                          style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important;">
+                          <strong style="padding-left : 8px;">GST 8 %</strong></td>
+                        <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+
+                          <t t-if="o.amount_tax">
+                            <strong><span t-if="o.currency_id" t-field="o.currency_id" />$
+                              <span t-esc="o.amount_tax"
+                                t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" />
+                            </strong>
+                          </t>
+
+                        </td>
+                      </tr>
+                      <tr style="border: 1px solid #000 !important;">
+                        <td
+                          style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important; ">
+                          <strong style="padding-left : 8px;">Total Amount</strong></td>
+                        <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+
+                          <strong><span t-if="o.currency_id" t-field="o.currency_id" />$
+                            <span class="text-nowrap" t-esc="o.amount_total"
+                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" /></strong>
+
+                        </td>
+                      </tr>
+                      <tr style=" ">
+                        <td colspan="2">
+                          <!-- <span>Local delivery subjected to 7% GST</span> -->
+                        </td>
+                      </tr>
+                    </table>
+                    <br />
+                  </div>
+
+                  <div style="page-break-inside: avoid;">
+                    <table class="table" style="  font-size: 12px; font-weight : 500; width:100%;">
+                      <tr>
+                        <td><strong style="padding-left : 8px;">Remarks: <span t-field="o.note" /></strong></td>
+                      </tr>
+                    </table>
+                    <table style=" font-size: 12px; width:700px; border:1px solid #000;">
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • P/O address to</td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.company_id.name" /> </td>
+                        <td style="padding-left: 10px;"> • Cancellation Window</td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.cancellation_window" /> </td>
+                      </tr>
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • All prices quoted in </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;">
+                          <span t-if="o.currency_id" t-field="o.currency_id" /> </td>
+                        <td style="padding-left: 10px;"> • Reschedule Window</td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.reschedule_window" /> </td>
+                      </tr>
+
+
+
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • Min. Order Value </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.min_order" />/Delivery</td>
+                        <td style="padding-left: 10px;"> • Validity of quote <br />
+                          (From Quotation Date) </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.validity_quote" /> days</td>
+                      </tr>
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • Payment Term <br />
+                          (From Invoice Date) </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;">
+                          <span t-if="o.payment_term_id" t-field="o.payment_term_id" />
+                        </td>
+                        <!-- <span t-field="o.partner_id.property_payment_term_id"/>  -->
+                        <td style="padding-left: 10px;"> • Bank Charges </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.bank_charges" /><span> applicable for T/T Payment value </span><br /> <span>below
+                          </span><span t-field="o.min_order" /> </td>
+
+                      </tr>
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • Shipment Term </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.freight_terms" /> </td>
+                        <td style="padding-left: 10px;"><span> • Local delivery subjected</span></td>
+                        <td style="padding-left: 0px;"><span>to</span></td>
+                        <td style="padding-left: 0px; border-right: 1px solid #000 !important;"><span>8% GST</span></td>
+                      </tr>
+                    </table>
+                    <br />
+
+                    <div class="row mt32 mb32">
+
+                      <div class="col-auto">
+
+                        <div style="margin-left : -15px" class="col-auto">
+                          <div><span style="font-size: 12px;"> We look forward to your continuous support. </span></div>
+                          <!--<div><span style="font-size: 12px; font-weight: bold;"> Email address : <span t-field="o.user_id.email"/>   </span></div>     -->
+
+                          <br />
+
+
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 15px" width="150px">Best Regards</td>
+                              </tr>
+                            </table>
+
+
+                          </div>
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 15px" width="150px">
+                                  <b><span t-field="o.user_id.partner_id.name" /></b>
+                                </td>
+                              </tr>
+                            </table>
+
+
+                          </div>
+
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <b>
+                                  <td style="padding-left: 15px" width="150px"><span t-field="o.user_id.function" />
+                                  </td>
+                                </b>
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <b>
+                                  <td style="padding-left: 15px" width="150px">Tel: <span
+                                      t-field="o.user_id.mobile_phone" /></td>
+                                </b>
+                              </tr>
+                            </table>
+                          </div>
+
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 15px" width="150px">
+                                  --<br />
+                                  <div><span style="font-size: 12px; font-weight: bold;"> Email address : <span
+                                        t-field="o.user_id.email" /> </span></div>
+                                  <span t-field="o.user_id.job_title" /><br />
+                                  __________________________________________________________<br />
+
+                                  <!--3 Ang Mo Kio Street 62,<br/>-->
+                                  <!--#01-57, LINK@AMK Singapore 569139-->
+                                </td>
+                              </tr>
+                            </table>
+
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+
+                      <div class="col-auto" style="margin-top : 2px; max-height: 90px;">
+                        <table style="font-size: 12px; width:100%; float : right; border:1px solid #000;">
+                          <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                            <td
+                              style="padding: 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important;">
+                              <strong>Acceptance of Quotation</strong></td>
+                          </tr>
+                          <tr>
+                            <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                              <span style="padding-left: 2px; text-align:left; font-size: 12px;">We hereby enter this
+                                acceptance in accordance with the prices, qty, MFG P/N, L/T and terms and delivery
+                                method listed above.</span>
+                              <br /><br />
+
+                              <strong>Company Stamp:</strong><br />
+                              <strong>Name:</strong><br />
+                              <strong>Signature of Acceptance:</strong><br />
+                              <strong>Date:</strong>
+                            </td>
+                          </tr>
+                        </table>
+
+                      </div>
+
+
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div style="page-break-before: always;">
+                <div class="row mt32 mb32" />
+                <p style="font-size: 9px;margin:2px;"><br /><br /><br /><br />
+                  <strong>Terms and Conditions of Sale</strong></p>
+                <p style="font-size: 9px;margin:2px;"><strong>Prices</strong></p>
+                <p style="font-size: 9px;margin:2px;">All prices for Supplies provided by the Company are in USD and are
+                  exclusive of GST and other duties and taxes and any applicable transport and handling charges which
+                  will be added at the time of dispatch and shall be payable by the Customer. Prices quoted are subject
+                  to variation in the cost of materials and labour and may be altered at any time before invoicing to
+                  reflect such variations. The Company has used all reasonable endeavours to ensure that prices for the
+                  Supplies are accurately set out in the Catalogue but these prices are not binding and the Company
+                  reserves the right to change its prices without notice at any time. <br /> Any supply of Goods and the
+                  provision of Services to a Singapore address will be charged GST at the current rate if, in the case
+                  of Goods, the Goods are for subsequent export. Upon receipt of proof in accordance with the Goods and
+                  Services Tax Act (Cap. 117A, 1997 Ed), that the Goods have been exported, a credit note to the full
+                  value of GST will be issued. The direct supply of Goods to a non-Singapore address will be zero rated
+                  for GST purposes in accordance with the Goods and Services Tax Act (Cap. 117A, 1997 Ed).</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Payment</strong></p>
+                <p style="font-size: 9px;margin:2px;">All payments must be made in the currency billed on the original
+                  invoice. Unless otherwise agreed in writing, payment shall be TT in advance to process order. Orders
+                  will be canceled after 20 business days if funds have not been received. Customer is responsible for
+                  duties and taxes. <br />In the event of default in payment, the company reserves the right to suspend
+                  further deliveries and cancel orders until due payment is made, and to charge the customer interest on
+                  any amount outstanding at the rate of 2% per annum above the base rate of The Development Bank of
+                  Singapore Ltd. in force at the time when payment is due.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Minimum Order Change</strong></p>
+                <p style="font-size: 9px;margin:2px;">The company reserves the right to apply a minimum order charge
+                  dependent on circumstances.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Delivery</strong></p>
+                <p style="font-size: 9px;margin:2px;">Where dispatch promises are given, the time quoted will commence
+                  from the date of receipt of a written order and will include only statutory working days. Time of
+                  delivery is not of the essence of the contract unless agreed and expressly stated so. Every effort
+                  will be made to fulfil delivery within the time quoted but the company shall not be liable to the
+                  buyer for any loss or costs resulting from late delivery. The Company reserve the right to levy
+                  delivery charges should exceptional economic conditions arise and dictate such action. Any request for
+                  proof of delivery must be requested within one calendar month of date of invoice.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Non-Acceptance of Goods</strong></p>
+                <p style="font-size: 9px;margin:2px;">The buyer shall inspect goods immediately. Goods delivered but
+                  found by the buyer not to be of the standard required may be returned to the Company, only after the
+                  Company's confirmation. The Company may accept the return of its standard products provided it is
+                  notified of the default within 10 calendar days of the date of invoice and goods are returned promptly
+                  in the original packaging, carriage paid and in new condition. Such returns must be accompanied by the
+                  original Iconnexion batch number and will be credited less a possible handling and re-inspection
+                  charge.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Damage or Shortage</strong></p>
+                <p style="font-size: 9px;margin:2px;">Complaints as to goods received damaged or short must be made to
+                  the Company in writing within seven calendar days of receipts of goods. Failure to observe this
+                  notification, then the goods will be deemed to have been accepted as invoiced.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Loss in Transit</strong></p>
+                <p style="font-size: 9px;margin:2px;">Liability for goods lost in transit will not be accepted unless
+                  both the carriers and the Company be advised in writing within 14 calendar days from receipt of
+                  invoice.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Retention of Title</strong></p>
+                <p style="font-size: 9px;margin:2px;">Property in the goods supplied will not pass in law until payment
+                  for those goods has been received in full. Until payment in full, the customer shall hold and store at
+                  his own expense the goods on the Company's behalf with licence to use the goods: such licence being
+                  revoked automatically on the insolvency of the customer or expressly by actual revocation. Upon such
+                  insolvency or revocation, the Company shall be entitled to enter the Customer's premises, and remove
+                  goods to the value of all monies owed by the customer and used under the said licence (whether or not
+                  the same shall have been incorporated with other goods to from a new product PROVIDED THAT the goods
+                  are capable of removal and subsequent re-use) without prejudice to its right to sue non-payment. In
+                  the event of the Company exercising its right of removal it shall not be liable for any damage to the
+                  property or premises of the customer caused by such removal. Until payment in full the Company shall
+                  have a lien on all property of the customer in its possession.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Intellectual Property Rights</strong></p>
+                <p style="font-size: 9px;margin:2px;">Intellectual Property Right (IPR) arising from research or
+                  development work required to be carried out by the Company in connection with the manufacture of goods
+                  shall be vested in the Company, unless agreed otherwise by both parties.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Fitness for Purpose</strong></p>
+                <p style="font-size: 9px;margin:2px;">No warranty is given that the goods supplied are fit for any
+                  particular purpose, save insofar as such purpose is defined to the Company or the goods are supplied
+                  to the customer in the pursuance of a written request by the customer to supply goods for a particular
+                  purpose. Unless stated in the purchase contract, and specifically agreed by us, the purchaser shall be
+                  wholly responsible for ensuring that the products supplied are used in such a manner as to ensure
+                  compliance with Directives on Electro-Magnetic Compatibility such as Directive 89/336/EEC and/or its
+                  equivalent for Telecommunications Equipment.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Illustrations and Descriptive Matter</strong></p>
+                <p style="font-size: 9px;margin:2px;">Descriptions, illustrations and specifications contained in the
+                  Company's catalogues, price list and other advertising material are by way of identification only and
+                  are intended merely to present a general idea of the goods described therein. The use shall not in any
+                  circumstances constitute a trade by description.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Legal Construction</strong></p>
+                <p style="font-size: 9px;margin:2px;">Any conditions imposed by the purchaser which are at variance
+                  above will not accepted unless agreed by the Company in writing prior to its acceptance of the order.
+                  Unless otherwise agreed in writing the contract shall in all respects be construed and operated as an
+                  English Contract in conformity with English Law.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>Liability</strong></p>
+                <p style="font-size: 9px;margin:2px;">The Company shall not be liable for any damage, loss, cost, claim
+                  or expense resulting from the failure to give advice or information or the giving of incorrect advice
+                  or information whether or not due to the negligence of the Company, its employees, agents or
+                  subcontractors.</p>
+                <p style="font-size: 9px;margin:2px;">The Company does not exclude or restrict its liability for any
+                  matter for which it would be illegal for the Company to exclude or attempt to exclude its liability.
+                  Nothing in these Conditions of Sale excludes or limits the liability of the Company for death or
+                  personal injury caused by the Company's negligence or fraudulent misrepresentation.</p>
+                <p style="font-size: 9px;margin:2px;"><strong>General</strong></p>
+                <p style="font-size: 9px;margin:2px;">The Terms and Conditions may not be modified or cancelled without
+                  the Company's written agreement. Accordingly, goods furnished and services rendered by the Company are
+                  sold only on the terms and conditions stated herein. The sale of Products hereunder will be governed
+                  by the Terms and Conditions, notwithstanding contrary or additional terms and conditions in any order
+                  purchase order, planning schedule, acknowledgment, confirmation or any other form or document issued
+                  by either party affecting the purchase and/or sale of Products. Notwithstanding any terms and
+                  conditions on Customer's order, the information and conditions on the Credit Application are
+                  controlling over Customer and the Company. Any conflicting statements or terms listed on the Customer
+                  purchase orders, invoices, confirmations or other Customer generated documents, whether heretofore or
+                  hereafter submitted, are negated by submission of the Credit Application and the issuance of credit by
+                  the Company, and all different or additional terms and conditions contained in any Customer Documents
+                  are hereby objected to by the Company. The Company's performance of any contract is expressly made
+                  conditional on Customer's agreement to the Company's Terms and Conditions of Sale, unless otherwise
+                  specifically agreed upon in writing by the Company. In the absence of such agreement, commencement of
+                  performance and/or delivery shall be for Customer's convenience only and shall not be deemed or
+                  construed to be acceptance of Customer's terms and conditions or any of them. If a contract is not
+                  earlier formed by mutual agreement in writing, acceptance by Customer of any goods or services shall
+                  be deemed acceptance by Customer of the terms and conditions stated herein. No rights, duties,
+                  agreements or obligations hereunder, may be assigned or transferred by operation of law, merger or
+                  otherwise, without the prior written consent of the Company. The obligations, rights, terms and
+                  conditions hereof will be binding on the parties hereto and their respective successors and assigns.
+                  The waiver or breach of any term, condition or covenant hereof, or default under any provision hereof,
+                  will not be deemed to constitute a waiver of any other term, condition, or covenant contained herein,
+                  or of any subsequent breach or default of any kind or nature. Any provision hereof which is prohibited
+                  or unenforceable in any jurisdiction shall, as to such jurisdiction, be ineffective to the extent of
+                  such prohibition or unenforceability without invalidating the remaining provisions hereof in that
+                  jurisdiction, or affecting the validity or enforceability of such provision in any other jurisdiction.
+                  The Terms and Conditions will be governed by and construed in accordance with the laws of the state of
+                  Texas and the applicable laws of the United States.</p>
+              </div>
+
+              <div class="footer">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <small>
+                      <span>Page</span>
+                      <span class="page" />
+                      /
+                      <span class="topage" />
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </t>
+        </t>
+      </t>
+    </template>
+
+    <record id="paperformat_a4_icon_quotation" model="report.paperformat">
+      <field name="name">Paper A4 Icon Quotation</field>
+      <field name="default" eval="True" />
+      <field name="format">A4</field>
+      <field name="page_height">0</field>
+      <field name="page_width">0</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">15</field>
+      <field name="margin_bottom">5</field>
+      <field name="margin_left">15</field>
+      <field name="margin_right">15</field>
+      <field name="header_line" eval="False" />
+      <field name="header_spacing">5</field>
+      <field name="dpi">80</field>
+    </record>
+
+    <record id="report_quotation_mccoy" model="ir.actions.report">
+        <field name="name">Report Quotation (Iconnexion)</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">iconnexion_custom.report_quotation_mccoy_doc</field>
+        <field name="report_file">iconnexion_custom.report_quotation_mccoy_doc</field>
+        <field name="binding_model_id" search="[('model', '=', 'sale.order')]"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_quotation_mccoy" model="ir.actions.report">
+      <field name="paperformat_id" ref="iconnexion_custom.paperformat_a4_icon_quotation" />
+      <field name="groups_id" eval="[(4, ref('iconnexion_custom.group_iconnexion_company'))]" />
+    </record>
+
+  </data>
+</odoo>

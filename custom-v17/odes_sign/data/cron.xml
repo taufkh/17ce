@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="forecasted_invoiced_reminder_scheduler" model="ir.cron">
+        <field name="name">Forecasted Invoiced Reminder</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall">0</field>
+        <field name="model_id" ref="odes_accounting.model_sale_invoice_forecast"/>
+        <field name="code">model.send_sale_invoice_forecast_reminder()</field>
+        <field name="priority">5</field>
+    </record>
+
+</odoo>

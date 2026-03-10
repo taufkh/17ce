@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- v16: landing_page.css moved to assets dict in __manifest__.py -->
+
+    <template id="landing_page" name="landing_page">
+        <t t-call="website.layout">
+        <t t-set="title">Landing Page</t>
+            <div class="container">
+                <div class="odes-container">
+                    <span class="odes-title">UNLEASH THE TRUE POTENTIAL</span>
+                    <span class="odes-title">OF YOUR BUSINESS</span>
+                    <span class="odes-title-info">By optimising your inventory management</span>
+
+                    <div class="odes-slider">
+                        <div class="odes-slides">
+                            <input type="radio" name="radio-btn" id="odes-radio1" />
+                            <input type="radio" name="radio-btn" id="odes-radio2" />
+                            <input type="radio" name="radio-btn" id="odes-radio3" />
+                            <input type="radio" name="radio-btn" id="odes-radio4" />
+                            <div class="odes-slide odes-first">
+                                <img src="/odes_crm/static/description/inven.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/Inventory.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/inventory2.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/inven.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-navigation-auto">
+                                <div class="odes-auto-btn1"></div>
+                                <div class="odes-auto-btn2"></div>
+                                <div class="odes-auto-btn3"></div>
+                                <div class="odes-auto-btn4"></div>
+                            </div>
+                        </div>
+                        <div class="odes-navigation-manual">
+                            <label for="odes-radio1" class="odes-manual-btn"></label>
+                            <label for="odes-radio2" class="odes-manual-btn"></label>
+                            <label for="odes-radio3" class="odes-manual-btn"></label>
+                            <label for="odes-radio4" class="odes-manual-btn"></label>
+                        </div>
+                    </div>
+                    <!-- <img class="odes-image" src="/odes_crm/static/description/inven.jpeg" /> -->
+                    <div class="odes-content">
+                        <div class="odes-left-content">
+                            <div>
+                                <p>Many businesses face problems in managing their inventories, and it is causing them to lose out on valuable opportunities to increase their revenue and customer satisfaction.</p>
+                                <p>In this concise guide, we will walk you through some of the ways that our customers have benefited from the various automations and optimisations that their business management solution has brought to their inventory management.</p>
+                                <p>If you have always wanted to scale your operations, reach out to more customers, and stop having problems with keeping track of your stock levels, you will definitely love reading this.</p>
+                            </div>
+                        </div>
+                        <div class="odes-right-content">
+                            <span class="odes-title-form">Personal Data</span>
+                            <form action="/campaign-landing-page/process" method="post">
+                                <div class="odes-form-section">
+
+                                <!-- <form method="post"> -->
+                                    <input type="hidden" name="url" t-att-value="url"/>
+                                    <div class="odes-form-row">
+                                        <div class="odes-form">
+                                            <label class="col-form-label odes-form-text">Name</label>
+                                            <input type="text" name="name" class="form-control odes-input-form" required=""/>
+                                        </div>
+                                        <div class="odes-form">
+                                            <label class="col-form-label odes-form-text">Email</label>
+                                            <input type="email" name="email" class="form-control odes-input-form" required="" />
+                                        </div>
+                                    </div>
+                                    <div class="odes-form-row">
+                                        <div class="odes-form">
+                                            <label class="col-form-label odes-form-text">Phone</label>
+                                            <input type="text" name="phone" class="form-control odes-input-form" required="" />
+                                        </div>
+                                        <div class="odes-form">
+                                            <label class="col-form-label odes-form-text">Company</label>
+                                            <input type="text" name="company" class="form-control odes-input-form" required="" />
+                                        </div>
+                                    </div>
+                                    <div class="odes-form-row">
+                                        <div class="odes-form">
+                                            <label class="col-form-label odes-form-text">Position</label>
+                                            <input type="text" name="position" class="form-control odes-input-form" required=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="odes-form-info-bottom">
+                                    <button type="submit" class="odes-button odes-button-download-now"><span>Download Now</span></button>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    var counter = 1;
+                    setInterval(function(){
+                        let element = document.getElementById('odes-radio' + counter);
+                        if (element){
+                            element.checked = true;
+                        }
+                        counter++;
+                        if(counter > 4){
+                            counter = 1;
+                        }
+                    }, 5000);
+
+                </script>
+                <section class="s_process_steps pt24 pb24 o_colored_level" data-snippet="s_process_steps" data-name="Steps">
+                    <div class="row no-gutters">
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-user-plus fa-2x mx-auto rounded-circle odes-bg-active"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Sign Up</h2>
+                                <!-- <p class="o_default_snippet_text">Let your customers follow <br/>and understand your process.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-download fa-2x mx-auto rounded-circle bg-o-color-5 odes-bg-inactive"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Download</h2>
+                                <!-- <p>Click on the icon to adapt it <br/>to your purpose.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-calendar fa-2x mx-auto rounded-circle bg-secondary odes-bg-inactive"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Schedule Demo</h2>
+                                <!-- <p class="o_default_snippet_text">Duplicate blocks <br/>to add more steps.</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <template id="process" name="process">
+        <t t-call="website.layout">
+        <t t-set="title">Process</t>
+            <div class="container">
+                <div class="odes-container">
+                    <span class="odes-title">DOWNLOAD YOUR COPY NOW</span>
+
+                    <div class="odes-slider">
+                        <div class="odes-slides">
+                            <input type="radio" name="radio-btn" id="odes-radio1" />
+                            <input type="radio" name="radio-btn" id="odes-radio2" />
+                            <input type="radio" name="radio-btn" id="odes-radio3" />
+                            <input type="radio" name="radio-btn" id="odes-radio4" />
+                            <div class="odes-slide odes-first">
+                                <img src="/odes_crm/static/description/inven.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/Inventory.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/inventory2.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/inven.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-navigation-auto">
+                                <div class="odes-auto-btn1"></div>
+                                <div class="odes-auto-btn2"></div>
+                                <div class="odes-auto-btn3"></div>
+                                <div class="odes-auto-btn4"></div>
+                            </div>
+                        </div>
+                        <div class="odes-navigation-manual">
+                            <label for="odes-radio1" class="odes-manual-btn"></label>
+                            <label for="odes-radio2" class="odes-manual-btn"></label>
+                            <label for="odes-radio3" class="odes-manual-btn"></label>
+                            <label for="odes-radio4" class="odes-manual-btn"></label>
+                        </div>
+                    </div>
+
+                    <div class="odes-content">
+                        <div class="odes-left-content">
+                            <div>
+                                <p>Your digital transformation journey has just begun, and I hope that you are as excited as we are!</p>
+                                <p>Below, you will find the link to download our comprehensive and concise guide to optimising your inventory management through digital transformation.</p>
+                                <p>Our friendly consultants are always happy to give you a free demo of our solution with no obligations.</p>
+                                <p>All you have to do is to fill in the form to book a free demo session that will be conducted virtually at your convenience. </p>
+                            </div>
+                            <div>
+                                <a href="/odes_crm/static/description/test.pdf" target="_blank" rel="noopener noreferrer"><button type="button" class="odes-button odes-button-download-guide"><span>Download Guide</span></button></a>
+                            </div>
+                        </div>
+                        <div class="odes-right-content">
+                            <form action="/campaign-landing-page/success" method="post">
+                                <span class="odes-title-form">Schedule a Demo</span>
+                                <div class="odes-form-info-selection">
+                                    <div class="odes-form-info-selection-date">
+                                        <span class="odes-form-info-selection-text">Preferred Date to call</span>
+                                        <div class="form-group">
+                                            <div class="input-group datetime odes-input-group-date" id="datetimepickerID" data-target-input="nearest">
+                                                <input type="date" class="form-control datetimepicker-input odes-input-group-date" name="preferred_date" required=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="odes-form-info-selection-time">
+                                        <span class="odes-form-info-selection-text">Preferred Time to call</span>
+                                        <div class="odes-select">
+                                            <select class="form-control odes-input-group-time" name="preferred_time">
+                                                <option t-attf-value="9am_to_12pm" selected="">09.00 AM - 12.00 PM</option>
+                                                <option t-attf-value="12pm_to_3pm">12.00 PM - 03.00 PM</option>
+                                                <option t-attf-value="3pm_to_6pm">03.00 PM - 06.00 PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="odes-form-info">
+                                    <div class="odes-form-info-value">
+                                        <span>Name</span>
+                                        <span>:</span>
+                                        <span><t t-esc="name"/></span>
+                                    </div>
+                                    <div class="odes-form-info-value">
+                                        <span>Email</span>
+                                        <span>:</span>
+                                        <span><t t-esc="email"/></span>
+                                    </div>
+                                    <div class="odes-form-info-value">
+                                        <span>Phone</span>
+                                        <span>:</span>
+                                        <span><t t-esc="phone"/></span>
+                                    </div>
+                                    <div class="odes-form-info-value">
+                                        <span>Company</span>
+                                        <span>:</span>
+                                        <span><t t-esc="company"/></span>
+                                    </div>
+                                    <div class="odes-form-info-value">
+                                        <span>Position</span>
+                                        <span>:</span>
+                                        <span><t t-esc="position"/></span>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="name" t-att-value="name"/>
+                                <input type="hidden" name="email" t-att-value="email"/>
+                                <input type="hidden" name="phone" t-att-value="phone"/>
+                                <input type="hidden" name="position" t-att-value="position"/>
+                                <input type="hidden" name="company" t-att-value="company"/>
+                                <input type="hidden" name="lead_id" t-att-value="lead_id"/>
+                                <input type="hidden" name="contact_id" t-att-value="contact_id"/>
+                                <button type="submit" class="odes-button odes-button-book-demo"><span>Book Demo</span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    var counter = 1;
+                    setInterval(function(){
+                        let element = document.getElementById('odes-radio' + counter);
+                        if (element){
+                            element.checked = true;
+                        }
+                        counter++;
+                        if(counter > 4){
+                            counter = 1;
+                        }
+                    }, 5000);
+                </script>
+                <section class="s_process_steps pt24 pb24 o_colored_level" data-snippet="s_process_steps" data-name="Steps">
+                    <div class="row no-gutters">
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-user-plus fa-2x mx-auto rounded-circle odes-bg-inactive"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Sign Up</h2>
+                                <!-- <p class="o_default_snippet_text">Let your customers follow <br/>and understand your process.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-download fa-2x mx-auto rounded-circle bg-o-color-5 odes-bg-active"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Download</h2>
+                                <!-- <p>Click on the icon to adapt it <br/>to your purpose.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-calendar fa-2x mx-auto rounded-circle bg-secondary odes-bg-inactive"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Schedule Demo</h2>
+                                <!-- <p class="o_default_snippet_text">Duplicate blocks <br/>to add more steps.</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <template id="schedule_demo" name="schedule_demo">
+        <t t-call="website.layout">
+        <t t-set="title">Schedule Demo</t>
+            <div class="container">
+                <div class="odes-container">
+                    <span class="odes-title">WE WILL BE IN TOUCH SOON</span>
+
+                    <div class="odes-slider">
+                        <div class="odes-slides">
+                            <input type="radio" name="radio-btn" id="odes-radio1" />
+                            <input type="radio" name="radio-btn" id="odes-radio2" />
+                            <input type="radio" name="radio-btn" id="odes-radio3" />
+                            <input type="radio" name="radio-btn" id="odes-radio4" />
+                            <div class="odes-slide odes-first">
+                                <img src="/odes_crm/static/description/inven.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/Inventory.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/inventory2.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-slide">
+                                <img src="/odes_crm/static/description/inven.jpeg" alt=""/>
+                            </div>
+                            <div class="odes-navigation-auto">
+                                <div class="odes-auto-btn1"></div>
+                                <div class="odes-auto-btn2"></div>
+                                <div class="odes-auto-btn3"></div>
+                                <div class="odes-auto-btn4"></div>
+                            </div>
+                        </div>
+                        <div class="odes-navigation-manual">
+                            <label for="odes-radio1" class="odes-manual-btn"></label>
+                            <label for="odes-radio2" class="odes-manual-btn"></label>
+                            <label for="odes-radio3" class="odes-manual-btn"></label>
+                            <label for="odes-radio4" class="odes-manual-btn"></label>
+                        </div>
+                    </div>
+
+                    <div class="odes-content">
+                        <p>A member of our team will reach out to you shortly to arrange the free demo session. We look forward to sharing more with you!</p>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    var counter = 1;
+                    setInterval(function(){
+                        let element = document.getElementById('odes-radio' + counter);
+                        if (element){
+                            element.checked = true;
+                        }
+                        counter++;
+                        if(counter > 4){
+                            counter = 1;
+                        }
+                    }, 5000);
+                </script>
+                <section class="s_process_steps pt24 pb24 o_colored_level" data-snippet="s_process_steps" data-name="Steps">
+                    <div class="row no-gutters">
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-user-plus fa-2x mx-auto rounded-circle odes-bg-inactive"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Sign Up</h2>
+                                <!-- <p class="o_default_snippet_text">Let your customers follow <br/>and understand your process.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-download fa-2x mx-auto rounded-circle bg-o-color-5 odes-bg-inactive"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Download</h2>
+                                <!-- <p>Click on the icon to adapt it <br/>to your purpose.</p> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-4 s_process_step pt24 pb24 o_colored_level">
+                            <div class="s_process_step_icon">
+                                <span>
+                                    <i class="fa fa-calendar fa-2x mx-auto rounded-circle bg-secondary odes-bg-active"/>
+                                </span>
+                            </div>
+                            <div class="s_process_step_content text-center">
+                                <h2 class="o_default_snippet_text">Schedule Demo</h2>
+                                <!-- <p class="o_default_snippet_text">Duplicate blocks <br/>to add more steps.</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

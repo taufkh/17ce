@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend" name="Backend Assets">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" href="/odes_custom/static/src/less/dashboard.less"/>
+            <link rel="stylesheet" type="text/css" href="/odes_custom/static/src/css/odes_backend.css"/>
+            <link rel="stylesheet" type="text/scss" href="/odes_custom/static/src/scss/web_gantt.scss"/>
+        </xpath>
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/odes_custom/static/src/js/backend/dashboard.js"/>
+            <script type="text/javascript" src="/odes_custom/static/src/js/backend/dashboard_second.js"/>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="/odes_custom/static/src/lib/highcharts.js"/>
+            <script type="text/javascript" src="/odes_custom/static/src/lib/funnel.js"/>
+            <script type="text/javascript" src="/odes_custom/static/src/js/web_lead_funnel_chart.js"/>
+
+            <script type="text/javascript" src="/odes_custom/static/src/js/task_gantt_model.js"></script>
+            <script type="text/javascript" src="/odes_custom/static/src/js/task_gantt_view.js"></script>
+            <script type="text/javascript" src="/odes_custom/static/src/js/gantt_renderer.js"></script>
+        </xpath>
+        <xpath expr="//script[@src='/web/static/src/js/views/graph/graph_renderer.js']" position="replace">
+            <script type="text/javascript" src="/odes_custom/static/src/js/views/graph/graph_renderer.js"></script>
+        </xpath>
+        <xpath expr="//script[@src='/web_gantt/static/src/js/gantt_row.js']" position="replace">
+            <script type="text/javascript" src="/odes_custom/static/src/js/gantt_row.js"></script>
+        </xpath>
+        <xpath expr="//script[@src='/web_gantt/static/src/js/gantt_view.js']" position="replace">
+            <script type="text/javascript" src="/odes_custom/static/src/js/gantt_view.js"></script>
+        </xpath>
+        <xpath expr="//script[@src='/web_enterprise/static/src/js/control_panel.js']" position="replace">
+            <script type="text/javascript" src="/odes_custom/static/src/js/control_panel.js"></script>
+        </xpath>
+    </template>
+</odoo>

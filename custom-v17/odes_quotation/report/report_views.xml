@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_service_quotation" model="ir.actions.report">
+            <field name="name">Service Quotation</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">odes_quotation.report_service_quotation</field>
+            <field name="report_file">odes_quotation.report_service_quotation</field>
+            <field name="paperformat_id" ref="odes_quotation.paperformat_service_quotation"/>
+            <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

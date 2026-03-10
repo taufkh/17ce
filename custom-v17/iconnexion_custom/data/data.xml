@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sequences for sale.order -->
+        <record id="seq_proforma_inovice" model="ir.sequence">
+            <field name="name">Proforma Invoice</field>
+            <field name="code">proforma.invoice</field>
+            <field name="prefix">PI%(y)s</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for sale.order -->
+        <record id="seq_req_part_number" model="ir.sequence">
+            <field name="name">ID Number Sequence</field>
+            <field name="code">req.new.part.number.wizard</field>
+            <field name="prefix">iCon</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_sample_request" model="ir.sequence">
+            <field name="name">ID Number Sequence</field>
+            <field name="code">sample.request.form</field>
+            <field name="prefix">SAMPLE22</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_credit_application" model="ir.sequence">
+            <field name="name">ID Number Sequence</field>
+            <field name="code">icon.credit.application</field>
+            <field name="prefix">CREDIT22</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_t_loan" model="ir.sequence">
+            <field name="name">ID Number Sequence</field>
+            <field name="code">t.loan.form</field>
+            <field name="prefix">T-Loan</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mail_activity_data_icon_update_coo" model="mail.activity.type">
+            <field name="name">Update COO</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="sequence">4</field>
+            <!-- v16: res_model_id (Many2one) removed; use res_model (Selection/Char) instead -->
+            <field name="res_model">product.template</field>
+        </record>
+        <record id="mail_activity_data_icon_update_delivery_date" model="mail.activity.type">
+            <field name="name">Update Delivery Date</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="sequence">4</field>
+            <!-- v16: res_model_id → res_model -->
+            <field name="res_model">product.template</field>
+        </record>
+         <template id="track_po_line_date_received_template">
+            <div>
+                <strong>Received Date has been updated.</strong>
+                <ul>
+                    <li><t t-esc="line.product_id.display_name"/>:</li>
+                    Received Date: <t t-esc="date_planned_start" /> -&gt; <t t-esc="date_planned"/><br/>
+                </ul>
+            </div>
+        </template>
+
+        <template id="cs_finance_update_template">
+            <div>
+                <strong>TT-in-advance payment order already confirmed by salesman, for CS and Finance to please check and update the order.</strong>
+                <ul>
+                    <li><t t-esc="invoice.name"/>, <t t-esc="invoice.ref"/>:</li>
+                    PI Date: <t t-esc="invoice.invoice_date" />
+                </ul>
+            </div>
+        </template>
+        <template id="finance_confirm_payment_template">
+            <div>
+                <strong>TT-in-advance invoice payment has been received.</strong>
+                <ul>
+                    <li><t t-esc="invoice.name"/>, <t t-esc="invoice.ref"/>:</li>
+                    PI Date: <t t-esc="invoice.invoice_date" />
+                </ul>
+            </div>
+        </template>
+
+        <template id="so_request_low_margin">
+            <div>
+                <strong>Low Margin Requested on :</strong>
+                <ul>
+                    <li><t t-esc="sales.order_id.name"/>, <t t-esc="sales.name"/>, Reason : <t t-esc="sales.reason"/></li>
+                   <!--  Request Date: <t t-esc="sales.date_input" /> -->
+                </ul>
+            </div>
+        </template>
+         <template id="crm_change_stage">
+            <div>
+                <strong>Stage Change :</strong>
+                <ul>
+                    <li><t t-esc="crm.name"/>,  Reason : <t t-esc="reason"/></li>
+                   <!--  Request Date: <t t-esc="sales.date_input" /> -->
+                </ul>
+            </div>
+        </template>
+        <template id="so_approve_low_margin">
+            <div>
+                <strong>Low Margin Approve on :</strong>
+                <ul>
+                    <li><t t-esc="sales.order_id.name"/>, <t t-esc="sales.name"/></li>
+                   <!--  Request Date: <t t-esc="sales.date_input" /> -->
+                </ul>
+            </div>
+        </template>
+
+        <template id="sampe_request_confirm_template">
+            <div>
+                <strong> Sample Requested on</strong>
+                <ul>
+                    <li><t t-esc="sample.name"/></li>
+                </ul>
+            </div>
+        </template>
+
+        <template id="new_part_number_approve">
+            <div>
+                <strong>New Part Number Approve : </strong>
+                <ul>
+                    <li> <t t-esc="part_number.name"/></li>
+                   <!--  Request Date: <t t-esc="sales.date_input" /> -->
+                </ul>
+            </div>
+        </template>
+        <template id="new_part_number_created">
+            <div>
+                <strong>New Part Number Created : </strong>
+                <ul>
+                  <li> <t t-esc="part_number.name"/></li>
+                </ul>
+            </div>
+        </template>
+        <template id="new_part_number_rejected">
+            <div>
+                <strong>New Part Number Rejected : </strong>
+                <ul>
+                   <li> <t t-esc="part_number.name"/></li>
+                </ul>
+            </div>
+        </template>
+
+        <template id="cs_notif_generate_pi">
+            <div>
+                <strong>Customer Service to generate PI for customer to make payment 2 wks before supplier delivery date </strong>
+                <ul>
+                  
+                </ul>
+            </div>
+        </template>
+        <template id="cs_notif_paid_pi">
+            <div>
+                <p>Hi CS,</p>
+                [<t t-esc="invoice.name" />] <p>has been paid. Please check!</p>
+                <p>Thank You</p>
+            </div>
+        </template>
+    </data>
+</odoo>

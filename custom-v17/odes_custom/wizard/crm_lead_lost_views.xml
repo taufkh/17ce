@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="odes_crm_lead_lost_view_form_inherit" model="ir.ui.view">
+        <field name="name">odes.crm.lead.lost.inherit</field>
+        <field name="model">crm.lead.lost</field>
+        <field name="inherit_id" ref="crm.crm_lead_lost_view_form"/>
+        <field name="arch" type="xml">
+            <field name="lost_reason_id" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="options">{'no_create': 1}</attribute>
+            </field>
+            <field name="lost_reason_id" position="after">
+                <field name="is_input" invisible="1"/>
+                <field name="reason" required="1" invisible="not is_input"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

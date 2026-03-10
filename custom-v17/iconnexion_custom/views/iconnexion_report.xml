@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="icon_sales_report" model="ir.actions.report">
+            <field name="name">Sales Report</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">iconnexion_custom.icon_salesreport</field>
+            <field name="report_file">sale.order</field>
+            <field name="attachment_use" eval="False"/>
+            <field name="binding_model_id" search="[('model', '=', 'sale.order')]"/>
+            <field name="binding_type">report</field>
+        </record>
+
+          
+
+     </data>
+ </odoo>

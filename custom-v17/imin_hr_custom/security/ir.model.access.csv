@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_imin_webhook_log,imin.hr.webhook.log,model_imin_hr_webhook_log,,1,1,1,1
+access_imin_hr_department,imin.hr.department,model_imin_hr_department,,1,1,1,1
+access_imin_hr_employee,imin.hr.employee,model_imin_hr_employee,,1,1,1,1
+access_imin_attendance_import,imin.attendance.import,model_imin_attendance_import,,1,1,1,1
+access_imin_fetch_department,imin.fetch.department,model_imin_fetch_department,,1,1,1,1
+access_imin_fetch_employee,imin.fetch.employee,model_imin_fetch_employee,,1,1,1,1

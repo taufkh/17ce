@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-19 ForgeFlow S.L. (https://www.forgeflow.com)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="tier_review_view_tree" model="ir.ui.view">
+        <field name="name">tier.review.tree</field>
+        <field name="model">tier.review</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-danger="status=='rejected'"
+                decoration-success="status=='approved'"
+                default_order="reviewed_date desc"
+            >
+                <field name="res_name"/>
+                <field name="sequence" />
+                <field name="name" />
+                <field name="requested_by" />
+                <field name="status" />
+                <field name="done_by" />
+                <field name="reviewed_date" />
+                <field name="comment" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="tier_review_view_form" model="ir.ui.view">
+        <field name="name">tier.review.view.form</field>
+        <field name="model">tier.review</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Related Document" name="action_open_related" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="res_name"/>
+                            <field name="sequence" />
+                            <field name="name" />
+                            <field name="requested_by" />
+                        </group>
+                        <group>
+                            <field name="status" />
+                            <field name="done_by" />
+                            <field name="reviewed_date" />
+                            <field name="comment" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tier_review_view_search" model="ir.ui.view">
+        <field name="name">tier.review.view.search</field>
+        <field name="model">tier.review</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="res_name"/>
+                <field name="model"/>
+                <field name="requested_by"/>
+                <field name="done_by"/>
+                <filter name="filter_status_approved" string="Approved" domain="[('status', '=', 'approved')]" />
+                <filter name="filter_status_rejected" string="Rejected" domain="[('status', '=', 'rejected')]" />
+                <filter name="filter_status_pending" string="Pending" domain="[('status', '=', 'pending')]" />
+                <separator/>
+                <filter name="filter_reviewed_date" string="Validation Date" date="reviewed_date" />
+                <filter name="groupby_model" context="{'group_by': 'model'}" />
+                <filter name="groupby_status" context="{'group_by': 'status'}" />
+                <filter name="groupby_requested_by" context="{'group_by': 'requested_by'}" />
+                <filter name="groupby_done_by" context="{'group_by': 'done_by'}" />
+            </search>
+        </field>
+    </record>
+
+    <record id="tier_review_action" model="ir.actions.act_window">
+        <field name="name">Tier Review</field>
+        <field name="res_model">tier.review</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{'create': 0, 'edit': 0, 'delete': 0}</field>
+    </record>
+
+    <menuitem
+        id="menu_tier_review"
+        parent="menu_tier_confirmation"
+        action="tier_review_action"
+        sequence="11"
+    />
+</odoo>

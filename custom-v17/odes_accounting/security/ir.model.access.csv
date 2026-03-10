@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_res_company","access.res.company","model_res_company","",1,1,1,0
+"access_odes_partner_invoice","access.odes.partner.invoice","model_odes_partner_invoice","",1,1,1,0
+"access_odes_product_purchase","access.odes.product.purchase","model_odes_product_purchase","",1,1,1,1
+"access_odes_product_sale","access.odes.product.sale","model_odes_product_sale","",1,1,1,1
+"access_sale_invoice_forecast","sale.invoice.forecast","model_sale_invoice_forecast","",1,1,1,1

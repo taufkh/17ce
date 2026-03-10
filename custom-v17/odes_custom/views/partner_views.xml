@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="odes_view_partners_form_crm1_inherit" model="ir.ui.view">
+        <field name="name">odes.crm.res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+        <field name="arch" type="xml">
+        	<field name="opportunity_count" position="attributes">
+        		<attribute name="string">CRM</attribute>
+        	</field>
+        </field>
+    </record>
+
+    <record id="act_res_partner_2_sale_order" model="ir.actions.act_window">
+        <field name="name">Quotations and Sales</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="context">{'search_default_partner_id': active_id, 'default_partner_id': active_id}</field>
+        <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new quotation, the first step of a new sale!
+            </p><p>
+            Once the quotation is confirmed by the customer, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
+            </p>
+        </field>
+    </record>
+
+    <record id="odes_view_partners_form_inherit" model="ir.ui.view">
+        <field name="name">odes.res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div class="o_address_format" position="replace">
+                <div class="o_address_format">
+                    <field name="is_zip" invisible="1"/>
+                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                    <field invisible="is_zip" name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                    <field invisible="is_zip" name="city" placeholder="City" class="o_address_city"/>
+                    <field invisible="is_zip" domain="[('country_id', '=', country_id)]" name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'default_country_id': country_id}"/>
+                    <field invisible="is_zip" name="zip" placeholder="ZIP" class="o_address_zip"/>
+
+                    <field invisible="not is_zip" style="width: 68%" name="country_id" placeholder="Country" options='{"no_open": True, "no_create": True}'/>
+                    <span invisible="not is_zip">&amp;nbsp;</span>
+                    <field invisible="not is_zip" style="width: 30%" name="zip" placeholder="ZIP"/>
+                </div>
+            </div>
+
+            <xpath expr="//field[@name='property_payment_term_id']" position="after">
+                <field name="freight_terms"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_projects" icon="fa-list">
+                    <field name="projects_count" string="Projects" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="action_view_invoices_sgd" icon="fa-pencil-square-o" context="{'default_partner_id': active_id}">
+                        <div class="o_form_field o_stat_info">
+                            <span>
+                                <field name="sgd_currency_id" invisible="1"/>
+                                <!-- <field name="sgd_total_invoiced"  widget='monetary' options="{'currency_field': 'sgd_currency_id'}"/> -->
+                            </span>
+                            <span class="o_stat_text">Invoiced (SGD)</span>
+                        </div>
+                </button>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="odes_res_partner_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">odes.res.partner.kanban.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="company_id"/>
+            </field>
+            <!-- v16: o_row removed from partner kanban template; target o_kanban_record_bottom instead -->
+            <xpath expr="//div[hasclass('o_kanban_record_bottom')]" position="before">
+                <div class="o_row">
+                    <strong><field name="company_id"/></strong>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="odes_view_country_form_inherit" model="ir.ui.view">
+        <field name="name">odes.res.country.form.inherit</field>
+        <field name="model">res.country</field>
+        <field name="inherit_id" ref="base.view_country_form"/>
+        <field name="arch" type="xml">
+            <field name="state_required" position="after">
+                <field name="is_zip"/>
+                <field name="property_payment_term_id"/>
+                <field name="freight_terms"/>
+                <!-- <field name="tax_ids" context="{'default_type_tax': 'sale', 'search_default_sale': 1}" domain="[('type_tax_use', '=', 'sale')]" widget="many2many_tags"/> -->
+            </field>
+        </field>
+    </record>
+</odoo>

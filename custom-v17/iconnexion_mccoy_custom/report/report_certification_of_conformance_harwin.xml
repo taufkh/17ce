@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="iconnexion_mccoy_report_certification_of_conformance_harwin_template_inherited"
+      inherit_id="iconnexion_custom.report_certification_of_conformance_harwin_template">
+      <xpath expr="." position="replace">
+        <t t-foreach="docs" t-as="o">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+                        <div class="page">
+                            <style>
+                                td {
+                                    border: 1px solid black;
+                                }
+                            </style>
+                            <div class="header">
+                                <div class="row mt32 mb32">
+                                    <div class="col-auto" style="margin-top:15px;text-align:center;border:3px solid black;padding:10px;">
+                                        <img src="/iconnexion_mccoy_custom/static/src/img/Harwin/logo_harwin_2.png" style="max-height: 85px;" alt="Logo"/><br/>
+                                        <span style="font-weight:bold;font-size:17px;">UK-SINGAPORE-USA</span><br/>
+                                        <span style="font-weight:bold;font-size:17px;">HARWIN ASIA PTE LTD</span><br/>
+                                        <span style="font-size:12px;">NO. 3 Ang Mo Kio Street 62, #01-57 Link@AMK Singapore
+                                            569139</span><br/>
+                                        <span style="font-size:12px;">Website Address:
+                                            http://www.harwin.com</span><br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt32 mb32" style="margin-top:-10mm;">
+                                <div class="col-auto">
+                                    <h1 style="text-align: center;font-size:14px;font-weight:bold;">CERTIFICATE OF
+                                        CONFORMANCE</h1>
+                                </div>
+                            </div><br/>
+                            <div class="col-auto">
+                                <div style="font-size:12px;">TO: <span t-field="o.sale_id.partner_id.name"/></div>
+                                <div style="font-size:12px;margin-top:-5px">DATE: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></div>
+                                <div style="font-size:12px;margin-top:-5px">PO: <span t-field="o.sale_id.client_order_ref"/></div>
+                            </div>
+                            <div class="col-auto" style="margin-top:10px;">
+                                <div style="font-size:12px;">WE HERE BY CERTIFY THAT FOLLOWING PRODUCTS LISTED BELOW
+                                    HAVE BEEN MANUFACTURED </div>
+                                <div style="font-size:12px;margin-top:-5px;">IN ACCORDANCE WITH THE SPECIFICATIONS AND
+                                    STANDARDS AS INDICATED IN THE CURRENT</div>
+                                <div style="font-size:12px;margin-top:-5px;">HARWIN CATALOGUE</div>
+                            </div>
+                            <!--</div>-->
+                            <!--<div class="row">-->
+                            <!--<p style="width:96%;font-size:15px;margin-left:15px;">Iconnexion hereby certifies that all product listed is in conformance with the purchase order requirements, and applicable specifications and drawings as stated below:</p>-->
+                            <!--</div>-->
+                            <div>
+                                <table style=" margin-top : 8px;width:100%;">
+                                    <thead style="font-size : 12px;">
+                                        <tr style="">
+                                            <th class="text-center" width="10%"><span>SIL</span></th>
+                                            <th class="text-center" width="30%"><span>HARWIN P/N</span></th>
+                                            <th class="text-center" width="20%"><span>BATCH</span></th>
+                                            <th class="text-center" width="10%"><span>EACH</span></th>
+                                            <th class="text-center" width="30%"><span>RESULT</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size : 12px;">
+                                        <t t-set="line_count" t-value="0"/>
+                                        <t t-set="lines" t-value="o.move_line_ids_without_package"/>
+                                        <tr t-foreach="lines" t-as="line" style="border: 0px;">
+                                            <t t-set="line_count" t-value="line_count + 1"/>
+                                            <td class="text-center" style="border:0px;"><span t-esc="line_count"/></td>
+                                            <td class="text-center" style="border:0px;"><span t-field="line.product_id.name"/><br/><span t-field="line.product_cpn"/></td>
+                                            <td class="text-center" style="border:0px;"><span t-field="line.lot_id.name"/></td>
+                                            <td class="text-center" style="border:0px;"><span t-field="line.qty_done" t-options="{'widget': 'integer'}"/></td>
+                                            <td class="text-center" style="border:0px;"><span>AS PER
+                                                    SPECIFICATION</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="col-auto" style="margin-top:10px;">
+                                <p style="font-size:12px;">*THIS IS COMPUTER GENERATED COPY AND DOES NOT REQUIRE A
+                                    MANUAL SIGNATURE</p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+      </xpath>
+    </template>
+
+
+    </data>
+</odoo>

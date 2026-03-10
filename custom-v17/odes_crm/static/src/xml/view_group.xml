@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" inherit_id="web.template" xml:space="preserve" >
+     <t t-extend="KanbanView.Group">
+        <t t-jquery=".o_column_title" t-operation="before">
+            <!-- <img width="16" t-attf-src="/web/image/social.stream/#{widget.id}/media_image/16x16" class="mr8" />
+            <span class="mr-1"> <t t-esc="widget.id"/></span> -->
+            
+        </t>
+    </t>
+</templates>

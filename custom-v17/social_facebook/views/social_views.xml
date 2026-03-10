@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="social_media_view_tree" model="ir.ui.view">
+        <field name="name">social.media.tree</field>
+        <field name="model">social.media</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="media_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="social_account_view_tree" model="ir.ui.view">
+        <field name="name">social.account.tree</field>
+        <field name="model">social.account</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="media_id"/>
+                <field name="page_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="social_post_view_tree" model="ir.ui.view">
+        <field name="name">social.post.tree</field>
+        <field name="model">social.post</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="social_post_view_form" model="ir.ui.view">
+        <field name="name">social.post.form</field>
+        <field name="model">social.post</field>
+        <field name="arch" type="xml">
+            <form string="Social Post">
+                <header>
+                    <button name="action_queue" type="object" string="Queue" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="message"/>
+                    </group>
+                    <notebook>
+                        <page string="Live Posts">
+                            <field name="live_post_ids">
+                                <tree editable="bottom">
+                                    <field name="account_id"/>
+                                    <field name="state"/>
+                                    <field name="facebook_post_id"/>
+                                    <field name="posted_on"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="social_live_post_view_tree" model="ir.ui.view">
+        <field name="name">social.live.post.tree</field>
+        <field name="model">social.live.post</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="post_id"/>
+                <field name="account_id"/>
+                <field name="state"/>
+                <field name="facebook_post_id"/>
+                <field name="posted_on"/>
+                <button name="action_publish" type="object" string="Publish" class="btn-link"/>
+                <button name="action_retry" type="object" string="Retry" class="btn-link"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="social_live_post_view_form" model="ir.ui.view">
+        <field name="name">social.live.post.form</field>
+        <field name="model">social.live.post</field>
+        <field name="arch" type="xml">
+            <form string="Live Post">
+                <header>
+                    <button name="action_publish" type="object" string="Publish" class="btn-primary"
+                            invisible="state == 'posted'"/>
+                    <button name="action_retry" type="object" string="Retry"
+                            invisible="state != 'failed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="post_id"/>
+                        <field name="account_id"/>
+                        <field name="facebook_post_id" readonly="1"/>
+                        <field name="posted_on" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="failure_reason" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="social_media_action" model="ir.actions.act_window">
+        <field name="name">Social Media</field>
+        <field name="res_model">social.media</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="social_account_action" model="ir.actions.act_window">
+        <field name="name">Social Accounts</field>
+        <field name="res_model">social.account</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="social_post_action" model="ir.actions.act_window">
+        <field name="name">Social Posts</field>
+        <field name="res_model">social.post</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="social_live_post_action" model="ir.actions.act_window">
+        <field name="name">Live Posts</field>
+        <field name="res_model">social.live.post</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_social_root" name="Social" parent="base.menu_custom" sequence="80"/>
+    <menuitem id="menu_social_post" name="Posts" parent="menu_social_root" action="social_post_action" sequence="10"/>
+    <menuitem id="menu_social_live_post" name="Live Posts" parent="menu_social_root" action="social_live_post_action" sequence="20"/>
+    <menuitem id="menu_social_account" name="Accounts" parent="menu_social_root" action="social_account_action" sequence="30"/>
+    <menuitem id="menu_social_media" name="Media" parent="menu_social_root" action="social_media_action" sequence="40"/>
+</odoo>

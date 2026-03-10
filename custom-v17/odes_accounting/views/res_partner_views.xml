@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="view_odes_partners_form_inherit" model="ir.ui.view">
+            <field name="name">view.odes.partners.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="mobile" position="after">
+                    <field name="fax"/>
+                </field>
+                <notebook position="inside">
+                    
+                    <page string="Invoice Summary">
+                        
+                            <group name="Yearly Annual Invoice" string="Yearly Annual Invoice">
+                                <field nolabel="1" name="aml_ids">
+                                    <tree>
+                                        <field name="year"/>
+                                        <field name="currency_id"/>
+                                        
+                                        <field name="total"/>
+                                        <button name="view_detail" type="object" string="Detail" icon="fa-book" class="oe_highlight" />
+                                    </tree>
+                                </field>
+
+                            </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+<!--        <record id="view_odes_partner_tree_inherit" model="ir.ui.view">
+            <field name="name">view.odes.partners.tree.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="after">
+                    <field name="fax" optional="hide"/>
+                </field>
+            </field>
+        </record>-->
+</odoo>

@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+       <record id="view_account_payment_partial_form" model="ir.ui.view">
+            <field name="name">account.payment.partial.form</field>
+            <field name="model">account.payment.partial.register</field>
+            <field name="arch" type="xml">
+                <form string="Register Payment Partial">
+                    <sheet>
+                        <!-- Invisible fields -->
+                        <field name="id" invisible="1"/>
+                        <field name="is_reconciled" invisible="1"/>
+                        <field name="payment_type" invisible="1"/>
+                        <field name="partner_type" invisible="1"/>
+                        <field name="partner_id" invisible="1"/>
+                        <field name="destination_account_id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <div class="o_view_nocontent" invisible="payment_type != False">
+                            <div class="o_nocontent_help">
+                                <p class="o_view_nocontent_smiling_face">
+                                     Does not allow partial payment invoice with credit or debit
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row" invisible="payment_type == False">
+                           <div class="mb-4 mb-lg-0 col-lg-6">
+                              <div class="h-100 card">
+                                 <div class="card-header">
+                                     <p class="h5 card-heading"><field name="active_move_type" invisible="0"/></p>
+
+                                 </div>
+                                 <div class="card-body">
+                                    <div class="chart-holder">
+                                        <group>
+                                            <field name="active_move_id" readonly="1" />
+                                            <field name="active_move_currency" invisible="1"/>
+                                            <field name="active_move_partner"/>
+                                            <field string="Document Date" name="active_move_date"/>
+                                            <field name="active_move_date_due"/>
+                                            <field name="active_move_total" widget="monetary" options="{'currency_field': 'active_move_currency'}"/>
+                                            <field name="active_move_residual" widget="monetary" options="{'currency_field': 'active_move_currency'}"/>
+                                        </group>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="mb-4 mb-lg-0 col-lg-6" name="information_amount">
+                                <div class="h-100 card">
+                                    <div class="card-header">
+                                    <p class="h5 card-heading">
+                                            Information Payment</p>
+                                     </div>
+                                    <div class="d-flex card-body">
+                                       <div class="w-100 align-items-center row">
+                                          <div class="mb-4 mb-sm-0 col-sm-6">
+                                                <group>
+                                                    <field name="payment_id" readonly="1" />
+                                                    <field name="payment_currency_id" invisible="1"/>
+                                                    <field name="partner_id"/>
+                                                    <field string="Payment Date" name="date_payment"/>
+                                                    <field name="ref"/>
+                                                    <field name="amount" widget="monetary" options="{'currency_field': 'payment_currency_id'}"/>
+                                                    <field name="amount_residual" widget="monetary" options="{'currency_field': 'payment_currency_id'}"/>
+                                                </group>
+                                          </div>
+                                       </div>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="row mt-3" invisible="payment_type == False">
+                           <div class="mb-4 mb-lg-0 col-lg-8" name="multi_pay">
+                                 <div class="h-100 card">
+                                 <div class="card-header">
+                                     <p class="h5 card-heading">Payment made with <field name="payment_id" readonly="1" /></p>
+                                 </div>
+                                 <div class="card-body">
+                                    <div class="chart-holder">
+                                        <field name="account_payable_or_receivable" invisible="1"/>
+                                        <field name="entries_pay_move_id" invisible="1"/>
+                                        <field name="matched_debit_ids" invisible="partner_type == 'supplier'">
+                                                <tree editable="bottom" string="Partial Pay" create="false" delete="false">
+                                                    <!-- Displayed fields -->
+                                                    <field name="credit_move_id"/>
+                                                    <field name="debit_move_id"/>
+                                                    <field name="amount" string="Importe" sum="Total" widget="monetary" />
+                                                </tree>
+                                        </field>
+                                        <field name="matched_credit_ids" invisible="partner_type == 'customer'">
+                                                <tree editable="bottom" string="Partial Pay" create="false" delete="false">
+                                                    <!-- Displayed fields -->
+                                                    <field name="credit_move_id"/>
+                                                    <field name="debit_move_id"/>
+                                                    <field name="amount" string="Importe" sum="Total" widget="monetary" />
+                                                </tree>
+                                        </field>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="mb-4 mb-lg-0 col-lg-4" name="partial_pay">
+                              <div class="h-100 card">
+                                 <div class="card-header">
+                                     <p class="h5 card-heading">Partial Pay</p>
+                                 </div>
+                                 <div class="card-body">
+                                    <div class="chart-holder">
+                                        <h5><field name="active_move_id" readonly="1"/></h5>
+                                        <h3><field class="w-75" name="amount_partial" options="{'currency_field': 'payment_currency_id'}"/></h3>
+                                        <span class="text-muted">Add the partial amount to pay in this document</span>
+                                    </div>
+                                 </div>
+                                  <div class="card-footer"/>
+                              </div>
+                           </div>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <button string="Add Payment" name="action_create_payments" type="object"
+                                class="btn btn-primary" invisible="payment_type == False"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

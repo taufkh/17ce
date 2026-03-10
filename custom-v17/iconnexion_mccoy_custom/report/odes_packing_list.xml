@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="odes_accounting.report_odes_packing_list" model="ir.actions.report">
+            <field name="name">Packing/Weight List (McCoy)</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">odes_accounting.report_odes_packing_list_doc</field>
+            <field name="report_file">odes_accounting.report_odes_packing_list_doc</field>
+        </record>
+    </data>
+</odoo>

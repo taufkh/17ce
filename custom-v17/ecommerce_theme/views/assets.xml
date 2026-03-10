@@ -1,0 +1,48 @@
+<!--#############################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+    <data>
+        <template id="assets_ecommerce_theme_frontend" inherit_id="website.layout">
+            <xpath expr="." position="inside">
+                <!-- css section -->
+                <link rel="stylesheet" type="text/css" href="/ecommerce_theme/static/src/css/st_ecommerce_theme.css"/>
+                <link rel="stylesheet" type="text/css" href="/ecommerce_theme/static/lib/owl/owl.carousel.css"/>
+
+                <!-- Open sans fonts -->
+                <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+            </xpath>
+        </template>
+
+        <!-- Snippets assets -->
+        <template id="st_ecommerce_theme_snippets_assets" name="ST Ecommerce Theme Snippets Assets"
+                  inherit_id="web.assets_frontend">
+            <xpath expr="//link[last()]" position="after">
+
+                <!-- js section -->
+                <script src="/ecommerce_theme/static/src/js/st_ecommerce_theme_header.js"/>
+                <script src="/ecommerce_theme/static/src/js/st_ecommerce_theme_product.js"/>
+                <script src="/ecommerce_theme/static/src/js/st_ecommerce_theme_cart.js"/>
+
+                <script src="/ecommerce_theme/static/lib/owl/owl.carousel.min.js"/>
+                <script src="/ecommerce_theme/static/src/js/st_ecommerce_theme_popular_product.js"/>
+            </xpath>
+        </template>
+
+        <template id="st_ecommerce_theme_assets_editor" inherit_id="web.assets_backend">
+            <xpath expr="//script[last()]" position="after">
+                <script src="/ecommerce_theme/static/src/js/st_ecommerce_theme.editor.js"/>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

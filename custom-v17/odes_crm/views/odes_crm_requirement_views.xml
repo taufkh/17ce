@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- REQUIREMENT -->
+    <record id="view_odes_crm_requirement_search" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.search</field>
+        <field name="model">odes.crm.requirement</field>
+        <field name="arch" type="xml">
+            <search string="Requirements">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('number', 'ilike', self)]"/>
+                <field name="number"/>
+                <field name="module_id"/>
+                <field name="type"/>
+                <field name="priority"/>
+                <field name="business_function_id"/>
+                <separator/>
+                <filter string="New" name="state_new" domain="[('state', '=', 'new')]"/>
+                <filter string="Confirmed by Client" name="state_client_confirmed" domain="[('state', '=', 'client_confirmed')]"/>
+                <filter string="On Development" name="state_development" domain="[('state', '=', 'development')]"/>
+                <filter string="Done Development" name="state_done_development" domain="[('state', '=', 'done_development')]"/>
+                <filter string="Confirmed by PM" name="stae_pm_confirmed" domain="[('state', '=', 'pm_confirmed')]"/>
+                <filter string="Confirmed by Client (Done)" name="state_done" domain="[('state', '=', 'done')]"/>
+                <filter string="Uncompleted Task" name="uncompleted_task" domain="[('uncompleted_task', '>', '0')]"/>
+                <separator/>
+                <filter string="Pending Feedback" name="pending_feedback" domain="[('is_pending_feedback', '=', True)]"/>
+                <separator/>
+                <filter string="REQ Without Deadline" name="req_empty_deadline" domain="[('date_deadline', '=', False)]"/>
+                <filter string="Defaulted Requirement" name="defaulted_requirement" domain="[('date_deadline', '&lt;', (context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d')), ('state', 'in', ['new', 'client_confirmed', 'development'])]"/>
+                <filter string="Defaulted Task" name="defaulted_task" domain="[('event_task_ids.start', '&lt;', (context_today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d')), ('event_task_ids.is_done', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Apps" name="apps" context="{'group_by': 'module_id'}"/>
+                    <filter string="Project" name="project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Stage" name="stage" context="{'group_by': 'stage_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                    <filter string="Business Functions" name="business_function" context="{'group_by': 'business_function_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.tree</field>
+        <field name="model">odes.crm.requirement</field>
+        <field name="arch" type="xml">
+            <!-- v16: decoration-bf removed — is_action_request is group-restricted, can't use in decoration -->
+            <tree string="Requirements" decoration-info="state == 'client_confirmed'" decoration-warning="state == 'development'" decoration-primary="state == 'done_development'" decoration-it="state == 'pm_confirmed'" decoration-success="state == 'done'">
+                <field name="project_name"/>
+                <field name="number"/>
+                <field name="date"/>
+                <field name="module_id"/>
+                <field name="type"/>
+                <field name="priority"/>
+                <field name="name"/>
+                <field name="description" widget="html"/>
+                <field name="attachment_ids"/>
+                <field name="date_deadline"/>
+                <field name="estimated_mandays" sum="Total Estimated Mandays" groups="project.group_project_manager" />
+                <field name="consumed_mandays" sum="Total Completed Mandays" groups="project.group_project_manager" />
+                <field name="total_manhours" sum="Total Tasks Mandays" groups="project.group_project_manager" />
+                <field name="uncompleted_task" sum="Total Uncompleted Tasks" groups="project.group_project_manager" />
+                <field name="state"/>
+                <field name="is_pending_feedback"/>
+                <field name="is_action_request" groups="project.group_project_manager"/>
+                <field name="order_id" invisible="1"/>
+                <field name="project_id" invisible="1"/>
+                <field name="project_type" invisible="1" />
+                <field name="requirement_status_requester_id" invisible="1" />
+                <button type="object" name="action_client_confirm" invisible="project_type == 'internal' or state not in 'new'" groups="odes_crm.group_odes_customer,project.group_project_manager" class="oe_highlight" string="Confirm"/>
+                <button type="object" name="action_client_confirm" invisible="(project_type == 'internal' and state not in 'new') or not requirement_status_requester_id" groups="odes_crm.group_odes_customer,project.group_project_manager" class="oe_highlight" string="Confirm"/>
+
+                <!-- <button type="object" name="action_client_confirm" invisible="state != 'new'" groups="odes_crm.group_odes_customer,project.group_project_manager" class="oe_highlight" string="Confirm"/> -->
+                <button type="object" name="action_done" invisible="project_type == 'internal' or state not in 'pm_confirmed'" groups="odes_crm.group_odes_customer" class="oe_highlight" string="Set as Done"/>
+                <button type="object" name="action_done" invisible="(project_type == 'internal' and state not in 'pm_confirmed') or not requirement_status_requester_id" groups="odes_crm.group_odes_customer" class="oe_highlight" string="Set as Done"/>
+
+                <!-- <button type="object" name="action_done" invisible="state != 'pm_confirmed'" groups="odes_crm.group_odes_customer" class="oe_highlight" string="Set as Done"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_kanban" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.kanban</field>
+        <field name="model">odes.crm.requirement</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban" quick_create="false" group_delete="false" group_create="false" examples="project" js_class="project_kanban" archivable="false" sample="1">
+                <field name="is_customer"/>
+                <field name="stage_id"/>
+                <field name="priority"/>
+                <field name="state"/>
+                <!-- <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' sum_field="expected_revenue" help="This bar allows to filter the opportunities based on scheduled activities."/> -->
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div t-attf-class="ribbon ribbon-top-right" invisible="state in ('new', 'client_confirmed', 'development', 'done_development')">
+                                <span t-attf-class="ribbon-done">
+                                    <p>DONE</p>
+                                </span> 
+                            </div>
+                            <div class="o_dropdown_kanban dropdown">
+
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                    <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_title">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <span><field name="number"/></span>
+                                <div class="date-info mt-3 d-flex flex-column">
+                                    <span>Date: <field name="date"/></span>
+                                    <span>Deadline: <field name="date_deadline"/></span>
+                                </div>
+                                <!-- <div>
+                                    <span t-if="record.partner_id.value" t-esc="record.partner_id.value"></span>
+                                </div> -->
+                                
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- <field name="priority" widget="priority" groups="base.group_user"/> -->
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                        <div name="date_deadline" invisible="state == 'pm_confirmed'">
+                                            <field name="date_deadline" widget="remaining_days"/>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="oe_kanban_bottom_right">
+                                        <field name="user_id" widget="many2one_avatar_user"/>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="oe_clear"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.form</field>
+        <field name="model">odes.crm.requirement</field>
+        <field name="arch" type="xml">
+            <form string="Requirements">
+                <header>
+                    <!-- Internal Client Confirmed Button -->
+                    <button type="object" name="action_client_confirm" invisible="(project_type == 'internal' and state not in 'new') or not requirement_status_requester_id" groups="odes_crm.group_odes_customer,project.group_project_manager" class="oe_highlight" string="Confirm"/>
+                    <!-- External Client Confirmed Button -->
+                    <button type="object" name="action_client_confirm" invisible="project_type == 'internal' or state not in 'new'" groups="odes_crm.group_odes_customer,project.group_project_manager" class="oe_highlight" string="Confirm"/>
+                    
+                    <!-- Internal Set Development Button -->
+                    <button type="object" name="action_set_development" invisible="(project_type == 'internal' and state == 'new' and requirement_status_requester_id) or state not in 'client_confirmed'" groups="sales_team.group_sale_manager,project.group_project_manager" class="oe_highlight" string="Set On Development"/>
+                    <!-- <button type="object" name="action_set_development" invisible="(requirement_status_requester_id or project_type == 'internal') and state not in 'client_confirmed'" groups="sales_team.group_sale_manager,project.group_project_manager" class="oe_highlight" string="Set On Development"/> -->
+                    <!-- External Set Development Button -->
+                    <button type="object" name="action_set_development" invisible="(project_type == 'external' or state not in 'new') or requirement_status_requester_id" groups="sales_team.group_sale_manager,project.group_project_manager" class="oe_highlight" string="Set On Development"/>
+
+                    <button type="object" name="action_done_development" invisible="state not in ('development')" groups="sales_team.group_sale_manager,project.group_project_manager" class="oe_highlight" string="Set Development Done"/>
+                    <button type="object" name="action_pm_confrm" invisible="state not in ('done_development')" groups="project.group_project_manager" class="oe_highlight" string="PM Confirm"/>
+
+                    <!-- Internal Client Done Button -->
+                    <button type="object" name="action_done" invisible="(project_type == 'internal' and state not in 'pm_confirmed') or not requirement_status_requester_id" groups="odes_crm.group_odes_customer" class="oe_highlight" string="Set as Done"/>
+                    <!-- Eksternal Client Done Button   -->
+                    <button type="object" name="action_done" invisible="project_type == 'internal' or state not in 'pm_confirmed'" groups="odes_crm.group_odes_customer" class="oe_highlight" string="Set as Done"/>
+                    <button type="object" name="action_deadline_change_request" string="Change Deadline" invisible="state != 'development'" />
+
+                    <field name="state" widget="statusbar" invisible="project_type == 'internal'" />
+                    <field name="state_internal_project" widget="statusbar" statusbar_visible="new,development,done_development,pm_confirmed" invisible="project_type == 'external' or requirement_status_requester_id" />
+                    <field name="state_internal_project_requester" widget="statusbar" invisible="project_type == 'external' or not requirement_status_requester_id" />
+                </header>
+                <sheet>
+                    <field name="order_id" invisible="1"/>
+                    <field name="project_id" invisible="1"/>
+                    <field name="project_type" invisible="1" />
+
+                    <div class="oe_title" invisible="not number">
+                        <h1>
+                            <field name="number" readonly="1"/>
+                            <!-- <field name="project_id" /> -->
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <!-- <field name="requirement_id"/>
+                            <field name="is_main_requirement"/>
+                            <field name="req_prefix_number"/>
+                            <field name="is_first_moved_requirement"/> -->
+                            <field name="date" required="1" readonly="state != 'new'"/>
+                            <field name="date_deadline" readonly="state != 'new' and state != 'client_confirmed'"/>
+                            <field name="business_function_id" domain="['|', '&amp;', ('project_id', '=', project_id), ('project_id', '!=', False), '&amp;', ('order_id', '=', order_id), ('order_id', '!=', False)]" context="{'default_project_id': project_id, 'default_order_id': order_id}" readonly="state == 'done'"/>
+                        </group>
+                        <group>
+                            <!-- <field name="module_id" required="1" options="{'no_open': 1}" readonly="state != 'new'"/> -->
+                            <field name="module_id" required="0" options="{'no_open': 1}"/>
+                            <field name="type" required="0" readonly="state != 'new'"/>
+                            <field name="priority" required="0" readonly="state == 'done'"/>
+                            <field name="internal_user_ids" widget="many2many_tags" readonly="state == 'done'" groups="project.group_project_manager"/>
+                            <field name="stage_id" domain="[('project_ids', '=', project_id)]" options="{'no_open': 1, 'no_create': 1}" readonly="state == 'done'" /> 
+                            <field name="is_internal_only" groups="project.group_project_manager"/>
+                            <field name="is_requirement" invisible="requirement_task_ids != () or event_task_ids != ()" groups="project.group_project_manager"/>
+                        </group>
+
+                        <group>
+                            <field name="project_name"/>
+                            <field name="state_rel" groups="odes_crm.group_odes_superuser" readonly="0" force_save="1"/>
+                            <field name="attachment_ids" widget="many2many_binary" readonly="state == 'done'"/>
+                            <field name="is_action_request" groups="project.group_project_manager"/>
+                            <field name="request_deadline" invisible="not is_action_request" groups="project.group_project_manager"/>
+                            <field name="request_responsible_id" invisible="not is_action_request" groups="project.group_project_manager"/>
+                            <field name="requirement_status_requester_id" invisible="project_type == 'external'" />
+                        </group>
+                        <group style="margin-top: 0;" groups="project.group_project_manager">
+                            <group>
+                                <span class="o_label" style="font-size: 24px; padding-top: 0;">Dev</span>
+                                <field name="estimated_mandays" readonly="state == 'done'" groups="project.group_project_manager"/>
+                                <field name="consumed_mandays" readonly="1" groups="project.group_project_manager"/>
+                                <field name="uncompleted_task" readonly="1" groups="project.group_project_manager"/>
+                            </group>
+                            <group>
+                                <span class="o_label" style="font-size: 24px; padding-top: 0;">PM</span>
+                                <field name="pm_estimated_mandays" readonly="state == 'done'" groups="project.group_project_manager"/>
+                                <field name="total_manhours" readonly="1" groups="project.group_project_manager"/>
+                            </group>
+                        </group>
+                        <group>
+                            <button type="object" name="action_request_done" invisible="not is_action_request" groups="project.group_project_manager" class="oe_highlight" string="Set Requested Action Done"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Feedback">
+                            <field name="feedback_ids" nolabel="1" readonly="state == 'done'" colspan="4"/>
+                            <button type="object" name="action_new_feedback" class="oe_highlight oe_read_only" string="Add Feedback"/>
+                        </page>
+
+                        <page string="Development Tasks" groups="project.group_project_manager">
+                            <field name="requirement_task_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="module"/>
+                                    <field name="requester"/>
+                                    <field name="mandays"/>
+                                    <field name="project"/>
+                                    <field name="user"/>
+                                    <field name="team"/>
+                                    <field name="date_deadline"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="stage"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Tasks">
+                            <field name="event_task_ids" nolabel="1" context="{'default_type': 'task', 'is_hide_requirement': 1}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="partner_ids" widget="many2many_tags"/>
+                                    <field name="start"/>
+                                    <field name="duration"/>
+                                    <field name="allday"/>
+                                    <field name="type"/>
+                                    <field name="meeting_type"/>
+                                    <field name="site"/>
+                                    <field name="manhours" invisible="1" groups="project.group_project_manager" />
+                                    <field name="manhours2" groups="project.group_project_manager" />
+                                    <field name="is_done" />
+                                    <field name="requirement_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <div class='d-flex' groups="project.group_project_manager" >
+                                <div class="o_form_label mr-5">Total Tasks Mandays</div>
+                                <field name="total_manhours" readonly="1"/>
+                            </div>
+                        </page>
+                    </notebook>
+
+                    <separator string="Description"/>
+                    <field name="description" widget="html" readonly="state != 'new'"/>
+
+                    <separator string="Flow"/>
+                    <field name="flow" widget="html" readonly="state != 'new'"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_gantt" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.gantt</field>
+        <field name="model">odes.crm.requirement</field>
+        <field name="arch" type="xml">
+            <gantt
+                color="business_function_id"
+                date_start="date"
+                date_stop="date_deadline"
+                default_group_by="business_function_id"
+                decoration-info="state == 'client_confirmed'" 
+                decoration-warning="state == 'development'" 
+                decoration-secondary="state == 'pm_confirmed'"
+                string="Gantt View"
+                default_scale="year"
+                scales="day,week,month,year"
+                thumbnails="{'user_id': 'image_128'}"
+                js_class="task_gantt"
+                display_unavailability="1"
+                sample="1"
+                decoration-success="state == 'done'">
+                <field name="state"/>
+            </gantt>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_pivot" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.pivot</field>
+        <field name="model">odes.crm.requirement</field>
+        <field name="arch" type="xml">
+            <pivot string="Requirements" sample="1">
+                <field name="project_id" type="row"/>
+                <field name="estimated_mandays" type="measure"/>
+                <field name="consumed_mandays" type="measure"/>
+                <field name="outstanding_mandays" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="quick_create_requirement_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.form.quick_create</field>
+        <field name="model">odes.crm.requirement</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" placeholder="e.g. Requirement Title" autocomplete="off" required="1"/>
+                    <!-- <field name="stage_id" required="1"/>
+                    <field name="date_deadline" required="1"/> -->
+                    <!-- <label for="module">Module</label> -->
+                    <!-- <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column">
+                            <label for="module_id"/>
+                            <field name="module_id" required="1"/>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="business_function_id"/>
+                            <field name="business_function_id"/>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column">
+                            <label for="type" />
+                            <field name="type" required="1"/>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="priority" />
+                            <field name="priority" required="1"/>
+                        </div>
+                    </div> -->
+                    <!-- <div class="d-flex flex-column">
+                        <div class="label d-flex justify-content-between">
+                            <label for="module_id"/>
+                            <label for="business_function_id"/>
+                        </div>
+                        <div class="field d-flex">
+                            <field name="module_id" required="1"/>
+                            <field name="business_function_id" options="{'no_open': 1}"/>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="label d-flex justify-content-between">
+                            <label for="type" />
+                            <label for="priority" />
+                        </div>
+                        <div class="field d-flex">
+                            <field name="type" required="1"/>
+                            <field name="priority" required="1"/>
+                        </div>
+                    </div>
+                    <field name="attachment_ids">
+                        <tree>
+                            <field name="name" />
+                            <field name="file_size" />
+                            <field name="create_date" />
+                        </tree>
+                    </field> -->
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- MODULE -->
+    <record id="view_odes_crm_requirement_module_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.module.tree</field>
+        <field name="model">odes.crm.requirement.module</field>
+        <field name="arch" type="xml">
+            <tree string="Requirement Modules">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_module_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.module.form</field>
+        <field name="model">odes.crm.requirement.module</field>
+        <field name="arch" type="xml">
+            <form string="Requirement Modules">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- FEEDBACK -->
+    <record id="view_odes_crm_requirement_feedback_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.feedback.tree</field>
+        <field name="model">odes.crm.requirement.feedback</field>
+        <field name="arch" type="xml">
+            <tree string="Requirement Feedback">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="description" widget="html"/>
+                <field name="attachment_ids" widget="many2many_binary"/>
+                <field name="state"/>
+                <button type="object" name="action_edit_feedback" class="oe_highlight" string="Edit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_feedback_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.feedback.form</field>
+        <field name="model">odes.crm.requirement.feedback</field>
+        <field name="arch" type="xml">
+            <form string="Requirement Feedback">
+                <header>
+                    <button type="object" name="action_draft" invisible="state not in ('rejected', 'approved')" string="Set to Draft" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <button type="object" name="action_prompt_to_developer" class="ml-3 mr-2 oe_highlight" invisible="state not in ('approved')" string="Prompt to Developer" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <button type="object" name="action_prompt_to_pm" class="ml-4 oe_highlight" invisible="state not in ('approved')" string="Prompt to PM" groups="sales_team.group_sale_manager,project.group_project_manager,odes_crm.group_odes_customer"/>
+                    <button type="object" name="action_reject" invisible="state not in ('draft')" string="Reject" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <button type="object" name="action_approve" class="oe_highlight" invisible="state not in ('draft')" string="Approve" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <button type="object" name="action_done" class="oe_highlight" invisible="state not in ('approved')" string="Set as Done" groups="odes_crm.group_odes_customer"/>
+                    <button name="%(odes_crm.action_odes_crm_transfer_feedback)d" string="Transfer to New Requirement" type="action" class="oe_highlight" invisible="state not in ('draft')" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <field name="requirement_id" invisible="1"/>
+                    <group>
+                        <field name="name" required="1" readonly="state != 'draft'"/>
+                        <field name="date" required="1" readonly="state != 'draft'"/>
+                        <field name="attachment_ids" widget="many2many_binary" readonly="state != 'draft'"/>
+                        <field name="description" widget="html" readonly="state != 'draft'"/>
+                        <field name="transferred_requirement_id" invisible="state != 'transferred'" readonly="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_feedback_popup_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.feedback.popup.form</field>
+        <field name="model">odes.crm.requirement.feedback</field>
+        <field name="priority" eval="50"/>
+        <field name="arch" type="xml">
+            <form string="Requirement Feedback" create="0" edit="0">
+                <header>
+                    <button type="object" name="action_draft" invisible="state not in ('rejected', 'approved')" string="Set to Draft" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <button type="object" name="action_reject" invisible="state not in ('draft')" string="Reject" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <button type="object" name="action_approve" class="oe_highlight" invisible="state not in ('draft')" string="Approve" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <button type="object" name="action_done" class="oe_highlight" invisible="state not in ('approved')" string="Set as Done" groups="odes_crm.group_odes_customer"/>
+                    <button name="%(odes_crm.action_odes_crm_transfer_feedback)d" string="Transfer to New Requirement" type="action" class="oe_highlight" invisible="state not in ('draft')" groups="sales_team.group_sale_manager,project.group_project_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <field name="requirement_id" invisible="1"/>
+                    <group>
+                        <field name="name" required="1" readonly="state != 'draft'"/>
+                        <field name="date" required="1" readonly="state != 'draft'"/>
+                        <field name="attachment_ids" widget="many2many_binary" readonly="state != 'draft'"/>
+                        <field name="description" widget="html" readonly="state != 'draft'"/>
+                        <field name="transferred_requirement_id" invisible="state != 'transferred'" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Save" class="btn-primary oe_edit_only" special="save"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- TASK -->
+    <record id="view_odes_crm_requirement_task_search" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.task.search</field>
+        <field name="model">odes.crm.requirement.task</field>
+        <field name="arch" type="xml">
+            <search string="Requirements">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('requirement_id', 'ilike', self)]"/>
+                <field name="project"/>
+                <field name="module"/>
+                <field name="requester"/>
+                <field name="user"/>
+                <field name="team"/>
+                <!-- <filter name="filter_this_month" string="This Month" domain="[('start_date','&gt;=',(context_today()+relativedelta(day=1)).strftime('%d/%m/2022'))]" />  -->
+                <filter name="filter_this_month" string="This Month" domain="['&amp;',('end_date','&gt;=',(context_today()+relativedelta(day=1)).strftime('%d/%m/%Y')),('end_date','&lt;=',(context_today()+relativedelta(months=1)+relativedelta(day=1)-relativedelta(days=1)).strftime('%d/%m/%Y'))]" />         
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Apps" name="group_module" context="{'group_by': 'module'}"/>
+                    <filter string="Requirement" name="group_req" context="{'group_by': 'requirement_id'}" invisible="1"/>
+                    <filter string="Start Date" name="group_month" context="{'group_by': 'start_date:month'}"/>
+                    <filter string="Status" name="group_stage" context="{'group_by': 'stage'}"/>
+                    
+                    <filter string="Project" name="group_project" context="{'group_by': 'project'}"/>
+                    <filter string="Requirement" name="group_requirement" context="{'group_by': 'requirement_id'}"/>
+                </group>
+           </search>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_task_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.task.tree</field>
+        <field name="model">odes.crm.requirement.task</field>
+        <field name="arch" type="xml">
+            <tree string="Requirement Tasks">
+                <field name="name"/>
+                <field name="module"/>
+                <field name="requester"/>
+                <field name="mandays" sum="Total Mandays"/>
+                <field name="project"/>
+                <field name="user"/>
+                <field name="team"/>
+                <field name="date_deadline"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="stage"/>
+                <field name="requirement_id"/>
+                <field name="draft_requirement_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_task_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.task.form</field>
+        <field name="model">odes.crm.requirement.task</field>
+        <field name="arch" type="xml">
+            <form string="Requirement Tasks">
+                <sheet>
+                    <field name="pms_task_id" invisible="1"/>
+                    <field name="requirement_id" invisible="1"/>
+                    <field name="draft_requirement_id" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="requester" required="1"/>
+                            <field name="user" required="1"/>
+                            <field name="project" required="1"/>
+                            <field name="start_date" required="1"/>
+                            <field name="stage"/>
+                        </group>
+                        <group>
+                            <field name="module" required="1"/>
+                            <field name="mandays" required="1"/>
+                            <field name="team" required="1"/>
+                            <field name="date_deadline" required="1"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_task_gantt" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.task.gantt</field>
+        <field name="model">odes.crm.requirement.task</field>
+        <field name="arch" type="xml">
+            <gantt
+                date_start="start_date"
+                date_stop="end_date"
+                scales="day,week,month,year"       
+                string="Gantt View"
+                precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:full'}">
+                <field name="stage"/>
+            </gantt>
+        </field>
+    </record>
+
+    <!-- DEVELOPER -->
+    <record id="view_odes_crm_requirement_developer_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.developers.form</field>
+        <field name="model">odes.crm.requirement.developers</field>
+        <field name="arch" type="xml">
+            <form string="Developers">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="email" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_developers_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.developers.tree</field>
+        <field name="model">odes.crm.requirement.developers</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="email" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- DRAFT REQUIREMENTS -->
+    <record id="view_odes_crm_requirement_draft_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.draft.tree</field>
+        <field name="model">odes.crm.requirement.draft</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="project_name"/>
+                <field name="number"/>
+                <field name="date"/>
+                <field name="module_id"/>
+                <field name="type"/>
+                <field name="priority"/>
+                <field name="name"/>
+                <field name="description" widget="html"/>
+                <field name="attachment_ids"/>
+                <field name="date_deadline"/>
+                <field name="estimated_mandays" sum="Total Estimated Mandays" groups="project.group_project_manager" />
+                <field name="consumed_mandays" sum="Total Completed Mandays" groups="project.group_project_manager" />
+                <field name="total_manhours" sum="Total Tasks Mandays" groups="project.group_project_manager" />
+                <field name="state"/>
+                <field name="is_pending_feedback"/>
+                <field name="is_action_request" groups="project.group_project_manager"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_requirement_draft_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.draft.form</field>
+        <field name="model">odes.crm.requirement.draft</field>
+        <field name="arch" type="xml">
+            <form string="Draft Requirements">
+                <header>
+                    <button type="object" name="action_pm_confirm_draft" invisible="draft_req_state != 'draft'" groups="project.group_project_manager" class="oe_highlight" string="Confirm"/>
+                    <field name="draft_req_state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <field name="order_id" invisible="1"/>
+                    <field name="project_id" invisible="1"/>
+                    <field name="project_type" invisible="1" />
+
+                    <div class="oe_title" invisible="not number">
+                        <h1>
+                            <field name="number" readonly="1"/>
+                            <!-- <field name="project_id" /> -->
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="date" required="1"/>
+                            <field name="date_deadline"/>
+                            <field name="business_function_id" domain="['|', '&amp;', ('project_id', '=', project_id), ('project_id', '!=', False), '&amp;', ('order_id', '=', order_id), ('order_id', '!=', False)]" context="{'default_project_id': project_id, 'default_order_id': order_id}"/>
+                        </group>
+                        <group>
+                            <!-- <field name="module_id" required="1" options="{'no_open': 1}"/> -->
+                            <field name="module_id" required="1" options="{'no_open': 1}"/>
+                            <field name="type" required="1"/>
+                            <field name="priority" required="1"/>
+                            <field name="internal_user_ids" widget="many2many_tags" groups="project.group_project_manager"/>
+                            <field name="stage_id" required="1"/> 
+                            <field name="is_internal_only" groups="project.group_project_manager"/>
+                        </group>
+
+                        <group>
+                            <field name="project_name"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </group>
+                        <group style="margin-top: 0;" groups="project.group_project_manager">
+                            <group>
+                                <span class="o_label" style="font-size: 24px; padding-top: 0;">Dev</span>
+                                <field name="estimated_mandays" groups="project.group_project_manager"/>
+                                <field name="consumed_mandays" readonly="1" groups="project.group_project_manager"/>
+                            </group>
+                            <group>
+                                <span class="o_label" style="font-size: 24px; padding-top: 0;">PM</span>
+                                <field name="pm_estimated_mandays" groups="project.group_project_manager"/>
+                                <field name="total_manhours" readonly="1" groups="project.group_project_manager"/>
+                            </group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Development Tasks" groups="project.group_project_manager">
+                            <field name="requirement_task_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="module"/>
+                                    <field name="requester"/>
+                                    <field name="mandays"/>
+                                    <field name="project"/>
+                                    <field name="user"/>
+                                    <field name="team"/>
+                                    <field name="date_deadline"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="stage"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <separator string="Description"/>
+                    <field name="description" widget="html"/>
+
+                    <separator string="Flow"/>
+                    <field name="flow" widget="html"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- STAGES -->
+    <record id="stages_type_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.type.tree</field>
+        <field name="model">odes.crm.requirement.type</field>
+        <field name="arch" type="xml">
+            <tree string="Project Stage" delete="0" sample="1">
+                <field name="sequence" widget="handle" optional="show"/>
+                <field name="name"/>
+                <field name="fold" optional="show"/>
+                <field name="description" optional="hide"/>
+                <field name="project_ids" optional="show" widget="many2many_tags" options="{'color_field': 'color'}" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stages_type_form" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.type.form</field>
+        <field name="model">odes.crm.requirement.type</field>
+        <field name="arch" type="xml">
+            <form string="Project Stage" delete="0" >
+                <header>
+                    <button class="btn-primary" name="lock_stage" string="Lock Stage" type="object" invisible="is_locked"  />
+                    <button class="btn-primary" name="unlock_stage" string="Unlock Stage" type="object" invisible="not is_locked"  />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="description" />
+                        <!-- <field name="project_id" /> -->
+                        <field name="project_ids" widget="many2many_tags" />
+                        <field name="fold" />
+                        <!-- <field name="stage_status_ids"/> -->
+                        <!-- <field name="stage_status_id" /> -->
+                        <field name="is_locked" />
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="deadline"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- PROJECT STAGES STATUS -->
+    <record id="stages_type_status_tree" model="ir.ui.view">
+        <field name="name">odes.crm.requirement.type.status.tree</field>
+        <field name="model">odes.crm.requirement.type.status</field>
+        <field name="arch" type="xml">
+            <tree string="Project Stage Status">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="stage_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="deadline"/>
+                <field name="is_locked"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_odes_crm_requirement" model="ir.actions.act_window">
+        <field name="name">Requirements</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.crm.requirement</field>
+        <field name="view_mode">kanban,tree,form,gantt</field>
+        <field name="context">{'search_default_stage': 1, 'search_default_status': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Select a project &amp; click create button to create new requirement.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_my_requirement" model="ir.actions.act_window">
+        <field name="name">My Requirements</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.crm.requirement</field>
+        <field name="view_mode">tree,form,gantt</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click create button to create new requirement.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_odes_crm_my_requirement" parent="odes_crm.odes_crm_customer_portal" action="action_odes_crm_my_requirement" sequence="10"/>
+
+    <record id="action_odes_crm_requirement_module" model="ir.actions.act_window">
+        <field name="name">Requirement Modules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.crm.requirement.module</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click create button to create new requirement module.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_odes_crm_requirement_module" parent="sale.menu_sale_config" action="action_odes_crm_requirement_module" sequence="65"/>
+
+    <record id="model_odes_crm_requirement_action_notify_client" model="ir.actions.server">
+        <field name="name">Notify Client</field>
+        <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+        <field name="binding_model_id" ref="odes_crm.model_odes_crm_requirement"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_notify_client()</field>
+    </record>
+
+    <record id="model_odes_crm_requirement_action_set_manhours" model="ir.actions.server">
+        <field name="name">Change Manhours</field>
+        <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+        <field name="binding_model_id" ref="odes_crm.model_odes_crm_requirement"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_set_manhours()</field>
+    </record>
+
+    <record id="action_odes_crm_requirement_task" model="ir.actions.act_window">
+        <field name="name">Dev Tasks</field>
+        <field name="res_model">odes.crm.requirement.task</field>
+        <field name="view_mode">tree,form,gantt</field>
+        <field name="context">{'search_default_group_month': 1, 'search_default_group_stage': 1, 'search_default_group_requirement': 1}</field>
+        <field name="search_view_id" ref="view_odes_crm_requirement_task_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No developer tasks found!
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Dev Tasks" id="menu_odes_crm_requirement_task" parent="project.menu_main_pm" action="action_odes_crm_requirement_task" sequence="10" groups="base.group_no_one,project.group_project_user"/>
+
+    <record id="action_odes_crm_requirement_report" model="ir.actions.act_window">
+        <field name="name">Requirements Analysis</field>
+        <field name="res_model">odes.crm.requirement</field>
+        <field name="view_mode">pivot</field>
+        <field name="search_view_id" ref="view_odes_crm_requirement_search"/>
+        <field name="context">{'group_by_no_leaf': 1, 'group_by': ['project_id', 'state']}</field>
+        <field name="help">View all requirements in pivot to use it for report.</field>
+    </record>
+
+    <menuitem id="menu_odes_crm_requirement_report" name="Requirements Analysis" parent="project.menu_project_report" action="action_odes_crm_requirement_report" sequence="60"/>
+
+    <record id="action_odes_crm_requirement_developers" model="ir.actions.act_window">
+        <field name="name">Developers</field>
+        <field name="res_model">odes.crm.requirement.developers</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">View all requirements in pivot to use it for report.</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click create button to create new developers.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_odes_crm_requirement_developers" name="Developers" parent="project.menu_project_config" action="action_odes_crm_requirement_developers" sequence="50"/>
+
+    <record id="action_odes_crm_requirement_type" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">odes.crm.requirement.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'default_project_id': 1}</field>
+        <!-- <field name="view_id" ref="stages_type_tree"/> -->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click create button to create new Stages.   
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_odes_crm_requirement_project_stages" name="Project Stages" parent="project.menu_project_config" action="action_odes_crm_requirement_type" sequence="51"/>
+
+
+    <record id="action_odes_crm_requirement_type_status" model="ir.actions.act_window">
+        <field name="name">Stages Status</field>
+        <field name="res_model">odes.crm.requirement.type.status</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="stages_type_status_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click create button to create new Stages Status.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_odes_crm_requirement_project_stages_status" name="Project Stages Status" parent="project.menu_project_config" action="action_odes_crm_requirement_type_status" sequence="60"/>
+    <menuitem id="odes_crm_mandays_monthly_report_excel_menu" name="Mandays Monthly Report" parent="project.menu_project_report" sequence="70" action="odes_crm.action_wizard_mandays_monthly_report"/>
+    <menuitem id="odes_crm_amalgamation_report_menu" name="Amalgamation Report" parent="project.menu_project_report" sequence="75" action="odes_crm.action_wizard_amalgamation_report"/>
+
+    <!-- Hide Project Task Stages Menu -->
+    <menuitem action="project.open_task_type_form" id="project.menu_project_config_project" name="Stages" parent="project.menu_project_config" sequence="3" groups="base.group_no_one" active="False" />
+</odoo>

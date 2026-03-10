@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend" name="web_gantt compatibility assets">
+        <xpath expr="." position="inside">
+            <!-- Placeholder compatibility template to satisfy inherit/asset expectations. -->
+        </xpath>
+    </template>
+</odoo>

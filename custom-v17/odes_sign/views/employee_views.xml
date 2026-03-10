@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_hr_leave_view_form_inherit" model="ir.ui.view">
+        <field name="name">odes.hr.leave.view.form.inherit</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="attachment" filename="attachment_name"/>
+                <field name="attachment_name" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="odes_hr_employee_update_view_tree" model="ir.ui.view">
+        <field name="name">odes.hr.employee.update.view.tree</field>
+        <field name="model">hr.employee.update</field>
+        <field name="arch" type="xml">
+            <tree string="Update Employee Data">
+                <field name="employee_id" />
+                <field name="department_id" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="odes_hr_employee_update_view_form" model="ir.ui.view">
+        <field name="name">odes.hr.employee.update.view.form</field>
+        <field name="model">hr.employee.update</field>
+        <field name="arch" type="xml">
+            <form string="Update Employee Data">
+                <header>
+                    <button class="btn btn-primary" name="action_request" string="Request Update" type="object" invisible="state != 'draft'"/>
+                    <button class="btn btn-primary" name="action_approve" string="Approve" type="object" groups="odes_hr2_custom.group_see_all_record_hr" invisible="state != 'request'"/>
+                    <button class="btn btn-primary" name="action_request" string="Request Update" type="object" invisible="state != 'draft'"/>
+                    <button class="btn btn-primary" name="action_approve" string="Approve" type="object" invisible="state != 'request'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="employee_id" string="Employee"/>
+                        <h1><field name="employee_id" required="1" options="{'no_create': True, 'no_create_edit':True}" domain="[('user_id', '=', uid)]"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="department_id" readonly="1" force_save="1" />
+                        </group>
+                        <group>
+                            <field name="work_email" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="educational_information" string="Educational Information">
+                            <group string="Computer Knowledge and Skills" colspan="4">
+                                <field name="education_info_line" nolabel="1" colspan="4">
+                                    <form string="Education Information">
+                                        <group>
+                                            <group>
+                                                <field name="comp_prog_knw" placeholder="Computer Programs Knowledge"/>
+                                                <field name="shorthand" placeholder="Shorthand"/>
+                                                <field name="course" placeholder="Courses Taken"/>
+                                            </group>
+                                            <group>
+                                                <field name="typing" placeholder="Typing"/>
+                                                <field name="other_know" placeholder="Other Knowledge &amp; Skills"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="Education Information" editable="bottom">
+                                        <field name="comp_prog_knw"/>
+                                        <field name="shorthand"/>
+                                        <field name="course"/>
+                                        <field name="typing"/>
+                                        <field name="other_know"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="other_information" string="Other Information">
+                            <group>
+                                <group>
+                                    <field name="dialect" placeholder="name of specific region or social group"/>
+                                    <field name="driving_licence" placeholder="Driving License Class" />
+                                    <field name="car" />
+                                    <field name="resume" />
+                                    <field name="employee_type_id" />
+                                </group>
+                                <group></group>
+                            </group>
+                        </page>
+                        <page name="dependents" string="Dependents">
+                            <group>
+                                <group>
+                                    <field name="spouse_name" />
+                                    <field name="spouse_nationality" />
+                                    <field name="spouse_ident_no" />
+                                </group>
+                                <group>
+                                    <field name="spouse_dob" />
+                                    <field name="marriage_date" />
+                                </group>
+                            </group>
+                            <field name="dependent_ids">
+                                <tree editable="bottom">
+                                    <field name="first_name" />
+                                    <field name="last_name" />
+                                    <field name="birth_date" />
+                                    <field name="gender" />
+                                    <field name="relation_ship" />
+                                    <field name="contact_number" />
+                                    <field name="email" />
+                                    <field name="identification_number" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="training_workshop" string="Training Workshop">
+                            <field name="training_ids">
+                                <tree editable="bottom">
+                                    <field name="tr_title" />
+                                    <field name="tr_institution" />
+                                    <field name="tr_date" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="extra_information" string="Extra Information">
+                            <group colspan="4" string="Health Condition">
+                                <label for="physical_stability" string="Are you suffering from any physical                             disability or illness that requires you to be                             medication for a prolonged period?"/>
+                                <newline/>
+                                <group name="Physical Stability" colspan="4" col="4">
+                                    <field name="physical_stability" string="Yes" colspan="1"/>
+                                    <field name="physical_stability_no"/>
+                                </group>
+                                <newline/>
+                                <label for="physical" string="If YES Please Specify" colspan="3"/>
+                                <newline/>
+                                <field name="physical" invisible="not physical_stability" colspan="4" nolabel="1"/>
+                            </group>
+                            <group colspan="4" string="Important Information">
+                                <label for="court_b" string="Have you ever been convicted in a court of                             law in any country?"/>
+                                <newline/>
+                                <group name="Court of Law" colspan="4" col="4">
+                                    <field name="court_b" string="Yes"/>
+                                    <field name="court_no" colspan="1"/>
+                                </group>
+                                <newline/>
+                                <label for="court" string="If YES Please Specify" colspan="3"/>
+                                <newline/>
+                                <field name="court" invisible="not court_b" colspan="4" nolabel="1"/>
+                                <newline/>
+                                <label for="dismissed_b" string="Have you ever been dismissed or suspended                             from employement?"/>
+                                <newline/>
+                                <group name="dismissed_b" colspan="4" col="4">
+                                    <field name="dismissed_b" string="Yes"/>
+                                    <field name="dismissed_no" colspan="1"/>
+                                </group>
+                                <newline/>
+                                <label for="dismiss" string="If YES Please Specify" colspan="3"/>
+                                <newline/>
+                                <field name="dismiss" invisible="not dismissed_b" colspan="4" nolabel="1"/>
+                                <newline/>
+                                <label for="bankrupt_b" string="Have you ever been declared a bankrupt?"/>
+                                <newline/>
+                                <group name="Bankrupt" colspan="4" col="4">
+                                    <field name="bankrupt_b" string="Yes"/>
+                                    <field name="bankrupt_no" colspan="1"/>
+                                </group>
+                                <newline/>
+                                <label for="bankrupt" string="If YES Please Specify" colspan="3"/>
+                                <newline/>
+                                <field name="bankrupt" invisible="not bankrupt_b" colspan="4" nolabel="1"/>
+                            </group>
+                            <separator colspan="4" string="About Yourself"/>
+                            <field name="about" placeholder="About Yourself" colspan="4" nolabel="1"/>
+                        </page>
+                        <page name="private_information" string="Private Information">
+                            <group>
+                                <group string="Private Contact">
+                                        <field name="address_home_id"
+                                            context="{
+                                                'show_address': 1,
+                                                'default_type': 'private',
+                                                'form_view_ref': 'base.res_partner_view_form_private'}"
+                                            options='{"always_reload": True, "highlight_first_line": True}'/>
+                                        <field name="emp_country_id" />
+                                        <field name="emp_state_id" />
+                                        <field name="emp_city_id" />
+                                        <field name="private_email" string="Email"/>
+                                        <field name="phone" class="o_force_ltr" groups="hr.group_hr_user" string="Phone"/>
+                                    </group>
+                                <group string="Citizenship">
+                                    <field name="country_id" options='{"no_open": True, "no_create": True}'/>
+                                    <field name="identification_id" groups="hr.group_hr_user"/>
+                                    <field name="passport_id" groups="hr.group_hr_user"/>
+                                    <field name="gender"/>
+                                    <field name="birthday"/>
+                                    <field name="place_of_birth" groups="hr.group_hr_user"/>
+                                    <field name="country_of_birth" groups="hr.group_hr_user"/>
+                                </group>
+                                <group string="Emergency">
+                                    <field name="emergency_contact"/>
+                                    <field name="emergency_phone" class="o_force_ltr"/>
+                                </group>
+                                <group string="Education">
+                                    <field name="certificate"/>
+                                    <field name="study_field"/>
+                                    <field name="study_school"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="odes_hr_employee_update_action" model="ir.actions.act_window">
+        <field name="name">Update Employee Data</field>
+        <field name="res_model">hr.employee.update</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a request to update employee data
+            </p><p>
+                Follow the process of the request and communicate with the collaborator.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="odes_hr_employee_update_menu"
+        name="Update Employee Data"
+        action="odes_hr_employee_update_action"
+        parent="hr.menu_hr_employee_payroll"
+        sequence="2"/>
+
+    <record id="odes_hr_employee_update_action_manager" model="ir.actions.act_window">
+        <field name="name">Update Employee Data (Manager)</field>
+        <field name="res_model">hr.employee.update</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a request to update employee data
+            </p><p>
+                Follow the process of the request and communicate with the collaborator.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="odes_hr_employee_update_menu_manager"
+        name="Update Employee Data (Manager)"
+        action="odes_hr_employee_update_action_manager"
+        parent="hr.menu_hr_employee_payroll"
+        sequence="2"
+        groups="odes_hr2_custom.group_see_all_record_hr"/>
+
+</odoo>

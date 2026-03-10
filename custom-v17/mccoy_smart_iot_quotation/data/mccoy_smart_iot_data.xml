@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1"> 
+        <!-- Quotation Template -->
+        <record id="quotation_template_smart_iot" model="sale.order.template">
+            <field name="name">SMART IOT</field>
+            <field name="quotation_type">item</field>
+        </record>
+
+        <!-- Term and Condition -->
+        <record id="term_and_condition" model="smart.iot.term.condition">
+            <field name="name">Default Term and Condition</field>
+            <field name="term_condition" type="html">
+                <table>
+                    <tr><td><b><u>Terms and Conditions</u></b></td></tr>
+                    <tr>
+                        <td>
+                            <ol>
+                                <li><b>Valid of quote: [%(validity_quote)] days.</b></li>
+                                <li>Mccoy Pte Ltd reserved the rights to change any part of the quote after validity date passed.</li>
+                                <li><b>Payment Terms (from invoice date):</b> [%(payment_term)]</li>
+                                <li>To accept the quotation client will issue purchase order or make payment to our respective invoices.</li>
+                                <li>
+                                    If Payment is not received in accordance to payment terms as agreed. McCoy Pte Ltd reserves the right not to carry on the service and the client agrees to the following terms:
+                                    <ul>
+                                        <li>Not to hold McCoy Pte Ltd for any disruption of services this termination may cause.</li>
+                                        <li>To pay for services rendered up to the point of the termination including fees in lineu of notice.</li>
+                                    </ul>
+                                </li>
+                                <li><b>All prices quoted in:</b> [%(currency)]</li>
+                                <li><b>Shipment terms:</b> [%(freight_term)]</li>
+                                <li><b>Leadtime:</b> []</li>
+                                <li><b>Warranty:</b> []</li>
+                            </ol>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+    </data>
+</odoo>

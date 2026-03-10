@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_custom_hr_kanban_view_employees_inherit" model="ir.ui.view">
+        <field name="name">odes.custom.hr.employee.kanban.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="create">0</attribute>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- v16: inherited views cannot have groups_id on the record.
+         Removed groups_id — kanban create=1 now applies to all users;
+         actual HR write-access is enforced by hr.group_hr_manager at model level. -->
+    <record id="odes_custom_hr_kanban_view_employees_full_inherit" model="ir.ui.view">
+        <field name="name">odes.custom.hr.employee.kanban.full.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="create">1</attribute>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="odes_view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">odes.hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="edit">0</attribute>
+                <attribute name="create">0</attribute>
+                <attribute name="delete">0</attribute>
+            </form>
+            <header position="inside">
+                <button name="update_user_image" string="Update User Image" type="object" groups="hr.group_hr_manager"/>
+                <button name="update_user_group" string="Update Groups" type="object" invisible="1"/>
+            </header>
+            <!-- Odoo 17: avoid restricting pages that include modifiers referencing
+                 fields with access-controlled visibility (e.g. child_ids). -->
+            <field name="company_id" position="after">
+                <field string="Record Timesheet as" name="timesheet_company_ids" widget="many2many_tags" options="{'no_open': 1, 'no_create': 1}" groups="hr_timesheet.group_hr_timesheet_approver"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- v16: groups_id removed from inherited view; edit/create/delete=1 now applies to all. -->
+    <record id="odes_custom_view_employee_form_full_inherit" model="ir.ui.view">
+        <field name="name">odes.custom.hr.employee.form.full.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="edit">1</attribute>
+                <attribute name="create">1</attribute>
+                <attribute name="delete">1</attribute>
+            </form>
+            <page name="personal_information" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </page>
+        </field>
+    </record>
+
+    <!-- Enterprise-only: hr_gamification not available in Community
+    <record id="odes_custom_hr_hr_employee_view_form_inherit" model="ir.ui.view">
+        <field name="name">odes.custom.hr.gami.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_gamification.hr_hr_employee_view_form"/>
+        <field name="arch" type="xml">
+            <page name="received_badges" position="attributes">
+                <attribute name="groups">odes_custom.group_full_employee</attribute>
+            </page>
+        </field>
+    </record>
+    -->
+
+    <record id="hr_daily_work_report_view_tree" model="ir.ui.view">
+      <field name="name">hr.daily.work.report.view.tree</field>
+      <field name="model">hr.daily.work.report</field>
+      <field name="arch" type="xml">
+        <tree editable="top">
+            <field name="employee_id" options="{'no_open': 1, 'no_create': 1}" required="1"/>
+            <field name="date" required="1"/>
+            <field name="description" required="1"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="hr_daily_work_record_view_tree" model="ir.ui.view">
+      <field name="name">hr.daily.work.record.view.tree</field>
+      <field name="model">hr.daily.work.report</field>
+      <field name="arch" type="xml">
+        <tree editable="top">
+            <field name="employee_id" options="{'no_open': 1, 'no_create': 1}" required="1"/>
+            <field name="date" required="1"/>
+            <field name="description" required="1"/>
+            <field name="partner_id" options="{'no_open': 1, 'no_create': 1}" groups="odes_custom.group_ts_extra_columns"/>
+            <field name="brand_id" groups="odes_custom.group_ts_extra_columns"/>
+            <field name="state" groups="odes_custom.group_ts_extra_columns"/>
+            <field name="remarks" groups="odes_custom.group_ts_extra_columns"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="hr_daily_work_report_view_filter" model="ir.ui.view">
+        <field name="name">hr.daily.work.report.filter</field>
+        <field name="model">hr.daily.work.report</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="date"/>
+                <field name="employee_id"/>
+                <field name="description"/>
+                <field name="partner_id"/>
+                <field name="brand_id"/>
+                <field name="state"/>
+                <field name="remarks"/>
+                <filter string="ODES" name="odes_report" domain="[('employee_id.timesheet_company_ids', '=', 1)]"/>
+                <filter string="iConnexion" name="iconnexion_report" domain="[('employee_id.timesheet_company_ids', '=', 3)]"/>
+                <separator/>
+                <filter string="Yesterday" name="yesterday_report"
+                    domain="[('date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Today" name="today_report"
+                    domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="In-Progress" name="in_progress_state" domain="[('state', '=', 'in_progress')]"/>
+                <filter string="Done" name="done_state" domain="[('state', '=', 'done')]"/>
+                <filter string="Hold" name="hold_state" domain="[('state', '=', 'hold')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Date" name="date" domain="[]" context="{'group_by': 'date'}"/>
+                    <filter string="Employee" name="employee" domain="[]" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Status" name="state" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Customer" name="partner_id" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Brand" name="brand_id" domain="[]" context="{'group_by': 'brand_id'}"/>
+                </group>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hr_daily_work_report_action">
+        <field name="name">Daily Work Report</field>
+        <field name="res_model">hr.daily.work.report</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="odes_custom.hr_daily_work_report_view_tree"/>
+        <field name="context">{'search_default_today_report': 1, 'create': 0, 'edit': 0, 'delete': 0}</field>
+    </record>
+    <menuitem id="daily_work_report_menu" name="Daily Work Report" parent="hr_timesheet.menu_hr_time_tracking" action="hr_daily_work_report_action" sequence="5" groups="hr_timesheet.group_hr_timesheet_approver"/>
+
+    <record model="ir.actions.act_window" id="hr_daily_work_record_action">
+        <field name="name">Daily Work Record</field>
+        <field name="res_model">hr.daily.work.report</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="odes_custom.hr_daily_work_record_view_tree"/>
+    </record>
+    <menuitem id="daily_work_record_menu" name="Daily Work Record" parent="hr_timesheet.menu_hr_time_tracking" action="hr_daily_work_record_action" sequence="7"/>
+
+</odoo>

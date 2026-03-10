@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_iconn_mccoy_sale_order_form_inherit_view_odes_purchase_order_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.sale.order.form.inherit.view.odes.purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="odes_accounting.view_odes_purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='freight_terms']" position="replace">
+                <field name="is_mccoy" invisible="1"/>
+                <field name="is_odes" invisible="1"/>
+                <field name="is_iconnexion" invisible="1"/>
+                <field name="freight_terms" invisible="is_mccoy or is_iconnexion"/>
+            </xpath>
+            <xpath expr="//field[@name='freight_terms']" position="after">
+                <field name="purchase_delivery_method_id" string="Delivery Method" invisible="is_odes" options="{'no_create': True, 'no_open': True}"  domain="[('is_delivery_method', '=', True),('company_id','=',allowed_company_ids)]"/>
+                <field name="purchase_freight_terms_id" invisible="is_odes" domain="[('is_delivery_method', '=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_purchase_order_inherit_iconnexion_custom_view_odes_purchase_order_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.purchase.order.inherit.iconnexion.custom.view.odes.purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="iconnexion_custom.view_odes_purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='icon_sale_ids']" position="after">
+                <field name="buffer_stock_ids" groups="iconnexion_custom.group_iconnexion_company">
+                    <tree>
+                        <field name="product_id"/>
+                        <field name="stock_used"/>
+                        <field name="sale_order_line_id"/>
+                    </tree>
+                </field>
+            </xpath>       
+            <xpath expr="//field[@name='icon_so_line_qty']" position="replace">
+                <field name="buffer_stock_so_qty" groups="iconnexion_custom.group_iconnexion_company"/>
+            </xpath>       
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_purchase_order_inherit_purchase_purchase_order_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.purchase.order.inherit.purchase.purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='products']//field[@name='date_planned']" position="replace">
+                <field name="is_group_iconnexion_edit_purchase_delivery_date" invisible="1"/>
+                <field name="date_planned" optional="hide" readonly="not is_group_iconnexion_edit_purchase_delivery_date" required="not display_type" force_save="1"/>
+            </xpath>       
+        </field>
+    </record>
+
+    <record id="iconn_mccoy_purchase_order_search_inherit_purchase_view_purchase_order_filter" model="ir.ui.view">
+        <field name="name">iconn.mccoy.purchase.order.search.inherit.purchase.view.purchase.order.filter</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="cpn"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_purchase_order_line_tree_inherit_iconnexion_custom_purchase_order_line_icon2_tree" model="ir.ui.view">
+        <field name="name">iconn.mccoy.purchase.order.line.tree.inherit.iconnexion.custom.purchase.order.line.icon2.tree</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="iconnexion_custom.purchase_order_line_icon2_tree"/>
+        <field name="arch" type="xml">
+            <field name="order_id" position="before">
+                <field name="serial_numbers"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_iconn_mccoy_req_new_part_number_wizard_tree_inherit_iconnexion_custom_req_new_part_number_wizard_view_tree" model="ir.ui.view">
+        <field name="name">iconn.mccoy.req.new.part.number.wizard.tree.inherit.iconnexion.custom.req.new.part.number.wizard.view.tree</field>
+        <field name="model">req.new.part.number.wizard</field>
+        <field name="inherit_id" ref="iconnexion_custom.req_new_part_number_wizard_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="create_uid" position="after">
+                <field name="create_date"/>
+            </field>
+        </field>
+    </record>
+</odoo>

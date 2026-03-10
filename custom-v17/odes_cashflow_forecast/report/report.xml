@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <record id="odes_cashflow_xlsx" model="ir.actions.report">
+        <field name="name">Odes Cashflow Report</field>
+        <field name="model">odes.cashflow.forecast.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">odes_cashflow_forecast.cashflow_forecast_xlsx</field>
+        <field name="report_file">odes_cashflow_forecast_wizard</field>
+        <field name="attachment_use" eval="False"/>
+        <field name="binding_model_id" search="[('model', '=', 'odes.cashflow.forecast.wizard')]"/>
+        <field name="binding_type">report</field>
+    </record>
+</data>
+</odoo>

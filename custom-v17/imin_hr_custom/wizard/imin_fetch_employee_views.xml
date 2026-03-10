@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_imin_fetch_employee" model="ir.ui.view">
+        <field name="name">imin.fetch.employee</field>
+        <field name="model">imin.fetch.employee</field>
+        <field name="arch" type="xml">
+            <form string="Fetch Employees">
+                <p>To fetch existing employees from iMin, click on Confirm button below.</p>
+                <footer>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_imin_fetch_employee" model="ir.actions.act_window">
+        <field name="name">Fetch Employees</field>
+        <field name="res_model">imin.fetch.employee</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem id="imin_fetch_employee" parent="imin_hr_custom.menu_imin_hr_employee_api" action="action_imin_fetch_employee" sequence="10"/>
+</odoo>

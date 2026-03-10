@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="odes_custom.DashboardMain_second">
+        <div class="o_dashboards">
+            <div class="container-fluid o_oa_dashboard">
+                <t t-call="odes_custom.dashboard_header_second"/>
+                <div class="o_website_dashboard_content"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="odes_custom.dashboard_header_second">
+        <div class="row o_dashboard_common">
+            <div class="o_box_odes">
+                <!-- <div class="col-md-12">
+                    <span class="odes_dashboard_subtitle">CRM Dashboard</span>
+                </div> -->
+
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-red" data-action="odes_custom.odes_action_crm_active_lead" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_lead"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Active Leads</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/lead_active.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-users fa-3x clr-purple"></div> -->
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-orange" data-action="odes_custom.odes_action_crm_active_lead_g7" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_lead_g7"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Active Leads > 7 Days</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/lead_lt7.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-user-o fa-3x clr-purple"><span class="odes-sm-logo">> 7</span></div> -->
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-blue" data-action="odes_custom.odes_action_crm_active_prospect" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_prospect"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Prospect</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/prospect.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-line-chart fa-3x clr-blue"></div> -->
+                        </div>
+
+                    </a>
+                </div>
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-palepurple" data-action="odes_custom.odes_action_crm_outstanding_won" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.outstanding_won"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Won</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/won.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-smile-o fa-3x clr-light-blue"></div> -->
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-green" data-action="odes_custom.odes_action_crm_active_opportunity" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_opportunity"/> / <t t-esc="state.opportunity_revenue"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Opportunity</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/opportunity.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-handshake-o fa-3x clr-blue"></div> -->
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-darkblue" data-action="odes_custom.odes_action_crm_active_report" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_report"/> / <t t-esc="state.report_revenue"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Report</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/report.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-file-text-o fa-3x clr-blue"></div> -->
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-purple" data-action="odes_custom.odes_action_crm_active_pending" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_pending"/> / <t t-esc="state.pending_revenue"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Pending</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/pending.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-clock-o fa-3x clr-blue"></div> -->
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3 tablet-button hide-mob">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-black" data-action="odes_custom.odes_action_lead_lost" t-on-click="onDashboardAction">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.lead_lost"/></span>
+                            <span class="o_stat_text_dashboard_odes clr-white">Total Lost Lead</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/lead_losttotal.png' style="width: 65px; height: 45px;"/>
+                            <!-- <div class="fa fa-fw o_button_icon fa-frown-o fa-3x clr-orange"></div> -->
+                        </div>
+                    </a>
+                </div>
+
+                <!-- NOT USED ON ODES DASHBOARD -->
+                <!-- <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-orange" data-action="odes_custom.odes_action_crm_active_lead_l7">
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.active_lead_l7"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Active Leads &#8804; 7 Days</span>
+                        </div>
+                        <div class="o_button_border_odes">
+                            <img src='/odes_custom/static/src/img/icon/lead_active.png' style="width: 80px; height: 45px;"/>
+                            <div class="fa fa-fw o_button_icon fa-user-o fa-3x clr-purple"><span class="odes-sm-logo">&#8804; 7</span></div>
+                        </div>
+                    </a>
+                </div> -->
+                <!-- <div class="col-md-6">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-orange" data-action="odes_custom.odes_action_crm_outstanding_lost">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-frown-o fa-3x clr-orange"></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-black"><t t-esc="state.outstanding_lost"/></span>
+                            <span class="o_stat_text_dashboard clr-black">Total Lost</span>
+                        </div>
+                    </a>
+                </div> -->
+
+                <!-- OLD MOBILE BUTTON -->
+                <table class="table-button-mob">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-red" data-action="odes_custom.odes_action_crm_active_lead" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_lead"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Active Leads</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/lead_active.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-orange" data-action="odes_custom.odes_action_crm_active_lead_g7" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_lead_g7"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Active Leads > 7 Days</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/lead_lt7.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-blue" data-action="odes_custom.odes_action_crm_active_prospect" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_prospect"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Prospect</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/prospect.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-palepurple" data-action="odes_custom.odes_action_crm_outstanding_won" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.outstanding_won"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Won</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/won.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-green" data-action="odes_custom.odes_action_crm_active_opportunity" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_opportunity"/> / <t t-esc="state.opportunity_revenue"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Opportunity</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/opportunity.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-darkblue" data-action="odes_custom.odes_action_crm_active_report" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_report"/> / <t t-esc="state.report_revenue"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Report</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/report.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-purple" data-action="odes_custom.odes_action_crm_active_pending" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_pending"/> / <t t-esc="state.pending_revenue"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Pending</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/pending.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-black" data-action="odes_custom.odes_action_lead_lost" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.lead_lost"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Total Lost Lead</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/lead_losttotal.png' style="width: 65px; height: 45px;"/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- END HERE -->
+
+
+                <div class="div-table-button-sm">
+                    <table class="table-button-mob-sm">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-red" data-action="odes_custom.odes_action_crm_active_lead" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_lead"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Active Leads</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/lead_active.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-users fa-3x clr-purple"></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-orange" data-action="odes_custom.odes_action_crm_active_lead_g7" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_lead_g7"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Active Leads > 7 Days</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/lead_lt7.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-user-o fa-3x clr-purple"><span class="odes-sm-logo">> 7</span></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-blue" data-action="odes_custom.odes_action_crm_active_prospect" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_prospect"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Prospect</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/prospect.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-line-chart fa-3x clr-blue"></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-palepurple" data-action="odes_custom.odes_action_crm_outstanding_won" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.outstanding_won"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Won</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/won.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-smile-o fa-3x clr-light-blue"></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-green" data-action="odes_custom.odes_action_crm_active_opportunity" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_opportunity"/> / <t t-esc="state.opportunity_revenue"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Opportunity</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/opportunity.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-handshake-o fa-3x clr-blue"></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-darkblue" data-action="odes_custom.odes_action_crm_active_report" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_report"/> / <t t-esc="state.report_revenue"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Report</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/report.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-file-text-o fa-3x clr-blue"></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-purple" data-action="odes_custom.odes_action_crm_active_pending" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.active_pending"/> / <t t-esc="state.pending_revenue"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Pending</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/pending.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-clock-o fa-3x clr-blue"></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-lg-3 tablet-button">
+                                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-black" data-action="odes_custom.odes_action_lead_lost" t-on-click="onDashboardAction">
+                                        <div class="o_stat_info_dashboard">
+                                            <span class="o_stat_value_dashboard_odes clr-white"><t t-esc="state.lead_lost"/></span>
+                                            <span class="o_stat_text_dashboard_odes clr-white">Total Lost Lead</span>
+                                        </div>
+                                        <div class="o_button_border_odes">
+                                            <img src='/odes_custom/static/src/img/icon/lead_losttotal.png' style="width: 65px; height: 45px;"/>
+                                            <!-- <div class="fa fa-fw o_button_icon fa-frown-o fa-3x clr-orange"></div> -->
+                                        </div>
+                                        <div class="o_button_border_odes_right">
+                                            <div class="fa fa-fw o_button_icon_right fa-angle-right fa-4x clr-odes-white"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="width:100%;">
+                <button type="button" class="btn tablet-button btn-block table-button-mob-sm">
+                    <a>
+                        <i class="fa fa-angle-double-down fa-3x collapse-button" aria-hidden="false"></i>
+                    </a>
+                </button>
+            </div>
+
+                <div class="col-md-12 col-lg-12 col-xl-4" style="padding-top: 0px;">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-grey">
+                        <div style="text-align: center; padding-bottom: 2px;">
+                            <span class="o_stat_text_dashboard_odes clr-black funnel-text">Sales Funnel Pipeline</span>
+                        </div>
+                        <div class="bg-grey">
+                            <table style="pointer-events:none; background: #f2f2f2;">
+                                <tbody>
+                                    <tr style="background: #f2f2f2;">
+                                        <td rowspan="5">
+                                            <img id="funnel_image" src='/odes_custom/static/src/img/sale_funnel_mob.png' class="funnel-img"/>
+                                        </td>
+                                        <!-- <td>
+                                            <div style="font-size: 14px; padding-top: 32px; padding-right: 20px;"><t t-esc="state.fname1"/></div>
+                                        </td> -->
+                                        <td>
+                                            <div class="odes_funnel_1 clr-black funnel-font"><t t-esc="state.fcount1"/> / <t t-esc="state.fmoun1"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #f2f2f2;">
+                                        <!-- <td style="background: #FFFFFF;">
+                                            <div style="font-size: 14px; padding-right: 20px;"><t t-esc="state.fname2"/></div>
+                                        </td> -->
+                                        <td>
+                                            <div class="odes_funnel_2 clr-black funnel-font"><t t-esc="state.fcount2"/> / <t t-esc="state.fmoun2"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #f2f2f2;">
+                                        <!-- <td>
+                                            <div style="font-size: 14px; padding-right: 20px;"><t t-esc="state.fname3"/></div>
+                                        </td> -->
+
+                                        <td>
+                                            <div class="odes_funnel_3 clr-black funnel-font"><t t-esc="state.fcount3"/> / <t t-esc="state.fmoun3"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #f2f2f2;">
+                                        <!-- <td>
+                                            <div style="font-size: 14px; padding-right: 20px;"><t t-esc="state.fname4"/></div>
+                                        </td> -->
+                                        <td>
+                                            <div class="odes_funnel_4 clr-black funnel-font"><t t-esc="state.fcount4"/> / <t t-esc="state.fmoun4"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #f2f2f2;">
+                                        <!-- <td>
+                                            <div style="font-size: 14px; padding-bottom: 18px; padding-right: 20px;"><t t-esc="state.fname5 or 'Lost'"/></div>
+                                        </td> -->
+                                        <td>
+                                            <div class="odes_funnel_5 clr-black funnel-font"><t t-esc="state.fcount5"/> / <t t-esc="state.fmoun5"/></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-grey">
+                        <div style="text-align: center;">
+                            <span class="o_stat_text_dashboard_odes clr-black" style="font-size: 18px;">Top 5 Expected Revenue Opportunity</span>
+                        </div>
+                        <div class="bg-grey">
+                            <canvas id="lead_chart_second" width="400" height="250" class="bg-grey"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-grey">
+                        <div style="text-align: center;">
+                            <span class="o_stat_text_dashboard_odes clr-black" style="font-size: 18px;">Top 5 Expected Revenue Pending</span>
+                        </div>
+                        <div class="bg-grey">
+                            <canvas id="pending_chart" width="400" height="250" class="bg-grey"></canvas>
+                            <!-- Chart scripts are loaded via module assets, not inline -->
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </t>
+
+</templates>

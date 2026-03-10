@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="sample_request_line_view_tree" model="ir.ui.view">
+	    	<field name="name">sample.request.line.view.tree</field>
+	    	<field name="model">sample.request.line</field>
+	    	<field name="arch" type="xml">
+	    		<tree string="Sample Request" create="0">
+	    			<field name="request_id" widget="many2onebutton" string="Name" type="many2one" options="{'always_reload': True}" context="{'form_view_ref': 'iconnexion_custom.sample_request_form_view_form'}"/>
+	    			<field name="state"/>
+	    			<field name="user_id" string="Contact"/>
+	    			<field name="contact_id" />
+    				<field name="postcode" />
+    				<field name="email" />
+    				<field name="courir"/>
+    				<field name="telephone" />
+    				<field name="aplication"/>
+    				<field name="project_name"/>
+    				<field name="project_desc"/>
+    				<field name="project_start_date"/>
+					<field name="project_reference_no" invisible="1"/>
+					<field name="crm_id" widget="many2onebutton" string="Project Reference No." type="many2one" options="{'always_reload': True}"/>
+					<field name="product_id"/>
+                    <field name="delivery_date"/>
+                    <field name="qty"/>
+	    		</tree>
+	    	</field>
+	    </record>
+	    <record id="action_sample_request_line" model="ir.actions.act_window">
+	    	<field name="name">Sample Request Line</field>
+	    	<field name="type">ir.actions.act_window</field>
+	    	<field name="res_model">sample.request.line</field>
+	    	<field name="view_mode">tree</field>
+	    	<field name="context">{'tree_view_ref': 'iconnexion_custom.sample_request_line_view_tree'}</field>
+	    	<field name="help" type="html">
+				<p class="o.view_nocontent_smiling_face">
+					Create Your First Sample Request Line
+				</p>
+			</field>
+	    	
+	    </record>
+	    
+
+    	<menuitem id="sample_request_line_menu" name="Sample Request Line" parent= "crm.crm_menu_root" action="action_sample_request_line" sequence="1001" groups="iconnexion_custom.group_iconnexion_req_new_part_number,iconnexion_custom.group_iconnexion_company" />
+	    <record id="sample_request_form_view_tree" model="ir.ui.view">
+	    	<field name="name">sample.request.form.view.tree</field>
+	    	<field name="model">sample.request.form</field>
+	    	<field name="arch" type="xml">
+	    		<tree string="Sample Request">
+	    			<field name="name"/>
+	    			<field name="state"/>
+	    		</tree>
+	    	</field>
+	    </record>
+
+	     <record id="sample_request_form_view_form" model="ir.ui.view">
+	    	<field name="name">sample.request.form.view.form</field>
+	    	<field name="model">sample.request.form</field>
+	    	<field name="type">form</field>
+	    	<field name="arch" type="xml">
+	    		<form string="Sample Reuest">
+		    		<header>
+		    			<button name="button_confirm" string="Confirm" class="btn-primary" type="object" invisible="state != 'request'"/>	
+		    			<button name="button_approve" string="Approve" class="btn-primary" type="object" invisible="state != 'inprocess'" groups="iconnexion_custom.group_iconnexion_sales_manager"/>
+		    			<button name="button_reject" string="Reject" class="btn-primary" type="object" invisible="state != 'inprocess'" groups="iconnexion_custom.group_iconnexion_sales_manager"/>
+		    			<!-- <button name="button_sample_crm" class="btn-primary" string="Product From CRM" invisible="state == 'created'" groups="iconnexion_custom.group_iconnexion_sales_manager" type="object"/> -->
+		    			<button name="button_send_item" string="Send Item" type="object" invisible="state not in ('approved')" class="btn-primary"/>
+		    			<field name="state" widget="statusbar"/>
+		    		</header>
+		    		
+
+		    		<sheet>
+		    			<div class="oe_button_box" name="button_box">
+			                <button name="action_view_picking" type="object"
+			                    class="oe_stat_button" icon="fa-truck"
+			                    context="{'partner_id': partner_id}"			                    >
+			                    <div class="o_stat_info">
+			                        <field name="picking_count" class="o_stat_value"/>
+			                        <span class="o_stat_text" invisible="picking_count &lt; 2"> Receipts</span>
+			                        <span class="o_stat_text" invisible="picking_count &gt; 1"> Receipt</span>
+			                    </div>
+			                </button>
+			                <button name="action_view_out_picking" type="object"
+			                    class="oe_stat_button" icon="fa-truck"
+			                    context="{'partner_id': partner_id}"			                    >
+			                    <div class="o_stat_info">
+			                        <field name="picking_out_count" class="o_stat_value"/>
+			                        <span class="o_stat_text" invisible="picking_out_count &lt; 2"> Outgoing</span>
+			                        <span class="o_stat_text" invisible="picking_out_count &gt; 1"> Outgoing</span>
+			                    </div>
+			                </button>
+			           </div>
+			            <div class="oe_title">                            
+                            <h1><field name="name" placeholder="e.g. Sample Number"  readonly="1"/></h1>
+                        </div>
+	    				<field name="crm_id" invisible="1"/>
+	    				<field name="opportunity_id" invisible="1"/>
+	    				<group>
+	    					<field name="picking_id" invisible="1" />
+	    					<field name="location_id" readonly="0" required="1" domain="[('usage','=','internal')]"/>
+			    		</group>	
+			    		<group string="Distributor Details">
+			    			<group>
+			    				<field name="company_id" readonly="1" />
+			    			</group>
+			    			<group>
+			    				<field name="user_id" string="Contact" domain="[('share','=',False)]" widget="many2one_avatar_user"/>
+			    			</group>
+			    		</group>
+			    		<group string="Customer Details">
+			    			<group>
+			    				<field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options="{&quot;always_reload&quot;: True}" string="Company" />
+			    			</group>
+			    			<group>
+			    				<field name="contact_id"  domain="[('parent_id','=',partner_id)]"/>
+			    				<field name="postcode" />
+			    				<field name="email" />
+			    				<field name="courir"/>
+			    				<field name="telephone" />
+			    			</group>
+			    		</group>
+			    		<group string="Project Information">
+		    				<field name="aplication"/>
+		    				<field name="project_name"/>
+		    				<field name="project_desc"/>
+		    				<field name="project_start_date"/>
+	    					<field name="project_reference_no"/>
+			    		</group>
+			    		<group string="Product Information">
+			    			<field name="product_line" nolabel="1">
+		                        <tree editable="bottom">
+		                            <field name="product_id" required="1"/>
+		                            <field name="delivery_date"/>
+		                            <field name="qty"/>
+		                        </tree>
+		                    </field>
+			    		</group>
+			    		<group string="Quantity Information">
+			    			<group>
+			    				<field name="quantity_1" />
+			    				<field name="quantity_2" />
+			    			</group>
+			    			<group>
+			    				<field name="prototype_quantity"/>
+			    				<field name="production_start_date"/>
+			    			</group>
+			    		</group>
+			    		<group string="Completed By">
+			    			<group>
+			    				<field name="company_id" string="Signed (Distributor)" />
+			    				<field name="print_name" />
+			    			</group>
+			    			<group>
+			    				<field name="date_now"/>
+			    				<field name="given_date"/>
+								<field name="received_date"/>
+			    			</group>
+			    		</group>
+			    	</sheet>
+			    	<div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+	    		</form>
+	    	</field>
+	    </record>
+
+	    <record id="action_sample_request_form" model="ir.actions.act_window">
+	    	<field name="name">Sample Request</field>
+	    	<field name="type">ir.actions.act_window</field>
+	    	<field name="res_model">sample.request.form</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="help" type="html">
+				<p class="o.view_nocontent_smiling_face">
+					Create Your First Sample Request
+				</p>
+			</field>
+	    	
+	    </record>
+	    
+
+    	<menuitem id="sample_request_form_menu" name="Sample Request" parent= "crm.crm_menu_root" action="action_sample_request_form" sequence="1000" groups="iconnexion_custom.group_iconnexion_req_new_part_number,iconnexion_custom.group_iconnexion_company" />
+    </data>
+
+</odoo>

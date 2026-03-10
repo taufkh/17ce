@@ -1,0 +1,14 @@
+<odoo>
+    <record id="business_grouping_iconn_sg" model="res.business.grouping">
+        <field name="name">IConnexion SG</field>
+        <field name="code">iconn_sg</field>
+    </record>
+    <record id="business_grouping_iconn_my" model="res.business.grouping">
+        <field name="name">IConnexion MY</field>
+        <field name="code">iconn_my</field>
+    </record>
+    <record id="business_grouping_iconn_ph" model="res.business.grouping">
+        <field name="name">IConnexion PH</field>
+        <field name="code">iconn_ph</field>
+    </record>
+</odoo>

@@ -1,0 +1,107 @@
+
+
+.varpassword_confirm_strength {
+    position: absolute;
+    left: 100%;
+    top: 31px;
+    min-width: 165px;
+    margin-left: 10px;
+    font-weight: 1000;
+}
+
+.varpassword_strength {
+    position: absolute;
+    left: 100%;
+    top: 40px;
+    min-width: 165px;
+    margin-left: 10px;
+}
+
+.description{
+    
+    font-style: italic;
+    font-size: 11px;
+}
+
+.form-group.field-password.pt-2 {
+    position: relative;
+}
+.form-group.field-confirm_password {
+    position: relative;
+}
+
+
+
+.odestooltip {
+	 position: relative;
+}
+ .odestooltip__item {
+	 position: absolute;
+	 min-width: 300px;
+	 padding: 20px;
+	 visibility: hidden;
+	 opacity: 0;
+	 background: white;
+	 transition: all 0.25s cubic-bezier(0, 0, 0.2, 1);
+	 color: #484848;
+	 border: 1px solid #cecece;
+	 border-radius: 3px;
+	 font-weight: 500;
+	 box-shadow: 0 2px 1px #bcbcbc;
+	 z-index: 4;
+}
+ .odestooltip__item:after {
+	 content: "";
+	 display: block;
+	 position: absolute;
+	 width: 0;
+	 height: 0;
+	 border-style: solid;
+}
+ .odestooltip__initiator {
+	 cursor: pointer;
+	 z-index: 5;
+}
+ .odestooltip[data-direction="left"] .odestooltip__initiator:hover ~ .odestooltip__item {
+	 transform: translate3d(0, -50%, 0);
+	 visibility: visible;
+	 opacity: 1;
+}
+ .odestooltip[data-direction="left"] .odestooltip__item {
+	 top: 50%;
+	 right: calc(100% + 1em);
+	 transform: translate3d(15px, -50%, 0);
+}
+ .odestooltip[data-direction="left"] .odestooltip__item:after {
+	 top: 50%;
+	 right: -0.5em;
+	 transform: translate3d(0, -50%, 0);
+	 border-width: 0.5em 0 0.5em 0.5em;
+	 border-color: transparent transparent transparent white;
+	 -webkit-filter: drop-shadow(1px 2px 1px #bcbcbc);
+	 filter: drop-shadow(1px 2px 1px #bcbcbc);
+}
+ .odestooltip[data-direction="bottom"] .odestooltip__initiator:hover ~ .odestooltip__item {
+	 transform: translate3d(-50%, 0, 0);
+	 visibility: visible;
+	 opacity: 1;
+}
+ .odesodestooltip[data-direction="bottom"] .odestooltip__item {
+	 top: calc(100% + 1em);
+	 left: 50%;
+	 transform: translate3d(-50%, -15px, 0);
+}
+ .odestooltip[data-direction="bottom"] .odestooltip__item:after {
+	 top: -0.5em;
+	 left: 50%;
+	 transform: translate3d(-50%, 0, 0);
+	 border-width: 0 0.5em 0.5em 0.5em;
+	 border-color: transparent transparent white transparent;
+	 -webkit-filter: drop-shadow(1px 2px 1px #bcbcbc);
+	 filter: drop-shadow(1px -1px 1px #bcbcbc);
+}
+.odestooltip .fa.fa-info-circle {
+    font-size: 15px;
+    color: #171515;
+    font-weight: 500;
+}

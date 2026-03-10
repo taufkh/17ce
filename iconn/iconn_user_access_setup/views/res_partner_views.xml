@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_form_iconn_company_approval" model="ir.ui.view">
+            <field name="name">res.partner.form.iconn.company.approval</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <group string="Iconn Company Approval" invisible="not is_company">
+                        <field name="iconn_company_approval_state"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="odes_default_client_user" model="res.users">
+            <field name="name">Default Client User Template</field>
+            <field name="login">client_default</field>
+            <field name="active" eval="False"/>
+        </record>
+        <record id="odes_crm_create_user_company_id" model="ir.config_parameter">
+            <field name="key">odes_crm.crm_create_user_company_id</field>
+            <field name="value" ref="base.main_company"/>
+        </record>
+        <record id="odes_crm_pms_url" model="ir.config_parameter">
+            <field name="key">odes_crm.pms_url</field>
+            <field name="value">https://devteam.odes.com.sg</field>
+        </record>
+        <record id="odes_crm_pms_database" model="ir.config_parameter">
+            <field name="key">odes_crm.pms_database</field>
+            <field name="value">ODES_PMS</field>
+        </record>
+        <record id="odes_crm_pms_username" model="ir.config_parameter">
+            <field name="key">odes_crm.pms_username</field>
+            <field name="value">admin</field>
+        </record>
+        <record id="odes_crm_pms_key" model="ir.config_parameter">
+            <field name="key">odes_crm.pms_key</field>
+            <field name="value">0bb41aeca3668925bcb0ef99fd67260f102f9c68</field>
+        </record>
+        <record id="odes_crm_valid_mandays_status" model="ir.config_parameter">
+            <field name="key">odes_crm.valid_status</field>
+            <field name="value">Done</field>
+        </record>
+        <record id="odes_crm_resync_from" model="ir.config_parameter">
+            <field name="key">odes_crm.resync_from</field>
+            <field name="value">2022-08-08</field>
+        </record>
+    </data>
+</odoo>

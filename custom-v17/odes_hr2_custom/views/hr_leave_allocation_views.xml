@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr2_custom_leave_allocation_view_form_manager_inherit" model="ir.ui.view">
+        <field name="name">hr2.custom.leave.allocation.view.form.manager.inherit</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_validate']" position="attributes">
+                <attribute name="groups">hr_holidays.group_hr_holidays_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_refuse']" position="attributes">
+                <attribute name="groups">hr_holidays.group_hr_holidays_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_draft']" position="attributes">
+                <attribute name="groups">hr_holidays.group_hr_holidays_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

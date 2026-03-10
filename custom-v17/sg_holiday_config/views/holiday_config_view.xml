@@ -1,0 +1,43 @@
+<odoo>
+
+    <record id='res_config_settings_view_form' model="ir.ui.view">
+        <field name='name'>inherit.form.view.res.config.setting.leave</field>
+        <field name="model">res.config.settings</field>
+        <field name='inherit_id' ref="hr.res_config_settings_view_form"/>
+        <field name='arch' type="xml">
+            <xpath expr="//app[@name='hr']" position="inside">
+                <block title="Leave Configuration" name="sg_leave_configuration" groups="hr.group_hr_manager">
+                    <setting id="sg_holiday_extended_setting" help="Create leave structures for employees.">
+                        <field name="module_sg_holiday_extended"/>
+                    </setting>
+                    <setting id="sg_allocate_leave_setting" help="Create bulk leave allocation by wizard.">
+                        <field name="module_sg_allocate_leave"/>
+                    </setting>
+                    <setting id="sg_leave_constraints_setting" help="Enable additional leave constraints.">
+                        <field name="module_sg_leave_constraints"/>
+                    </setting>
+                    <setting id="sg_leave_extended_setting" help="Enable leave interval unit allocation features.">
+                        <field name="module_sg_leave_extended"/>
+                    </setting>
+                    <setting id="sg_expire_leave_setting" help="Expire carry-forward leave allocations by scheduler.">
+                        <field name="module_sg_expire_leave"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="action_hr_leave_configuration" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'hr_holidays'}</field>
+    </record>
+
+    <menuitem id="menu_hr_leave_global_settings" name="Settings"
+        parent="hr_holidays.menu_hr_holidays_configuration" sequence="0"
+        action="action_hr_leave_configuration" groups="hr.group_hr_manager"/>
+
+</odoo>

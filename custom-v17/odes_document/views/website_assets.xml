@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="odes_document_public_page_assets" inherit_id="documents.public_page_assets" name="Odes Document Assets">
+        <xpath expr="." position="inside">
+            <script src="/odes_document/static/src/js/bootstrap-notify.min.js"></script>
+            <!-- Custom -->
+            <link rel="stylesheet" href="/odes_document/static/src/css/custom.css"/>
+            <link rel="stylesheet" href="/odes_document/static/src/css/responsive.css"/>
+            <!-- Custom -->
+            <script type="text/javascript" src="/odes_document/static/src/js/custom.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

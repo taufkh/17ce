@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_icon_label_doc">
+              <t t-foreach="docs" t-as="o">
+                <t t-call="web.html_container">
+                     <t t-call="web.external_layout"> 
+                        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>                        
+                        <div class="page">
+                          <t t-foreach="o.move_ids_without_package" t-as="move">
+                           <table style=" font-size : 14px; width:100%; border:1px solid #000;">
+                            <tr>
+                                <th style="border-right: 1px solid #000 !important;">                                    
+                                    <div style="width:170px;height:130px;">                                        
+                                        <div class="col-auto" t-if="o.partner_id">
+                                          <div class="row mt32 mb32">
+                                            <table style="padding : 5px; width: 95%;">
+                                              <tr>
+                                                  <td style="padding-left: 5px; text-align:left; font-size:10px; width:30px">From</td>
+                                                  <td style="font-size:10px; padding-left: 5px;">:</td>
+                                                  <td style="padding-left: 10px; text-align:left; font-size:10px;">
+                                                      <span t-if="o.company_id.partner_id" t-field="o.company_id.partner_id" t-options="{'widget': 'contact', 'fields': ['name', 'address'], 'no_marker': True}"/>                                                        
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td style="padding-left: 5px; text-align:left; font-size:10px; width:30px"></td>
+                                                  <td style="font-size:10px; padding-left: 5px;"></td>
+                                                  <td style="padding-left: 10px; text-align:left; font-size:10px;">
+                                                      <span>Tel: </span><span t-field="o.company_id.partner_id.phone"/>
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td style="padding-left: 5px; text-align:left; font-size:10px; width:30px"></td>
+                                                  <td style="font-size:12px; padding-left: 5px;"></td>
+                                                  <td style="padding-left: 10px; text-align:left; font-size:10px;">
+                                                      
+                                                  </td>
+                                              </tr>
+                                              
+                                          </table>
+                                              
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="width:170px;height:120px;">                                       
+                                        <div class="col-auto" t-if="move.purchase_line_id">
+                                          <div class="row mt32 mb32">
+                                              <table style="padding : 5px; width: 95%;">
+                                                  <tr>
+                                                    <!-- <t t-if="move.purchase_line_id.icon_picking_ref_id"> -->
+                                                      <!-- <t t-if="move.purchase_line_id.icon_picking_ref_id.partner_id"> -->
+                                                      <td style="padding-left: 5px; text-align:left; font-size:10px; width:30px">To</td>
+                                                      <td style="font-size:10px; padding-left: 5px;">:</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:10px;">
+                                                        <span t-if="move.purchase_line_id.icon_sale_id.partner_id" t-field="move.purchase_line_id.icon_sale_id.partner_id" t-options="{'widget': 'contact', 'fields': ['name', 'address'], 'no_marker': True}"/>
+                                                       
+                                                      </td>
+                                                    <!-- </t>
+                                                    </t> -->
+                                                  </tr>
+                                                  <tr>
+                                                      <td style="padding-left: 5px; text-align:left; font-size:10px; width:30px"></td>
+                                                      <td style="font-size:10px; padding-left: 5px;"></td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:10px;">
+                                                         <span>Tel: </span><span t-field="o.partner_id.phone"/>
+                                                      </td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td style="padding-left: 5px; text-align:left; font-size:10px; width:30px"></td>
+                                                      <td style="font-size:10px; padding-left: 5px;"></td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:10px;">
+                                                         
+                                                      </td>
+                                                  </tr>
+                                                  
+                                              </table>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>                              
+                          </table>
+                           <table style=" font-size : 10px; width:100%; border-bottom:1px solid #000;border-left:1px solid #000;border-right:1px solid #000;">
+                             <tr>
+                                <td colspan="2" >
+                                  <span>UID:</span><br/>
+                                    <table style="padding : 15px; width: 75%;">
+                                      <tr>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                      <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', move.iconnexion_uid, 400, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                      <span t-esc="move.iconnexion_uid"/>
+                                    </td>
+                                    <td style="text-align: right;">
+                                      <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', move.iconnexion_uid, 30, 30)" style="width:30px;height:30px;"/>
+                                    </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                             </table>
+                             <table style=" font-size : 10px; width:100%; border-bottom:1px solid #000;border-left:1px solid #000;border-right:1px solid #000;">
+                             <tr>
+                                <td colspan="1">
+                                  <div style="width:170px;">
+                                  <span>PO#:</span><br/>
+                                  <table style="padding : 15px; width: 95%;">
+                                    <tr>
+                                      <td style="text-align: center; vertical-align: middle;">
+                                      <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', o.origin, 400, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                      <span t-esc="o.origin"/>
+                                    </td>
+                                  </tr>
+                                </table>
+                                </div>
+                                </td>
+                                <td>
+                                </td>
+                              </tr>
+                             </table>
+                             <table style=" font-size : 10px; width:100%; border-bottom:1px solid #000;border-left:1px solid #000;border-right:1px solid #000;">
+                             <tr>
+                                <td colspan="1">
+                                  <div style="width:170px;">
+                                  <span>CPN:</span><br/>
+                                  <table style="padding : 15px; width: 95%;">
+                                      <tr>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', move.name, 600, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                        <span t-esc="move.name"/>
+                                    </td>
+                                   </tr>
+                                  </table>
+                                </div>
+                                </td>
+                                <td>
+                                </td>
+                              </tr>
+                             </table>
+                             <table style=" font-size : 10px; width:100%; border-bottom:1px solid #000;border-left:1px solid #000;border-right:1px solid #000;">
+                             <tr>
+                                <td >
+                                 <span>Quantity:</span><br/>
+                                   <table style="padding : 15px; width: 95%;">
+                                      <tr>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', move.product_uom_qty, 400, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                        <span t-esc="move.product_uom_qty"/>
+                                    </td>
+                                   </tr>
+                                  </table>
+                                  
+                                </td>
+                                <td >
+                                  <span>COO:</span><br/>
+                                  <t t-if="move.product_id">
+                                    <t t-if="move.product_id.coo_id">
+                                       <table style="padding : 15px; width: 95%;">
+                                          <tr>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', move.product_id.coo_id.name, 400, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                            <span t-esc="move.product_id.coo_id.name"/>
+                                        </td>
+                                       </tr>
+                                      </table>
+                                    </t>
+                                  </t>
+                                </td>
+                              </tr>
+                             </table>
+                             <table style=" font-size : 10px; width:100%; border-bottom:1px solid #000;border-left:1px solid #000;border-right:1px solid #000;">
+                             <tr>
+                                <td colspan="0">
+                                  <div style="width:170px;">    
+                                  <span>Mfr P/N:</span><br/>
+                                  <table style="padding : 15px; width: 95%;">
+                                      <tr>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                          <t t-set="mfr_part_number" t-value="o._label_mfr_part_number(move)"/>
+                                          <t t-if="mfr_part_number">
+                                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', mfr_part_number, 600, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                            <span t-esc="mfr_part_number"/>
+                                          </t>
+                                    </td>
+                                   </tr>
+                                  </table>
+                                  </div>
+                                </td>
+                                <td></td>
+                              </tr>
+                             </table>
+                             <table style=" font-size : 10px; width:100%; border-bottom:1px solid #000;border-left:1px solid #000;border-right:1px solid #000;">
+                             <tr>
+                                <td >
+                                  <span>Date Code:</span><br/>
+                                 <t t-if="move.dc">
+                                 <table style="padding : 15px; width: 95%;">
+                                      <tr>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', move.dc, 300, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                        <span t-esc="move.dc"/>
+                                    </td>
+                                   </tr>
+                                  </table>
+                                  </t>
+                                </td>
+                                <td >
+                                  <span>Batch no:</span><br/>
+                                  <t t-if="move.lot_icon">
+                                  <table style="padding : 15px; width: 95%;">
+                                      <tr>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('Code128', move.lot_icon, 400, 100, 0)" style="height:30px" alt="Barcode"/><br/>
+                                        <span t-esc="move.lot_icon"/>
+                                    </td>
+                                   </tr>
+                                  </table>
+                                  </t>
+                                </td>
+                              </tr>
+                             </table>
+                          
+                              <p style="page-break-after: always;"/>
+                            </t>
+                          </div>
+                       
+                    </t>
+                 </t> 
+            </t>          
+        </template>
+
+        
+        
+        <record id="paperformat_a6_label" model="report.paperformat">
+            <field name="name">Paper A6 Label</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">152</field>
+            <field name="page_width">101</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">80</field>
+        </record>
+        
+        <record id="report_icon_label" model="ir.actions.report">
+            <field name="name">Label (Iconnexion)</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">iconnexion_custom.report_icon_label_doc</field>
+            <field name="report_file">iconnexion_custom.report_icon_label_doc</field>
+            <field name="binding_model_id" search="[('model', '=', 'stock.picking')]"/>
+            <field name="binding_type">report</field>
+        </record>
+        
+        <record id="report_icon_label" model="ir.actions.report">
+            <field name="paperformat_id" ref="paperformat_a6_label"/>
+            <field name="groups_id" eval="[(4, ref('iconnexion_custom.group_iconnexion_company'))]"/>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,9 @@
+.card_scanner_img img{
+    width: auto;
+    max-height: 292px;
+}
+
+img[name='namecard_image']{
+    width: auto;
+    max-height: 240px;
+}

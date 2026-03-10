@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="iconnexion_mccoy_report_iconnexion_packing_list_doc_inherited"
+      inherit_id="iconnexion_custom.report_iconnexion_packing_list_doc">
+      <xpath expr="." position="replace">
+        <t t-foreach="docs" t-as="o">
+          <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+              <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+              <div class="page" style="margin-top:-50px!important;">
+                <div class="row mt32 mb32">
+                  <div class="col-auto">
+                    <img style="width : 100%; max-height:45mm; max-width:45mm; margin-top: 2mm;"
+                      src="/iconnexion_custom/static/src/img/icon.png" />
+                    <!--                                <t t-if="o.journal_id.logo_journal">
+                                  <img t-if="o.journal_id.logo_journal" t-att-src="image_data_uri(o.journal_id.logo_journal)" style="max-height: 65px;" alt="Logo"/>
+                                  
+                                
+                                </t> 
+                                <t t-if="not o.journal_id.logo_journal">
+                                  <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 65px;" alt="Logo"/>
+                                </t> -->
+
+                  </div>
+                  <div class="col-auto">
+                    <h3 style="text-align: right;">Packing/Weight List</h3>
+                  </div>
+                </div>
+                <br />
+
+                <div class="row mt32 mb32">
+                  <div class="col-auto">
+                    <div><span style="font-size : 15px; text-decoration: underline; font-weight: bold;"
+                        t-field="o.company_id.name" /></div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.street" /> </div>
+                    <div style="font-size: 12px;"><span t-field="o.company_id.street2" /> </div>
+                    <div style="font-size : 12px;"> <span t-field="o.company_id.country_id" /> <span
+                        t-field="o.company_id.zip" /> </div>
+                    <div style="font-size : 12px;">Tel : <span t-field="o.company_id.partner_id.phone" /></div>
+                    <div style="font-size : 12px;">Fax : <span t-field="o.company_id.fax" /></div>
+                  </div>
+                  <div style="font-size : 12px;" class="col-auto">
+
+                    <!-- <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                Date :
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                <span class="text-uppercase" t-field="o.scheduled_date"/>
+                                </div>
+                                
+                              </div>
+                              <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                Invoice No :
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                <span class="text-uppercase" t-field="o.company_id.company_registry"/>
+                                </div>
+                                
+                              </div> -->
+                    <!-- <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                Flight / Vessel :
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                <span class="text-uppercase" t-field="o.scheduled_date"/>
+                                </div>
+                                
+                              </div>
+                              <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                AWB :
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                <span class="text-uppercase" t-field="o.name"/>
+                                </div>
+                                
+                              </div>      
+                              <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                By :
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                <span class="text-uppercase" t-field="o.partner_id.ref"/>
+                                </div>
+                                
+                              </div>                       
+                              <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                PAYMENT TERMS :
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                <span t-field="o.partner_id.property_payment_term_id"/>
+                                </div>
+                                
+                              </div>
+                              <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                FREIGHT TERMS  :
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                <span t-field="o.sale_id.freight_terms"/>
+                                </div>
+                                
+                              </div> -->
+
+                  </div>
+                </div>
+                <br />
+                <table style=" font-size : 14px; width:100%; border:1px solid #000;">
+                  <tr>
+                    <th style="border-right: 1px solid #000 !important;padding-bottom:30px;">
+                      <div style="width:340px;height:130px;">
+                        <br />
+                        <div class="col-auto">
+                          <div class="row mt32 mb32">
+                            <table style="margin-top:-20px;padding:15px;width: 100%;">
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">To</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <!--<span t-if="o.partner_id.parent_id" t-field="o.partner_id.parent_id" t-options="{'widget': 'contact', 'fields': ['name', 'address'], 'no_marker': True}"/>-->
+                                  <!--<span t-else="" t-field="o.partner_id" t-options="{'widget': 'contact', 'fields': ['name', 'address'], 'no_marker': True}"/>-->
+                                  <t t-if="o.sale_id.partner_id">
+                                    <span t-field="o.sale_id.partner_id.name" /><br />
+                                  </t>
+                                  <t t-else="">
+                                    <span t-field="o.partner_id" /><br />
+                                  </t>
+                                  <t t-if="o.sale_id.ship_to_street">
+                                    <span t-field="o.sale_id.ship_to_street" /><br />
+                                  </t>
+                                  <t t-if="o.sale_id.ship_to_block">
+                                    <span t-field="o.sale_id.ship_to_block" /><br />
+                                  </t>
+                                  <t t-if="o.sale_id.ship_to_city">
+                                    <span t-field="o.sale_id.ship_to_city" /><br />
+                                  </t>
+                                  <t t-if="o.sale_id.ship_to_state">
+                                    <span t-field="o.sale_id.ship_to_state" /><br />
+                                  </t>
+                                  <span t-field="o.sale_id.ship_to_country_id" />
+                                  <span t-field="o.sale_id.ship_to_zip" /><br />
+                                  <t t-if="o.sale_id.ship_to_remarks">
+                                    <span t-field="o.sale_id.ship_to_remarks" />
+                                  </t>
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Contact
+                                </td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.sale_id.ship_to_contact_person.name" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Tel</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.sale_id.ship_to_contact_person.phone" />
+                                </td>
+                              </tr>
+                              <!--                                                 <tr> 
+                                                  <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">DO  No</td>
+                                                  <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-field="o.name"/><br/>
+                                                    </td>
+                                                </tr> -->
+                            </table>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div style="width:340px;height:120px;">
+                        <br />
+                        <div class="col-auto" t-if="o.partner_id">
+                          <div class="row mt32 mb32">
+                            <table style="margin-top:-20px;padding:15px;width: 100%;">
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;width:100px">Date</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">:
+                                  <t t-if="o.state == 'done'">
+                                    <span class="text-uppercase"
+                                      style="padding-left: 10px; text-align:left; font-size:12px;"
+                                      t-esc="o.date_done.strftime('%d.%m.%Y')" />
+
+                                  </t>
+                                  <t t-else="">
+                                    <span class="text-uppercase"
+                                      style="padding-left: 10px; text-align:left; font-size:12px; "
+                                      t-esc="context_timestamp(datetime.datetime.now()).strftime('%d.%m.%Y')" />
+                                  </t>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Invoice No
+                                </td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">:
+                                  <t t-set="account_obj" t-value="request.env['account.move']" />
+                                  <t t-set="account_move" t-value="account_obj.search([('delivery_order_id', '=', o.id)],limit=1)"/>
+                                  <t t-if="account_move"><span
+                                      style="padding-left: 10px; text-align:left; font-size:12px;"
+                                      t-esc="account_move.name" /><br /></t>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                </table>
+                <table style=" font-size : 14px; width:80%; border:1px solid #000;">
+                  <tr>
+                    <th style="border-right: 1px solid #000 !important;">
+                      <div style="width:340px;height:130px;">
+                        <br />
+                        <div class="col-auto">
+                          <div class="row mt32 mb32">
+                            <table style="margin-top:-20px;padding:15px;width: 100%;">
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Flight /
+                                  Vessel</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.flight_vessel" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">AWB #</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.awb" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">By</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.by_courier" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Sailing
+                                  on/about</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.sailing_on" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Total
+                                  packages</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.total_packages_c" />
+                                </td>
+                              </tr>
+                            </table>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div style="width:340px;height:120px;">
+                        <br />
+                        <div class="col-auto">
+                          <div class="row mt32 mb32">
+                            <table style="margin-top:-20px;padding:15px;width: 100%;">
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Container
+                                  No
+                                </td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">:
+                                  <span style="padding-left: 10px; text-align:left; font-size:12px; "
+                                    t-field="o.container_no" /><br />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Seal No
+                                </td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">:
+                                  <span style="padding-left: 10px; text-align:left; font-size:12px; "
+                                    t-field="o.seal_no" /><br />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:100px">Shipping
+                                  Mark
+                                </td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">:
+                                  <span style="padding-left: 10px; text-align:left; font-size:12px; "
+                                    t-field="o.shipping_mark" /><br />
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                </table>
+                <!-- <br/> -->
+                <div style="min-height : 280px">
+                  <table style=" margin-top : 8px;" class="table table-sm o_main_table" name="invoice_line_table">
+                    <thead style="font-size : 12px;">
+                      <tr style="background-color: lightgrey;">
+                        <t t-if="o.picking_type_code != 'incoming'">
+                          <th name="th_description" class="text-left"><span>PO.No</span></th>
+                        </t>
+                        <th name="th_description" class="text-left"><span>MPN/CPN</span></th>
+                        <th name="th_desc" class="text-left"><span>Quantity/Ctn</span></th>
+                        <th name="th_carton" class="text-left"><span>No of cartons</span></th>
+                        <th name="th_qty"
+                          t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>Total qty</span></th>
+                        <th name="th_uom" class="text-left"><span>UOM</span></th>
+                        <th name="th_measurement" class="text-left"><span>Measurement (CM)</span></th>
+                        <th name="th_weight" class="text-left"><span>Net Wt./ctn.</span></th>
+                        <th name="th_gr_wt" class="text-left"><span>Total Gr. Wt.</span></th>
+                      </tr>
+                    </thead>
+                    <tbody style="font-size : 12px;" class="invoice_tbody">
+                      <!-- <t t-set="current_subtotal" t-value="0"/> -->
+                      <t t-set="total" t-value="0" />
+                      <t t-set="total_kg" t-value="0" />
+                      <t t-set="line_count" t-value="1" />
+                      <!-- <t t-set="lines" t-value="o.move_ids_without_package"/> -->
+                      <t t-set="lines" t-value="o.move_line_ids_without_package" />
+                      <tr t-foreach="lines" t-as="line">
+                        <t t-set="line_count" t-value="line_count + 0" />
+                        <t t-set="total" t-value="total + line.qty_done" />
+                        <!--<t t-set="total_kg" t-value="total_kg + float(line.total_gr_wt_c)"/>-->
+                        <t t-if="line.weight">
+                          <t t-set="total_kg" t-value="total_kg + float(line.weight)" />
+                        </t>
+                        <t t-if="o.picking_type_code != 'incoming'">
+                          <td>
+                            <span t-field="line.po_number_c" />
+                          </td>
+                        </t>
+                        <td>
+                          <span t-field="line.product_id" /><br />
+                          <span t-field="line.move_id.name" />
+                        </td>
+                        <td class="text-center">
+                          <span t-esc="line.qty_done"
+                            t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}" />
+                        </td>
+                        <td class="text-center">
+                          <!-- <span t-field="line.no_of_carton"/> -->
+                          <span t-esc="line_count" />
+                        </td>
+                        <td class="text-center">
+                          <span t-esc="line.qty_done"
+                            t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}" />
+                        </td>
+                        <td>
+                          <span t-field="line.product_uom_id" />
+                        </td>
+                        <td>
+                          <t>
+                          </t>
+                          <span t-if="line.dimension_length">
+                            <span t-field="line.dimension_length" />
+                          </span>
+                          <span t-if="line.dimension_width">
+                            x <span t-field="line.dimension_width" />
+                          </span>
+                          <span t-if="line.dimension_height">
+                            x <span t-field="line.dimension_height" />
+                          </span>
+                        </td>
+                        <td>
+                          <t t-if="line.weight">
+                            <span t-if="float(line.weight) &lt;= 1 and float(line.weight) &gt; 0.1">
+                              <span t-esc="float(line.weight) - 0.1"
+                                t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" /> kg
+                            </span>
+                            <span t-if="float(line.weight) &gt; 1">
+                              <span t-esc="float(line.weight) - 0.5"
+                                t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" /> kg
+                            </span>
+                            <span t-if="float(line.weight) &lt;= 0.1">
+                              <span t-esc="float(line.weight) - 0.01"
+                                t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" /> kg
+                            </span>
+                          </t>
+                        </td>
+                        <td>
+                          <span t-if="line.weight">
+                            <span t-field="line.weight" /> </span> kg
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <t t-if="o.picking_type_code != 'incoming'">
+                        <td>
+                          <span />
+                        </td>
+            </t>
+            </td>
+            <td />
+            <td>TOTAL</td>
+            <td><span t-esc="total or False"
+                t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}" /></td>
+            <td />
+            <td>Total Weight (in KG)</td>
+            <td><span t-esc="total_kg or False"
+                t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 1}" /> kg</td>
+            <td />
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            <div style="font-size : 12px; position: absolute; width : 680px">
+              <p style="font-size:10px;">CR NUMBER : CR 78664170000E</p>
+            </div>
+            <br />
+            <div class="row mt32 mb32">
+              <div class="col-auto">
+                <div class="signature">
+                  <br />
+                  <br />
+
+
+                  <div style="margin-left: 75px; font-weight : 900; font-size:12px;" />
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="signature">
+                  <p style="font-size:10px;">for and on behalf of iConnexion Asia Pte Ltd</p>
+                  <br />
+                  <br />
+
+                  <div style="text-align:center;font-size:12px;font-weight:bold;border-bottom:1px solid black;">Lyvian
+                    Chen</div>
+                  <div style="margin-top:2px;border-bottom:1px solid black" />
+                  <div style="margin-left: 75px; font-weight : 900; font-size: 12px; text-align:" />
+                </div>
+
+                <br />
+              </div>
+            </div>
+            </div>
+          </t>
+        </t>
+        </t>
+      </xpath>
+    </template>
+
+  </data>
+</odoo>

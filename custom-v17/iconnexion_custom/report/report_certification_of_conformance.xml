@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_certification_of_conformance_template">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+                        <div class="page">
+                            <style>
+                                td {
+                                    border: 1px solid black;
+                                }
+                            </style>
+                            <div class="header">
+                                <div class="row mt32 mb32">
+                                    <div class="col-auto">
+                                        <img style="width : 100%; max-height:55mm; max-width:55mm;margin-left:0mm;margin-top:4mm;"
+                                            src="/iconnexion_custom/static/src/img/icon.png" />
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt32 mb32">
+                                <div class="col-auto">
+                                    <h1 style="text-align: center;">CERTIFICATE OF CONFORMANCE</h1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p style="width:96%;font-size:15px;margin-left:15px;">iConnexion Asia Pte Ltd hereby
+                                    certifies that all product listed is in conformance with the purchase order
+                                    requirements, and applicable specifications and drawings as stated below:</p>
+                            </div>
+                            <table style="font-size : 14px; width:100%;border-collapse: collapse;;margin-top:-13px;">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Customer Name</th>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Customer Purchase Order Number</th>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Customer Part Number</th>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Mfr Part Number</th>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Description</th>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Datecode (YYWW)</th>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Batch No</th>
+                                        <th
+                                            style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;padding:7px;">
+                                            Shipment Quantity</th>
+                                        <!--<th style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;">Shipper Line Item</th>-->
+                                        <!--<th style="border: 1px solid black;height: 70px; background-color: #A9A9A9;font-size:14px;">Serial Number(s)</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.move_line_ids_without_package" t-as="move">
+                                        <tr>
+                                            <td>
+                                                <p t-field="o.sale_id.partner_id.name" />
+                                            </td>
+                                            <td>
+                                                <t t-if="o.sale_id">
+                                                    <p t-field="o.sale_id.client_order_ref" />
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <p t-field="move.move_id.name" />
+                                            </td>
+                                            <td>
+                                                <p t-field="move.product_id.name" />
+                                            </td>
+                                            <td>
+                                                <p t-field="move.product_id.description_mpn" />
+                                            </td>
+                                            <td>
+                                                <p t-field="move.dc" />
+                                            </td>
+                                            <td>
+                                                <t t-if="move.lot_id">
+                                                    <p t-field="move.lot_id" />
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <p t-field="move.qty_done" t-options="{'widget': 'integer'}" />
+                                            </td>
+                                            <!--<td/>-->
+                                            <!--<td/>-->
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <br />
+                            <div class="clearfix">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div class="remarks" style="margin-left:5px;">
+                                            <p stlye="font-size:17px;">Remarks:</p>
+                                            <div style="border-bottom: 1px solid black;" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="row">-->
+                                <!--    <div class="col-auto">-->
+                                <!--    <div class="agent" style="margin-left:5px;">-->
+                                <!--        <p stlye="font-size:17px;">Shipping Agent:</p>-->
+                                <!--        <div style="border-bottom: 1px solid black;"/>-->
+                                <!--    </div>-->
+                                <!--    </div>-->
+                                <!--</div>-->
+                                <br />
+                                <div class="row">
+                                    <div class="col-auto"
+                                        style="margin-left:15px;margin-right:15px;text-align: center;font-size:19px;border:1px solid black;">
+                                        <p>Substantiating evidence will remain on file for the duration specified by the
+                                            contractual requirements. This data is available for review by authorized
+                                            customer representatives.</p>
+                                    </div>
+                                </div>
+
+                                <!--  </div>-->
+                                <!--  <div class="row">-->
+                                <!--  <div class="col-4">-->
+                                <!--  <div class="signature" style="">-->
+                                <!--      <p stlye="font-size:17px">Signature:</p>-->
+                                <!--      <div style="border-bottom: 1px solid black"/>-->
+                                <!--  </div>-->
+                                <!--  </div>-->
+                                <!--  <div class="col-4">-->
+                                <!--  <div class="print_name">-->
+                                <!--      <p stlye="font-size:17px;font-weight: bold;">Print Name:</p>-->
+                                <!--      <div style="border-bottom: 1px solid black"/>-->
+                                <!--  </div>-->
+                                <!--  </div>-->
+                                <!--  </div>-->
+                                <!--  <div class="row">-->
+                                <!--  <div class="col-4" style="">-->
+                                <!--  <div class="date">-->
+                                <!--      <p stlye="font-size:17px;">Date:</p>-->
+                                <!--      <div style="border-bottom: 1px solid black"/>-->
+                                <!--  </div>-->
+                                <!--  </div>-->
+                                <!--  <div class="col-4" style="margin-top:16px;">-->
+                                <!--  <div class="title">-->
+                                <!--      <p stlye="font-size:17px;">Title:</p>-->
+                                <!--      <div style="border-bottom: 1px solid black"/>-->
+                                <!--  </div>-->
+                                <!--  </div>-->
+
+                                <!--</div>-->
+                                <br />
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="col-auto" style="margin-top:10px;">
+                                <p style="font-size:17px;">*THIS IS COMPUTER GENERATED COPY AND DOES NOT REQUIRE A
+                                    MANUAL SIGNATURE</p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+
+
+        </template>
+
+        <record id="iconnexion_paperformat_us" model="report.paperformat">
+            <field name="name">US Letter</field>
+            <field name="default" eval="True" />
+            <field name="format">Letter</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">35</field>
+            <field name="margin_bottom">30</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="report_certification_of_conformance" model="ir.actions.report">
+            <field name="name">Certificate of Conformance</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">iconnexion_custom.report_certification_of_conformance_template</field>
+            <field name="report_file">iconnexion_custom.report_certification_of_conformance_template</field>
+            <field name="binding_model_id" search="[('model', '=', 'stock.picking')]"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="report_certification_of_conformance" model="ir.actions.report">
+            <field name="paperformat_id" ref="iconnexion_paperformat_us" />
+            <field name="groups_id" eval="[(4, ref('iconnexion_custom.group_iconnexion_company'))]" />
+        </record>
+
+    </data>
+</odoo>

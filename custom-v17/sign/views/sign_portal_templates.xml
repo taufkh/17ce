@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sign_request_portal" name="Sign Request Portal">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3 t-esc="sign_request.name"/>
+                <p>Status: <strong t-esc="sign_request.state"/></p>
+                <ul class="list-group mt-3">
+                    <t t-foreach="sign_request.request_item_ids" t-as="item">
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span><t t-esc="item.partner_id.name"/> (<t t-esc="item.role"/>)</span>
+                                <span t-esc="item.state"/>
+                            </div>
+                            <t t-if="item.state != 'signed' and sign_request.state == 'sent'">
+                                <form t-attf-action="/sign/request/#{sign_request.access_token}/sign/#{item.id}" method="post" class="row g-2">
+                                    <div class="col-md-4">
+                                        <input type="text" name="otp" class="form-control" placeholder="OTP code" required="1"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="signature" class="form-control" placeholder="Type full name as signature" required="1"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary w-100" type="submit">Sign</button>
+                                    </div>
+                                </form>
+                            </t>
+                        </li>
+                    </t>
+                </ul>
+            </div>
+        </t>
+    </template>
+</odoo>

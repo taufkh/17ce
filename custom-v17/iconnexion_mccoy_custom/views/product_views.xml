@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_icon_mccoy_odes_accounting_product_template" model="ir.ui.view">
+        <field name="name">view.icon.mccoy.odes.accounting.product.template</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="odes_accounting.view_odes_product_template_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='purchase_history']" position="after">
+                <page string="Quotation History" name="quotation_history" groups="iconnexion_custom.group_iconnexion_company">
+                    <field name="quotation_history_ids">
+                        <tree>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="date" widget="date"/>
+                            <field name="order_id" optional="hide"/>
+                            <field name="partner_id" optional="hide"/>
+                            <field name="user_id" optional="hide"/>
+                            <field name="product_id"/>
+                            <field name="moq"/>
+                            <field name="qty"/>
+                            <field name="price_unit" digits="[42,4]" options="{'currency_field': 'currency_id'}"/>
+                            <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>      
+                            <field name="state" optional="hide"/>
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <group>
+                                    <field name="order_id"/>
+                                    <field name="partner_id"/>                    
+                                    <field name="user_id"/>
+                                    </group>
+                                    <group>
+                                    <field name="date" widget="date"/>
+                                    <field name="currency_id"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_product_template_form_inherit_product_product_template_form_view" model="ir.ui.view">
+        <field name="name">iconn.mccoy.product.template.form.inherit.product.product.template.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/label[@for='list_price']" position="attributes">
+                <attribute name="groups">iconnexion_mccoy_custom.group_iconnexion_view_cost_price</attribute>
+            </xpath>
+            <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/div[@name='pricing']" position="attributes">
+                <attribute name="groups">iconnexion_mccoy_custom.group_iconnexion_view_cost_price</attribute>
+            </xpath>
+            <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/label[@for='standard_price']" position="attributes">
+                <attribute name="groups">iconnexion_mccoy_custom.group_iconnexion_view_cost_price</attribute>
+            </xpath>
+             <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/div[@name='standard_price_uom']" position="attributes">
+                <attribute name="groups">iconnexion_mccoy_custom.group_iconnexion_view_cost_price</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_product_template_form_inherit_mccoy_custom_mccoy_custom_product_template_form_view" model="ir.ui.view">
+        <field name="name">iconn.mccoy.product.template.form.inherit.mccoy.custom.mccoy.custom.product.template.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="mccoy_custom.mccoy_custom_product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='avg_cost']" position="attributes">
+                <attribute name="groups">iconnexion_mccoy_custom.group_iconnexion_view_cost_price</attribute>
+            </xpath>
+            <xpath expr="//field[@name='total_cost']" position="attributes">
+                <attribute name="groups">iconnexion_mccoy_custom.group_iconnexion_view_cost_price</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_iconn_mccoy_req_new_part_number_wizard_form_inherit_iconnexion_custom_req_new_part_number_wizard_view_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.req.new.part.number.wizard.form.inherit.iconnexion.custom.req.new.part.number.wizard.view.form</field>
+        <field name="model">req.new.part.number.wizard</field>
+        <field name="inherit_id" ref="iconnexion_custom.req_new_part_number_wizard_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='brand_id']" position="replace">
+                <field name="brand_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" domain="[('company_id','=',allowed_company_ids)]"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

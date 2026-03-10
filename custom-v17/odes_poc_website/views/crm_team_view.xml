@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="odes_crm_team_view" model="ir.ui.view">
+            <field name="name">odes.crm.team.form.inherit</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="priority">12</field>
+            <field name="arch" type="xml">
+                <xpath expr='//notebook' position="inside">
+                    <page name="Sub Channel" string="Sub Channel" >
+                        <field name="teamList_ids">
+                            <tree editable="bottom">
+                                    <field name="name"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                    
+                <xpath expr="//div[@name='options_active']" position="inside">
+                    <div class="o_row" style="display:inherit">
+                        <field name="available_in_website"/><label for="available_in_website"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+        
+        <record id="odes_crm_lead_view" model="ir.ui.view">
+            <field name="name">odes.crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="priority">12</field>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='team_id']" position="after">
+                        <field name="list_ids" widget="many2many_tags"/>
+                    </xpath>
+                    
+                
+            </field>
+        </record>
+        
+        
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+        <template id="message_user_n_team_assigned">
+            <p style="margin: 0px;">
+                <span>Dear <t t-esc="object.user_id.sudo().name"/><t t-if="object.team_id.sudo()"> and <t t-esc="object.team_id.sudo().name"/></t>,</span><br />
+                <span style="margin-top: 8px;">You have been assigned to the <t t-esc="model_description or 'document'"/> <t t-esc="object.display_name"/>.</span>
+            </p>
+            <p style="margin-top: 24px; margin-bottom: 16px;">
+                <a t-att-href="access_link" t-att-data-oe-model="object._name" t-att-data-oe-id="object.id" style="background-color:#875A7B; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">
+                        View <t t-esc="model_description or 'document'"/>
+                </a>
+            </p>
+        </template>
+    </data>
+
+    <record id="odes_view_incoming_mail_form_inherit" model="ir.ui.view">
+        <field name="name">odes_view_incoming_mail_form_inherit</field>
+        <field name="model">fetchmail.server</field>
+        <field name="inherit_id" ref="fetchmail.view_email_server_form"/>
+        <field name="arch" type="xml">
+            <field name="object_id" position="after">
+                <field name="default_salesperson_id" required="1" invisible="not is_email_crm_country"/>
+                <field name="default_salesteam_id" invisible="not is_email_crm_country"/>
+                <field name="default_country_id" invisible="not is_email_crm_country"/>
+                <field name="default_company_id" invisible="not is_email_crm_country"/>
+                <field name="is_email_crm_country" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="odes_view_incoming_mail_form_action" model="ir.actions.act_window">
+            <field name="name">Incoming Mail Servers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fetchmail.server</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('object_id.model','=','odes.mail.to.crm.wizard')]</field>
+            <field name="context">{'incoming_mail_crm':1}</field>
+        </record>
+
+
+        <menuitem id="odes_view_incoming_mail_crm_menu" name="Incoming Mail Servers" parent="crm.crm_menu_config" action="odes_view_incoming_mail_form_action" sequence="70" />
+
+</odoo>

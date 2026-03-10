@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_crm_case_tree_view_leads_inherit" model="ir.ui.view">
+        <field name="name">odes.crm.lead.lead.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="team_id" position="after">
+                <field name="lead_stage_id"/>
+                <field name="stage_latest_update"/>
+                <field invisible="True" name="stage_total_days"/>
+
+            </field>
+        </field>
+    </record>
+
+    <record id="odes_crm_case_form_view_oppor_inherit" model="ir.ui.view">
+        <field name="name">odes.sale.crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="sale_amount_total" position="replace">
+                <field name="sale_amount_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </field>
+
+            <button name="action_sale_quotations_new" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+        </field>
+    </record>
+
+    <record id="odes_crm_lead_view_form" model="ir.ui.view">
+        <field name="name">odes.crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <field name="team_id" position="attributes">
+                <attribute name="widget">ztree_select</attribute>
+            </field>
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object" name="get_attachment" icon="fa-files-o">
+                    <div class="o_stat_info">
+                        <field name="attachment_count" class="o_stat_value"/>
+                        <span class="o_stat_text" invisible="attachment_count &lt; 2"> Attachments</span>
+                        <span class="o_stat_text" invisible="attachment_count &gt; 1"> Attachment</span>
+                    </div>
+                </button>
+            </div>
+            <button name="action_schedule_meeting" position="attributes">
+                <attribute name="context">{'from_lead': 1}</attribute>
+            </button>
+            <!-- <field name="team_id" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="domain">[('new_member_ids.id', '=', user_id)]</attribute>
+            </field> -->
+            <field name="stage_id" position="attributes">
+                <attribute name="domain">[('company_ids', '=', company_id)]</attribute>
+            </field>
+            <page name="internal_notes" position="before">
+                <field name="is_odes" invisible="1"/>
+		<field name="is_iconnexion" invisible="1" />
+                <page name="project" string="Project" invisible="is_odes">
+                    <group>
+                        <group>
+                            <field name="project_name" required="not is_odes"/>
+                            <!-- <field name="application" required="not is_odes"/> -->
+                            <field name="application_id" required="not is_odes" options="{'no_open': 1, 'no_create': 1}"/>
+                            <label for="end_partner_id"  invisible="is_iconnexion"/>
+                            <div class="d-flex" invisible="is_iconnexion">
+                                <field name="end_partner_id" options="{'no_open':True,'no_create': True}" required="not is_odes"/>
+                            </div>
+                             <label for="end_partner_char"  invisible="not is_iconnexion"/>
+                            <div class="d-flex" invisible="not is_iconnexion">
+                                <field name="end_partner_char"/>                               
+                            </div>
+
+                            <field name="end_product_id" invisible="1" required="not is_odes"/>
+                            <field name="end_product_display_name" required="not is_odes"/>
+                            <field name="contract_site" required="not is_odes"/>
+                            <field name="design_location"/>
+                            <field name="annual_qty" required="not is_odes"/>
+                            <field name="mass_schedule_date" required="not is_odes"/>
+                        </group>
+                        <group>
+                            <field name="pilot_qty"/>
+                            <field name="pilot_schedule_date" required="not is_odes"/>
+                            <field name="project_status" required="not is_odes"/>
+                            <field name="project_lifespan"/>
+                            <field name="estimated_closing_date"/>
+                        </group>
+                        <separator name="competitor_info" string="Competitor Information"/>
+                        <field name="odes_competitor_ids">
+                            <tree editable="bottom">
+                                <field name="name" required="1"/>
+                                <field name="manufacture" required="1"/>
+                                <field name="price" required="1"/>
+                            </tree>
+                        </field>
+                        <separator name="part_info" string="Part Information"/>
+                        <field name="odes_part_ids">
+                            <tree editable="bottom">
+                                <field name="name" required="1" invisible="1"/>
+                                <field name="product_id" required="1"/>
+                                <field name="manufacture" required="1"/>
+                                <field name="price" invisible="True" required="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </page>
+            <notebook position="inside">
+                <page name="page_minutes_record" string="Minutes Record">
+                    <field name="event_ids" readonly="1">
+                        <tree>
+                            <field name="name" string="Subject" readonly="1"/>
+                            <field name="allday" invisible="True"/>
+                            <field name="start" string="Start Date"/>
+                            <field name="stop" string="End Date"/>
+                            <field name="duration" widget="float_time" readonly="1"/>
+                            <button name="view_event" string="View" type="object"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="page_lead_history" string="Opp's History">
+                    <separator string="Lead History"/>
+                    <field name="crm_lead_history_ids">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="status"/>
+                            <field name="start_datetime" widget="date"/>
+                            <field name="end_datetime" widget="date"/>
+                            <field name="days_count"/>
+                        </tree>
+                    </field>
+                    <separator string="Opportunity History" invisible="type == 'lead'"/>
+                    <field name="odes_stage_ids" invisible="type == 'lead'">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="stage_name"/>
+                            <field name="start_datetime" widget="date"/>
+                            <field name="end_datetime" widget="date"/>
+                            <field name="backward_reason"/>
+                            <field name="days_count"/>
+                        </tree>
+                    </field>
+                    <separator string="Possibility History"/>
+                    <field name="odes_lead_history_ids">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="create_date" string="Changed on" widget="date"/>
+                            <field name="possibility"/>
+                            <field name="history_reason"/>
+                        </tree>
+                    </field>
+                    <separator string="Expected Revenue History" invisible="type == 'lead'"/>
+                    <field name="odes_revenue_history_ids" invisible="type == 'lead'">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="create_date" string="Changed on" widget="date"/>
+                            <field name="amount" widget="monetary" options="{'currency_field': 'company_currency'}" required="1"/>
+                            <field name="change_reason"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+
+            <!-- BUSINESS GROUPING -->
+            <field name="company_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <!-- v16: h2 no longer uses div.col columns; insert Business Grouping after h1 instead -->
+            <xpath expr="//div[hasclass('oe_title')]/h1" position="after">
+                <div>
+                    <div>
+                        <label for="company_id" string="Business Grouping"/>
+                    </div>
+                    <div class="o_row">
+                        <field name="company_id" required="1" readonly="id != 0" options="{'no_open': 1, 'no_create': 1}"/>
+                    </div>
+                </div>
+            </xpath>
+
+            <label for="expected_revenue" position="replace">
+                <div class="text-center oe_read_only">
+                    <label for="currency_revenue" string="Expected Revenue"/>
+                </div>
+                <div class="oe_edit_only">
+                    <label for="currency_revenue" string="Expected Revenue"/>
+                </div>
+            </label>
+
+            <!-- REPLACE PROBABLITITY TO POSSIBILITY -->
+            <xpath expr="//label[@for='probability']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@id='probability']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@id='probability']" position="after">
+                <div>
+                    <label for="possibility"/>
+                </div>
+                <div class="o_row d-flex">
+                    <field name="id" invisible="1"/>
+                    <field name="possibility" readonly="id != 0" required="id == 0"/>
+                    <button name="%(odes_custom.action_odes_crm_lead_history_wizard)d" type="action" string="Change" invisible="id == 0"/>
+                </div>
+            </xpath>
+
+
+            <!-- REPLACE EXPECTED REVENUE TO ADD HISTORY -->
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="invisible">1</attribute>
+                <attribute name="readonly">1</attribute>
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='expected_revenue']" position="after">
+                <span class="oe_read_only">
+                    <field name="currency_revenue" required="1"/>
+                    <field name="currency_id" widget="selection" required="type == 'opportunity'"/>
+                    <button name="%(odes_custom.action_odes_crm_revenue_history_wizard)d" type="action" string="Change" invisible="id == 0"/>
+                </span>
+                <span class="oe_edit_only" invisible="id == 0">
+                    <field name="currency_revenue" required="1" readonly="id != 0"/>
+                    <field name="currency_id" widget="selection" readonly="id != 0" required="type == 'opportunity'"/>
+                    <button name="%(odes_custom.action_odes_crm_revenue_history_wizard)d" type="action" string="Change" invisible="id == 0"/>
+                </span>
+                <div class="oe_edit_only o_row" invisible="id != 0">
+                    <field name="currency_revenue" required="1"/>
+                    <field name="currency_id" widget="selection" required="type == 'opportunity'"/>
+                    <button name="%(odes_custom.action_odes_crm_revenue_history_wizard)d" type="action" string="Change" invisible="id == 0"/>
+                </div>
+            </xpath>
+
+
+            <!-- Odoo 17: inject custom lead action buttons at header level -->
+            <xpath expr="//header" position="inside">
+                <button name="%(crm.crm_lead_lost_action)d" string="Mark as Lost" type="action" invisible="type == 'opportunity' or (probability == 0 and not active)"/>
+                <button name="%(odes_custom.action_odes_crm_backward_stage_wizard)d" type="action" string="Stage Backward" invisible="(not id or type == 'lead') or not active"/>
+                <button name="action_copy_end_product" string="copy end product" type="object" invisible="1"/>
+                <button invisible="True" name="action_copy_end_application" string="copy end application" type="object"/>
+            </xpath>
+            <!-- v16: group opportunity_info removed — this was a no-op anyway -->
+
+            <group name="lead_priority" position="inside">
+                <field name="lead_stage_id" options="{'no_open': 1, 'no_create': 1}"/>
+            </group>
+            <!-- TOTAL DAYS IN HISTORY -->
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="currency_rate" readonly="1" digits="[12,12]" invisible="1"/>
+                <field name="expected_revenue2" invisible="1"/>
+                <field invisible="True" name="stage_total_days" readonly="1"/>
+                <field name="stage_latest_update" readonly="1"> Days</field>
+            </xpath>
+
+            <xpath expr="//group[@name='lead_partner']//field[@name='partner_id']" position="attributes">
+                <attribute name="context">
+                    {
+                        'default_name': contact_name,
+                        'default_street': street,
+                        'default_city': city,
+                        'default_state_id': state_id,
+                        'default_zip': zip,
+                        'default_country_id': country_id,
+                        'default_function': function,
+                        'default_phone': phone,
+                        'default_mobile': mobile,
+                        'default_email': email_from,
+                        'default_user_id': user_id,
+                        'default_team_id': team_id,
+                        'default_website': website,
+                        'show_vat': True,
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']//field[@name='partner_id']" position="attributes">
+                <attribute name="context">
+                    {
+                        'res_partner_search_mode': type == 'opportunity' and 'customer' or False,
+                        'default_name': contact_name or partner_name,
+                        'default_street': street,
+                        'default_is_company': type == 'opportunity' and contact_name == False,
+                        'default_company_name': type == 'opportunity' and partner_name,
+                        'default_street2': street2,
+                        'default_city': city,
+                        'default_title': title,
+                        'default_state_id': state_id,
+                        'default_zip': zip,
+                        'default_country_id': country_id,
+                        'default_function': function,
+                        'default_phone': phone,
+                        'default_mobile': mobile,
+                        'default_email': email_from,
+                        'default_user_id': user_id,
+                        'default_team_id': team_id,
+                        'default_website': website,
+                        'show_vat': True,
+                    }
+                </attribute>
+            </xpath>
+
+            <field name="user_id" position="before">
+                <field name="source" required="0"/>
+                <field name="social_media" invisible="source != 'social_media'" required="source == 'social_media'"/>
+            </field>
+
+            <xpath expr="//page[@name='internal_notes']" position="inside">
+                <field name="project_ids" invisible="1"/>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object" name="action_crm_project_view" icon="fa-puzzle-piece" invisible="type == 'lead'">
+                    <field string="Project" name="project_count" widget="statinfo"/>
+                </button>
+            </div>
+
+        </field>
+    </record>
+
+    <record id="odes_crm_lead_view_tree" model="ir.ui.view">
+        <field name="name">odes.crm.lead.view.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field invisible="True" name="stage_total_days"  string="Total Days"/>
+                <field name="stage_latest_update" optional="show"  string="Latest Update"/>
+            </field>
+            <field name="expected_revenue" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="expected_revenue" position="after">
+                <field name="currency_revenue" string="Expected Revenue"/>
+                <field name="currency_id" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="odes_crm_case_kanban_view_leads_inherit" model="ir.ui.view">
+        <field name="name">odes.crm.lead.kanban.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="group_create">0</attribute>
+            </kanban>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <!-- <b><span>Total: </span><field name="stage_total_days"/><span> Days</span></b><br/> -->
+                <b invisible="sale_order_count == 0"><span>Total SO: </span><field name="sale_order_count"/></b><br/>
+                <b><span>Latest Update: </span><field name="stage_latest_update"/><span> Days Ago</span></b><br/>
+                <field name="minutes_record" widget="html"/>
+            </xpath>
+            <field name="expected_revenue" position="after">
+                <field name="currency_revenue"/>
+                <field name="currency_id"/>
+            </field>
+            <xpath expr="//div[hasclass('o_kanban_record_subtitle')]//field[@name='expected_revenue']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_record_subtitle')]//field[@name='expected_revenue']" position="after">
+                <field name="currency_revenue" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="odes_quick_create_opportunity_form_inherit" model="ir.ui.view">
+        <field name="name">odes.crm.lead.form.quick_create.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="priority">1000</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+        <field name="arch" type="xml">
+            <label for="expected_revenue" position="before">
+                <label for="currency_revenue" string="Expected Revenue"/>
+                <div class="o_row">
+                    <field name="currency_revenue" class="oe_inline" required="1"/>
+                    <field name="currency_id" class="oe_inline" required="1" widget="selection"/>
+                </div>
+            </label>
+            <label for="expected_revenue" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+            <field name="expected_revenue" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="partner_id" position="before">
+                <field name="is_odes" invisible="1"/>
+                <field name="user_id" invisible="1"/>
+                <field name="company_id" string="Business Grouping" required="1" readonly="id != 0" options="{'no_open': 1, 'no_create': 1}"/>
+                <field name="possibility" required="1"/>
+            </field>
+            <field name="partner_id" position="attributes">
+                <attribute name="context">{'res_partner_search_mode': 'customer', 'show_vat': True, 'default_user_id': user_id}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.menu" id="crm.crm_menu_sales">
+        <field name="sequence">5</field>
+    </record>
+
+    <record model="ir.ui.menu" id="crm.crm_menu_leads">
+        <field name="sequence">4</field>
+    </record>
+
+
+    <record id="odes_crm_lost_reason_view_tree_inherit" model="ir.ui.view">
+        <field name="name">odes.crm.lost.reason.tree.inherit</field>
+        <field name="model">crm.lost.reason</field>
+        <field name="inherit_id" ref="crm.crm_lost_reason_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="is_input"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="odes_view_crm_case_leads_filter_inherit" model="ir.ui.view">
+        <field name="name">odes.crm.lead.search.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="arch" type="xml">
+            <field name="campaign_id" position="after">
+                <field name="lead_stage_id"/>
+            </field>
+            <filter name="source" position="after">
+                <filter string="Lead Stages" name="lead_stage" domain="[]" context="{'group_by':'lead_stage_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="reconciliation.line.match">
+        <t t-jquery="table" t-operation="replace">
+            <style>
+                table thead {
+                    background-color: rgba(72, 118, 255, 0.5);
+                    background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 100%);
+                    border-top: 1px solid rgba(255, 255, 255, 0.2);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 
+                                0 2px 0 rgba(255, 255, 255, 0.2), 
+                                0 3px 0 rgba(255, 255, 255, 0.2), 
+                                0 4px 0 rgba(255, 255, 255, 0.2), 
+                                0 5px 0 rgba(255, 255, 255, 0.2), 
+                                0 6px 0 rgba(255, 255, 255, 0.2);
+                }
+                th[colspan="2"] {
+                    text-align: center;
+                }
+            </style>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Date</th>
+                        <th>Label</th>
+                        <!-- <th>Amount in Currency</th> -->
+                        <th colspan="2">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </t>
+    </t>
+
+
+
+    <t t-extend="reconciliation.line.mv_line">
+        <t t-jquery=".cell_due_date" t-operation="replace">
+            <td class="cell_due_date">
+                <t t-if="typeof(line.id) != 'number' &amp;&amp; line.id">
+                    <span class="badge badge-secondary">New</span>
+                </t>
+                <t t-else="" t-esc="line.date"/>
+            </td>
+        </t>
+        <!-- <t t-jquery=".cell_left" t-operation="before">
+            <td class="cell_right">
+                <t t-if="line.total_amount_currency_str"> (<t t-esc="line.total_amount_currency_str"/>)</t>
+            </td>
+        </t> -->
+        <t t-jquery=".cell_label" t-operation="replace">
+            <td class="cell_label">
+                <t t-if="line.partner_id &amp;&amp; line.partner_id !== state.st_line.partner_id">
+                    <t t-if="line.partner_name.length">
+                        <span class="font-weight-bold" t-esc="line.partner_name"/>:
+                    </t>
+                </t>
+                <t t-esc="line.name"/>
+                <t t-if="line.ref &amp;&amp; line.ref.length"> : </t>
+                <t t-esc="line.ref"/>
+                <t t-if="line.total_amount_currency_str"> - <t t-esc="line.total_amount_currency_str"/></t>
+            </td>
+        </t>
+    </t>
+</templates>
+
+
+
+
+

@@ -1,0 +1,130 @@
+.odes_cookieAcceptBar {
+  	display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: #fff;
+    color: #2a2a2a;
+    padding: 20px 0;
+    z-index: 99999;
+	 box-shadow: 1px 0 7px 3px rgb(14, 14, 14, 0.3);
+}
+.odes_cookieAcceptBar .odes_cookies_content{
+	text-align: left;
+	max-width: 670px;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: top;
+  padding-right: 15px;
+  padding-left: 15px;
+  overflow: hidden;
+}
+
+.odes_cookieAcceptBar .odes_cookies_content .odes_cookies_title {
+  font-weight: bold;
+  font-size: 16px;
+	margin-bottom: 6px;
+}
+.odes_cookieAcceptBar .odes_cookies_content .odes_cookies_text {
+    font-size: 14px;
+}
+.odes_cookieAcceptBar a {
+  color: #2a2a2a;
+  font-weight: bold;
+}
+
+.odes_cookieAcceptBar .cookieAcceptBarConfirm {
+  cursor: pointer;
+  border: none;
+ /* background-color: #0664b8;
+  color: #fff;*/
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 10px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+}
+
+
+
+.sales_teams_child {
+    max-width: 640px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+}
+
+ul.ks-cboxtags {
+    list-style: none;
+    padding: 0px;
+}
+ul.ks-cboxtags li{
+  display: inline;
+}
+ul.ks-cboxtags li label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid rgba(139, 139, 139, .3);
+    color: #adadad;
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 2px 2px;
+    content: "\f067";
+    transition: transform .3s ease-in-out;
+}
+
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+    border: 2px solid #1B66B7;
+    background-color: #1B66B7;
+    color: #fff;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #1B66B7;
+}
+
+
+.o_wblog_post .o_wblog_post_short_tag_section {
+    display: none !important;
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_approval_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">odes.approval.request.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="is_art_result" invisible="1"/>
+            </xpath>
+           <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="readonly">is_art_result</attribute>
+            </xpath>
+            <xpath expr="//field[@name='request_owner_id']" position="attributes">
+                <attribute name="readonly">is_art_result</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="readonly">is_art_result</attribute>
+            </xpath>
+            <field name="date_confirmed" position="after">
+                <field name="result" invisible="not is_art_result" required="is_art_result"/>
+            </field>
+        </field>
+    </record>
+   
+</odoo>

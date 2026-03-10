@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="odes_config_view_form" model="ir.ui.view">
+            <field name="name">odes.config.view.form</field>
+            <field name="model">odes.config</field>
+            <field name="type">form</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml"> 
+                <form string="Odes Configuration" >
+                    <field name="remarks"/>
+                </form>
+            </field>
+        </record>
+
+</odoo>

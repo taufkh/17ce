@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_odes_crm_deadline_change_approvement_tree" model="ir.ui.view">
+        <field name="name">odes.crm.deadline.change.approvement.tree</field>
+        <field name="model">odes.crm.deadline.change.approvement</field>
+        <field name="arch" type="xml">
+            <tree string="Deadline Change Approvement" create="0" edit="0" delete="0">
+                <field name="name" invisible="1" />
+                <field name="project_id" />
+                <field name="req_number" />
+                <field name="requested_date" />
+                <field name="current_deadline" />
+                <field name="new_deadline" />
+                <field name="is_approved_by_coo" readonly="1" />
+                <field name="is_rejected_by_coo" readonly="1" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_deadline_change_approvement_form" model="ir.ui.view">
+        <field name="name">odes.crm.deadline.change.approvement.form</field>
+        <field name="model">odes.crm.deadline.change.approvement</field>
+        <field name="arch" type="xml">
+            <form string="Deadline Change Approvement" create="0" edit="0" delete="0">
+                <header>
+                    <button string="Approve" class="oe_highlight" type="object" name="action_approve" invisible="is_approved_by_coo or is_rejected_by_coo" groups="odes_crm.group_odes_coo" />
+                    <button string="Reject" type="object" name="action_reject" invisible="is_approved_by_coo or is_rejected_by_coo" groups="odes_crm.group_odes_coo" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" />
+                            <field name="requested_date" />
+                            <field name="req_id"/>
+                            <field name="req_number" invisible="1"  />
+                            <field name="approvement_url" invisible="1" />
+                            <field name="company_id" invisible="1" />
+                        </group>
+                        <group>
+                            <field name="current_deadline" />
+                            <field name="new_deadline" />
+                            <field name="is_approved_by_coo" />
+                            <field name="is_rejected_by_coo" />
+                        </group>
+                    </group>
+                    <group>
+                        <separator string="Reason" colspan="4" />
+                        <field name="reason" nolabel="1" />
+                        <separator string="Reason Rejected" colspan="4" invisible="not is_rejected_by_coo" />
+                        <field name="rejected_reason" nolabel="1" invisible="not is_rejected_by_coo" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_deadline_change_request_search" model="ir.ui.view">
+        <field name="name">odes.crm.deadline.change.approvement.search</field>
+        <field name="model">odes.crm.deadline.change.approvement</field>
+        <field name="arch" type="xml">
+            <search string="Deadline Change Requests">
+                <field name="project_id" />
+                <field name="req_number" />
+                <filter string="Approved" name="is_approved_by_coo" domain="[('is_approved_by_coo', '=', True)]" />
+                <filter string="Rejected" name="is_rejected_by_coo" domain="[('is_rejected_by_coo', '=', True)]" />
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_project_id" context="{'group_by': 'project_id'}" />
+                    <filter string="REQ" name="group_req_number" context="{'group_by': 'req_number'}" />
+                    <filter string="Requested Date" name="group_requested_date" context="{'group_by': 'requested_date'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_deadline_change_approvement" model="ir.actions.act_window">
+        <field name="name">Deadline Change Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.crm.deadline.change.approvement</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_odes_crm_deadline_change_request_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click create button to create new deadline change approvement.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_odes_crm_deadline_change_approvement" parent="project.menu_project_config" action="action_odes_crm_deadline_change_approvement" sequence="60"/>
+</odoo>

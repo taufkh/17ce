@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_odes_crm_requirement_task_report_pivot" model="ir.ui.view">
+             <field name="name">odes.crm.requirement.task.report.pivot</field>
+             <field name="model">odes.crm.requirement.task.report</field>
+             <field name="arch" type="xml">
+                 <pivot string="Requirement Tasks Analysis" disable_linking="True" sample="1">
+                    <field name="project" type="row"/>
+                    <field name="period" type="col"/>
+                    <field name="mandays" type="measure"/>
+                 </pivot>
+             </field>
+        </record>
+
+        <record id="view_odes_crm_requirement_task_report_search" model="ir.ui.view">
+            <field name="name">odes.crm.requirement.task.report.search</field>
+            <field name="model">odes.crm.requirement.task.report</field>
+            <field name="arch" type="xml">
+                <search string="Requirement Tasks Analysis">
+                    <field name="user"/>
+                    <field name="project"/>
+                    <field name="stage"/>
+                    <field name="date_deadline"/>
+
+                    <group expand="1" string="Group By">
+                        <filter string="Assigned to" name="user" context="{'group_by': 'user'}"/>
+                        <separator/>
+                        <filter string="Project" name="project" context="{'group_by': 'project'}"/>
+                        <separator/>
+                        <filter string="Team" name="team" context="{'group_by': 'team'}"/>
+                        <filter string="Stage" name="stage" context="{'group_by': 'stage'}"/>
+                        <filter string="Period" name="period" context="{'group_by': 'period'}"/>
+                        <filter string="Period/Month" name="month_period" context="{'group_by': 'month_period'}"/>
+                        <filter string="Requirement" name="requirement_id" context="{'group_by': 'requirement_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_odes_crm_requirement_task_report" model="ir.actions.act_window">
+            <field name="name">Dev Tasks Analysis</field>
+            <field name="res_model">odes.crm.requirement.task.report</field>
+            <field name="view_mode">pivot</field>
+            <field name="search_view_id" ref="view_odes_crm_requirement_task_report_search"/>
+            <field name="context">{'group_by_no_leaf': 1, 'group_by':[]}</field>
+            <field name="help">From this report, you can have an overview of the project with all the manpower used along with other useful information.</field>
+        </record>
+
+        <menuitem id="menu_odes_crm_requirement_task_report" name="Dev Tasks Analysis" parent="project.menu_project_report" action="action_odes_crm_requirement_task_report" sequence="55"/>
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- email template reminder forecasted -->
+    <record id="odes_forecasted_invoiced_information_reminder" model="mail.template">
+        <field name="name">Forecasted Invoiced Information Reminder by Email</field>
+        <field name="model_id" ref="odes_accounting.model_sale_invoice_forecast" />
+        <field name="email_to">
+            % for user in object.get_user_list():
+                ${user.partner_id.email},
+            % endfor
+        </field>
+        <field name="subject">Forecasted Invoiced Information Reminder</field>
+        <field name="auto_delete" eval="True" />
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <h1>Forecasted Invoiced Information Reminder</h1>
+                    <br/>
+                    <p>
+                        Dear Sir/Madam,
+                        <br/>
+                        Reminder that there is an invoice that needs to be made tomorrow.
+                        <br/>
+                        Below are the sale order and quotation list:
+                    </p>
+                    <br/><hr/><br/>
+                    <table class="table table-condensed table-sm o_main_table" style="font-size: 10px;">
+                    <tr>
+                        <th style="text-align:center;">Sale Order</th>
+                        <th style="text-align:center;">Date</th>
+                        <th style="text-align:center;">Amount</th>
+                        <th style="text-align:center;">Percentage (%)</th>
+                    </tr>
+                    % for line in object.sale_list_reminder():
+                        <tr>
+                            <td><strong>${line.sale_id.name}</strong></td>
+                            <td style="text-align:center;"><strong>${line.date_invoice}</strong></td>
+                            <td style="text-align:center;"><strong>${line.amount}</strong></td>
+                            <td style="text-align:center;"><strong>${line.percent_amount} %</strong></td>
+                        </tr>
+                    % endfor
+                </table>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

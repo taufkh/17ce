@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="odes_crm_pipeline_wizard2" model="ir.ui.view">
+        <field name="name">odes.crm.pipeline.wizard2</field>
+        <field name="model">odes.crm.pipeline.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="My Pipeline">
+                <group>
+                    <field name="crm_team_id" required="1" domain="[('new_member_ids.id', '=', uid)]" options="{'no_open': 1, 'no_create': 1}"/>
+                    <field name="crm_stage_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <footer>
+                    <button name="action_continue" string="Continue" class="oe_highlight" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_pipeline_wizard" model="ir.actions.act_window">
+        <field name="name">My Pipeline</field>
+        <field name="res_model">odes.crm.pipeline.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- <record id="crm.crm_menu_root" model="ir.ui.menu">
+        <field name="action" ref="odes_custom.ir_actions_crm_dashboard_2"/>
+    </record> -->
+    
+    <!-- <menuitem name="My Pipeline" parent="crm.crm_menu_sales" id="odes_crm_pipeline_wizard_menu" action="action_odes_crm_pipeline_wizard" sequence="1"/> -->
+
+    <menuitem id="unused_menu" name="Unused Menu" parent="base.menu_administration" sequence="50"/>
+    <menuitem id="crm.menu_crm_opportunities" name="My Pipeline" parent="crm.crm_menu_sales" sequence="1" action="crm.action_your_pipeline"/>
+</odoo>

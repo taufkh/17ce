@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_imin_hr_employee_tree" model="ir.ui.view">
+        <field name="name">imin.hr.employee.tree</field>
+        <field name="model">imin.hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="iMin HR Employees" create="0" edit="0">
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="date"/>
+                <field name="mobile"/>
+                <field name="gender"/>
+                <field name="imin_id"/>
+                <field name="staff_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_imin_hr_employee_form" model="ir.ui.view">
+        <field name="name">imin.hr.employee.form</field>
+        <field name="model">imin.hr.employee</field>
+        <field name="arch" type="xml">
+            <form string="iMin HR Employees" create="0" edit="0">
+                <sheet>
+                    <field name="pic" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+
+                    <group string="Basic Information">
+                        <group>
+                            <field name="department_id"/>
+                            <field name="date"/>
+                            <field name="member_type"/>
+                            <field name="gender"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="tel_area_code"/>
+                            <field name="mobile"/>
+                            <field name="position"/>
+                        </group>
+                    </group>
+
+                    <group string="Technical Information">
+                        <group>
+                            <field name="imin_id"/>
+                            <field name="staff_id"/>
+                            <field name="ext_number"/>
+                            <field name="imin_create_time"/>
+                        </group>
+                        <group>
+                            <field name="imin_org_id"/>
+                            <field name="imin_department_id"/>
+                            <field name="org_queue"/>
+                            <field name="imin_update_time"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_imin_hr_employee" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">imin.hr.employee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smmiling_face">
+                Click on fetch iMin HR Employees to get records.
+            </p>
+        </field>
+    </record>
+    
+    <menuitem id="menu_imin_hr_employee" parent="imin_hr_custom.menu_imin_hr_employee_master" action="action_imin_hr_employee" sequence="10"/>
+</odoo>

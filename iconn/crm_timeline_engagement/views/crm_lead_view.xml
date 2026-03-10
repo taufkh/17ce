@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_crm_lead_form_timeline_fields" model="ir.ui.view">
+        <field name="name">crm.lead.form.timeline.fields</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Timeline">
+                    <group string="Timeline &amp; Engagement Info">
+                        <field name="x_is_won_stage" invisible="1"/>
+                        <field name="x_is_lost" invisible="1"/>
+                        <field name="x_project_lifespan"
+                            readonly="x_is_won_stage or x_is_lost"/>
+                        <field name="x_estimated_closing_date"
+                            readonly="x_is_won_stage or x_is_lost"/>
+                        <field name="x_engagement_date"
+                            readonly="x_is_won_stage or x_is_lost"/>
+                        <field name="x_sample_quantity"
+                            readonly="x_is_won_stage or x_is_lost"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_quick_create_possibility" model="ir.ui.view">
+        <field name="name">crm.lead.quick.create.possibility</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="x_possibility"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

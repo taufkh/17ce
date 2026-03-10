@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="odes_crm_lead_history_wizard2" model="ir.ui.view">
+        <field name="name">odes.crm.lead.history.wizard2</field>
+        <field name="model">odes.crm.lead.history.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Reason">
+                <group>
+                    <group invisible="1">
+                        <field name="lead_id"/>
+                    </group>
+                    <group class="oe_title">
+                        <field name="possibility" required="1"/>
+                        <field name="history_reason" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_change_possibility" type="object" class="oe_highlight" string="Change"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_lead_history_wizard" model="ir.actions.server">
+        <field name="name">Input Reason</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_lead_history_wizard()</field>
+    </record>
+
+</odoo>

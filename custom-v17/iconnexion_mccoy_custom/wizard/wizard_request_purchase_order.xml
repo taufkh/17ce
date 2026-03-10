@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_icon_mccoy_request_purchase_order_wizard_form_inherit_iconnexion_custom_icon_request_purchase_order_wizard_view_form" model="ir.ui.view">
+        <field name="name">icon.mccoy.request.purchase.order.wizard.form.inherit.iconnexion.custom.icon.request.purchase.order.wizard.view.form</field>
+        <field name="model">icon.request.purchase.order.wizard</field>
+        <field name="inherit_id" ref="iconnexion_custom.icon_request_purchase_order_wizard_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="replace">
+                <form>
+                    <group>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id" required="1"/>
+                                <field name="name"/>
+                                <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"
+                                    placeholder="Name, TIN, Email, or Reference"
+                                />
+                                <field name="available_stock" string="Buffer Stock"/>
+                                <field name="so_qty" invisible="0" readonly="1"/>
+                                <field name="linked_qty" invisible="0" readonly="1"/>
+                                <field name="qty_demand" invisible="0" readonly="1"/>
+                                <field name="qty"/>
+                                <field name="price" digits="[42,4]"/>
+                                <field name="icpo_request_deliver_date"/>
+                                <!-- <field name="receipt_line_ids" widget="many2many_tags" options="{'no_create': True, 'limit': 1}" domain="[('product_id', '=', product_id),('picking_id.picking_type_code', '=', 'incoming')]"/> -->
+                                <!-- <field name="is_create_po" string="Create PO" optional="show"/> -->
+                                <field name="picking_id" invisible="1"/>
+                                <field name="icon_sale_id" invisible="1"/>
+                                <field name="move_id" invisible="1"/>
+                                <field name="icon_sale_line_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <!-- <button name="action_link_buffer_stock"
+                            string="Link Buffer Stock"
+                            type="object"
+                            class="btn-primary"/> -->
+                        <button name="action_create_po" string="Create PO" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="icon_request_purchase_order_wizard_view_form_action" model="ir.actions.act_window">
+        <field name="name">Create PO (Iconnexion)</field>
+        <field name="res_model">icon.request.purchase.order.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_view_types">list</field>
+    </record> -->
+
+   
+</odoo>

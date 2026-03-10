@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="odes_custom.report_saleorder_document" inherit_id="sale.report_saleorder_document">
+    <!-- <xpath expr="//t[@t-call='web.external_layout']" position="replace"> -->
+<!--         <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/> -->
+<!--         </t> -->
+<!--         <t t-foreach="docs" t-as="doc">
+            <t t
+        </t> -->
+    <!-- </xpath> -->
+</template>
+
+
+<template id="report_saleorder" inherit_id="sale.report_saleorder">
+    <!-- <xpath expr="//t[@t-call='web.html_container']" position="replace">
+      <t t-call="web.html_container">
+          <t t-foreach="docs" t-as="doc">
+              <t t-foreach="docs" t-as="o">
+                  <table style="width:100%">
+                      <tr>
+                          <td>
+                              <img t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 70px;"/><br/>
+                          </td>
+                          <td style="text-align:right">
+                              <h1>Purchase Order</h1>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td style="vertical-align:top">
+                              <span t-field="o.company_id"/><br/>
+                              <span t-field="o.company_id.street"/><br/>
+                              <span t-field="o.company_id.city"/>, <span t-field="o.company_id.state_id"/> <span t-field="o.company_id.zip"/><br/>
+                              <span t-field="o.company_id.country_id"/><br/>
+                              <br/>
+                              Tel:  <span t-field="o.company_id.phone"/><br/>
+                              Fax:  <span t-field="o.company_id.phone"/><br/>
+                              <br/>
+                              <br/>
+                              <br/>
+                          </td>
+                          <td>
+                            <table style="width:100%; text-align:right">
+                                <tr>
+                                    <td>
+                                        COMPANY REG NO :
+                                    </td>
+                                    <td>
+                                        <span t-field="o.company_id.company_registry"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        GST REG NO :
+                                    </td>
+                                    <td>
+                                        <span t-field="o.company_id.vat"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        P.O DATE :
+                                    </td>
+                                    <td>
+                                        <span t-field="o.date_order"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        P.O NO :
+                                    </td>
+                                    <td>
+                                        <span t-field="o.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        PAYMENT TERMS :
+                                    </td>
+                                    <td>
+                                        <span t-field="o.payment_term_id"/>
+                                    </td>
+                                </tr>
+                                  <tr>
+                                      <td>
+                                          FREIGHT TERMS :
+                                      </td>
+                                      <td>
+                                          PLACEHOLDER
+                                      </td>
+                                  </tr>
+                              </table>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td style="border: 1px solid black; padding: 10px;">
+                              <table>
+                                  <tr>
+                                      <td style="vertical-align:top; text-align:left">
+                                          To :   
+                                      </td>
+                                      <td style="vertical-align:top">
+                                          <b><span t-field="o.partner_id"/></b><br/>
+                                          <span t-field="o.partner_id.street"/><br/>
+                                          <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id"/> <span t-field="o.partner_id.zip"/><br/>
+                                          <span t-field="o.partner_id.country_id"/><br/>
+                                          <br/>
+                                          Contact Person: <span t-field="o.partner_id.contact_person"/>
+                                          <br/>
+                                          <br/>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </td>
+                          <td style="border: 1px solid black; padding: 10px;">
+                              <table>
+                                  <tr>
+                                      <td style="vertical-align:top; text-align:left">
+                                          Ship To :   
+                                      </td>
+                                      <td style="vertical-align:top">
+                                          <b><span t-field="o.partner_shipping_id"/></b><br/>
+                                          <span t-field="o.partner_shipping_id.street"/><br/>
+                                          <span t-field="o.partner_shipping_id.city"/>, <span t-field="o.partner_shipping_id.state_id"/> <span t-field="o.partner_shipping_id.zip"/><br/>
+                                          <span t-field="o.partner_shipping_id.country_id"/><br/>
+                                          <br/>
+                                          <br/>
+                                          <br/>
+                                          <br/>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </td>
+                      </tr>
+                  </table>
+                  <br/>
+                  <hr/>
+                  <br/>
+                  <table style="width:100%;">
+                      <thead style="padding-top:5px; padding-bottom:5px;">
+                          <tr style="text-align:center; background: #FCBE03;">
+                              <th>Our Part No</th>
+                              <th>P/N Description</th>
+                              <th>Delivery Date</th>
+                              <th>Unit Price</th>
+                              <th>Order Qty</th>
+                              <th>Total Price</th>
+                          </tr>
+                      </thead>
+                      <tbody style="padding-top:5px; padding-bottom:5px;">
+                          <t t-foreach="o.order_line" t-as="line">
+                              <tr>
+                                  <td><span t-field="line.product_id.default_code"/></td>
+                                  <td><span t-field="line.product_id.name"/></td>
+                                  <td style="text-align:center;">PLACEHOLDER</td>
+                                  <td style="text-align:right;"><span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
+                                  <td style="text-align:center;"><span t-field="line.product_uom_qty"/></td>
+                                  <td style="text-align:right"><span t-field="line.price_subtotal"/></td>
+                              </tr>
+                          </t>
+                      </tbody>
+                  </table>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <hr/>
+                  <br/>
+                  <table style="width:100%">
+                      <tr>
+                          <td style="width:40%; text-align:center;">
+                              <br/>
+                              <br/>
+                              <br/>
+                              <br/>
+                              <br/>
+                              <br/>
+                              <br/>
+                              <br/>
+                              <hr/>
+                              <p><b>AUTHORIZED SIGNATURE</b></p>
+                          </td>
+                          <td style="width:20%; text-align:center;"></td>
+                          <td style="text-align:right; width:40%;">
+                              <table style="border: 1px solid black; text-align: right; width:100%;">
+                                  <tr style="border-bottom: 1px solid black;">
+                                      <td style="padding: 15px;">SUBTOTAL</td>
+                                      <td style="padding: 15px;"><span t-field="o.amount_untaxed"/></td>
+                                  </tr>
+                                  <tr style="border-bottom: 1px solid black;">
+                                      <td style="padding: 15px;">GST 8%</td>
+                                      <td style="padding: 15px;"><span t-field="o.amount_tax"/></td>
+                                  </tr>
+                                  <tr>
+                                      <td style="padding: 15px;">TOTAL AMOUNT</td>
+                                      <td style="padding: 15px;"><span t-field="o.amount_total"/></td>
+                                  </tr>
+                              </table>
+                          </td>
+                      </tr>
+                  </table>
+              </t>
+          </t>
+      </t>
+    </xpath> -->
+</template>
+
+</odoo>

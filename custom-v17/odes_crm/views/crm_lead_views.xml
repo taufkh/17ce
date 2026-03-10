@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="crm_lead_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="after">
+                <!-- v16: won_status removed; use stage_id.is_won instead -->
+                <field name="customer_user_id" invisible="1"/>
+                <field name="is_odes_crm" invisible="1"/>
+                <field name="nda_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//header//button[last()]" position="after">
+                <button name="action_create_user" string="Create User for NDA" type="object" invisible="not is_odes_crm or is_nda_confirmed"/>
+            </xpath>
+            <xpath expr="//button[@name='action_view_sale_quotation']" position="attributes">
+                <attribute name="invisible">(type == "lead") or ((is_odes_crm) and (not is_nda_confirmed))</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']" position="inside">
+                <!-- v16: won_status replaced by stage_id.is_won -->
+                <field name="is_nda_confirmed" invisible="not stage_id.is_won" readonly="1"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_nda" type="object"
+                    class="oe_stat_button" icon="fa-file-text-o"
+                    invisible="not nda_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text"> NDA</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_apollo_leave_balance_doc">
+<t t-call="web.basic_layout">
+
+        <div class="page">
+            <div class="row">
+                        <div style="width:70%;">
+                          <img t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 80px;"/>
+                          <u><h3><strong>Leave Balance Report</strong></h3></u>
+                        </div>
+
+                        <div style="width:30%;font-size:13px;">
+                            <p style="margin-bottom:1px;font-size:14px;"><strong><t t-esc="o.company_id.name"/></strong></p>
+                            <p style="margin-bottom:1px;"><t t-esc="o.company_id.street"/></p>
+                            <p style="margin-bottom:1px;"><t t-esc="o.company_id.street2"/></p>
+                            <p style="margin-bottom:1px;">Tel : <t t-esc="o.company_id.phone"/></p>
+                            <p style="margin-bottom:1px;">Fax : <t t-esc="o.company_id.fax"/></p>
+                            <p style="margin-bottom:1px;">Company Gst Reg No : <t t-esc="o.company_id.company_registry"/></p>
+                        </div>
+                      </div>
+                      <br/>
+                <div class="oe_structure"/>
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-center"><b><span t-field="o.name"/></b></h3>
+                        <br/>
+                        <table style="width:100%;" class="table table-bordered">
+                            <thead style="font-size:14px;" class="text-center">
+                              <tr>
+                                <th style="vertical-align:middle;border:1px solid black;padding:10px 0px;" class="text-center" width="20%">Leave</th>
+                                <th style="padding:10px 0px;vertical-align:middle;border:1px solid black;" class="text-center" width="17%">Carry Over</th>
+                                <th style="padding:10px 0px;vertical-align:middle;border:1px solid black;" class="text-center" width="16%">Current Year Entitlement</th>
+                                <th style="padding:10px 0px;vertical-align:middle;border:1px solid black;" class="text-center" width="16%">Current Earned Leave</th>
+                               <!--  <th style="padding:10px 0px;vertical-align:middle;border:1px solid black;" class="text-center" width="10%">Pending</th> -->
+                                <th style="padding:10px 0px;vertical-align:middle;border:1px solid black;" class="text-center" width="16%">Taken</th>
+                               <!--  <th style="padding:10px 0px;vertical-align:middle;border:1px solid black;" class="text-center" width="13%">This Year's Balance</th> -->
+                                <th style="padding:10px 0px;vertical-align:middle;border:1px solid black;" class="text-center" width="15%">This Month's Balance</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <t t-set="count" t-value="0"/>
+                            <t t-set="balance_month" t-value="0"/>
+                            <t t-set="balance_year" t-value="0"/>
+                            <t t-foreach="o.get_alloc_all_leave()" t-as="l">
+                              <t t-set="count" t-value="count+1"/>
+                              <tr style="font-size:13px;">
+                                <td style="padding:0px 3px;border:1px solid black;" class="text-left">
+                                    <p style="padding:5px 1px;"><span t-esc="l.name2"/></p>
+                                </td>
+                                <td style="padding:0px 3px;border:1px solid black;" class="text-center">
+                                    <t t-set="cary_over" t-value="o.get_cary_over_leave_year(l)"/>
+                                   <p style="padding:5px 1px;"><span t-esc="cary_over"/></p>
+                                   
+                                </td>
+                                <td style="padding:0px 3px;border:1px solid black;" class="text-center">
+                                    <t t-set="balance_year" t-value="o.get_total_leave_year(l)"/>
+                                    
+                                   <p style="padding:5px 1px;"><span t-esc="balance_year"/></p>
+                                   
+                                   
+                                </td>
+                                <td style="padding:0px 3px;border:1px solid black;" class="text-center">
+                                    <t t-set="balance_month" t-value="round((balance_year/12)*o.get_current_mont(),2)"/>
+                                   <p style="padding:5px 1px;"><span t-esc="round(balance_month,2)"/></p>
+                                   
+                                </td>
+                           <!--      <td style="padding:0px 3px;border:1px solid black;" class="text-center">
+                                   <p style="padding:5px 1px;"><span t-esc="o.get_total_leave_pending(l)"/></p>
+                                </td> -->
+                                <td style="padding:0px 3px;border:1px solid black;" class="text-center">
+                                    <t t-set="balance_year" t-value="balance_year+cary_over"/>
+                                    <t t-set="taken" t-value="o.get_total_leave_taken(l)"/>
+                                    <t t-set="balance_year" t-value="balance_year - taken"/>
+                                   <p style="padding:5px 1px;"><span t-esc="taken"/></p>
+                                   
+                                </td>
+                           <!--      <td style="padding:0px 3px;border:1px solid black;" class="text-center">
+                                   <p style="padding:5px 1px;"><span t-esc="balance_year"/></p>
+                                </td> -->
+                                <td style="padding:0px 3px;border:1px solid black;" class="text-center">
+                                   <p style="padding:5px 1px;"><span t-esc="round(balance_month-taken+cary_over,2)"/></p>
+                                </td>
+                              </tr>
+                            </t>
+                            
+                          </tbody>
+                      </table>
+                    </div>
+                </div>
+        </div>
+    </t>
+</template>
+
+<template id="report_apollo_leave_balance">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="odes_hr2_custom.report_apollo_leave_balance_doc" t-lang="user.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+    <record id="apollo_leave_balance_paperformat" model="report.paperformat">
+          <field name="name">Apollo leave balance Paperformat</field>
+          <field name="default" eval="False" />
+          <field name="format">A4</field>
+          <field name="orientation">Portrait</field>
+          <field name="margin_top">4</field>
+          <field name="margin_bottom">65.00</field>
+          <field name="margin_left">8</field>
+          <field name="margin_right">6</field>
+          <field name="header_line" eval="False" />
+          <field name="header_spacing">190</field>
+          <field name="dpi">90</field>
+      </record>
+
+<record id="action_apollo_report_leave_balance" model="ir.actions.report">
+            <field name="name">Leave Balance Report</field>
+            <field name="model">hr.employee</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">odes_hr2_custom.report_apollo_leave_balance</field>
+            <field name="report_file">odes_hr2_custom.report_apollo_leave_balance</field>
+            <field name="paperformat_id" ref="odes_hr2_custom.apollo_leave_balance_paperformat"/>
+            <field name="binding_model_id" ref="hr.model_hr_employee"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+</odoo>

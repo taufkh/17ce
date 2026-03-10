@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="documents.documents_view_list" model="ir.ui.view">
+        <field name="name">documents list</field>
+        <field name="model">documents.document</field>
+        <field name="arch" type="xml">
+            <tree js_class="documents_list"
+                  create="false" edit="false"
+                  decoration-info="type == 'empty'"
+                  sample="1">
+                <button name="action_show_guest_view" icon="fa-search-plus" type="object" title="View Subscribers"/>
+                <field name="name" string="Document" required="True"/>
+                <field name="url" optional="hide"/>
+                <field name="tag_ids" widget="documents_many2many_tags"/>
+                <field name="partner_id"/>
+                <field name="owner_id" widget="many2one_avatar_user"/>
+                <field name="lock_uid" optional="hide"/>
+                <field name="type"/>
+                <field name="create_date" widget="date"/>
+                <field name="activity_exception_decoration" widget="activity_exception"/>
+            </tree>
+        </field>
+    </record>
+
+
+   <record id="odes_document_guest_view_form" model="ir.ui.view">
+        <field name="name">odes.document.guest.view.form</field>
+        <field name="model">odes.document.guest</field>
+        <field name="type">form</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml"> 
+            <form string="Guest">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="document_id" invisible="1" /> 
+                            <field name="first_name"/>
+                            <field name="last_name"/> 
+                            <field name="email"/> 
+                            <field name="company"/> 
+                            <field name="phone"/> 
+                            <!-- <field name="country_id"/>  -->
+                            <!-- <field name="your_team"/> 
+                            <field name="download_reason"/>  -->
+                        </group>
+                        <group>
+                            <field name="mailing_list"/> 
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="odes_document_guest_view_tree" model="ir.ui.view">
+        <field name="name">odes.document.guest.view.tree</field>
+        <field name="model">odes.document.guest</field>
+        <field name="type">tree</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml"> 
+            <tree string="Guest">
+                <field name="document_id" invisible="1" /> 
+                <field name="first_name"/> 
+                <field name="last_name"/> 
+                <field name="email"/> 
+                <field name="company"/> 
+                <field name="phone"/> 
+                <!-- <field name="country_id"/>  -->
+                <!-- <field name="your_team"/> 
+                <field name="download_reason"/>  -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="odes_document_guest_action" model="ir.actions.act_window">
+      <field name="name">Subscribers</field>
+      <field name="res_model">odes.document.guest</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Subscribers" id="odes_document_guest" parent="documents.Config" groups="base.group_no_one" action="odes_document_guest_action" sequence="3"/>
+    
+</odoo>

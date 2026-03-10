@@ -1,0 +1,217 @@
+
+.form-download-wrapper .lp-element.lp-pom-box {
+    position: relative;
+    font-family: Montserrat;
+    display: inline-block;
+    background: white;
+    border-style: none;
+    border-radius: 0px;
+    z-index: 14;
+    width: 372px;
+    height: auto;
+    padding: 30px;
+    opacity: 0.95;
+    color: #000;
+}
+
+.form-download-wrapper #lp-pom-box-419-color-overlay {
+    position:absolute;
+    background:#E8E8E8;
+    height:490px;
+    width:372px;
+    left: 798px;
+    top:29px;
+}
+.o_docs_share_page.o_home_menu_background {
+/*    background: url(/odes_document/static/src/img/background-new-odes.png), 
+    linear-gradient(to right bottom, #77717e, #c9a8a9);*/
+    background-size: cover;
+    background-image: url("/odes_document/static/src/img/background-new-odes.png") !important; 
+}
+
+
+ 
+.form-download-wrapper form.form input.text, 
+.form-download-wrapper form.form textarea.standard, 
+.form-download-wrapper form.form select, 
+.form-download-wrapper form.form input.date { 
+   background-color:#FFFFFF;
+   border:solid 1px #000;
+   font-size:14px;
+   font-family: sans-serif;
+   color:#000000;
+   -moz-border-radius:0px;
+   -webkit-border-radius:0px;
+   border-radius:25px;
+   padding-top:10px;
+   padding-bottom:10px;
+   padding-left:25px;
+   padding-right:5px;
+
+   outline: none!important;
+}
+.form-download-wrapper form.form input.text:focus, 
+.form-download-wrapper form.form textarea.standard:focus, 
+.form-download-wrapper form.form select:focus, 
+.form-download-wrapper form.form input.date:focus {
+    border-color: #0760b2;
+    -webkit-box-shadow: inset 0 0px 1px #0760b2, 0 0 2px rgba(7, 96, 178, 0.45);
+    box-shadow: inset 0 0px 1px #0760b2, 0 0 2px rgba(7, 96, 178, 0.45);
+}
+
+.form-download-wrapper form.form input::-webkit-outer-spin-button,
+.form-download-wrapper form.form input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.form-download-wrapper form.form input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.form-download-wrapper form.form input::-webkit-input-placeholder{
+  color: #000;
+  opacity: 1;
+}
+.form-download-wrapper form.form input::-moz-placeholder{
+  color: #000;
+  opacity: 1;
+} 
+.form-download-wrapper form.form input::placeholder{
+  color: #000;
+  opacity: 1;
+}
+
+.form-download-wrapper select#country_id {
+    margin-left: 5%;
+    width: 92%;
+}
+
+.form-download-wrapper select#your_team {
+    margin-left: 9%;
+    width: 161%;
+}
+
+.form-download-wrapper select#download_reason {
+    margin-left: 5%;
+    width: 89%;
+}
+
+.form-download-wrapper p.form-field.opt_in.pd-checkbox {
+    margin-left: 5%;
+}
+
+.form-download-wrapper form.form {
+    padding: 0;
+    margin: 0;
+    padding: 0 25px;
+}
+
+.form-download-wrapper form.form p label {
+   font-size:13px;
+   color:#333333;
+   font-weight:normal;
+   padding-top:0px;
+   padding-bottom:20px;
+   /*display:none;*/
+}
+
+.form-download-wrapper form.form .btn-pardot-form {
+    background-color: #0764b8;
+    font-size: 15px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+    padding: 1.2em 3em;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 30px;
+    border-width: 0px !important;
+    width: 85%;
+    font-weight: bold;
+    margin: auto;
+    outline: none !important;
+    margin-top: 15px;
+    margin-bottom: 7px;
+    padding: 15px 0;
+}
+.form-download-wrapper form.form p.submit {
+   margin-top:10px;
+   margin-bottom:0px;
+   text-align:center;
+   margin: 0 !important;
+}
+
+.form-download-wrapper form.form span.value {
+    margin-left: 0 !important;
+}
+
+.form-download-wrapper form.form p.required label, 
+.form-download-wrapper form.form span.required label {
+    background:none !important; 
+    font-weight:normal;
+}
+.form-download-wrapper form.form p.required label.field-label:after {
+    content:"*"; 
+    color: #FF0000; 
+}
+
+.form-download-wrapper form.form p {
+    margin: 12px 0px;
+}
+
+.form-download-wrapper form.form p.error {
+    margin: -0.8em 0em -0.4em 10px;
+}
+
+.form-download-wrapper p.pd-text label, 
+.form-download-wrapper p.pd-select label, 
+.form-download-wrapper p.pd-textarea label {
+  display:none !important;
+}
+
+.form-download-wrapper form.form p label.inline {
+    line-height: 1em;
+}
+
+.form-download-wrapper form.form p label { 
+    color: #000000; 
+}
+
+.form-download-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+}
+.form-download-wrapper > div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.form-download-wrapper .lp-element.lp-pom-text.nlh {
+    text-align: left;
+    margin: 0 8px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+}
+.form-download-wrapper form.form .odes-form-input {
+    width: 100% !important;
+    margin: 0 !important;
+}
+.form-download-wrapper form.form p {
+    margin: 12px 0px 8px 0px;
+    display: block;
+    width: 100%;
+}
+.form-download-wrapper form.form p.label-text-1{
+    font-size: 8px;
+    text-align: left;
+}
+.form-download-wrapper p.odes-info.pd-select {
+    text-align: center;
+    font-size: 9.5px;
+}

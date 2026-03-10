@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="odes_cashflow_forecast_wizard_view_form" model="ir.ui.view">
+        <field name="name">odes.cashflow.forecast.wizard.view.form</field>
+        <field name="model">odes.cashflow.forecast.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="date" required="1"/>
+                </group>
+                <footer>
+                    <button name="%(odes_cashflow_forecast.odes_cashflow_xlsx)d" string="Print" type="action" class="btn btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="odes_cashflow_forecast_wizard_action" model="ir.actions.act_window">        
+        <field name="name">Odes Cashflow Forecast Report</field>
+        <field name="res_model">odes.cashflow.forecast.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="odes_cashflow_forecast_wizard_menu"
+    parent="account.account_reports_legal_statements_menu"
+    action="odes_cashflow_forecast_wizard_action"/>
+</odoo>

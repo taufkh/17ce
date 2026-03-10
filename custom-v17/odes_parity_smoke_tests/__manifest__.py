@@ -1,0 +1,21 @@
+{
+    'name': 'ODES Community Parity Smoke Tests',
+'version': '17.0.1.0.0',    'summary': 'Automated smoke tests for community parity shims and modules',
+    'depends': [
+        'approvals',
+        'website_calendar',
+        'documents',
+        'social_facebook',
+        'delivery_compat',
+        'odes_approval_result',
+        'odes_appointment_calendar',
+        'odes_design',
+        'odes_design_additional',
+        'odes_document',
+        'odes_hr_custom',
+        'odes_social_facebook_modifier',
+    ],
+    'data': [],
+    'installable': True,
+    'license': 'LGPL-3',
+}

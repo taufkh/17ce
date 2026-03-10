@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="odes_change_partner_name_wizard_form_view" model="ir.ui.view">
+        <field name="name">odes.change.partner.name.wizard.form.view</field>
+        <field name="model">odes.change.partner.name.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Change Partner Name Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="old_partner_id" invisible="1"/>
+                            <field name="name" />
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="save_button" string="Save" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="odes_change_partner_name_wizard_action">
+        <field name="name">Change Name</field>
+        <field name="res_model">odes.change.partner.name.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="odes_documents_upload_url_view" model="ir.ui.view">
+        <field name="name">upload url</field>
+        <field name="priority" eval="5"/>
+        <field name="model">documents.upload.url.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+               <!--  <header>
+                    <button special="save" string="Generate" class="btn btn-primary"/>
+                </header> -->
+                    <group>
+                        <field name="url" string="URL" widget="url" required="1" placeholder="e.g. https://www.youtube.com/watch?v=CP96yVnXNrY"/>
+                        <field name="name" required="True"/>
+                        <field name="folder_id" invisible="1"/>
+                        <field name="tag_ids" invisible="1"/>
+                    </group>
+                <footer>
+                    <button special="save" string="Add" class="btn btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

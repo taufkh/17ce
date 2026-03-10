@@ -1,0 +1,320 @@
+odoo.define('odes_crm.GanttRenderer', function (require) {
+"use strict";
+
+var GanttRenderer = require('web_gantt.GanttRenderer');
+var ajax = require('web.ajax');
+var core = require('web.core');
+var QWeb = core.qweb;
+
+GanttRenderer.include({
+    // init: function () {
+    //     // this._super.apply(this, arguments);
+    //     // this.project_details = this._fetchProject()
+    //     // console.log(this, 'see here last this')
+    //     // this.project_details.then((data) => {
+    //     //     this.updateRow(this)
+    //     // })
+    //     // console.log(this.project_details, 'see here last')
+    // },
+
+    showBirdViews: function () {
+        let container = this.$el.children()
+        console.log(this.$el.children().children())
+        
+        container.css({
+            'width': '100%',
+            'overflow-x': 'hidden'
+        })
+        $('.o_gantt_button_gantt_scroll_views').css({
+            'display': 'inline'
+        })
+        $('.o_gantt_button_bird_eye_views').css({
+            'display': 'none'
+        })
+        $('.header_state_year .o_gantt_row_sidebar').css({
+            'max-width': '100%'
+        })
+        $('.rows_state_year .o_gantt_row_nogroup .o_gantt_row_sidebar').css({
+            'max-width': '100%'
+        })
+        $('.rows_state_year .o_gantt_row_group .o_gantt_row_sidebar').css({
+            'max-width': '100%'
+        })
+        $('.week_col').css({
+            'display': 'none'
+        })
+        this._getSlotsDates(true)
+    },
+
+    showGanttScrollViews: function () {
+        let container = this.$el.children()
+        container.css({
+            'width': '1200%'
+        })
+        $('.o_gantt_button_gantt_scroll_views').css({
+            'display': 'none'
+        })
+        $('.o_gantt_button_bird_eye_views').css({
+            'display': 'inline'
+        })
+        $('.header_state_year .o_gantt_row_sidebar').css({
+            'max-width': '2%'
+        })
+        $('.rows_state_year .o_gantt_row_nogroup .o_gantt_row_sidebar').css({
+            'max-width': '2%'
+        })
+        $('.rows_state_year .o_gantt_row_group .o_gantt_row_sidebar').css({
+            'max-width': '2%'
+        })
+        $('.week_col').css({
+            'display': 'flex'
+        })
+        this._getSlotsDates(false)
+    },
+
+    _getSlotsDates: function (ev) {
+        function range_date(start, end) {
+            var len = end - start + 1;
+            var a = new Array(len);
+            for (let i = 0; i < len; i++) a[i] = start + i;
+            return a;
+        }
+        var token = this.SCALES[this.state.scale].interval;
+        var stopDate = this.state.stopDate;
+        var day = this.state.startDate;
+        var dates = [];
+        // console.log(this.state)
+        // console.log(this)
+
+        if(this.state.scale == 'year') {
+            var dateDays = null;
+            if (ev === true) {
+                while (day <= stopDate) {
+                    dates.push(day);
+                    day = day.clone().add(1, token);
+                }
+                // console.log('satisfied')
+            } else {
+                // console.log('not satisfied')
+                // while (day <= stopDate) {
+                //     dates.push(day);
+                //     day = day.clone().add(1, token);
+                // }
+                while (day <= stopDate) {
+                    var weeks = [];
+                    dateDays = day.clone();
+                    while (dateDays.isSame(day, 'day')){
+                        var list_day = range_date(1, dateDays.daysInMonth())
+                        var i = 0;
+                        for (;list_day[i];) {
+                            dateDays.week_number = list_day[i];
+                            i++;
+                            weeks.push(dateDays);
+                            dateDays = dateDays.clone().add(dateDays.daysInMonth(), 'days');
+                        }
+                    }
+                    day.weeks = weeks;
+                    dates.push(day);
+                    day = day.clone().add(1, token);
+                }
+            }
+        } else {
+            while (day <= stopDate) {
+                dates.push(day);
+                day = day.clone().add(1, token);
+            }
+        }
+        
+        
+        return dates;
+    },
+
+    async _renderView() {
+        var self = this;
+        var oldRowWidgets = Object.keys(this.rowWidgets).map(function (rowId) {
+            return self.rowWidgets[rowId];
+        });
+        this.rowWidgets = {};
+        this.viewInfo = this._prepareViewInfo();
+
+        this.proms = [];
+        let project_list = []
+        this.state.rows.forEach(row => {
+            project_list.push(row.resId)
+        });
+        const res = await this._rpc({
+            model: 'project.project',
+            method: 'get_gantt_project_details',
+            args: [false, project_list]
+        })
+        // const res = {
+        //     'Teck Leong Metals': {
+        //         'dev': 'Delvin'
+        //     }
+        // }
+        var rows = this._renderRows(this.state.rows, this.state.groupedBy, res);
+        var totalRow;
+        if (this.totalRow) {
+            totalRow = this._renderTotalRow();
+        }
+        // this.proms.push(await this._super.apply(this, arguments));
+        // this.proms.push(Gantt);
+        var proms = this.proms;
+        delete this.proms;
+        let leftPane = this.$el.parent()
+        leftPane.on('scroll', () => {
+            if (leftPane.scrollLeft() == 0) {
+                $('.stickySidebar').css({
+                    'left': 0,
+                    'border': 'none',
+                    'z-index': 0
+                })
+            } else {
+                $('.stickySidebar').css({
+                    'background-color': 'white',
+                    'margin-left': '0px',
+                    'padding-left': '15px',
+                    'border-right': '0.5px solid #dbd7d7',
+                    'left': leftPane.scrollLeft(),
+                    'z-index': 5
+                })
+            }
+        })
+        // return Gantt
+        return Promise.all(proms).then(function () {
+            self.$el.empty();
+            _.invoke(oldRowWidgets, 'destroy');
+
+            self._replaceElement(QWeb.render('GanttView', {widget: self}));
+            const $containment = $('<div id="o_gantt_containment"/>');
+            self.$('.o_gantt_row_container').append($containment);
+            if (!self.state.groupedBy.length) {
+                $containment.css(self.isRTL ? {right: 0} : {left: 0})
+            }
+
+            rows.forEach(function (row) {
+                row.$el.appendTo(self.$('.o_gantt_row_container'));
+            });
+            if (totalRow) {
+                totalRow.$el.appendTo(self.$('.o_gantt_total_row_container'));
+            }
+
+            if (self._isInDom) {
+                self._setRowsDroppable();
+            }
+
+            if (self.state.isSample) {
+                self._renderNoContentHelper();
+            }
+        });
+    },
+    /**
+     * Render rows outside the DOM, so that we can insert them to the DOM once
+     * they are all ready.
+     *
+     * @private
+     * @param {Object[]} rows recursive structure of records according to
+     *   groupBys
+     * @param {string[]} groupedBy
+     * @returns {Promise<GanttRow[]>} resolved with the row widgets
+     */
+    _renderRows: function (rows, groupedBy, project_details=false) {
+        console.log(this, 'see here thiss')
+        console.log('im running')
+        var self = this;
+        var rowWidgets = [];
+        var disableResize = this.state.scale === 'year';
+
+        var groupLevel = this.state.groupedBy.length - groupedBy.length;
+        // FIXME: could we get rid of collapseFirstLevel in Renderer, and fully
+        // handle this in Model?
+        var hideSidebar = groupedBy.length === 0;
+        if (this.collapseFirstLevel) {
+            hideSidebar = self.state.groupedBy.length === 0;
+        }
+        rows.forEach(function (row) {
+            var pillsInfo = {
+                groupId: row.groupId,
+                resId: row.resId,
+                pills: row.records,
+                groupLevel: groupLevel,
+            };
+            if (groupedBy.length) {
+                pillsInfo.groupName = row.name;
+                pillsInfo.groupedByField = row.groupedByField;
+            }
+            var params = {
+                canCreate: self.canCreate,
+                canCellCreate: self.canCellCreate,
+                canEdit: self.canEdit,
+                canPlan: self.canPlan,
+                isGroup: row.isGroup,
+                consolidate: (groupLevel === 0) && (self.state.groupedBy[0] === self.consolidationParams.maxField),
+                hideSidebar: hideSidebar,
+                isOpen: row.isOpen,
+                disableResize: disableResize,
+                rowId: row.id,
+                scales: self.SCALES,
+                unavailabilities: row.unavailabilities,
+                project_details: project_details
+            };
+            if (self.thumbnails && row.groupedByField && row.groupedByField in self.thumbnails){
+                params.thumbnail = {model: self.fieldsInfo[row.groupedByField].relation, field: self.thumbnails[row.groupedByField],};
+            }
+            rowWidgets.push(self._renderRow(pillsInfo, params));
+            if (row.isGroup && row.isOpen) {
+                var subRowWidgets = self._renderRows(row.rows, groupedBy.slice(1));
+                rowWidgets = rowWidgets.concat(subRowWidgets);
+            }
+        });
+        return rowWidgets;
+    },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * Re-render a given row and its sub-rows. This typically occurs when a row
+     * is collapsed/expanded, to prevent from re-rendering the whole view.
+     *
+     * @param {Object} rowState part of the state concerning the row to update
+     * @returns {Promise}
+     */
+    updateRow: function (rowState, project_details=false) {
+        var self = this;
+        var oldRowIds = [rowState.id].concat(rowState.childrenRowIds);
+        var oldRows = [];
+        oldRowIds.forEach(function (rowId) {
+            if (self.rowWidgets[rowId]) {
+                oldRows.push(self.rowWidgets[rowId]);
+                delete self.rowWidgets[rowId];
+            }
+        });
+        this.proms = [];
+        // let project_list = []
+        // this.state.rows.forEach(row => {
+        //     project_list.push(row.resId)
+        // });
+        // console.log(project_list, 'list project')
+        // const res = await this._rpc({
+        //     model: 'project.project',
+        //     method: 'get_something',
+        //     args: [false, project_list]
+        // })
+        // console.log(res, 'see here response in render view')
+        var rows = this._renderRows([rowState], rowState.groupedBy, project_details);
+        var proms = this.proms;
+        delete this.proms;
+        return Promise.all(proms).then(function () {
+            var $previousRow = oldRows[0].$el;
+            rows.forEach(function (row) {
+                row.$el.insertAfter($previousRow);
+                $previousRow = row.$el;
+            });
+            _.invoke(oldRows, 'destroy');
+            self._setRowsDroppable();
+        });
+    },
+});
+});

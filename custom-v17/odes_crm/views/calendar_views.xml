@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_calendar_event_form_inherit" model="ir.ui.view">
+        <field name="name">calendar.event.form.inherit</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='allday']" position="after">
+                <field name="type"/>
+                <field name="requirement_id" invisible="context.get('is_hide_requirement')"/>
+            </xpath>
+            <xpath expr="//field[@name='event_tz']" position="after">
+                <field name="meeting_type" invisible="type != 'meeting'"/>
+                <field name="site" invisible="type != 'meeting'"/>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="is_done" />
+                <field name="manhours" invisible="1"/>
+                <field name="manhours2"/>
+                <field name="meeting_id" invisible="type != 'task'" domain="[('type', '=', 'meeting')]" />
+            </xpath>
+
+            <xpath expr="//page[@name='page_minutes_record']" position="after">
+                <page name="meeting_task" string="Tasks" invisible="type != 'meeting'">
+                    <field name="task_ids" >
+                        <tree create="0">
+                            <field name="create_date" />
+                            <field name="name" />
+                            <field name="partner_ids" widget="many2many_tags"/>
+                            <field name="start" />
+                            <field name="duration" />
+                            <field name="manhours" invisible="1" />
+                            <field name="manhours2" />
+                            <field name="is_done" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+            <!-- v16: timer.mixin (Enterprise-only) header removed —
+                 display_timesheet_timer, timer_pause, display_timer_* fields and
+                 action_timer_start/stop/pause/resume buttons all depend on timer.mixin -->
+        </field>
+    </record>
+
+    <record id="calendar.action_calendar_event" model="ir.actions.act_window">
+        <field name="domain">[('meeting_id', '=', False)]</field>
+    </record>
+
+    <!-- calendar.event inherit form view -->
+    <record id="view_calendar_event_timesheet_form_view" model="ir.ui.view">
+        <field name="name">calendar.event.inherit.view.form</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <!-- v16: groups_id removed from inherited view; group applied on page element instead -->
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="page_timesheets" string="Timesheets" groups="hr_timesheet.group_hr_timesheet_user">
+                    <field name="analytic_account_active" invisible="1"/>
+                    <field name="allow_timesheets" invisible="1"/>
+                    <!-- <field name="allow_subtasks" invisible="1"/> -->
+                    <field name="encode_uom_in_days" invisible="1"/>
+                    <group>
+                        <group>
+                            <div class="o_td_label">
+                                <label for="planned_hours" string="Initially Planned Hours" invisible="encode_uom_in_days"/>
+                                <label for="planned_hours" string="Initially Planned Days" invisible="not encode_uom_in_days"/>
+                            </div>
+                            <field name="planned_hours" widget="timesheet_uom_no_toggle" nolabel="1"/>
+                        </group>
+                        <group>
+                            <field name="progress" widget="progressbar" />
+                        </group>
+                    </group>
+                    <group name="timesheet_error" invisible="analytic_account_active">
+                        <div class="alert alert-warning" role="alert">
+                            You cannot log timesheets on this project since it is linked to an inactive analytic account. Please change this account, or reactivate the current one to timesheet on the project.
+                        </div>
+                    </group>
+                    <field name="timesheet_ids" mode="tree,kanban" context="{'default_requirement_id': requirement_id, 'default_name':''}">
+                        <tree editable="bottom" string="Timesheet Activities" default_order="date">
+                            <field name="date"/>
+                            <field name="user_id" invisible="1"/>
+                            <field name="employee_id" required="1" widget="many2one_avatar_employee"/>
+                            <field name="name" required="0"/>
+                            <field name="unit_amount" widget="timesheet_uom" decoration-danger="unit_amount &gt; 24"/>
+                            <field name="project_id" />
+                            <field name="calendar_id" />
+                            <field name="company_id" invisible="1"/>
+                        </tree>
+                        <kanban class="o_kanban_mobile">
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="employee_id" widget="many2one_avatar_employee"/>
+                            <field name="name"/>
+                            <field name="unit_amount" decoration-danger="unit_amount &gt; 24"/>
+                            <field name="project_id"/>
+                            <field name="calendar_id" invisible="1"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <strong><span><t t-esc="record.employee_id.value"/></span></strong>
+                                            </div>
+                                            <div class="col-6 pull-right text-right">
+                                                <strong><t t-esc="record.date.value"/></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 text-muted">
+                                                <span><t t-esc="record.name.value"/></span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="pull-right text-right">
+                                                    <field name="unit_amount" widget="float_time"/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form  string="Timesheet Activities">
+                            <sheet>
+                                <group>
+                                    <field name="date"/>
+                                    <field name="user_id" invisible="1"/>
+                                    <field name="employee_id" required="1" widget="many2one_avatar_employee"/>
+                                    <field name="name"/>
+                                    <field name="unit_amount" string="Duration" widget="float_time" decoration-danger="unit_amount &gt; 24"/>
+                                    <field name="project_id" />
+                                    <field name="calendar_id" />
+                                    <field name="company_id" invisible="1"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                    <group invisible="not analytic_account_active">
+                        <group class="oe_subtotal_footer oe_right" name="event_hours">
+                            <span>
+                                <label class="font-weight-bold" for="effective_hours" string="Hours Spent" invisible="encode_uom_in_days"/>
+                                <label class="font-weight-bold" for="effective_hours" string="Days Spent" invisible="not encode_uom_in_days"/>
+                            </span>
+                            <field name="effective_hours" widget="timesheet_uom" nolabel="1"/>
+
+                            <span>
+                                <label class="font-weight-bold" for="total_hours_spent" string="Total Hours"
+                                    invisible="encode_uom_in_days"/>
+                                <label class="font-weight-bold" for="total_hours_spent" string="Total Days"
+                                    invisible="not encode_uom_in_days"/>
+                            </span>
+                            <field name="total_hours_spent" widget="timesheet_uom" class="oe_subtotal_footer_separator" nolabel="1" />
+                            <span>
+                                <label class="font-weight-bold" for="remaining_hours" string="Remaining Hours"
+                                    invisible="planned_hours == 0.0 or encode_uom_in_days"/>
+                                <label class="font-weight-bold" for="remaining_hours" string="Remaining Days"
+                                    invisible="planned_hours == 0.0 or not encode_uom_in_days"/>
+                            </span>
+                            <field name="remaining_hours" widget="timesheet_uom" class="oe_subtotal_footer_separator"
+                                invisible="planned_hours == 0.0" nolabel="1"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="page_requirements" string="Requirements">
+                    <field name="project_requirement_ids" domain="[('project_id', '=', active_id)]">
+                        <tree>
+                            <field name="number" />
+                            <field name="project_id" />
+                            <field name="name" />
+                            <field name="date" />
+                            <field name="date_deadline" />
+                            <field name="stage_id" />
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="res_config_settings_expense_view_form" model="ir.ui.view">
+        <field name="name">res_config_settings_expense_view_form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_expense.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='expenses_setting_container']/div[@id='hr_payroll_accountant']" position="after">
+                    <div class="col-12 col-lg-6 o_setting_box" id="default_exp_product">
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Default Product</span>
+                            <div class="content-group">
+                                <field name="def_exp_product_id"/>
+                            </div>
+                        </div>
+                    </div>
+                
+            </xpath>
+
+        </field>
+    </record>
+
+ 
+
+</odoo>
+
+

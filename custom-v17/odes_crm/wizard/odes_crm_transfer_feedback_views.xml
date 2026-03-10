@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_odes_crm_transfer_feedback" model="ir.ui.view">
+        <field name="name">odes.crm.transfer.feedback.wizard</field>
+        <field name="model">odes.crm.transfer.feedback.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Feedback">
+                <p class="oe_grey">
+                    Feedback will be transferred into a new requirement, please fill in the required information.
+                </p>
+                <group>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="date" required="1"/>
+                        <field name="attachment_ids" widget="many2many_binary"/>
+                    </group>
+                    <group>
+                        <field name="type" required="1"/>
+                        <field name="module_id" required="1"/>
+                    </group>
+                </group>
+
+                <separator string="Description"/>
+                <field name="description" widget="html"/>
+
+                <footer>
+                    <button type="object" name="action_confirm" class="oe_highlight" string="Confirm"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_transfer_feedback" model="ir.actions.act_window">
+        <field name="name">Transfer to New Requirement</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.crm.transfer.feedback.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="odes_crm.model_odes_crm_requirement_feedback"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

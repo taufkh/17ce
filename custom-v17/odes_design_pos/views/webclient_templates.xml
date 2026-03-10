@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    
+    <template id="odes_design_pos.assets" name="odes_design_pos assets" inherit_id="point_of_sale.assets">
+        
+         <xpath expr="//script[@src='/point_of_sale/static/src/js/Chrome.js']" position="replace">
+                <script type="text/javascript" src="/odes_design_pos/static/src/js/Chrome.js"></script>
+        </xpath> 
+          <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/odes_design_pos/static/src/scss/odes_style.scss"/>
+        </xpath>       
+    </template>
+    
+    
+
+    
+</odoo>

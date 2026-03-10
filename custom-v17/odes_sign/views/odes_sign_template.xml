@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="odes_sign assets backend" inherit_id="web.assets_backend">
+        
+        
+        <xpath expr="//script[@src='/stock_barcode/static/src/js/client_action/lines_widget.js']" position="replace">
+                <script type="text/javascript" src="/odes_sign/static/src/js/lines_widget.js"></script>
+        </xpath> 
+                
+                      
+                
+    </template>
+</odoo>

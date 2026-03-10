@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="setup" name="Website Calendar Setup">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3>No appointment type configured.</h3>
+            </div>
+        </t>
+    </template>
+
+    <template id="employee_select" name="Employee Select">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Employee</label>
+            <div class="col-md-9">
+                <select class="form-control" name="employee_id">
+                    <t t-foreach="suggested_employees or []" t-as="employee">
+                        <option t-att-value="employee[0]" t-att-selected="selected_employee_id == employee[0] and 'selected' or None">
+                            <t t-esc="employee[1]"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </div>
+    </template>
+
+    <template id="appointment" name="Website Calendar Appointment">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3>Select Appointment Slot</h3>
+            </div>
+        </t>
+    </template>
+
+    <template id="appointment_calendar" name="Website Calendar Appointment Calendar">
+        <div class="container my-3">
+            <h5>Available Slots</h5>
+        </div>
+    </template>
+
+    <template id="appointment_form" name="Website Calendar Appointment Form">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3>Appointment Form</h3>
+            </div>
+        </t>
+    </template>
+
+    <template id="appointment_validated" name="Website Calendar Appointment Validated">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3>Appointment Confirmed</h3>
+            </div>
+        </t>
+    </template>
+
+    <template id="appointment_invalid" name="Website Calendar Appointment Invalid">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3>Invalid Appointment Link</h3>
+            </div>
+        </t>
+    </template>
+
+    <template id="index" name="Website Calendar Index">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3>Appointments</h3>
+            </div>
+        </t>
+    </template>
+</odoo>

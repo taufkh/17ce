@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_cron_odes_get_pms_task" model="ir.cron">
+        <field name="name">Get PMS Tasks</field>
+        <field name="model_id" ref="base.model_res_company" />
+        <field name="state">code</field>
+        <field name="code">model.action_get_pms_task()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="DateTime.now() + timedelta(hours=1)" />
+    </record>
+
+    <record id="ir_cron_odes_resync_pms_task" model="ir.cron">
+        <field name="name">Re-Sync PMS Tasks</field>
+        <field name="model_id" ref="base.model_res_company" />
+        <field name="state">code</field>
+        <field name="code">model.action_resync_pms_task()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="DateTime.now() + timedelta(hours=1)" />
+    </record>
+
+    <record id="ir_cron_odes_reminder_pic" model="ir.cron">
+        <field name="name">Deadline Reminder To PIC</field>
+        <field name="model_id" ref="odes_crm.model_odes_crm_requirement" />
+        <field name="state">code</field>
+        <field name="code">model.action_reminder_requirement_deadline()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:00:00')" />
+    </record>
+
+    <record id="ir_cron_odes_send_email" model="ir.cron">
+        <field name="name">Send Email To Dev</field>
+        <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_after_send_client_confirm()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:00:00')"/>
+    </record>
+
+    <record id="ir_cron_odes_send_reminder_to_pm" model="ir.cron">
+        <field name="name">Send Reminder Email To Pm</field>
+        <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_send_pm_confirm()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d 02:00:00')"/>
+    </record>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_holidays.menu_open_department_leave_approve" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('odes_hr2_custom.group_see_all_record_hr'))]"/>
+    </record>
+
+    <record id="hr2_custom_manager_time_off_action" model="ir.actions.act_window">
+        <field name="name">Manager Time Off</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,kanban,form,calendar,activity</field>
+        <field name="search_view_id" ref="hr_holidays.hr_leave_view_search_manager"/>
+        <field name="context">{
+            'search_default_managed_people': 1,
+            'hide_employee_name': 1}
+        </field>
+        <field name="domain">['|', ('employee_id.leave_manager_id', '=', uid), ('user_id', '=', uid)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Meet the time off dashboard.
+            </p><p>
+                A great way to keep track on employee’s PTOs, sick days, and approval status.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="hr2_custom"
+        name="Manager Time Off"
+        parent="hr_holidays.menu_hr_holidays_management"
+        action="hr2_custom_manager_time_off_action"
+        sequence="1"/>
+
+    <!-- menu exlusively used for department manager (CS) -->
+    <record id="hr2_custom_department_time_off_action" model="ir.actions.act_window">
+        <field name="name">Department Manager Time Off</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,kanban,form,calendar,activity</field>
+        <field name="search_view_id" ref="hr_holidays.hr_leave_view_search_manager"/>
+        <field name="context">{
+            'search_default_department': 1,
+            'hide_employee_name': 1}
+        </field>
+        <field name="domain">['|', ('employee_id.department_id.manager_id.user_id', '=', uid), ('user_id', '=', uid)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Meet the time off dashboard.
+            </p><p>
+                A great way to keep track on employee’s PTOs, sick days, and approval status.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="hr2_department_time_off"
+        name="Department Time Off"
+        parent="hr_holidays.menu_hr_holidays_management"
+        action="hr2_custom_department_time_off_action"
+        groups="odes_hr2_custom.group_department_time_off_manager"
+        sequence="1"/>
+</odoo>

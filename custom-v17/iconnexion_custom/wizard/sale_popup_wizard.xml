@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="icon_sale_popup_wizard" model="ir.ui.view">
+        <field name="name">icon.sale.popup.wizard</field>
+        <field name="model">icon.sale.popup.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Reason Lower Margin">
+                <group>
+                    <group invisible="0">
+                        <field name="reason"/>
+                    </group>                    
+                </group>
+               
+            </form>
+        </field>
+    </record>
+    <record id="action_icon_sale_popup_wizard" model="ir.actions.act_window">
+        <field name="name">Reason Lower Margin</field>
+        <field name="res_model">icon.sale.popup.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
+
+ <!-- <footer>
+                    <button name="button_change" type="object" class="oe_highlight" string="Confirm"/>
+                </footer> -->

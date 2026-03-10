@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <template id="iconnexion_mccoy_report_iconnexion_proforma_invoice_document_inherited"
+      inherit_id="iconnexion_custom.report_iconnexion_proforma_invoice_document">
+      <xpath expr="." position="replace">
+        <t t-foreach="docs" t-as="o">
+          <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+              <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+
+              <div class="header">
+                <div class="row mt32 mb32">
+                  <div class="col-auto">
+                    <img style="width : 100%; max-height:45mm; max-width:45mm;"
+                      src="/iconnexion_custom/static/src/img/icon.png" />
+
+
+                  </div>
+                  <div class="col-auto">
+                    <h5 style="margin-right : 35px; text-align: right; font-weight: 700;">PRO-FORMA INVOICE</h5>
+                  </div>
+                </div>
+                <br />
+
+                <div class="row mt16 mb16">
+                  <div class="col-auto">
+                    <div style="font-size : 12px;"><span t-field="o.company_id.name" /> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.street" /> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.street2" /> </div>
+
+                    <div style="font-size : 12px;"> <span t-field="o.company_id.country_id" /> <span
+                        t-field="o.company_id.zip" /> </div>
+
+                    <div style="font-size : 12px;">Tel : <span t-field="o.company_id.partner_id.phone" /><span
+                        style="margin-left : 10px;">Fax : <span t-field="o.company_id.fax" /></span> </div>
+                  </div>
+                  <div style=" width : 250px; font-size : 12px;">
+
+                    <div class="row mt16 mb16">
+                      <div style="width : 100px; border:1px solid #000; text-align : center;">
+                        PI Date
+                      </div>
+                      <div style="margin-left : 15px; width : 150px; text-align : left;">
+                        <span class="text-uppercase" t-esc="o.date.strftime('%d-%b-%Y')" />
+                      </div>
+
+                    </div>
+                    <div class="row mt16 mb16">
+                      <div style="width : 100px; border:1px solid #000; text-align : center;">
+                        PI Number
+                      </div>
+                      <div style="margin-left : 15px; width : 150px; text-align : left;">
+                        <span class="text-uppercase" t-field="o.name" />
+                      </div>
+
+                    </div>
+                    <div class="row mt16 mb16">
+                      <div style="width : 100px; border:1px solid #000; text-align : center;">
+                        Customer PO
+                      </div>
+                      <div style="margin-left : 15px; width : 150px; text-align : left;">
+                        <span t-field="o.ref" />
+                      </div>
+
+                    </div>
+                    <div class="row mt16 mb16">
+                      <div style="width : 100px; border:1px solid #000; text-align : center;">
+                        Quotation No.
+                      </div>
+                      <div style="margin-left : 15px; width : 150px; text-align : left;">
+                        <span t-esc="o.sale_order_id.name.replace('SO', 'QUO')" />
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="row mt32 mb32">
+                  <div class="col-auto" style="padding:0px;margin-left:4mm;">
+                    <div class="col-auto"
+                      style="border:1px solid #000; width : 100%; padding-left: 10px; text-align:left; font-size:12px;">
+                      To
+                      :
+                    </div>
+                    <div style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.name" />
+
+                    <t t-if="o.partner_id.street">
+                      <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                        t-field="o.partner_id.street" />
+                    </t>
+                    <t t-if="o.partner_id.street2">
+                      <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                        t-field="o.partner_id.street2" />
+                    </t>
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.partner_id.country_id" />
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.partner_id.zip" />
+                    <span style="padding-left: 10px; text-align:left; font-size:12px; margin-top:20px;">
+                      Tel : <t t-if="o.partner_id.phone"><span
+                          style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.contact_phone" /></t>
+                      <br />
+                    </span>
+                    <!--<t t-if="o.partner_id.phone"><span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.contact_phone"/></t><br/>-->
+                    <div style="padding-left: 10px; text-align:left; font-size:12px;margin-top:-3px;">Fax : <span
+                        style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax" />
+                    </div>
+                    <!--<span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax"/>-->
+                  </div>
+                  <div class="col-auto" style="margin-left:4mm;">
+                    <div class="col-auto"
+                      style="border:1px solid #000; width : 100%; padding-left: 10px; text-align:left; font-size:12px;">
+                      BILL TO
+                      :
+                    </div>
+                    <div style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.name" />
+
+                    <t t-if="o.sale_order_id.bill_to_street">
+                      <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                        t-field="o.sale_order_id.bill_to_street" />
+                    </t>
+                    <t t-if="o.sale_order_id.bill_to_block">
+                      <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                        t-field="o.sale_order_id.bill_to_block" />
+                    </t>
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.bill_to_city" />
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.bill_to_state" />
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.bill_to_zip" />
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.bill_to_country_id" />
+                    <span style="padding-left: 10px; text-align:left; font-size:12px; margin-top:20px;">
+                      Tel : <t t-if="o.partner_id.phone"><span
+                          style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.contact_phone" /></t>
+                      <br />
+                    </span>
+                    <!--<t t-if="o.partner_id.phone"><span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.contact_phone"/></t><br/>-->
+                    <div style="padding-left: 10px; text-align:left; font-size:12px;margin-top:-3px;">Fax : <span
+                        style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax" />
+                    </div>
+                    <!--<span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax"/>-->
+                  </div>
+                  <div class="col-auto">
+                    <div class="col-auto"
+                      style="border:1px solid #000; width : 100%; padding-left: 10px; text-align:left; font-size:12px;">
+                      SHIP TO
+                      :
+                    </div>
+                    <div style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.name" />
+
+                    <t t-if="o.sale_order_id.ship_to_street">
+                      <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                        t-field="o.sale_order_id.ship_to_street" />
+                    </t>
+                    <t t-if="o.sale_order_id.ship_to_block">
+                      <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                        t-field="o.sale_order_id.ship_to_block" />
+                    </t>
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.ship_to_city" />
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.ship_to_state" />
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.ship_to_zip" />
+                    <div style="padding:1px;padding-left: 10px; text-align:left; font-size:12px;"
+                      t-field="o.sale_order_id.ship_to_country_id" />
+                    <span style="padding-left: 10px; text-align:left; font-size:12px; margin-top:20px;">
+                      Tel : <t t-if="o.contact_phone"><span style="padding-left: 10px; text-align:left; font-size:12px;"
+                          t-field="o.partner_id.phone" /></t>
+                      <br />
+                    </span>
+                    <!--<t t-if="o.partner_id.phone"><span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.contact_phone"/></t><br/>-->
+                    <div style="padding-left: 10px; text-align:left; font-size:12px;margin-top:-3px;">Fax : <span
+                        style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax" />
+                    </div>
+                    <!--<span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax"/>-->
+                  </div>
+                  <!--<div class="col-auto">-->
+                  <!--  <div class="col-auto" style="width : 100%; border:1px solid #000;  padding-left: 10px; text-align:left; font-size:12px;">-->
+                  <!--    SHIP TO :-->
+                  <!--  </div>-->
+                  <!--  <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id"/><br/>-->
+                  <!--  <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.ship_to_street"/><br/>-->
+                  <!--  <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.ship_to_block"/><br/>-->
+                  <!--  <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.ship_to_city"/><br/>-->
+                  <!--  <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.ship_to_state"/>-->
+                  <!--  <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.ship_to_zip"/>-->
+                  <!--  <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.ship_to_country_id"/>-->
+
+
+                  <!--  <div style="padding-left: 10px; text-align:left; font-size:12px;margin-top:0px;">-->
+                  <!--    Tel : <t t-if="o.contact_phone"><span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.phone"/></t>-->
+                  <!--  </div>-->
+                  <!--<t t-if="o.contact_phone"><span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.phone"/></t>-->
+                  <!--  <br/>-->
+                  <!--  <div style="padding-left: 10px; text-align:left; font-size:12px;margin-top:-25px;">-->
+                  <!--    Fax : <span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax"/>-->
+                  <!--  </div>-->
+                  <!--<span style="padding-left: 10px; text-align:left; font-size:12px;" t-field="o.partner_id.fax"/>-->
+                  <!--</div>-->
+                </div>
+                <table style=" font-size : 10px; width : 100%; border: 1px solid black; margin-top : 8px; "
+                  name="invoice_line_table">
+
+                  <tr style=" border-bottom: 1px solid black;">
+                    <td style=" border-right: 1px solid black; width:15%;" name="th_description" class="text-center">
+                      <span>Ordered By</span></td>
+                    <td style=" border-right: 1px solid black; width:15%;" name="th_description" class="text-center">
+                      <span>Contact No</span></td>
+                    <td style=" border-right: 1px solid black; width:15%;" name="th_description" class="text-center">
+                      <span>Freight Term</span></td>
+                    <td style=" border-right: 1px solid black; width:35%;" name="th_description" class="text-center">
+                      <span>Payment Term</span></td>
+                    <td style=" border-right: 1px solid black; width:20%;" name="th_description" class="text-center">
+                      <div>Remarks</div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style=" border-right: 1px solid black; " class="text-center"><span><span style=""
+                          t-field="o.sale_order_id.contact_id.name" /></span></td>
+                    <td style=" border-right: 1px solid black; " class="text-center"><span><span style=""
+                          t-field="o.sale_order_id.contact_id.phone" /></span></td>
+                    <td style=" border-right: 1px solid black; " class="text-center"><span><span style=""
+                          t-field="o.sale_order_id.freight_terms_id.name" /></span></td>
+                    <td style=" border-right: 1px solid black; " class="text-center"><span><span style=""
+                          t-field="o.invoice_payment_term_id" /></span></td>
+                    <td style=" border-right: 1px solid black; " name="th_description" class="text-center"><span><span
+                          style="" t-field="o.narration" /></span></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="page">
+                <div style="min-height : 380px;  border: 1px solid black;margin-top:-10mm; ">
+                  <table style="border-top: 1px solid white;  margin-top : 0mm; width : 100%; "
+                    name="invoice_line_table">
+                    <thead style="border-top: 0px solid white;  font-size : 11px;">
+                      <tr style="border-bottom: 1px solid black; ">
+                        <th name="th_description"
+                          style="border-bottom: 1px solid black; border-right: 1px solid black; width:30%;"
+                          class="text-center"><span>P/N Description</span></th>
+                        <th name="th_desc"
+                          style="border-bottom: 1px solid black; border-right: 1px solid black; width:15%;"
+                          class="text-center"><span>Delivery Date</span></th>
+                        <th name="th_qty"
+                          style="border-bottom: 1px solid black; border-right: 1px solid black; width:13%;;"
+                          t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>Order Qty</span></th>
+                        <th name="th_uom"
+                          style="border-bottom: 1px solid black; border-right: 1px solid black; width:9%;;"
+                          t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>UOM</span></th>
+                        <th name="th_unit_price"
+                          style="border-bottom: 1px solid black; border-right: 1px solid black; width:13%;"
+                          t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>Unit Price</span></th>
+
+                        <th name="th_total" style="border-bottom: 1px solid black; width:20%;"
+                          t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>Total Amount</span></th>
+
+                      </tr>
+                    </thead>
+                    <tbody style=" font-size : 11px;" class="invoice_tbody">
+                      <t t-set="current_subtotal" t-value="0" />
+                      <t t-set="line_count" t-value="0" />
+
+                      <t t-set="lines"
+                        t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" />
+
+                      <t t-foreach="lines" t-as="line">
+                        <t t-set="line_count" t-value="line_count + 1" />
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                          groups="account.group_show_line_subtotals_tax_excluded" />
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                          groups="account.group_show_line_subtotals_tax_included" />
+
+                        <tr
+                          t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else 'line.display_type == line'">
+                          <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                            <td class="text-center" name="account_invoice_line_name"><span
+                                t-field="line.product_id.name" /></td>
+                            <td class="text-center" style=""><span>TBA</span></td>
+                            <td class="text-center" style="">
+                              <span class="text-nowrap" t-field="line.quantity"
+                                groups="account.group_show_line_subtotals_tax_excluded"
+                                t-options="{'widget': 'integer'}" />
+                              <span class="text-nowrap" t-field="line.price_total"
+                                groups="account.group_show_line_subtotals_tax_included" />
+                            </td>
+                            <td class="text-center" style="">
+                              <span class="text-nowrap" t-field="line.product_id.uom_id"
+                                groups="account.group_show_line_subtotals_tax_excluded" />
+                              <!--<span class="text-nowrap" t-field="line.product_id.uom_po_id" groups="account.group_show_line_subtotals_tax_excluded"/>-->
+                            </td>
+                            <td class="text-center" style="">
+                              <span class="text-nowrap" t-field="line.price_unit"
+                                groups="account.group_show_line_subtotals_tax_excluded" />
+                              <span class="text-nowrap" t-field="line.price_total"
+                                groups="account.group_show_line_subtotals_tax_included" />
+                            </td>
+
+                            <td class="text-center o_price_total" style="">
+                              <span class="text-nowrap" t-field="line.price_subtotal"
+                                groups="account.group_show_line_subtotals_tax_excluded" />
+                              <span class="text-nowrap" t-field="line.price_total"
+                                groups="account.group_show_line_subtotals_tax_included" />
+                            </td>
+                          </t>
+                          <t t-if="line.display_type == 'line_section'">
+                            <td colspan="99">
+                              <span t-field="line.name" t-options="{'widget': 'text'}" />
+                            </td>
+                            <t t-set="current_section" t-value="line" />
+                            <t t-set="current_subtotal" t-value="0" />
+                          </t>
+                          <t t-if="line.display_type == 'line_note'">
+                            <td colspan="99">
+                              <span t-field="line.name" t-options="{'widget': 'text'}" />
+                            </td>
+                          </t>
+                        </tr>
+
+                        <t t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                          <tr class="is-subtotal text-right">
+                            <td colspan="99">
+                              <strong class="mr16">Subtotal</strong>
+                              <span t-esc="current_subtotal"
+                                t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}" />
+                            </td>
+                          </tr>
+                        </t>
+                      </t>
+                    </tbody>
+                  </table>
+                  <div class="col-auto" style="page-break-inside: avoid;">
+
+                    <div style="margin-left : 115px; margin-top : 215px;" class="col-auto">
+                      <div class="row mt32 mb32" style="font-size : 11px; width: 100%;margin-bottom:30px;">
+                        <span>
+                          Bank Charges : <span t-field="o.sale_order_no_id.bank_charges" /> applicable for T/T Payment
+                          value below <span t-field="o.sale_order_no_id.min_order" />
+                        </span>
+                      </div>
+
+                      <div class="row mt32 mb32" style="font-size : 10px; width: 100%;">
+                        <u style="font-size : 10px;"><span>Bank Detail</span></u>
+                        <br />
+                        <span>
+                          Beneficiary : <span t-field="o.company_id.name" />
+                        </span>
+                        <br />
+                        <span>
+                          Beneficiary Address : <span t-field="o.company_id.street" /> <span
+                            t-field="o.company_id.street2" /> <span t-field="o.company_id.city" /> <span
+                            t-field="o.company_id.zip" />
+                        </span>
+                        <br />
+                        <span>
+                          Name Of Bank : Oversea-Chinese Banking Corporation Limited
+                        </span>
+                        <br />
+                        <span>
+                          Address Of Bank : 65 Chulia Street OCBC Centre Singapore 049513
+                        </span>
+                        <br />
+                        <span>
+                          Bank Account Number : 503008591301 (USD)
+                        </span>
+                        <br />
+                        <span>
+                          SWIFT Code : OCBCSGSG
+                        </span>
+                        <br />
+                        <span>
+                          Remarks: All Banking commission as well as bank charges are to be borne by payer
+                        </span>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+
+                <br />
+
+
+
+
+                <div class="row mt32 mb32">
+                  <div class="col-auto">
+                    <div class="signature">
+                      <br />
+                      <br />
+
+                      <div style="margin-left : 28mm">
+                        <i>KEITH GOH</i>
+                      </div>
+                      <div>________________________________________________</div>
+                      <div style="margin-left: 19mm; font-weight : 900;">Authorized Signature</div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-auto" style="margin-top : 10px; max-height: 80px;">
+                    <table class="table"
+                      style="  font-size : 11px; font-weight : 800; width:80%; float : right; border:1px solid #000;">
+                      <t t-if="o.is_generate_proforma_partial_before_delivery or o.is_generate_proforma_partial">
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">SUB TOTAL</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong><span t-field="o.amount_untaxed" /></strong>
+                          </td>
+                        </tr>
+                        <t t-if="o.sale_order_id.state != 'sale'">
+                          <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                            <td
+                              style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                              <strong style="padding-left : 8px;">Dep Paid</strong></td>
+                            <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                              <strong><span t-field="o.amount_dep_paid" /></strong>
+                            </td>
+                          </tr>
+                        </t>
+                        <t t-if="o.sale_order_id.state == 'sale'">
+                          <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                            <td
+                              style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                              <strong style="padding-left : 8px;">2nd Dep Paid</strong></td>
+                            <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                              <strong><span t-field="o.amount_dep_paid_2nd" /></strong>
+                            </td>
+                          </tr>
+
+                        </t>
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">GST</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong><span t-field="o.amount_tax" /></strong>
+                          </td>
+                        </tr>
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">TOTAL</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong><span t-field="o.amount_total" /></strong>
+                          </td>
+                        </tr>
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">BALANCE</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong><span t-field="o.amount_balance" /></strong>
+                          </td>
+                        </tr>
+                      </t>
+                      <t t-else="">
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">ORDER TOTAL</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong><span t-field="o.amount_untaxed" /></strong>
+                          </td>
+                        </tr>
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">GST</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong><span t-field="o.amount_tax" /></strong>
+                          </td>
+                        </tr>
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="width:150px;padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">TOTAL</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong><span t-field="o.amount_total" /></strong>
+                          </td>
+                        </tr>
+                      </t>
+
+                    </table>
+                    <br />
+
+
+                  </div>
+
+                </div>
+
+                <div class="footer">
+                  <div class="row">
+                    <div class="col-12 text-center">
+                      <small>
+                        <span>Page</span>
+                        <span class="page" />
+                        /
+                        <span class="topage" />
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </t>
+          </t>
+        </t>
+      </xpath>
+    </template>
+  </data>
+</odoo>

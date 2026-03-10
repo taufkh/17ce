@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <record id="odes_documents_upload_url_view_inherit" model="ir.ui.view">
+        <field name="name">odes.documents.upload.url.view.inherit</field>
+        <field name="model">documents.upload.url.wizard</field>
+        <field name="inherit_id" ref="documents.documents_upload_url_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group[1]" position="before">
+                <group>
+                    <group>
+                    </group>
+                    <group>
+                        <div class="clearfix">
+                            <label for="ondrive_share_url" string="Generate OneDrive Download URL"/>
+                            <field name="ondrive_share_url" widget="url" placeholder="Enter here to Generate OneDrive download URL"/> 
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="odes_document_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">odes.document.view.kanban.inherit</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.document_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//time[hasclass('oe_kanban_bottom_left')]" position="inside">
+               <button name="action_show_guest_view" icon="fa-search-plus" type="object" title="View Subscribers" class="btn btn-primary"><i class="fa fa-search-plus"/></button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

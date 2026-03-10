@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_iconn_mccoy_stock_picking_form_inherit_delivery_view_picking_withcarrier_out_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.stock.picking.form.inherit.delivery.view_picking.withcarrier.out.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='carrier_id']" position="replace">
+                <field name="is_mccoy" invisible="1"/>
+                <field name="is_odes" invisible="1"/>
+                <field name="is_iconnexion" invisible="1"/>
+                <field name="carrier_id" string="Delivery Method" readonly="state in 'cancel'" options="{'no_create': True, 'no_open': True}"  domain="[('is_delivery_method', '=', True),('company_id','=',allowed_company_ids)]"/>
+            </xpath>
+            <xpath expr="//field[@name='carrier_id']" position="after">
+                <field name="freight_terms_id" invisible="is_odes" domain="[('is_delivery_method', '=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+            </xpath>
+            <xpath expr="//field[@name='date_deadline']" position="after">
+                <field name="date_cogs" readonly="state in 'done'"/>
+                <field name="transfer_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_icon_mccoy_stock_picking_form_inherit_stock_view_picking_form" model="ir.ui.view">
+        <field name="name">icon.mccoy.stock.picking.form.inherit.stock.view.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>        
+        <field name="arch" type="xml">            
+            <!-- <xpath expr="//button[@name='action_assign']" position="attributes">
+                <attribute name="context">{'force_action_assign': True}</attribute> 
+            </xpath> -->
+            <xpath expr="//button[@name='action_assign']" position="before">
+                <button name="create_invoice_from_delivery_order" context="{'action_create_invoice_from_do': True}" invisible="(not is_iconnexion or state != 'done') or picking_type_code != 'outgoing'" string="Create Invoice" class="oe_highlight" type="object" />
+                <button name="create_bill_from_receipt" context="{'action_create_bill_from_receipt': True}" invisible="(not is_iconnexion or state != 'done') or picking_type_code != 'incoming'" string="Create Bill" class="oe_highlight" type="object" />
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-clipboard" invisible="invoice_count == 0">
+                    <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                </button>
+                <button name="action_view_bill" type="object" class="oe_stat_button" icon="fa-clipboard" invisible="bill_count == 0">
+                    <field name="bill_count" widget="statinfo" string="Vendor Bills"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="vendor_bill_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/tree/button[@name='action_show_details']" position="replace">
+                <button name="action_show_details" type="object" icon="fa-list" width="0.1" options="{&quot;warn&quot;: true}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_stock_picking_type_form_inherit" model="ir.ui.view">
+        <field name="name">iconn.mccoy.stock.picking.type.inherit</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='show_reserved']" position="after">
+                <field name="is_sample_request_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_update_po_so_link">
+        <field name="name">Update Purchase / Sale Linkage</field>
+        <field name="model_id" ref="model_stock_picking"/>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+                action = records.action_update_po_so_link()
+        </field>
+    </record>
+</odoo>

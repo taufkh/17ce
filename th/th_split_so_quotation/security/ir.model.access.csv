@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_split_wizard,access_split_wizard,model_sale_order_split_wizard,th_split_so_quotation.group_split_extract_quotation,1,1,1,1
+access_split_wizard_line,access_split_wizard_line,model_sale_order_split_wizard_line,th_split_so_quotation.group_split_extract_quotation,1,1,1,1

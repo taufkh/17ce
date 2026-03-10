@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="public_page_assets" name="Documents Public Assets"/>
+
+    <template id="not_available" name="Documents Not Available">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3>Document is not available.</h3>
+            </div>
+        </t>
+    </template>
+
+    <template id="share" name="Document Share">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3 t-esc="share.name"/>
+                <t t-if="share.date_deadline">
+                    <p class="text-muted">Valid until <span t-esc="share.date_deadline"/></p>
+                </t>
+                <t t-if="share.document_ids">
+                    <a t-attf-href="/document/share/#{share.id}/#{token}/download_zip" class="btn btn-primary mb-3">
+                        Download All
+                    </a>
+                    <ul class="list-group">
+                        <t t-foreach="share.document_ids" t-as="doc">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span t-esc="doc.name"/>
+                                <a t-attf-href="/document/share/#{share.id}/#{token}/download/#{doc.id}" class="btn btn-sm btn-outline-primary">
+                                    Download
+                                </a>
+                            </li>
+                        </t>
+                    </ul>
+                </t>
+                <t t-if="not share.document_ids">
+                    <p>No document available in this share.</p>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

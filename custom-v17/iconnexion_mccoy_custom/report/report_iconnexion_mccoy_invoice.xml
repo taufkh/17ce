@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="paperformat_iconnexion_mccoy_invoice" model="report.paperformat">
+      <field name="name">iConnexion/McCoy Invoice</field>
+      <field name="default" eval="True" />
+      <field name="format">A4</field>
+      <field name="page_height">0</field>
+      <field name="page_width">0</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">60</field>
+      <field name="margin_bottom">72</field>
+      <field name="margin_left">15</field>
+      <field name="margin_right">15</field>
+      <field name="header_line" eval="False" />
+      <field name="header_spacing">54</field>
+      <field name="dpi">80</field>
+    </record>
+
+    <template id="report_iconnexion_mccoy_invoice_document">
+      <t t-foreach="docs" t-as="o">
+          <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+              <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+              <div class="header">
+                <div class="row mt32 mb32">
+                  <t t-if="o.company_id.name in ['iConnexion Asia Pte Ltd']">
+                    <div class="col-auto">
+                      <img style="width : 100%; max-height:45mm; max-width:45mm;margin-left:-4mm;"
+                        src="/iconnexion_custom/static/src/img/icon.png" />
+                    </div>
+                  </t>
+                  <t t-if="o.company_id.name in ['McCoy Pte Ltd']">
+                    <div class="col-auto">
+                      <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                        style="max-height: 65px;margin-left:-4mm;" alt="Logo" />
+                    </div>
+                  </t>
+
+                  <div class="col-auto">
+                    <h3 style="text-align: right; font-weight: 700;">INVOICE</h3>
+                  </div>
+                </div>
+                <br />
+
+                <div class="row mt32 mb32">
+                  <div class="col-auto" style="margin-left:-4mm;">
+                    <div style="font-size : 12px;text-decoration: underline;font-weight: bold;"><span
+                        t-field="o.company_id.name" /> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.house_no"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.unit_no"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.street"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.street2"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.city"/> <span t-field="o.company_id.state_id"/></div>
+                    <div style="font-size : 12px;"> <span t-field="o.company_id.country_id"/> <span t-field="o.company_id.zip"/> </div>
+                    <div style="font-size : 12px;">Tel : <span t-field="o.company_id.partner_id.phone"/></div>
+                    <div style="font-size : 12px;">Fax : <span t-field="o.company_id.fax"/></div>
+                  </div>
+                  <div style="font-size : 12px;width:40%">
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        Company Reg No :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span class="text-uppercase">200718664Z</span>
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        GST Reg No :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span class="text-uppercase">200718664Z</span>
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        DATE :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span class="text-uppercase" t-esc="o.date.strftime('%d.%m.%Y')" />
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        INVOICE NO :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span class="text-uppercase" t-field="o.name" />
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        CUSTOMER PO NO :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <t t-if="o.po_no">
+                          <span t-field="o.po_no"/>
+                        </t>
+                        <t t-else="">
+                          <span t-field="o.ref"/>
+                        </t>
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        QUOTATION NO :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span t-esc="o.get_quotation_no()" />
+                      </div>
+
+                    </div>
+
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        PAYMENT TERMS :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span t-field="o.invoice_payment_term_id" />
+                      </div>
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        FREIGHT TERMS :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span t-field="o.sale_order_no_id.freight_terms_id.name" />
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        ORDERED BY :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span t-field="o.contact_id.name" />
+                      </div>
+
+                    </div>
+                    <!--                              <div class="row mt32 mb32">-->
+                    <!--                                <div class="col-auto" style="text-align : right;">-->
+                    <!--                                DETAILS :-->
+                    <!--                                </div>-->
+                    <!--                                <div class="col-auto" style="text-align : right;">-->
+                    <!--                                <span class="text-uppercase" t-field="o.narration"/>-->
+                    <!--                                </div>-->
+
+                    <!--                              </div>-->
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="page">
+                <table style=" margin-left:-4mm;font-size : 14px; width:80%; border:1px solid #000;">
+                  <tr>
+                    <th style="border-right: 1px solid #000 !important;">
+                      <div style="width:100mm;height:160px;">
+                        <br />
+                        <div class="col-auto" t-if="o.partner_id">
+                          <div class="row mt32 mb32">
+                            <table style="margin-top:-20px;padding : 15px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px">Bill to</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.partner_id" /><br />
+                                  <t t-if="o.sale_order_no_id">
+                                    <t t-if="o.sale_order_no_id.bill_to_street">
+                                      <span t-field="o.sale_order_no_id.bill_to_street" /><br />
+                                    </t>
+                                    <t t-if="o.sale_order_no_id.bill_to_block">
+                                      <span t-field="o.sale_order_no_id.bill_to_block" /><br />
+                                    </t>
+                                    <t t-if="o.sale_order_no_id.bill_to_city">
+                                      <span t-field="o.sale_order_no_id.bill_to_city" /><br />
+                                    </t>
+                                    <t t-if="o.sale_order_no_id.bill_to_state">
+                                      <span t-field="o.sale_order_no_id.bill_to_state" /><br />
+                                    </t>
+                                    <span t-field="o.sale_order_no_id.bill_to_country_id" />
+                                    <span t-field="o.sale_order_no_id.bill_to_zip" /><br />
+                                    <t t-if="o.sale_order_no_id.bill_to_remarks">
+                                      <span t-field="o.sale_order_no_id.bill_to_remarks" />
+                                    </t>
+                                  </t>
+
+                                  <t t-else="">
+                                    <t t-if="o.partner_id.street">
+                                      <span t-field="o.partner_id.street" /><br />
+                                    </t>
+                                    <t t-if="o.partner_id.street2">
+                                      <span t-field="o.partner_id.street2" /><br />
+                                    </t>
+                                    <t t-if="o.partner_id.city">
+                                      <span t-field="o.partner_id.city" /><br />
+                                    </t>
+                                    <t t-if="o.partner_id.state_id">
+                                      <span t-field="o.partner_id.state_id" /><br />
+                                    </t>
+                                    <span t-field="o.partner_id.country_id" />
+                                    <span t-field="o.partner_id.zip" /><br />
+                                  </t>
+
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px">C.Person
+                                </td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.sale_order_no_id.bill_to_contact_person.name" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px">Telephone
+                                </td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.sale_order_no_id.bill_to_contact_person.phone" />
+                                </td>
+                              </tr>
+                            </table>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </th>
+                    <th>
+                      <div style="width:100mm;height:120px;">
+                        <br />
+                        <div class="col-auto" t-if="o.partner_id">
+                          <div class="row mt32 mb32">
+                            <table style="margin-top:-20px;padding : 15px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Ship to</td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.partner_id" /><br />
+                                  <t t-if="o.sale_order_no_id">
+                                    <t t-if="o.sale_order_no_id.ship_to_street">
+                                      <span t-field="o.sale_order_no_id.ship_to_street" /><br />
+                                    </t>
+                                    <t t-if="o.sale_order_no_id.ship_to_block">
+                                      <span t-field="o.sale_order_no_id.ship_to_block" /><br />
+                                    </t>
+                                    <t t-if="o.sale_order_no_id.ship_to_city">
+                                      <span t-field="o.sale_order_no_id.ship_to_city" /><br />
+                                    </t>
+                                    <t t-if="o.sale_order_no_id.ship_to_state">
+                                      <span t-field="o.sale_order_no_id.ship_to_state" /><br />
+                                    </t>
+                                    <span t-field="o.sale_order_no_id.ship_to_country_id" />
+                                    <span t-field="o.sale_order_no_id.ship_to_zip" /><br />
+                                    <t t-if="o.sale_order_no_id.ship_to_remarks">
+                                      <span t-field="o.sale_order_no_id.ship_to_remarks" />
+                                    </t>
+                                  </t>
+                                  <t t-else="">
+                                    <t t-if="o.partner_id.street">
+                                      <span t-field="o.partner_id.street" /><br />
+                                    </t>
+                                    <t t-if="o.partner_id.street2">
+                                      <span t-field="o.partner_id.street2" /><br />
+                                    </t>
+                                    <t t-if="o.partner_id.city">
+                                      <span t-field="o.partner_id.city" /><br />
+                                    </t>
+                                    <t t-if="o.partner_id.state_id">
+                                      <span t-field="o.partner_id.state_id" /><br />
+                                    </t>
+                                    <span t-field="o.partner_id.country_id" />
+                                    <span t-field="o.partner_id.zip" /><br />
+                                  </t>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">C.Person
+                                </td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.sale_order_no_id.ship_to_contact_person.name" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Telephone
+                                </td>
+                                <td style="font-size:12px; padding-left: 5px;">:</td>
+                                <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                  <span t-field="o.sale_order_no_id.ship_to_contact_person.phone" />
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                </table>
+
+                <div style="min-height : 280px " class="row mt32 mb32">
+                  <table style=" margin-top : 8px; " class="table table-sm o_main_table" name="invoice_line_table">
+                    <thead style="border-bottom: 1px solid black; border-top: 1px solid black; font-size : 12px;">
+                      <tr
+                        style="border-bottom: 1px solid black; border-top: 1px solid black; background-color: lightgrey;">
+                        <th name="th_description"
+                          style="border-bottom: 1px solid black; border-top: 1px solid black; width:100px;"
+                          class="text-left"><span>Cust P/N</span></th>
+                        <th name="th_desc"
+                          style="border-bottom: 1px solid black; border-top: 1px solid black; width:150px;"
+                          class="text-left"><span>Description</span></th>
+                        <th name="th_qty"
+                          style="border-bottom: 1px solid black; border-top: 1px solid black; width:40px;"
+                          t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>COO</span></th>
+                        <th name="th_qty"
+                          style="border-bottom: 1px solid black; border-top: 1px solid black; width:60px;"
+                          t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>Order Qty</span></th>
+                        <th name="th_uom"
+                          style="border-bottom: 1px solid black; border-top: 1px solid black; width:60px;"
+                          t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>UOM</span></th>
+                        <th name="th_unit_price"
+                          style="border-bottom: 1px solid black; border-top: 1px solid black; width:60px;"
+                          t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>Unit Price</span></th>
+
+                        <th name="th_total"
+                          style="border-bottom: 1px solid black; border-top: 1px solid black; width:80px;"
+                          t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                          <span>Total Amount</span></th>
+
+                      </tr>
+                    </thead>
+                    <tbody style="font-size : 12px;" class="invoice_tbody">
+                      <t t-set="current_subtotal" t-value="0" />
+                      <t t-set="line_count" t-value="0" />
+
+                      <t t-set="lines"
+                        t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" />
+
+                      <t t-foreach="lines" t-as="line">
+                        <t t-set="line_count" t-value="line_count + 1" />
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                          groups="account.group_show_line_subtotals_tax_excluded" />
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                          groups="account.group_show_line_subtotals_tax_included" />
+
+                        <tr
+                          t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else 'line.display_type == line'">
+                          <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                            <td name="account_invoice_line_name"><span t-field="line.name" /></td>
+                            <td class="text-left">
+                              <span>MPN: </span><span t-field="line.product_id.name" /><br />
+                              <t t-if="line.product_id.class_id">
+                                <span>Description: </span><span t-field="line.product_id.class_id.name" />
+                              </t>
+
+                            </td>
+                            <td class="text-left"><span t-field="line.product_id.coo_id" /></td>
+                            <td class="text-right">
+                              <span class="text-nowrap" t-field="line.quantity" t-options="{'widget': 'integer'}"
+                                groups="account.group_show_line_subtotals_tax_excluded" />
+                              <span class="text-nowrap" groups="account.group_show_line_subtotals_tax_included">
+                                <t t-esc="o.currency_id.symbol" />
+                                <t t-esc="line.price_total" t-options="{'widget': 'float', 'precision': 2}" />
+                              </span>
+                            </td>
+                            <td class="text-right"><span t-field="line.product_uom_id" /></td>
+                            <td class="text-right">
+                              <span class="text-nowrap" t-field="line.price_unit"
+                                groups="account.group_show_line_subtotals_tax_excluded" />
+                              <span class="text-nowrap" groups="account.group_show_line_subtotals_tax_included">
+                                <t t-esc="o.currency_id.symbol" />
+                                <t t-esc="line.price_total" t-options="{'widget': 'float', 'precision': 2}" />
+                              </span>
+                            </td>
+
+                            <td class="text-right o_price_total">
+                              <span class="text-nowrap" groups="account.group_show_line_subtotals_tax_excluded">
+                                <t t-esc="o.currency_id.symbol" />
+                                <t t-esc="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}" />
+                              </span>
+                              <span class="text-nowrap" groups="account.group_show_line_subtotals_tax_included">
+                                <t t-esc="o.currency_id.symbol" />
+                                <t t-esc="line.price_total" t-options="{'widget': 'float', 'precision': 2}" />
+                              </span>
+                            </td>
+                          </t>
+                          <t t-if="line.display_type == 'line_section'">
+                            <td colspan="99">
+                              <span t-field="line.name" t-options="{'widget': 'text'}" />
+                            </td>
+                            <t t-set="current_section" t-value="line" />
+                            <t t-set="current_subtotal" t-value="0" />
+                          </t>
+                          <t t-if="line.display_type == 'line_note'">
+                            <td colspan="99">
+                              <span t-field="line.name" t-options="{'widget': 'text'}" />
+                            </td>
+                          </t>
+                        </tr>
+
+
+                        <t t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                          <tr class="is-subtotal text-right">
+                            <td colspan="99">
+                              <strong class="mr16">Subtotal</strong>
+                              <span t-esc="current_subtotal"
+                                t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}" />
+                            </td>
+                          </tr>
+                        </t>
+                      </t>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="font-size : 14px" class="text-left">
+                  <span>
+                    <span t-field="o.narration" />
+                  </span>
+                  <br />
+
+                </div>
+                <!--                    <div style="font-size : 12px" class="text-left">Remarks: T/T and correspondent bank charges to be borne by payer</div>-->
+
+                <!--<div style="font-size : 12px; border-bottom: 0px solid white; position: absolute; width : 680px">-->
+                <!-- <i>  <span t-field="o.company_id.remarks_header"/></i> -->
+                <!--  <br/>-->
+                <!--  <p><span style="font-size : 13px;">-->
+
+                <!--    </span>-->
+                <!--    <br/>-->
+                <!--    <span style="font-size : 13px;">-->
+                <!--      CR NUMBER: CR78664170000E-->
+                <!--    </span></p>-->
+                <!--</div>-->
+                <br />
+                <!-- <div style="font-size : 11px; font-style: italic;" >For attention: Mc'Coy Components offer to sell product shall be solely in accordance with the standard Terms and Conditions of Sales </div> -->
+                <t t-if="line_count &lt;= 5">
+                  <!-- <br/><br/><br/><br/><br/> -->
+                </t>
+
+
+                <div class="footer">
+                  <div class="row mt32 mb32">
+
+                    <div class="col-auto">
+                      <p><span style="font-size : 13px;">
+
+                        </span>
+                        <br />
+                        <span style="font-size : 13px;">
+                          CR NUMBER: CR78664170000E
+                        </span></p>
+
+                    </div>
+
+                    <div class="col-auto" style="margin-top : 10px; max-height: 80px;">
+
+                      <table class="table"
+                        style="  font-size : 11px; font-weight : 500; width:88.5%; border:1px solid #000;margin-left:13.5mm;">
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="padding: 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">SUBTOTAL</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong>
+                              <span>
+                                <t t-esc="o.currency_id.symbol" />
+                                <t t-esc="o.amount_untaxed" t-options="{'widget': 'float', 'precision': 2}" />
+
+                              </span>
+                            </strong>
+                          </td>
+                        </tr>
+                        <tr style="">
+                          <td
+                            style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">Discount
+                              <!-- <span t-field="o.percentage_downpayment"/> --> </strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <!-- <strong><span t-field="o.invoice_downpayment"/></strong> -->
+                          </td>
+                        </tr>
+                        <tr style="">
+                          <td
+                            style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">Freight
+                              <!-- <span t-field="o.percentage_downpayment"/> --> </strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <!--<strong><span t-field="o.invoice_downpayment"/></strong>-->
+                          </td>
+                        </tr>
+
+                        <t t-foreach="o.taxes()" t-as="tx">
+                          <t t-if="tx['amount'] * (tx['tax']/100) != 0">
+                            <tr style="">
+                              <td
+                                style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                                <strong style="padding-left : 8px;">GST <span t-esc="int(tx['tax'])" />%</strong></td>
+                              <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                                <strong>
+                                  <span>
+                                    <t t-esc="o.currency_id.symbol" />
+                                    <t t-esc="tx['amount'] * (tx['tax']/100)"
+                                      t-options="{'widget': 'float', 'precision': 2}" />
+
+                                  </span>
+                                </strong>
+                              </td>
+                            </tr>
+                          </t>
+                        </t>
+                        <tr style="">
+                          <td
+                            style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 0px solid #FFFF !important; border-left: 0px solid #FFFF !important; ">
+                            <strong style="padding-left : 8px;">
+                              <t t-if="o.currency_id == o.company_id.currency_id">
+                                <span>Total Amount</span>
+                              </t>
+                              <t t-if="o.currency_id != o.company_id.currency_id">
+                                <span> Total Amount</span>
+                              </t>
+
+                            </strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong>
+                              <span class="text-nowrap">
+                                <t t-esc="o.currency_id.symbol" />
+                                <t t-esc="o.amount_total" t-options="{'widget': 'float', 'precision': 2}" />
+                              </span>
+                            </strong>
+                          </td>
+                        </tr>
+
+                      </table>
+
+
+                      <div class="row mt32 mb32" style="font-size : 9px; width: 100%;margin-left:10mm;">
+                        <div class="col-auto">
+                          <span>
+                            Beneficiary : <span t-field="o.company_id.name" />
+                          </span>
+                          <br />
+                          <span>
+                            Beneficiary : <span t-field="o.company_id.street" /> <span t-field="o.company_id.street2" />
+                            <span t-field="o.company_id.city" /> <span t-field="o.company_id.zip" />
+                          </span>
+                          <br />
+                          <span>
+                            Bank : Oversea-Chinese Banking Corporation Limited
+                          </span>
+                          <br />
+                          <span>
+                            Address Of Bank : 65 Chulia Street OCBC Centre Singapore 049513
+                          </span>
+                          <br />
+                          <span>
+                            Bank Account Number : 503008591301 (USD)
+                          </span>
+                          <br />
+                          <span>
+                            SWIFT Code : OCBCSGSG
+                          </span>
+                          <br />
+                          <span>
+                            Remarks: All Banking commission as well as bank charges are to be borne by payer
+                          </span>
+                        </div>
+                      </div>
+                      <br />
+
+
+                    </div>
+
+
+                  </div>
+                  <div class="row mt32 mb32">
+                    <div class="col-auto" style="margin-top: -10mm">
+                      <div class="signature">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <t t-if="o.company_id.name in ['iConnexion Asia Pte Ltd']">
+                          <div style="margin-left: 135px; font-weight : 900;">KG</div>
+                        </t>
+                        <div>________________________________________________</div>
+                        <div style="margin-left: 75px; font-weight : 900;">Authorized Signature</div>
+
+                      </div>
+                    </div>
+                    <t t-if="o.company_id.name in ['iConnexion Asia Pte Ltd']">
+                      <div class="col-auto" style="margin-top: -20mm;">
+                        <t t-if="o.state in ['posted']">
+                          <br />
+                          <div class="row mt16 mb16">
+                            <div class="col-auto">
+                              <img style="width : 140mm; margin-left: -132mm;"
+                                src="/iconnexion_custom/static/src/img/keith_signature.png" />
+                            </div>
+                            <div class="col-auto">
+                              <img style="width : 40mm; margin-left: -117mm;"
+                                src="/iconnexion_custom/static/src/img/stamp_iconnexion-removebg.png" />
+                            </div>
+                          </div>
+                        </t>
+                      </div>
+                    </t>
+                    <t t-if="o.company_id.name in ['McCoy Pte Ltd']">
+                      <div class="col-auto" style="margin-top: -20mm;">
+                        <t t-if="o.state in ['posted']">
+                          <br />
+                          <div class="row mt16 mb16">
+                            <!--<div class="col-auto">-->
+                            <!--  <img style="width : 140mm; margin-left: -124mm;" src="/iconnexion_custom/static/src/img/keith_signature.png"/>-->
+                            <!--</div>-->
+                            <div class="col-auto">
+                              <img style="width : 25mm; margin-left: -75mm;margin-top:12mm;"
+                                src="/odes_sign/static/src/img/stamp_mccoy-removebg.png" />
+                            </div>
+                          </div>
+                        </t>
+                      </div>
+                    </t>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 text-center">
+                      <small>
+                        <span>Page</span>
+                        <span class="page" />
+                        /
+                        <span class="topage" />
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </t>
+        </t>
+    </template>
+
+
+
+    <record id="iconnexion_report_mccoy_invoice" model="ir.actions.report">
+      <field name="name">Invoice (iConnexion/McCoy)</field>
+      <field name="model">account.move</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">iconnexion_mccoy_custom.report_iconnexion_mccoy_invoice_document</field>
+      <field name="report_file">iconnexion_mccoy_custom.report_iconnexion_mccoy_invoice_document</field>
+    </record>
+
+    <record id="iconnexion_report_mccoy_invoice" model="ir.actions.report">
+      <field name="paperformat_id" ref="iconnexion_mccoy_custom.paperformat_iconnexion_mccoy_invoice" />
+      <field name="groups_id" eval="[(4, ref('iconnexion_custom.group_iconnexion_company'))]" />
+    </record>
+
+  </data>
+</odoo>

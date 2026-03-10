@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_imin_attendance_import" model="ir.ui.view">
+        <field name="name">imin.attendance.import</field>
+        <field name="model">imin.attendance.import</field>
+        <field name="arch" type="xml">
+            <form string="Import Attendance">
+                <sheet>
+                    <group col="4">
+                        <field name="attendance_file" required="1" filename="filename"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Import" name="action_import" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_imin_import_attendance" model="ir.actions.act_window">
+        <field name="name">Import Attendance</field>
+        <field name="res_model">imin.attendance.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem id="imin_attendance_import" name="Import Attendance" parent="imin_hr_custom.menu_imin_hr_attendance_root" action="action_imin_import_attendance" sequence="5" />
+</odoo>

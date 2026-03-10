@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_committed_date_tree" model="ir.ui.view">
+        <field name="name">icon.committeddate.history.tree</field>
+        <field name="model">icon.committeddate.history</field>
+        <field name="arch" type="xml">
+            <tree string="date" create="false">
+                <field name="date" />
+                <field name="change_reason" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_order_product_tree" model="ir.ui.view">
+        <field name="name">sale.report.tree</field>
+        <field name="model">sale.report</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Analysis">
+                <field name="product_tmpl_id" />
+                <field name="product_brand_id" />
+                <field name="product_uom_qty" />
+                <field name="qty_delivered" />
+                <field name="qty_invoiced" />
+
+                <field name="date" />
+                <field name="price_subtotal" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+    <record id="icon_sale_report_action" model="ir.actions.act_window">
+        <field name="name">Sale Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.report</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_order_product_tree" />
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+    <record id="sale_view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.view.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <!-- v16: groups_id on inherited view not allowed; removed -->
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_icon_order_line_tree" model="ir.ui.view">
+        <field name="name">sale.order.line.tree</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Order Lines" create="1">
+                <field name="create_date" invisible="0" optional="show" readonly="1" />
+                <field name="create_uid" invisible="0" optional="show" readonly="1" />
+                <field name="order_id" optional="show" />
+                <field name="client_order_ref_rel" optional="show" />
+                <field name="order_partner_id" optional="show" />
+                <field name="supplier_name_id" optional="show" />
+                <field name="product_id" string="MPN" optional="show" />
+                <field name="is_special_price" string="Special" optional="show" invisible="1" />
+                <field name="name" string="CPN" optional="show" />
+                <field name="committed_date" optional="show" />
+                <field name="customer_request_date2" optional="show" />
+                <field name="customer_request_date" widget="remaining_days" string="Aging Date" optional="show" />
+                <field name="icon_scheduled_date" optional="show" />
+                <field name="salesman_id" optional="show" />
+                <field name="product_uom_qty" string="Qty" optional="show" />
+                <field name="qty_delivered" optional="show" />
+                <field name="qty_invoiced" optional="show" />
+                <field name="qty_to_invoice" optional="show" />
+                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom" optional="show" />
+                <field name="quote_price_unit" string="Unit Price" optional="show" />
+                <field name="price_subtotal" sum="Total" widget="monetary" optional="show" />
+                <field name="currency_id" invisible="1" optional="show" />
+                <field name="state" optional="show" />
+                <button name="action_committed_history_wizard" string="Change Committed Date" type="object"
+                    class="btn-primary" />
+                <button name="action_view_history_wizard" string="View History" type="object" class="btn-primary" />
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_icon_picklist_order_line_tree" model="ir.ui.view">
+        <field name="name">picklist.sale.order.line.tree</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Order Lines" editable="bottom" create="false">
+                <field name="create_date" invisible="0" optional="show" readonly="1" />
+                <field name="create_uid" invisible="0" optional="show" readonly="1" />
+                <field name="order_id" optional="show" readonly="1" />
+                <field name="client_order_ref_rel" optional="show" readonly="1" />
+                <field name="order_partner_id" optional="show" readonly="1" />
+                <field name="supplier_name_id" optional="show" readonly="1" />
+                <field name="product_id" string="MPN" optional="show" readonly="1" />
+                <field name="name" string="CPN" optional="show" readonly="1" />
+                <field name="committed_date" optional="show" readonly="1" />
+                <field name="customer_request_date2" optional="show" readonly="1" />
+                <field name="customer_request_date" widget="remaining_days" string="Aging Date" optional="show"
+                    readonly="1" />
+                <field name="icon_scheduled_date" optional="show" readonly="1" />
+                <field name="salesman_id" optional="show" readonly="1" />
+                <field name="product_uom_qty" string="Qty" optional="show" readonly="1" />
+                <field name="qty_delivered" optional="show" readonly="1" />
+                <field name="qty_invoiced" optional="show" readonly="1" />
+                <field name="qty_to_invoice" optional="show" readonly="1" />
+                <field name="product_uom" string="Unit of Measure" groups="uom.group_uom" optional="show"
+                    readonly="1" />
+                <field name="quote_price_unit" string="Unit Price" optional="show" readonly="1" />
+                <field name="price_subtotal" sum="Total" widget="monetary" optional="show" readonly="1" />
+                <field name="currency_id" invisible="1" optional="show" readonly="1" />
+                <field name="state" optional="show" readonly="1" />
+                <field name="is_pick" readonly="0" />
+                <button name="action_committed_history_wizard" string="Change Committed Date" type="object"
+                    class="btn-primary" />
+                <button name="action_view_history_wizard" string="View History" type="object" class="btn-primary" />
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="sale_order_line_view_search" model="ir.ui.view">
+        <field name="name">sale.order.line.select</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Sale Order">
+                <field name="order_id" string="Order Reference" filter_domain="[('order_id.name', 'ilike', self)]" />
+                <field name="order_id" string="Source Document" filter_domain="[('order_id.origin', 'ilike', self)]" />
+                <filter string="Order" name="Sale Order" domain="[('order_id.state', '=', 'sale')]" />
+                <field name="name" string="CPN" />
+                <field name="product_id" string="MPN" />
+                <!-- v16: product_qty renamed to product_uom_qty -->
+                <field name="product_uom_qty" string="Qty" />
+                <field name="order_id" string="Customer" filter_domain="[('order_id.partner_id', 'ilike', self)]" />
+                <field name="icpo_request_deliver_date" string="Iconn Request Date" />
+            </search>
+        </field>
+    </record>
+    <record id="icon_sale_order_line_action" model="ir.actions.act_window">
+        <field name="name">Sale Orders Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_icon_order_line_tree" />
+        <field name="domain">[]</field>
+        <field name="search_view_id" ref="sale_order_line_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+    <record id="icon_picklist_sale_order_line_action" model="ir.actions.act_window">
+        <field name="name">Picklist</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_icon_picklist_order_line_tree" />
+        <field name="domain">[('company_id', '=', 3)]</field>
+        <field name="search_view_id" ref="sale_order_line_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+    <menuitem id="icon_item_sale_order_line" name="Sale Order Line"
+        action="iconnexion_custom.icon_sale_order_line_action" parent="sale.sale_order_menu"
+        groups="sales_team.group_sale_salesman" sequence="7" />
+
+    <menuitem id="icon_picklist_sale_order_line" name="Picklist"
+        action="iconnexion_custom.icon_picklist_sale_order_line_action" parent="sale.sale_order_menu" sequence="8" />
+
+    <record id="action_quotations_with_onboarding_current" model="ir.actions.act_window">
+        <field name="name">Quotations (Current)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree_with_onboarding" />
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation" />
+        <field name="context">{'search_default_is_current': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+            </p>
+            <p>
+                Once the quotation is confirmed by the customer, it becomes a sales order.<br /> You will be able to
+                create an invoice and collect the payment.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_quotations_current" action="action_quotations_with_onboarding_current"
+        parent="sale.sale_order_menu" sequence="1" groups="sales_team.group_sale_salesman" />
+
+    <record id="view_proforma_invoice_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <!-- v16: invisible not in RELAXNG schema for tree views → use invisible instead -->
+            <!-- parent view already has string="Number" readonly="1" decoration-bf="1" on name field -->
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="proforma_number" />
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+    <!-- <record id="action_proforma_invoice" model="ir.actions.act_window">
+        <field name="name">Proforma Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('is_proforma_invoice','=', True)]</field>
+        <field name="view_id" ref="iconnexion_custom.view_proforma_invoice_tree" />
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation" />
+        <field name="context">{'form_view_ref':'iconnexion_custom.icon_view_order_form_inherit'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_quotations_current" action="action_proforma_invoice" parent="sale.sale_order_menu"
+        sequence="8" groups="sales_team.group_sale_salesman" /> -->
+
+
+   <!-- <record id="odes_sale_order_form_view" model="ir.ui.view">
+        <field name="name">odes.view.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="odes_sale_reporting.odes_sale_order_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='purchase_order_line_id']"
+                position="attributes">
+                <attribute name="invisible">parent.is_iconnexion</attribute>
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/tree/button[@name='action_link_po_to_supplier']"
+                position="replace">
+
+            </xpath>
+
+        </field>
+    </record>-->
+    <record id="sale_order_icon_tree" model="ir.ui.view">
+        <field name="name">sale.order.icon.tree</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Order Lines" create="false">
+                <field name="name" readonly="1" />
+                <field name="client_order_ref" readonly="1" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_icon_order_form" model="ir.ui.view">
+        <field name="name">sale.order.icon.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <!-- Ensure boolean used by form modifiers is always available in the view -->
+            <xpath expr="//sheet" position="inside">
+                <field name="is_iconnexion" invisible="1" />
+                <field name="is_sale_view" invisible="1" />
+            </xpath>
+            <header position="inside">
+                <!-- v16: states attribute deprecated → use invisible expression -->
+                <button name="print_icon_quotation" string="Print Quotation" type="object"
+                    invisible="state not in ('draft', 'sent', 'done')"
+                    groups="iconnexion_custom.group_iconnexion_company" class="btn-primary" />
+                <button name="print_icon_so" string="Print Sale Order" type="object"
+                    invisible="state != 'sale'"
+                    groups="iconnexion_custom.group_iconnexion_company" class="btn-primary" />
+            </header>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_uom_qty']" position="before">
+                <!-- v16: invisible removed (not in RELAXNG schema); optional preserves default visibility -->
+                <field name="customer_request_date" optional="hide" />
+                <field name="committed_date" optional="hide" />
+                <field name="icon_scheduled_date" optional="show" />
+                <field name="icpo_request_deliver_date" invisible="1" />
+            </xpath>
+            <!-- v16: promise_date and request_date removed from sale.order.line tree in v16 -->
+            <!-- <xpath expr="//field[@name='order_line']//tree//field[@name='promise_date']" position="replace">
+                <field name="promise_date" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='request_date']" position="replace">
+                <field name="request_date" invisible="1" />
+            </xpath> -->
+            <xpath expr="//field[@name='order_line']//tree//field[@name='is_downpayment']" position="before">
+                <field name="serial_numbers" />
+                <field name="is_special_price" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
+                <field name="current_stock" string="Buffer Stock" digits="[42,2]" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+                <field name="icon_sale_price" invisible="1" />
+                <!-- v16: moq_id disabled (mccoy.product.moq not available) -->
+                <!-- <field name="moq_id" invisible="1" /> -->
+                <!-- v16: invisible removed; optional="hide" = hidden by default (iconnexion-specific columns) -->
+                <field name="moq"
+                    readonly="state != 'draft'"
+                    optional="show" />
+                <field name="spq"
+                    readonly="state != 'draft'"
+                    optional="show" />
+                <field name="a_moq" invisible="1" />
+                <field name="a_spq" invisible="1" />
+                <field name="ar_code" invisible="1" />
+                <field name="r_code" readonly="1" optional="hide" />
+                <field name="sale_delay"
+                    readonly="state != 'draft'"
+                    string="Lead Time" optional="hide" />
+                <field name="brand" readonly="1" optional="show" />
+                <field name="quote_price_unit" optional="show" string="U/P" />
+                <field name="s_margin" invisible="1" />
+                <field name="s_margin_char" string="S. Margin" optional="hide" />
+                <field name="is_iconnexion" invisible="1" />
+                <field name="reason" invisible="1" />
+                <field name="is_lower_margin" invisible="1" />
+                <field name="is_request_margin" invisible="1" />
+                <field name="approve_user_id" invisible="1" />
+
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="after">
+                <button name="%(iconnexion_custom.action_icon_quotation_reason_wizard)d" type="action"
+                    string="New Pricing Request"
+                    invisible="not is_lower_margin or is_request_margin"
+                    class="btn-primary" />
+                <button name="%(iconnexion_custom.action_icon_quotation_approve_wizard)d" type="action"
+                    string="View Request" invisible="not is_request_margin" class="btn-primary"
+                    groups="iconnexion_custom.group_iconnexion_sales_manager" />
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//form//field[@name='tax_id']" position="after">
+                <field name="icon_purchase_id" optional="show" />
+                <field name="icon_purchase_ids" optional="show" widget="many2many_tags" />
+                <field name="customer_request_date" optional="show"
+                    invisible="not parent.is_sale_view" />
+                <field name="icpo_request_deliver_date" optional="show"
+                    invisible="not parent.is_sale_view" />
+                <field name="delivery_date" optional="show"
+                    invisible="not parent.is_sale_view" />
+                <!-- v16: invisible is invalid in form subviews; use invisible instead -->
+                <field name="icon_scheduled_date" invisible="not parent.is_sale_view"
+                    optional="show" />
+
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="attributes">
+
+                <attribute name="string">CPN</attribute>
+            </xpath>
+            <!-- v16: invisible with expression not in RELAXNG schema for tree fields.
+                 Use optional="hide" so these columns are hidden by default (iconnexion uses
+                 quote_price_unit/U/P instead of price_unit, and hides uom/lead-time columns). -->
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//tree//field[@name='tax_id']" position="attributes">
+
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_uom']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='customer_lead']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="string">Order Qty</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="string">MPN</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_total']" position="attributes">
+                <attribute name="string">Total Price</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_template_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- <xpath expr="//notebook/page/field/form/div[@name='invoice_lines']" position="after">
+                <div name="sales_history_ids">
+                    <label for="sales_history_ids"/>
+                    <field name="sales_history_ids">
+                        <tree>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="date" widget="date"/>
+                            <field name="order_id" optional="hide"/>
+                            <field name="partner_id" optional="hide"/>
+                            <field name="user_id" optional="hide"/>
+                            <field name="product_id"/>
+                            <field name="qty"/>
+                            <field name="price_unit" digits="[42,4]" options="{'currency_field': 'currency_id'}"/>
+                            <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/> 
+                        </tree>
+                    </field>
+                </div>
+            </xpath> -->
+
+
+            <xpath expr="//page[@name='order_lines']" position="after">
+                <page name="so_analyze" string="Order Analysis"
+                    groups="iconnexion_custom.group_iconnexion_sales_manager"
+                    invisible="not is_iconnexion">
+                    <field name="sale_order_line_analyze_ids">
+                        <tree editable="bottom" create="0" delete="0">
+                            <field name="name" readonly="1" invisible="1" />
+                            <field name="product_id" readonly="1" string="Code" />
+                            <field name="product_uom_qty" readonly="1" string="Order Qty" />
+                            <field name="a_moq" readonly="1" />
+                            <field name="a_spq" readonly="1" />
+                            <field name="ar_code" readonly="1" />
+                            <field name="icon_sale_price" invisible="1" />
+                            <field name="quote_price_unit" readonly="1" string="U/P" />
+                            <field name="s_margin_char" readonly="1" string="S. Margin" />
+                            <field name="price_unit" invisible="1" />
+                            <field name="price_subtotal" invisible="1" />
+                            <field name="cost_price" readonly="1"
+                                groups="iconnexion_custom.group_iconnexion_sales_manager" />
+                            <field name="a_margin_char" readonly="1" string="A. Margin" />
+                            <field name="total_a_margin" readonly="1" string="Total A. Margin" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="attachment_count" invisible="1" />
+            </xpath>
+
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="attachment_ids" widget="many2many_binary" />
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="readonly">state in ('done', 'cancel', 'quote_lock')</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_cancel']" position="before">
+                <button name="action_confirm" id="action_confirm" string="Confirm" class="btn-primary" type="object"
+                    invisible="state not in ('quote_lock')" />
+            </xpath>
+
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible">(state not in ["draft", "sent", "sale", "quote_lock"]) or (not id)</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <!-- <field name="select_address" invisible="not is_iconnexion" /> -->
+                <field name="bill_to_street" invisible="not is_iconnexion" />
+                <field name="bill_to_block" string="" invisible="not bill_to_block" />
+                <field name="bill_to_city" string="" invisible="not bill_to_city" />
+                <field name="bill_to_state" string="" invisible="not bill_to_state" />
+                <field name="bill_to_zip" string="" invisible="not bill_to_zip" />
+                <field name="bill_to_country_id" string=""
+                    invisible="not bill_to_country_id" />
+                <field name="bill_to_remarks" string="" invisible="not bill_to_remarks" />
+                <field name="bill_to_contact_person" invisible="1"/>
+                <field name="ship_to_street" invisible="not is_iconnexion" />
+                <field name="ship_to_block" string="" invisible="not ship_to_block" />
+                <field name="ship_to_city" string="" invisible="not ship_to_city" />
+                <field name="ship_to_state" string="" invisible="not ship_to_state" />
+                <field name="ship_to_zip" string="" invisible="not ship_to_zip" />
+                <field name="ship_to_country_id" string=""
+                    invisible="not ship_to_country_id" />
+                <field name="ship_to_remarks" string="" invisible="not ship_to_remarks" />
+                <field name="bill_to_contact_person" invisible="1"/>
+                <field name="is_sale_view" widget="boolean_toggle" />
+                <field name="client_order_ref" invisible="not is_sale_view" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_odes_quo_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.odes.quo.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="odes_quotation.view_order_form_inherit" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='opportunity_id']" position="replace">
+                <field name="opportunity_id" readonly="state not in ('draft', 'sent', 'sale')" help="Log in the chatter from which opportunity the order originates" groups="sales_team.group_sale_salesman"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- v16: website_sale not installed; inherit_id ref would fail -->
+    <!-- <record id="sale_order_view_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="website_sale.sale_order_view_form" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="context">{
+                    'display_website': True,
+                    'res_partner_search_mode': 'customer',
+                    'show_address': 1,
+                    'show_vat': True,
+                    'disable_search': True,
+                    }</attribute>
+            </field>
+        </field>
+    </record> -->
+
+
+    <record id="sale_order_line_payment_tree" model="ir.ui.view">
+        <field name="name">sale.order.line.payment</field>
+        <field name="model">sale.order.line</field>
+        <!-- v16: type="html" → type="xml" to avoid HTML parser issues -->
+        <field name="arch" type="xml">
+            <tree string="Matching of Payment Data" create="false">
+                <field name="create_date" optional="show" />
+                <field name="create_uid" optional="show" />
+                <field name="order_id" optional="show" />
+                <field name="client_order_ref_rel" optional="show" />
+                <field name="order_partner_id" optional="show" />
+                <field name="product_id" string="MPN" optional="show" />
+                <field name="name" string="CPN" optional="show" />
+                <field name="salesman_id" optional="show" widget="many2one_avatar_user" />
+                <field name="product_uom_qty" optional="show" />
+                <field name="product_uom" optional="show" />
+                <field name="product_uom_category_id" optional="show" invisible="1" />
+                <field name="quote_price_unit" optional="show" />
+                <field name="price_subtotal" sum="Total" widget="monetary" optional="show" />
+                <field name="currency_id" invisible="1" optional="show" />
+                <field name="company_id" optional="show" />
+                <field name="state" decoration-success="state == 'sale' or state == 'done'"
+                    decoration-info="state == 'draft' or state == 'sent'" widget="badge" optional="show" />
+                <field name="payment_state" optional="show" widget="badge"
+                    decoration-danger="payment_state == 'not_paid'"
+                    decoration-warning="payment_state in ('partial', 'in_payment')"
+                    decoration-success="payment_state in ('paid', 'reversed')" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="act_open_sale_order_line_payment" model="ir.actions.act_window">
+        <field name="name">Matching of Payment Data</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sale_order_line_payment_tree" />
+        <field name="domain">[('salesman_id', '=', uid),('invoice_status', '!=', 'no')]</field>
+        <!--            <field name="search_view_id" ref="purchase_order_line_view_search"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="sale_order_line_payment" name="Matching of Payment Data" parent="sale.menu_sale_report" sequence="160"
+        action="act_open_sale_order_line_payment" />
+
+
+    <!-- <record id="view_proforma_invoice_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <field name="name" string="Number" readonly="1" decoration-bf="1" />
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="proforma_number" />
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="icon_view_order_form_inherit" model="ir.ui.view">
+        <field name="name">icon.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="name" invisible="1" />
+                <field name="proforma_number" />
+            </field>
+            <header position="inside">
+                <field name="is_proforma_invoice" invisible="1"/>
+                <field name="invoice_count" invisible="1"/>
+                <field name="is_generate_proforma_partial" invisible="1"/>
+                <field name="is_generate_proforma_partial_before_delivery" invisible="1"/>
+                <field name="is_pi_clear" invisible="1"/>
+                <button name="action_quotation_send" type="object" string="Send PRO-FORMA Invoice"
+                    invisible="not is_proforma_invoice or invoice_count &gt;= 1"
+                    context="{'proforma': True}" />
+                <button name="button_get_pi_payment" string="Create PI Payment" type="object"
+                    groups="iconnexion_custom.group_iconnexion_company" class="btn-primary"
+                    invisible="((not is_proforma_invoice or is_pi_clear) or is_generate_proforma_partial_before_delivery) or is_generate_proforma_partial" />
+                <button name="button_get_pi_payment_partial" string="Create PI Payment" type="object"
+                    groups="iconnexion_custom.group_iconnexion_company" class="btn-primary"
+                    invisible="(not is_proforma_invoice or is_pi_clear) or not is_generate_proforma_partial" />
+                <button name="button_get_pi_payment_partial" string="Create PI Payment" type="object"
+                    groups="iconnexion_custom.group_iconnexion_company" class="btn-primary"
+                    invisible="(not is_proforma_invoice or is_pi_clear) or not is_generate_proforma_partial_before_delivery" />
+            </header>
+            <xpath expr="//header/button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//sheet/div[hasclass('oe_button_box')]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//sheet/div[hasclass('oe_button_box')]" position="after">
+                <widget name="web_ribbon" title="Paid" bg_color="bg-success" invisible="not is_pi_clear"/>
+            </xpath>
+            <xpath expr="//notebook/page/group/group[@name='sale_total']/field[@name='amount_untaxed']" position="after">
+                <field name="amount_dep_paid" widget="monetary"  options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+        </field>
+    </record> -->
+
+
+    <!-- <record id="action_proforma_invoice" model="ir.actions.act_window">
+        <field name="name">Proforma Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('is_proforma_invoice','=', True)]</field>
+        <field name="view_id" ref="iconnexion_custom.view_proforma_invoice_tree" />
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation" />
+        <field name="context">{'form_view_ref':'iconnexion_custom.icon_view_order_form_inherit'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record> -->
+
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{'search_default_my_quotation': 1, 'form_view_ref':'sale.view_order_form'}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+              </p><p>
+                Once the quotation is confirmed by the customer, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
+              </p>
+            </field>
+        </record>
+
+    <!-- v16: moved to account_views.xml — server action defined there (load order: sales_order_views < account_views) -->
+    <!-- <menuitem id="menu_sale_proforma_invoice" action="iconnexion_custom.proforma_invoice_view_server_action" parent="sale.sale_order_menu" sequence="8" groups="sales_team.group_sale_salesman"/> -->
+
+
+    <record id="odes_view_order_form_inherit" model="ir.ui.view">
+        <field name="name">odes.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="odes_custom.odes_view_order_form_inherit" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <field name="is_proforma_invoice" invisible="1"/>
+                <field name="is_generate_proforma_to_process" invisible="1"/>
+                <field name="is_generate_proforma" invisible="1"/>
+                <field name="is_generate_proforma_partial" invisible="1"/>
+                <field name="is_generate_proforma_partial_before_delivery" invisible="1"/>
+                <button name="button_quote_crm" string="Quote From CRM"
+                    invisible="not opportunity_id" type="object" class="btn-primary"
+                    groups="sales_team.group_sale_salesman" />
+                <!-- <button name="button_create_pi" string="Create PI" type="object" class="btn-primary"/> -->
+                <button name="button_create_pi" string="Create PI" type="object" class="btn-primary" invisible="(is_proforma_invoice or not is_generate_proforma_to_process) or state == 'sale'"/>
+                <button name="button_create_pi" string="Create PI" type="object" class="btn-primary" invisible="(is_proforma_invoice or not is_generate_proforma) or state != 'sale'"/>
+                <button name="button_create_pi" string="Create PI" type="object" class="btn-primary" invisible="(is_proforma_invoice or not is_generate_proforma_partial_before_delivery) or state != 'sale'"/>
+                <button name="button_create_pi" string="Create PI" type="object" class="btn-primary" invisible="(is_proforma_invoice or not is_generate_proforma_partial) or state != 'draft'"/>
+                <button name="button_create_pi" string="Create PI" type="object" class="btn-primary" invisible="(is_proforma_invoice or not is_generate_proforma_partial_before_delivery) or state != 'draft'"/>
+            </header>
+            <!-- v17: inject stat buttons directly inside button box for stable xpath -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+
+                <button name="preview_pinvoice" type="object" class="oe_stat_button" icon="fa-paste" invisible="proforma_invoice_count == 0">
+                    <div class="o_stat_info">
+                        <field name="proforma_invoice_count" class="o_stat_value"/>
+                        <span class="o_stat_text">Pro-Forma</span>
+                        <span class="o_stat_text">Invoice</span>
+                    </div>
+                </button>
+                <button name="preview_pinvoice_so" type="object" class="oe_stat_button" icon="fa-paste" invisible="proforma_invoice_count_so == 0 or is_proforma_invoice">
+                    <div class="o_stat_info">
+                        <field name="proforma_invoice_count_so" class="o_stat_value"/>
+                        <span class="o_stat_text">Pro-Forma</span>
+                        <span class="o_stat_text">Invoice</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="attributes">
+                <attribute name="invisible">is_iconnexion</attribute>
+
+
+
+            </xpath>
+            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+
+            </xpath> -->
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="invisible">not is_iconnexion</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="invisible">not is_iconnexion</attribute>
+            </xpath>
+            <xpath expr="//page[@name='mccoy_info']" position="attributes">
+                <attribute name="string">Other Information</attribute>
+            </xpath>
+            <xpath expr="//page[@name='mccoy_info']" position="attributes">
+
+            </xpath>
+            <xpath expr="//field[@name='min_order']" position="after">
+                <field name="bank_charges" invisible="not is_iconnexion" />
+                <field name="is_iconnexion" invisible="1" />
+                <field name="is_pi_clear" invisible="1" />
+                <field name="is_generate_proforma_to_process" invisible="1" />
+                <field name="is_generate_proforma" invisible="1" />
+                <field name="is_proforma_invoice" invisible="0" />
+                <field name="proforma_number" invisible="1" />
+
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="contact_id" domain="[('parent_id','=',partner_id)]"
+                    context="{'default_parent_id': partner_id,'form_view_ref': 'iconnexion_custom.view_partner_form3','mail_create_nolog':True}"
+                    widget="res_partner_many2one" />
+                <field name="invoice_address_selection"/>
+                <field name="delivery_address_selection"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='mccoy_info']/group/group" position="inside">
+                <field name="reason" string="Reason Lower Margin" readonly="1" invisible="1" />
+                <field name="is_lower_margin" invisible="1" />
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="odes_approval_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">odes.approval.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Follower(s)" name="followers">
+                    <field name="follower_ids" context="{'tree_view_ref': 'odes_custom.odes_view_users_tree_simple_view'}">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <field name="amount" position="after">
+                <field name="currency_id" options="{'no_open': 1, 'no_create': 1}" invisible="has_amount == 'no'" required="has_amount == 'required'"/>
+            </field>
+            <field name="amount" position="attributes">
+                <attribute name="widget">monetary</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="approvals.approvals_menu_manager" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5, 0, 0)]"/>
+    </record>
+
+    <record id="odes_custom_approval_category_view_form_inherit" model="ir.ui.view">
+        <field name="name">odes_custom_approval_category_view_form_inherit</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+            <group name="approvers" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </group>
+            <field name="company_id" position="after">
+                <field name="is_expense"/>
+                <field name="is_leave"/>
+            </field>
+            <page name="options" position="attributes">
+                <attribute name="invisible">(is_expense) or (is_leave)</attribute>
+            </page>
+            <group name="approvers" position="after">
+                <group name="approval_flow" string="Approvers">
+                    <field name="flow" invisible="is_expense or is_leave" required="not is_expense or not is_leave"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <record id="odes_custom_approval_category_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">odes_custom_approval_category_view_kanban_inherit</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_kanban"/>
+        <field name="arch" type="xml">
+            <field name="image" position="after">
+                <field name="is_expense"/>
+                <field name="is_leave"/>
+            </field>
+            <button name="create_request" position="attributes">
+                <attribute name="invisible">(is_expense) or (is_leave)</attribute>
+            </button>
+            <xpath expr="//div[hasclass('oe_module_action')]//button[2]" position="attributes">
+                <attribute name="invisible">(is_expense) or (is_leave)</attribute>
+            </xpath>
+            <button name="create_request" position="after">
+                <button type="action" class="btn btn-sm btn-secondary float-right" name="%(odes_custom.odes_custom_action_hr_expense_sheet_to_approve)d" groups="approvals.group_approval_user" invisible="not is_expense">To Review: <field name="request_to_validate_count"/></button>
+                <button type="action" class="btn btn-sm btn-secondary float-right" name="%(odes_custom.odes_custom_action_action_approve_department)d" groups="approvals.group_approval_user" invisible="not is_leave">To Review: <field name="request_to_validate_count"/></button>
+            </button>
+        </field>
+    </record>
+
+</odoo>

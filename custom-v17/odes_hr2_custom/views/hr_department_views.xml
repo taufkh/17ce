@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="odes_hr2_view_department_form_inherit" model="ir.ui.view">
+            <field name="name">odes.hr2.view.department.form.inherit</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager_id']" position="after">
+                    <field name="is_included_in_timeoff_approval"/>
+                </xpath>
+            </field> 
+        </record>
+    </data>
+</odoo>

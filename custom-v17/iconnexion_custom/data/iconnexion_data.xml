@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">   
+        <!-- forcecreate="True" -->
+        <!-- <record  id="icon_quote_product_price" model="decimal.precision">
+            <field name="name">Quote Product Price</field>
+            <field name="digits">4</field>
+        </record> -->
+        <!-- <record id="icon_moq" model="decimal.precision">
+            <field name="name">iCon MOQ</field>
+            <field name="digits">1</field>
+        </record> -->
+        <record id="iconnexion1" model="iconnexion.lead.type">
+            <field name="name">Exempt Private Company</field>
+            <field name="notes">Owner by 20 members or less and….</field>
+            <field name="type">business</field>
+        </record>
+        <record id="iconnexion2" model="iconnexion.lead.type">
+            <field name="name">Private Company</field>
+            <field name="notes">Owned by 50 members or less</field>
+            <field name="type">business</field>
+        </record>
+        <record id="iconnexion3" model="iconnexion.lead.type">
+            <field name="name">Public  Company</field>
+            <field name="notes">Owned by more than 50 members</field>
+            <field name="type">business</field>
+        </record>
+        <record id="iconnexion4" model="iconnexion.lead.type">
+            <field name="name">Listed Company</field>
+            <field name="notes">Listed on stock exchange</field>
+            <field name="type">business</field>
+        </record>
+        <record id="iconnexion5" model="iconnexion.lead.type">
+            <field name="name">Brand</field>
+            <field name="notes">Brand Owner, eg. Apple</field>
+            <field name="type">customer</field>
+        </record>
+        <record id="iconnexion6" model="iconnexion.lead.type">
+            <field name="name">EMS</field>
+            <field name="notes">Electronics Manufacturing Service, eg. Flextronics</field>
+            <field name="type">customer</field>
+        </record>
+        <record id="iconnexion7" model="iconnexion.lead.type">
+            <field name="name">ODM</field>
+            <field name="notes">Original Design Manufacturer, eg. Lite-On Technology</field>
+            <field name="type">customer</field>
+        </record>
+        <record id="iconnexion8" model="iconnexion.lead.type">
+            <field name="name">OEM</field>
+            <field name="notes">Original Equipment Manufacturer, eg. BOSCH</field>
+            <field name="type">customer</field>
+        </record>
+        <record id="iconnexion9" model="iconnexion.lead.type">
+            <field name="name">Trader</field>
+            <field name="notes">Trading Company</field>
+            <field name="type">customer</field>
+        </record>
+        <record id="iconnexion10" model="iconnexion.lead.type">
+            <field name="name">Agriculture</field>
+            <field name="notes">Agriculture</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion11" model="iconnexion.lead.type">
+            <field name="name">Automotive and EV</field>
+            <field name="notes">Automotive and EV</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion12" model="iconnexion.lead.type">
+            <field name="name">Computers and Peripheral</field>
+            <field name="notes">Computers and Peripheral</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion13" model="iconnexion.lead.type">
+            <field name="name">Home Appliance</field>
+            <field name="notes">Home Appliance</field>
+            <field name="type">activity</field>
+        </record>
+       <record id="iconnexion14" model="iconnexion.lead.type">
+            <field name="name">In-Building</field>
+            <field name="notes">In-Building</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion15" model="iconnexion.lead.type">
+            <field name="name">Industrial Automotion</field>
+            <field name="notes">Industrial Automotion</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion16" model="iconnexion.lead.type">
+            <field name="name">Lighting</field>
+            <field name="notes">Lighting</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion17" model="iconnexion.lead.type">
+            <field name="name">Medical</field>
+            <field name="notes">Medical</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion18" model="iconnexion.lead.type">
+            <field name="name">Newtwork Infrastructure</field>
+            <field name="notes">Newtwork Infrastructure</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion19" model="iconnexion.lead.type">
+            <field name="name">Oil, Gas and Energy</field>
+            <field name="notes">Oil, Gas and Energy</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion20" model="iconnexion.lead.type">
+            <field name="name">Personal Electronics</field>
+            <field name="notes">Personal Electronics</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion21" model="iconnexion.lead.type">
+            <field name="name">Rail and Mass Transit</field>
+            <field name="notes">Rail and Mass Transit</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion22" model="iconnexion.lead.type">
+            <field name="name">Retail and Warehousing</field>
+            <field name="notes">Retail and Warehousing</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion23" model="iconnexion.lead.type">
+            <field name="name">Security and Surveillance</field>
+            <field name="notes">Security and Surveillance</field>
+            <field name="type">activity</field>
+        </record>
+        <record id="iconnexion24" model="iconnexion.lead.type">
+            <field name="name">DIP</field>
+            <field name="notes">Bidding : DIP - This is bidding project</field>
+            <field name="type">bidding</field>
+        </record> 
+        <record id="iconnexion25" model="iconnexion.lead.type">
+            <field name="name">L1</field>
+            <field name="notes">Bidding : L1 - iconnexion pricing in L1</field>
+            <field name="type">bidding</field>
+        </record> 
+        <record id="iconnexion26" model="iconnexion.lead.type">
+            <field name="name">Order Win</field>
+            <field name="notes">Bidding : Order Win</field>
+            <field name="type">bidding</field>
+        </record> 
+        <record id="iconnexion27" model="iconnexion.lead.type">
+            <field name="name">Order Lost</field>
+            <field name="notes">Bidding : Order Lost</field>
+            <field name="type">bidding</field>
+        </record> 
+         <record id="iconnexion28" model="iconnexion.lead.type">
+            <field name="name">Prospect</field>
+            <field name="notes">Desing : Prospect - There is potential project</field>
+            <field name="type">design</field>
+        </record> 
+         <record id="iconnexion29" model="iconnexion.lead.type">
+            <field name="name">Qualified</field>
+            <field name="notes">Design : Qualified - Factory able to offer</field>
+            <field name="type">design</field>
+        </record> 
+        <record id="iconnexion30" model="iconnexion.lead.type">
+            <field name="name">Sponsorship</field>
+            <field name="notes">Design: Sponsorship - Customer prefer to factory's proposal</field>
+            <field name="type">design</field>
+        </record> 
+        <record id="iconnexion31" model="iconnexion.lead.type">
+            <field name="name">Inclusion</field>
+            <field name="notes">Design: Inclusion - Customer accept proposal, submit sample</field>
+            <field name="type">design</field>
+        </record> 
+        <record id="iconnexion32" model="iconnexion.lead.type">
+            <field name="name">Validation</field>
+            <field name="notes">Design: Validation - Validation of proposal and Test passed</field>
+            <field name="type">design</field>
+        </record> 
+        <record id="iconnexion33" model="iconnexion.lead.type">
+            <field name="name">Acceptance</field>
+            <field name="notes">Design: Acceptance - Final BOM with proposed part</field>
+            <field name="type">design</field>
+        </record> 
+        <record id="iconnexion34" model="iconnexion.lead.type">
+            <field name="name">Order Win</field>
+            <field name="notes">Design: Order Win</field>
+            <field name="type">design</field>
+        </record> 
+        <record id="iconnexion35" model="iconnexion.lead.type">
+            <field name="name">Order Lost</field>
+            <field name="notes">Design: Order Lost</field>
+            <field name="type">design</field>
+        </record> 
+         <record id="iconnexion36" model="iconnexion.lead.type">
+            <field name="name">Technical Enquiry</field>
+            <field name="notes">Technical Enquiry</field>
+            <field name="type">technical</field>
+        </record> 
+         <record id="iconnexion37" model="iconnexion.lead.type">
+            <field name="name">Trading</field>
+            <field name="notes">Trading</field>
+            <field name="type">trading</field>
+        </record> 
+         <record id="iconnexion38" model="iconnexion.lead.type">
+            <field name="name">Order Win</field>
+            <field name="notes">Order Win</field>
+            <field name="type">trading</field>
+        </record> 
+         <record id="iconnexion39" model="iconnexion.lead.type">
+            <field name="name">Order Lost</field>
+            <field name="notes">Order Lost</field>
+            <field name="type">trading</field>
+        </record>    
+        <record id="coo1" model="icon.coo">
+            <field name="name">Asia</field>
+        </record>      
+        <record id="coo2" model="icon.coo">
+            <field name="name">CN</field>
+        </record>      
+        <record id="coo3" model="icon.coo">
+            <field name="name">GB</field>
+        </record>      
+        <record id="coo4" model="icon.coo">
+            <field name="name">KR</field>
+        </record>      
+        <record id="coo5" model="icon.coo">
+            <field name="name">MY</field>
+        </record>      
+        <record id="coo6" model="icon.coo">
+            <field name="name">TW</field>
+        </record>      
+        <record id="coo7" model="icon.coo">
+            <field name="name">US</field>
+        </record>
+
+        <!-- v16: ir.config_parameter records to replace hardcoded company IDs in Python models.
+             Admin can update these values via Settings > Technical > Parameters > System Parameters
+             without requiring code changes. -->
+        <record id="param_main_company_id" model="ir.config_parameter">
+            <field name="key">iconnexion_custom.main_company_id</field>
+            <field name="value">1</field>
+        </record>
+        <record id="param_cross_company_partner_ids" model="ir.config_parameter">
+            <field name="key">iconnexion_custom.cross_company_partner_ids</field>
+            <field name="value">1,2</field>
+        </record>
+        <record id="param_trading_company_id" model="ir.config_parameter">
+            <field name="key">iconnexion_custom.trading_company_id</field>
+            <field name="value">3</field>
+        </record>
+        <record id="param_label_use_default_code_company_ids" model="ir.config_parameter">
+            <field name="key">iconnexion_custom.label_use_default_code_company_ids</field>
+            <field name="value">2</field>
+        </record>
+
+    </data>
+</odoo>

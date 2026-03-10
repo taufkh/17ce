@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_quotation_line_salesman,access_crm_quotation_line_salesman,model_crm_quotation_line,sales_team.group_sale_salesman,1,1,1,0
+access_crm_quotation_line_manager,access_crm_quotation_line_manager,model_crm_quotation_line,sales_team.group_sale_manager,1,1,1,1
+access_crm_quotation_line_admin,access_crm_quotation_line_admin,model_crm_quotation_line,base.group_system,1,1,1,1
+access_crm_quotation_manufacturer_admin,access_crm_quotation_manufacturer_admin,model_crm_quotation_manufacturer,base.group_system,1,1,1,1

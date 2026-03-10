@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_assets_common" inherit_id="web.report_assets_common" name="Report Assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/odes_quotation/static/src/css/report.css"/>
+        </xpath>
+    </template>
+    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Sale frontend assets">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/odes_quotation/static/src/scss/sale_portal.scss"/>
+        </xpath>
+    </template>
+    <template id="assets_wysiwyg" inherit_id="web_editor.assets_wysiwyg" name="Wysiwyg Editor Assets">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/odes_quotation/static/src/css/custom.css"/>
+        </xpath>
+    </template>
+</odoo>

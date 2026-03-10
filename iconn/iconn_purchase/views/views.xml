@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_supplierinfo_tree_view_inherit_product" model="ir.ui.view">
+        <field name="name">product.supplierinfo.view.list.inherit</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
+        <field name="arch" type="xml">
+            <field name="min_qty" position="after">
+                <field name="moq_qty" />
+                <field name="spq_qty" />
+            </field>
+        </field>
+    </record>
+</odoo>

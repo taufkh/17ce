@@ -1,0 +1,271 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="icon_old_sales_history_form_view" model="ir.ui.view">
+        <field name="name">icon.old.sales.history.view.form</field>
+        <field name="model">icon.old.sales.history</field>
+        <field name="arch" type="xml">
+            <form>
+            <sheet>
+                <group>
+                    <group>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    </group>
+                    <group>
+                    <field name="date"/>
+                    <field name="currency_id"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="product_id"/>
+                    <field name="qty"/>
+                    <field name="price_unit"/>
+                    <field name="price_subtotal"/>
+                    <field name="type" invisible="1"/>
+                    <field name="remark"/>
+                </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="icon_old_sales_history_tree_view" model="ir.ui.view">
+        <field name="name">icon.old.sales.history.tree.view</field>
+        <field name="model">icon.old.sales.history</field>
+        <field name="arch" type="xml">
+            <tree string="Sales" export_xlsx="0">                
+                <field name="date" widget="date"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="partner2_id" optional="hide"/>
+                <field name="user_id" optional="hide"/>
+                <field name="brands" optional="hide"/>
+                <field name="customer_po" optional="hide"/>
+                <field name="product_id"/>
+                <field name="cpn" optional="hide"/>
+                <field name="qty"/>
+                <field name="uom_char" optional="hide"/>
+                <field name="icpo_no" optional="hide"/>
+                <field name="inv" optional="hide"/>
+                <field name="inv_date" optional="hide"/>
+                <field name="price_unit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="cost_price" widget="monetary" options="{'currency_field': 'currency_id'}" optional="hide"/>
+                <field name="cost_price_total" widget="monetary" options="{'currency_field': 'currency_id'}" optional="hide"/>
+                <field name="currency_id" optional="hide"/>
+                <field name="type" invisible="1"/>
+                <field name="remark" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <record id="icon_old_quote_history_form_view" model="ir.ui.view">
+        <field name="name">icon.old.quote.history.view.form</field>
+        <field name="model">icon.old.quote.history</field>
+        <field name="arch" type="xml">
+            <form>
+            <sheet>
+                <group>
+                    <group>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="project_name"/>
+                    </group>
+                    <group>
+                    <field name="date"/>
+                    <field name="currency_id"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="product_id"/>
+                    <field name="qty"/>
+                    <field name="price_unit"/>
+                    <field name="price_subtotal"/>
+                    <field name="type" invisible="1"/>
+                    <field name="eau"/>
+                    <field name="remark"/>
+                </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="icon_old_quote_history_tree_view" model="ir.ui.view">
+        <field name="name">icon.old.quote.history.tree.view</field>
+        <field name="model">icon.old.quote.history</field>
+        <field name="arch" type="xml">
+            <tree string="Sales">
+                <field name="currency_id" invisible="1"/>
+                <field name="date" widget="date"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="user_id" optional="hide"/>
+                <field name="project_name" optional="hide"/>
+                <field name="product_id"/>
+                <field name="qty" invisible="1"/>
+                <field name="moq"/>
+                <field name="spq"/>
+                <field name="price_unit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="type" invisible="1"/>
+                <field name="remark" optional="hide"/>
+                <field name="eau" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_old_sale_history_filter" model="ir.ui.view">
+        <field name="name">icon.old.sales.history.select</field>
+        <field name="model">icon.old.sales.history</field>
+        <field name="arch" type="xml">
+            <search string="Search history">
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="remark"/>
+                <separator/>                    
+                <group expand="0" name="group_by" string="Group By">
+                    <filter name="salesperson" string="Salesperson" domain="[]" context="{'group_by' : 'user_id'}" />
+                    <filter name="group_partner" string="Customer" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_old_quote_history_filter" model="ir.ui.view">
+        <field name="name">icon.old.quote.history.select</field>
+        <field name="model">icon.old.quote.history</field>
+        <field name="arch" type="xml">
+            <search string="Search history">
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="project_name"/>
+                <field name="remark"/>
+                <separator/>                    
+                <group expand="0" name="group_by" string="Group By">
+                    <filter name="salesperson" string="Salesperson" domain="[]" context="{'group_by' : 'user_id'}" />
+                    <filter name="group_partner" string="Customer" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_old_sales_history_graph">
+            <field name="name">icon.old.sales.history.graph</field>
+            <field name="model">icon.old.sales.history</field>
+            <field name="arch" type="xml">
+                <graph string="Old Sales History" sample="1">
+                    <field name="partner_id"/>
+                    <field name="price_subtotal" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_old_sales_history_pivot">
+            <field name="name">icon.old.sales.history.pivot</field>
+            <field name="model">icon.old.sales.history</field>
+            <field name="arch" type="xml">
+                <pivot string="Old Sales History" sample="1">
+                    <field name="date" type="row"/>
+                    <field name="price_subtotal" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Old Sales History Kanban View  -->
+        <record model="ir.ui.view" id="view_old_sales_history_kanban">
+            <field name="name">icon.old.sales.history.kanban</field>
+            <field name="model">icon.old.sales.history</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="partner_id"/>                    
+                    <field name="currency_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.partner_id.value"/></span></strong>
+                                    </div>
+                                    <strong><field name="price_subtotal"/></strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left text-muted">
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <!-- Quotation -->
+     <record model="ir.ui.view" id="view_old_quote_history_graph">
+            <field name="name">icon.old.quote.history.graph</field>
+            <field name="model">icon.old.quote.history</field>
+            <field name="arch" type="xml">
+                <graph string="Old Quote History" sample="1">
+                    <field name="partner_id"/>
+                    <field name="price_subtotal" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_old_quote_history_pivot">
+            <field name="name">icon.old.quote.history.pivot</field>
+            <field name="model">icon.old.quote.history</field>
+            <field name="arch" type="xml">
+                <pivot string="Old Quote History" sample="1">
+                    <field name="date" type="row"/>
+                    <field name="price_subtotal" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Old Sales History Kanban View  -->
+        <record model="ir.ui.view" id="view_old_quote_history_kanban">
+            <field name="name">icon.old.quote.history.kanban</field>
+            <field name="model">icon.old.quote.history</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="partner_id"/>                    
+                    <field name="currency_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.partner_id.value"/></span></strong>
+                                    </div>
+                                    <strong><field name="price_subtotal"/></strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left text-muted">
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <record id="icon_old_sales_history_action" model="ir.actions.act_window">
+        <field name="name">Old Sales History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">icon.old.sales.history</field>
+        <field name="context" eval="{
+            'default_type': 'sales','disable_search':True}"/>
+        <field name="view_mode">tree,kanban,form,pivot,graph</field>
+    </record>
+    <record id="icon_old_quotation_history_action" model="ir.actions.act_window">
+        <field name="name">Old Quotation History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">icon.old.quote.history</field>
+        <field name="context" eval="{
+            'default_type': 'quote','disable_search':True}"/>
+        <field name="view_mode">tree,kanban,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="icon_old_sales_history_menu" name="Old Sales History" parent="sale.menu_sale_config" sequence="25" action="icon_old_sales_history_action" groups="group_iconnexion_company"/>
+    <menuitem id="icon_old_quote_history_menu" name="Old Quotation History" parent="sale.menu_sale_config" sequence="26" action="icon_old_quotation_history_action" groups="group_iconnexion_company"/>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="wysiwyg.widgets.image.existing.attachments">
+        <t t-jquery="div.o_we_existing_attachments" t-operation="replace">
+            <div class ="o_we_existing_attachments o_we_images d-flex flex-wrap w-100 justify-content-between align-items-stretch my-0">
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="wysiwyg.widgets.document.existing.attachments">
+        <t t-jquery="div.o_we_existing_attachments" t-operation="replace">
+            <div class ="o_we_existing_attachments o_we_documents">
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="wysiwyg.widgets.file">
+        <t t-jquery="div.o_we_load_more" t-operation="replace">
+            <div class="mt-4 text-center mx-auto o_we_load_more">
+            </div>
+        </t>
+    </t>
+
+</templates>

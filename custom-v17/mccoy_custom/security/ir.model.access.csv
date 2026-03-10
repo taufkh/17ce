@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_template_custom_tabs,product.template.custom.tabs,model_product_template_custom_tabs,,1,1,1,1
+access_product_template_moq_qty,product.template.moq.qty,model_product_template_moq_qty,,1,1,1,1
+access_mccoy_subscribe,mccoy.subscribe,model_mccoy_subscribe,,1,1,1,1
+access_product_template_moq_qty_price_lines,product.template.moq.qty.price.lines,model_product_template_moq_qty_price_lines,,1,1,1,1
+access_product_class,product.class,model_product_class,,1,1,1,1
+access_mccoy_product_moq,mccoy.product.moq,model_mccoy_product_moq,,1,1,1,1
+access_mccoy_special_export_wizard,mccoy.special.export.wizard,model_mccoy_special_export_wizard,,1,1,1,1
+

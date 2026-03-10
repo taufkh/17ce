@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_inherit_crm" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <field name="day_close" position="after">
+                <field name="sample_status" invisible="1"/>
+            </field>
+            <header position="after">
+                <header>
+                    <field name="sample_status" widget="statusbar" class="o_field_statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" />
+                </header>
+            </header>
+        </field>
+    </record>
+
+    <record id="view_crm_case_opportunities_filter_inherit_crm" model="ir.ui.view">
+        <field name="name">crm.lead.view.search.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <filter name="lost" position="after">
+                <separator/>
+                <filter name="sample_status_requested" string="Sample Requested" domain="[('sample_status', '=', 'requested')]"  />
+                <filter name="sample_status_requested" string="Sample Shipped" domain="[('sample_status', '=', 'shipped')]"  />
+                <filter name="sample_status_requested" string="Sample Received" domain="[('sample_status', '=', 'received')]"  />
+                <filter name="sample_status_requested" string="Sample Rejected" domain="[('sample_status', '=', 'rejected')]"  />
+                <filter name="sample_status_requested" string="Sample Pending" domain="[('sample_status', 'in', ['requested', 'shipped'])]"  />
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_order_form_inherit_sale" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="override_pi_block" widget="boolean_toggle" readonly="state not in ['draft']"/>
+            </field>
+
+            <button name="action_draft" position="after">
+                <button string="Create PI" name="create_proforma_invoice" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+            </button>
+        </field>
+    </record>
+
+    <record id="view_order_form_inherit_sale_project_inherit_sale_project" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_project.view_order_form_inherit_sale_project"/>
+        <field name="arch" type="xml">
+            <button name="action_view_project_ids" position="attributes">
+                <attribute name="invisible">state in ['cancel'] or not project_ids</attribute>
+            </button>
+        </field>
+    </record>
+
+    <record id="view_move_form_inherit_account" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <div name="journal_div" position="after">
+                <field name="year_project"/>
+            </div>
+        </field>
+    </record>
+</odoo>

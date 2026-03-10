@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+
+        
+    <record id="odes_sale_order_form_view" model="ir.ui.view">
+        <field name="name">odes.view.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="odes_quotation.view_order_form_inherit"/>
+        <field name="arch" type="xml"> 
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                <!-- <field name="purchase_order_line_id" 
+                    string="P.O. No" 
+                    options="{'no_create': True}" 
+                    domain="[('state','in',('purchase','done')),('product_id','=',product_id)]"/> -->
+                <field name="purchase_order_line_id" 
+                    string="P.O" 
+                    options="{'no_create': True}" 
+                    domain="[('id','=',-1)]" readonly="1"/>
+                <button name="action_link_po_to_supplier" icon="fa-link" type="object" title="Link S.O. to P.O" class="oe_read_only"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

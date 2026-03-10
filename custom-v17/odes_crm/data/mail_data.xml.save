@@ -1,0 +1,1897 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <record id="mail_template_odes_crm_feedback_pm" model="mail.template">
+            <field name="name">ODES CRM: Requirement Feedback</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement_feedback"/>
+            <field name="subject">Project Requirement Feedback </field>
+            <field name="email_from">"${object.requirement_id.company_id.name | safe}" &lt;${(object.requirement_id.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.requirement_id.get_pm_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.requirement_id.company_id.name}"/>
+                                        </td
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear PM,</p>
+                                        <p>There's new feedback attached at the system in the <strong>${object.requirement_id.number}</strong></p>  
+                                        <p>Please kindly check on this update</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.requirement_id.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_feedback_dev" model="mail.template">
+            <field name="name">ODES CRM: Requirement Feedback</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement_feedback"/>
+            <field name="subject">Project Requirement Feedback </field>
+            <field name="email_from">"${object.requirement_id.company_id.name | safe}" &lt;${(object.requirement_id.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.requirement_id.get_dev_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.requirement_id.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Developers,</p>
+                                        <p>There's new feedback attached at the system in the <strong>${object.requirement_id.number}</strong></p>
+                                        <p>Please kindly check on this update</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.requirement_id.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        
+        <record id="mail_template_odes_crm_platform_account_created" model="mail.template">
+            <field name="name">ODES CRM: Platform Account Created</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">ODES Platform Account Created</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.email_from | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <span style="font-size:10px;">Your Account</span><br/>
+                                            <span style="font-size:20px;font-weight: bold;">
+                                                ${object.name}
+                                            </span>
+                                        </td>
+                                        <td valign="middle" align="right">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="top" style="font-size:13px;">
+                                            <div>
+                                                <p>Dear Sir/Mdm,</p>
+                                                <p>We are pleased to inform you that your user login into the ODES Platform has been created. Kindly login in with your registered email address in order to access the NDA and complete the acknowledgement.</p>
+                                                <p>This will then allow the progress of your enquiry to proceed to the next steps. For any clarifications, kindly send an email to <a href="mailto:info@mccoy.com.sg">info@mccoy.com.sg</a> and we will be most pleased to assist you.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_project_platform_account_created" model="mail.template">
+            <field name="name">ODES CRM: Project Platform Account Created</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_create_customer_user_wizard"/>
+            <field name="subject">ODES Platform Account Created</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.email | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <span style="font-size:10px;">Your Account</span><br/>
+                                            <span style="font-size:20px;font-weight: bold;">
+                                                ${object.name}
+                                            </span>
+                                        </td>
+                                        <td valign="middle" align="right">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="top" style="font-size:13px;">
+                                            <div>
+                                                <p>Dear Sir/Mdm,</p>
+                                                <p>We are pleased to inform you that your user login into the ODES Platform has been created. Kindly login in with your registered email address.</p>
+                                                <p>For any clarifications, kindly send an email to <a href="mailto:info@mccoy.com.sg">info@mccoy.com.sg</a> and we will be most pleased to assist you.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_nda_acknowledgement_completed" model="mail.template">
+            <field name="name">ODES CRM: NDA Acknowledgement Completed</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">NDA Acknowledgement Completed</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.user_id.email | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear ${object.user_id.name},</p>
+                                        <p>We are pleased to inform you that ${object.name} have completed the NDA Acknowledgement. Please proceed with next Steps.</p>
+                                        <div style="margin:16px 0px 16px 0px;">
+                                            <a href="${object.lead_url}" style="background-color:#1B66B7;padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                               View Lead
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_request_c_level_approval" model="mail.template">
+            <field name="name">ODES CRM: Request C-Level Approval</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Request C-Level Approval</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Sir,</p>
+                                        <p>The pre-project process by the ${object.user_id.name} for ${object.partner_id.name} has been completed and is pending your approval to proceed with Project Phase.</p>
+                                        <div style="margin:16px 0px 16px 0px;">
+                                            <a href="${object.order_url}" style="background-color:#1B66B7;padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                               View Quotation
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_c_level_approve" model="mail.template">
+            <field name="name">ODES CRM: Project Approved by C-Level</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Project Approved by C-Level</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.user_id.email | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear ${object.user_id.name},</p>
+                                        <p>We are pleased to inform you that the project for ${object.partner_id.name} has been approved and ${object.pm_user_id.name} will proceed with next steps. If required, please assist to inform the client and link up the assigned Project Manager.</p>
+                                        <div style="margin:16px 0px 16px 0px;">
+                                            <a href="${object.order_url}" style="background-color:#1B66B7;padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                               View Quotation
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_client_upload_doc" model="mail.template">
+            <field name="name">ODES CRM: Client Uploaded Document(s)</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Client Uploaded Document(s)</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.user_id.email | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear ${object.user_id.name},</p>
+                                        <p>We are pleased to inform you that ${object.partner_id.name} has uploaded documents.</p>
+                                        <div style="margin:16px 0px 16px 0px;">
+                                            <a href="${object.order_url}" style="background-color:#1B66B7;padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                               View Quotation
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_c_level_pm_assigned" model="mail.template">
+            <field name="name">ODES CRM: PM Assigned by C-Level</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">PM Assigned by C-Level</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.pm_user_id.email | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear ${object.pm_user_id.name},</p>
+                                        <p>We are pleased to inform you that the project for ${object.partner_id.name} has been approved. The Account Manager for this account is ${object.user_id.name}. Please proceed with next steps and link up with the account manager, if required.</p>
+                                        % if object.project_url:
+                                            <div style="margin:16px 0px 16px 0px;">
+                                                <a href="${object.project_url}" style="background-color:#1B66B7;padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                                   View Project
+                                                </a>
+                                            </div>
+                                        % endif
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width:590px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_development_done" model="mail.template">
+            <field name="name">ODES CRM: Requirement Development Done</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Project Requirement Development Done (${object.project_id.name})</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_pm_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Sir/Mdm,</p>
+                                        <p>Developers has completed the development of requirement below:</p>
+                                        <p>- <strong>${object.name}</strong></p>
+                                        <p>Please check and confirm.</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_notify_client" model="mail.template">
+            <field name="name">ODES CRM: Notify Client</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">ODES Project Requirement(s) Attention</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Sir/Mdm,</p>
+                                        <p>There are few requirement(s) that need your attention below:</p>
+                                        <div style="border: 1px solid black; width:100%;">
+                                            <div name="rTable" style="display: table; width: 100%;">
+                                                <div name="rTableRow" style="display: table-header-group; background-color: #ddd; font-weight: bold;">
+                                                    <div name="rTableHead" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 45%;">
+                                                        Requirement
+                                                    </div>
+                                                    <div name="rTableHead" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 12%;">
+                                                        Date
+                                                    </div>
+                                                    <div name="rTableHead" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 23%;">
+                                                        Status
+                                                    </div>
+                                                    <div name="rTableHead" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 20%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            % for requirement in ctx['requirements']:
+                                            <div name="rTable" style="display: table; width: 100%;">
+                                                <div name="rTableRow" style="display: table-header-group">
+                                                    <div name="rTableCell" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 45%;">
+                                                       ${requirement.name}
+                                                    </div>
+                                                    <div name="rTableCell" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 12%;">
+                                                        ${format_date(requirement.date)}
+                                                    </div>
+                                                    <div name="rTableCell" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 23%;">
+                                                        ${ctx['state'].get(requirement.state)}
+                                                    </div>
+                                                    <div name="rTableCell" style="display: table-cell; padding: 8px 10px; border: 1px solid #999999; width: 20%;">
+                                                        <a href="${requirement.requirement_url}" style="background-color:#1B66B7;padding: 4px 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px; margin: 3px 0;">
+                                                           View Requirement
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            % endfor
+                                        </div>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_client_confirmed" model="mail.template">
+            <field name="name">ODES CRM: Requirement Confirmed By Client</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Project Requirement Confirmed By Client (${object.project_id.name})</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_dev_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Developers,</p>
+                                        <p>Client has confirmed the requirement below:</p>
+                                        <p>- <strong>${object.name}</strong></p>
+                                        <p>Please check and start to develop.</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_client_confirmed_followup" model="mail.template">
+            <field name="name">ODES CRM: Requirement Confirmed By Client Followup</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Project Requirement Confirmed By Client Followup (${object.project_id.name})</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_dev_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Developers,</p>
+                                        <p>This email is sent to you in order to followup that</p>
+                                        <p>Client has confirmed the requirement below:</p>
+                                        <p>- <strong>${object.name}</strong></p>
+                                        <p>Please check and start to develop.</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_reminder_pic_48_hours" model="mail.template">
+            <field name="name">ODES CRM: Requirement Deadline 48 Hours Reminder</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Requirement [${object.name}] Deadline 48 Hours Left</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_pic_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Madam/Sir,</p>
+                                        <p>This email is sent to remind you there's a requirement that is 48 Hours left before deadline</p>
+                                        <p>- <strong>${object.number} ${object.name}</strong></p>
+                                        <p>Please kindly do check on it</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_reminder_pic_24_hours" model="mail.template">
+            <field name="name">ODES CRM: Requirement Deadline 24 Hours Reminder</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Requirement [${object.name}] Deadline 24 Hours Left</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_pic_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Madam/Sir,</p>
+                                        <p>This email is sent to remind you there's a requirement that is 24 Hours left before deadline</p>
+                                        <p>- <strong>${object.number} ${object.name}</strong></p>
+                                        <p>Please kindly do check on it</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_warning_exceeded_deadline_requirement" model="mail.template">
+            <field name="name">ODES CRM: Requirement Deadline Exceeded</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Requirement [${object.name}] Deadline Exceeded</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_reporting_group_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Madam/Sir,</p>
+                                        <p>This email is sent to warn you there's a requirement that is exceeded the deadline</p>
+                                        <p>- <strong>${object.number} ${object.name}</strong></p>
+                                        <p>Please kindly do check on it and extend if necessary</p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_client_confirmed_done" model="mail.template">
+            <field name="name">ODES CRM: Requirement Confirmed Done By Client</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Project Requirement Confirmed as Done By Client (${object.project_id.name})</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_reporting_group_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Project Manager,</p>
+                                        <p>Client has confirmed the requirement below as done:</p>
+                                        <p>- <strong>${object.number} ${object.name}</strong></p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_deadline_changed" model="mail.template">
+            <field name="name">ODES CRM: Requirement Deadline Notify</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Project Requirement Deadline Notify</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_deadline_notify_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody><tr><td valign="top" style="font-size:13px;">
+                                    <div>
+                                        <p>Dear Madam/Sir</p>
+                                        <p>This email is sent to remind that, the Deadline for Requirement <strong>${object.number} ${object.name}</strong></p>
+                                        <p>Has been set into <strong>${object.date_deadline}</strong></p>
+                                    </div>
+                                </td></tr>
+                                <tr><td style="text-align:center;">
+                                    <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                </td></tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+
+        <record id="mail_template_odes_crm_requirement_updates" model="mail.template">
+            <field name="name">ODES CRM: Requirement Modified</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Requirement [${object.name}] Modified</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_pic_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="top" style="font-size:13px;">
+                                            <div>
+                                                <p>Dear Madam/Sir,</p>
+                                                <p>This email is sent to updates you that there's a requirement that have been modified</p>
+                                                <p>- <strong>${object.number} ${object.name}</strong></p>
+                                                <p>Please kindly do check on it if necessary</p>
+                                            </div>
+                                            <div style='margin-top: 20px;'>
+                                                <a href="${object.requirement_url}" style="background-color:#1B66B7;padding: 4px 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px; margin: 3px 0;">
+                                                    View Requirement
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+
+        <record id="mail_template_odes_crm_reminder_pm" model="mail.template">
+            <field name="name">ODES CRM: Reminder PM on Done Development Requirement</field>
+            <field name="model_id" ref="odes_crm.model_odes_crm_requirement"/>
+            <field name="subject">Requirement [${object.name}] Reminder</field>
+            <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+            <field name="email_to">${object.get_pm_email() | safe}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top:16px;background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tbody><tr><td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="800" style="padding:16px;background-color: white; color: #454748; border-collapse:separate;">
+                <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle">
+                                            <img src="/odes_design/static/src/img/ODES-logo.png" style="padding:0px;margin: 0px; height: auto; width: 80px;" alt="${object.company_id.name}"/>
+                                        </td>
+                                        <td valign="middle"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="top" style="font-size:13px;">
+                                            <div>
+                                                <p>Dear PM,</p>
+                                                <p>please do note on the following done development requirement</p>
+                                                <p>- <strong>${object.number} ${object.name} at ${object.project_name} project</strong></p>
+                                                <p>Please confirm if the points is clear</p>
+                                            </div>
+                                            <div style='margin-top: 20px;'>
+                                                <a href="${object.requirement_url}" style="background-color:#1B66B7;padding: 4px 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px; margin: 3px 0;">
+                                                    View Requirement
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td align="center" style="min-width:800px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="middle" align="left">
+                                            ${object.company_id.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="left" style="opacity:0.7;">
+                                            <a href="https://odes.com.sg/" style="text-decoration:none;background-color: rgb(255, 255, 255); font-family: &quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif; font-size: 13px;"><span style="font-weight:bolder;">https://odes.com.sg</span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                </td></tr>
+                <!-- POWERED BY -->
+                <tr>
+                    <td align="center" style="min-width:800px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="800" style="min-width:800px;background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odes.com.sg?utm_source=db&amp;utm_medium=auth" style="color:#1B66B7;">ODES</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+.odes_field_readonly{
+	pointer-events: none;
+	cursor: default;
+}
+.odes_field_readonly .o_dropdown_button{
+	display: none !important;
+}
+.odes_field_readonly .o_input{
+	cursor: default !important;
+    pointer-events: none;
+}
+.odes_field_readonly.text-muted{
+    color: #adb5bd !important;
+}
+.odes_field_noborder{
+	border-color:transparent!important;
+}
+.odes_field_noborder .o_input{
+	border-color:transparent!important;
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+	    <record id="req_new_part_number_wizard_view_tree" model="ir.ui.view">
+	    	<field name="name">req.new.part.number.wizard.view.tree</field>
+	    	<field name="model">req.new.part.number.wizard</field>
+	    	<field name="arch" type="xml">
+	    		<tree string="New Part Number">
+		    		<header>
+		    			<button name="button_confirm" string="Confirm" class="btn-primary" type="object"/>	
+		    			<button name="button_create" string="Create" class="btn-primary" type="object"/>
+		    			<button name="button_reject" string="Reject" class="btn-primary" type="object"/>
+		    		</header>
+		    		<field name="create_uid" string="Requested By"/>
+		    		<field name="id_number"/>
+		    		<field name="name"/>
+		    		<field name="desc"/>
+		    		<field name="brand_id"/>
+		    		<field name="icon_type_id"/>
+		    		<field name="class_id"/>
+		    		<field name="category_id"/>
+		    		<field name="uom_id"/>
+		    		<field name="state"/>		    
+	    		</tree>
+	    	</field>
+	    </record>
+
+	     <record id="req_new_part_number_wizard_view_form" model="ir.ui.view">
+	    	<field name="name">req.new.part.number.wizard.view.form</field>
+	    	<field name="model">req.new.part.number.wizard</field>
+	    	<field name="type">form</field>
+	    	<field name="arch" type="xml">
+	    		<form string="New Part Number">
+
+	    			<header>	
+	    				<button name="button_confirm" string="Confirm" class="btn-primary" type="object" invisible="state != 'request'"/>	
+		    			<button name="button_create" string="Create" class="btn-primary" type="object" invisible="state != 'inprocess'"/>
+		    			<button name="button_reject" string="Reject" class="btn-primary" type="object" invisible="state != 'inprocess'"/>
+		    			<field name="state" widget="statusbar"/>
+		    		</header>
+		    		<sheet>
+			    		<group string="ITEM">
+			    			<field name="create_uid" string="Requested By"/>
+							<field name="req_new_part_number_id" string="Pipeline"/>
+			    			<field name="id_number" readonly="1"/>
+			    			<field name="name"/>
+			    			<field name="desc"/>
+			    			<field name="brand_id"/>
+			    			<field name="icon_type_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+			    			<field name="product_type" invisible="1"/>
+			    			<field name="class_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+			    			<field name="category_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+
+			    		</group>
+			    		<group string="List Pricing">
+			    				<field name="uom_id"/>
+			    		</group>
+			    	</sheet>
+	    		</form>
+	    	</field>
+	    </record>
+
+	    <record id="req_new_part_number_wizard" model="ir.actions.act_window">
+	    	<field name="name">Req New Part Number</field>
+	    	<field name="type">ir.actions.act_window</field>
+	    	<field name="res_model">req.new.part.number.wizard</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="help" type="html">
+				<p class="o.view_nocontent_smiling_face">
+					Create Your First Request Part
+				</p>
+			</field>
+	    	
+	    </record>
+	    
+
+    	<menuitem id ="req_new_part_number_wizard_menu" name="New Part Number" parent= "purchase.menu_purchase_root" action="req_new_part_number_wizard" sequence="150" groups="iconnexion_custom.group_iconnexion_req_new_part_number,iconnexion_custom.group_iconnexion_company"/>
+    </data>
+
+</odoo>

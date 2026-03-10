@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="odes_custom.DashboardMain">
+        <div class="o_dashboards">
+            <div class="container-fluid o_oa_dashboard">
+                <t t-call="odes_custom.dashboard_header"/>
+                <div class="o_website_dashboard_content"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="odes_custom.dashboard_header">
+        <div class="row o_dashboard_common">
+            <div class="o_box" style="padding-bottom:50px;">
+                <!-- <div class="col-md-12">
+                    <span class="odes_dashboard_subtitle">CRM Dashboard</span>
+                </div> -->
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-red" data-action="odes_custom.action_crm_active_lead" t-on-click="onDashboardAction">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-users fa-3x clr-odes-red"></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.active_lead"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Active Leads</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-orange" data-action="odes_custom.action_crm_active_lead_l7" t-on-click="onDashboardAction">
+
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-user-o fa-3x clr-odes-orange"><span class="odes-sm-logo">&#8804; 7</span></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.active_lead_l7"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Active Leads &#8804; 7 Days</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-blue" data-action="odes_custom.action_crm_active_lead_g7" t-on-click="onDashboardAction">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-user-o fa-3x clr-odes-blue"><span class="odes-sm-logo">> 7</span></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.active_lead_g7"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Active Leads > 7 Days</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-palepurple" data-action="odes_custom.action_crm_outstanding_won" t-on-click="onDashboardAction">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-smile-o fa-3x clr-odes-palepurple"></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.outstanding_won"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Total Won</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-green" data-action="odes_custom.action_crm_active_opportunity" t-on-click="onDashboardAction">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-handshake-o fa-3x clr-odes-green"></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.active_opportunity"/> / <t t-esc="state.opportunity_revenue"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Active Opportunity</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-darkblue" data-action="odes_custom.action_crm_active_opportunity_l7" t-on-click="onDashboardAction">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-handshake-o fa-3x clr-odes-darkblue"><span class="odes-sm-logo">&#8804; 7</span></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.active_opportunity_l7"/> / <t t-esc="state.opportunity_revenue_l7"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Active Opportunity &#8804; 7 Days</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-purple" data-action="odes_custom.action_crm_active_opportunity_g7" t-on-click="onDashboardAction">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-handshake-o fa-3x clr-odes-purple"><span class="odes-sm-logo">> 7</span></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.active_opportunity_g7"/> / <t t-esc="state.opportunity_revenue_g7"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Active Opportunity > 7 Days</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-sm oe_stat_button_dashboard o_dashboard_action bg-gradient-black" data-action="odes_custom.action_crm_outstanding_lost" t-on-click="onDashboardAction">
+                        <div class="o_button_border">
+                            <div class="fa fa-fw o_button_icon fa-frown-o fa-3x clr-odes-black"></div>
+                        </div>
+                        <div class="o_stat_info_dashboard">
+                            <span class="o_stat_value_dashboard clr-white"><t t-esc="state.outstanding_lost"/></span>
+                            <span class="o_stat_text_dashboard clr-white">Total Lost</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-green">
+                        <div>
+                            <span class="o_stat_text_dashboard clr-black" style="font-size: 20px;">Top 5 Possibility Lead</span>
+                        </div>
+                        <div class="bg-white">
+                            <canvas id="lead_chart" width="400" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-green">
+                        <div>
+                            <span class="o_stat_text_dashboard clr-black" style="font-size: 20px;">Top 5 Possibility Opportunity</span>
+                        </div>
+                        <div class="bg-white">
+                            <canvas id="opp_chart" width="400" height="250"></canvas>
+                            <!-- Chart scripts are loaded via module assets, not inline -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-green">
+                        <div>
+                            <span class="o_stat_text_dashboard clr-black" style="font-size: 20px;">CRM Stages</span>
+                        </div>
+                        <div class="bg-white">
+                            <canvas id="crm_chart" width="400" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-green">
+                        <div>
+                            <span class="o_stat_text_dashboard clr-black" style="font-size: 20px;">Top 5 Expected Revenue Opportunity</span>
+                        </div>
+                        <div class="bg-white">
+                            <canvas id="revenue_chart" width="400" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="display: None">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-green">
+                        <div>
+                            <span class="o_stat_text_dashboard clr-black" style="font-size: 20px;">Sales Funnel</span>
+                        </div>
+                        <div class="bg-white">
+                            <figure class="highcharts-figure">
+                                <div id="chart-container"></div>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="display: None">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-green">
+                        <div>
+                            <span class="o_stat_text_dashboard clr-black" style="font-size: 20px;">Sales Funnel</span>
+                        </div>
+                        <div class="bg-white">
+                            <table style="pointer-events:none; background: #FFFFFF;">
+                                <tbody>
+                                    <tr style="background: #FFFFFF;">
+                                        <td rowspan="4">
+                                            <img src='/odes_custom/static/src/img/4stage_funnel.png' width="372" height="372"/>
+                                        </td>
+                                        <td>
+                                            <div style="padding-top: 60px; font-size: 14px;">Proposition</div>
+                                        </td>
+                                        <td>
+                                            <div style="padding-top: 60px; font-size: 14px;">(70)</div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td style="background: #FFFFFF;">
+                                            <div style="padding-top: 26px; font-size: 14px; padding-bottom: 12px; padding-right: 15px;">Qualified</div>
+                                        </td>
+                                        <td>
+                                            <div style="padding-top: 26px; font-size: 14px; padding-bottom: 12px; padding-right: 15px;">(70)</div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td>
+                                            <div style="padding-bottom: 26px; font-size: 14px; padding-top: 7px;">Won</div>
+                                        </td>
+                                        <td>
+                                            <div style="padding-bottom: 26px; font-size: 14px; padding-top: 7px; padding-right: 15px;">(70)</div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td>
+                                            <div style="padding-bottom: 28px; font-size: 14px;">Lost</div>
+                                        </td>
+                                        <td>
+                                            <div style="padding-bottom: 28px; font-size: 14px; padding-right: 15px;">(70)</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn btn-sm oe_stat_button_dashboard bg-green">
+                        <div>
+                            <span class="o_stat_text_dashboard clr-black" style="font-size: 20px;">Sales Funnel</span>
+                        </div>
+                        <div class="bg-white">
+                            <table style="pointer-events:none; background: #FFFFFF;">
+                                <tbody>
+                                    <tr style="background: #FFFFFF;">
+                                        <td rowspan="7">
+                                            <img src='/odes_custom/static/src/img/7stage_funnel.png' width="315" height="372"/>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_1 crm_name"><t t-esc="state.fname1"/></div>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_1 crm_value"><t t-esc="state.fcount1"/> / <t t-esc="state.fmoun1"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td style="background: #FFFFFF;">
+                                            <div class="crm_funnel_2 crm_name"><t t-esc="state.fname2"/></div>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_2 crm_value"><t t-esc="state.fcount2"/> / <t t-esc="state.fmoun2"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td>
+                                            <div class="crm_funnel_3 crm_name"><t t-esc="state.fname3"/></div>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_3 crm_value"><t t-esc="state.fcount3"/> / <t t-esc="state.fmoun3"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td>
+                                            <div class="crm_funnel_4 crm_name"><t t-esc="state.fname4"/></div>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_4 crm_value"><t t-esc="state.fcount4"/> / <t t-esc="state.fmoun4"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td>
+                                            <div class="crm_funnel_5 crm_name"><t t-esc="state.fname5"/></div>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_5 crm_value"><t t-esc="state.fcount5"/> / <t t-esc="state.fmoun5"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td>
+                                            <div class="crm_funnel_6 crm_name"><t t-esc="state.fname6"/></div>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_6 crm_value"><t t-esc="state.fcount6"/> / <t t-esc="state.fmoun6"/></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background: #FFFFFF;">
+                                        <td>
+                                            <div class="crm_funnel_7 crm_name"><t t-esc="state.fname7"/></div>
+                                        </td>
+                                        <td>
+                                            <div class="crm_funnel_7 crm_value"><t t-esc="state.fcount7"/> / <t t-esc="state.fmoun7"/></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="odes_custom.DateRangeButtons">
+        <div class="col-md-12 text-center">
+            <form class="form-inline">
+                <div class="form-group mb-2 form-inline" style="display: flex; padding-right: 5px;">
+                    <label for="user_selection" style="padding-right: 10px; font-size: 15px;"><b>Sales</b></label>
+                    <select class="form-control" id="user_selection" style="width: 180px;">
+                    </select>
+                </div>
+                <div class="form-group mx-sm-3 mb-2 form-inline" style="display: flex;">
+                    <label for="company_selection" style="padding-right: 10px; font-size: 15px;"><b>Business</b></label>
+                    <select class="form-control" id="company_selection" style="width: 180px;">
+                    </select>
+                </div>
+                <div class="form-group mx-sm-3 mb-2 form-inline" style="display: flex;">
+                    <button type="button" class="btn btn-primary btn-Confirm-Selection" t-on-click="onSubmitClick">Filter</button>
+                </div>
+            </form>
+        </div>
+    </t>
+
+
+
+</templates>

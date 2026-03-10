@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Customer Portal"
+        id="odes_crm_customer_portal"
+        web_icon="odes_crm,static/description/icon.png"
+        groups="odes_crm.group_odes_customer"
+        sequence="50"/>
+</odoo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <function model="res.partner" name="iconn_backfill_company_approval_state"/>
+    </data>
+</odoo>
+

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_employee_public_view_search_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.search.inherit</field>
+            <field name="model">hr.employee.public</field>
+            <field name="inherit_id" ref="hr.hr_employee_public_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='archived']" position="after">
+                    <separator/>
+                    <filter name="attend" string="Attend" domain="[('hr_attendance_display', '=', 'attend')]"/>
+                    <filter name="not_attend" string="Not Attend with Reason" domain="[('hr_attendance_display', '=', 'not_attend')]"/>
+                    <filter name="absent" string="Absent" domain="[('hr_attendance_display', '=', 'absent')]"/>
+                </xpath>
+             </field>
+        </record>
+
+        <record id="view_employee_filter_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.search.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inactive']" position="after">
+                    <separator/>
+                    <filter name="attend" string="Attend" domain="[('hr_attendance_display', '=', 'attend')]"/>
+                    <filter name="not_attend" string="Not Attend with Reason" domain="[('hr_attendance_display', '=', 'not_attend')]"/>
+                    <filter name="absent" string="Absent" domain="[('hr_attendance_display', '=', 'absent')]"/>
+                </xpath>
+             </field>
+        </record>
+
+        <record id="hr_employee_public_view_kanban_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.kanban.inherit</field>
+            <field name="model">hr.employee.public</field>
+            <field name="inherit_id" ref="hr.hr_employee_public_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='hr_icon_display']" position="after">
+                    <field name="mobile_phone"/>
+                    <field name="hr_attendance_display"/>
+                    <field name="last_attendance_check_in"/>
+                    <field name="last_attendance_check_out"/>
+                    <field name="attendance_running_work_hours"/>
+                    <field name="leave_date_from"/>
+                    <field name="leave_date_to"/>
+                    <field name="current_date_leave_id"/>
+                    <field name="im_status"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_kanban_details')]" position="replace">
+                    <div class="oe_kanban_details" style="display: grid;">
+                        <div class="o_kanban_record_top">
+                            <div class="o_kanban_record_headings">
+                                <strong class="o_kanban_record_title">
+                                    <div class="float-right" t-if="record.hr_attendance_display.raw_value == 'attend'">
+                                        <span class="fa fa-circle text-success" role="img" aria-label="Attend" title="Attend" name="attend"></span>
+                                    </div>
+                                    <div class="float-right" t-if="record.hr_attendance_display.raw_value == 'not_attend'">
+                                        <span class="fa fa-circle text-warning" role="img" aria-label="Not Attend with Reason" title="Not Attend with Reason" name="not_attend"></span>
+                                    </div>
+                                    <div class="float-right" t-if="record.hr_attendance_display.raw_value == 'absent'">
+                                        <span class="fa fa-circle text-danger" role="img" aria-label="Absent" title="Absent" name="presence_absent_active"></span>
+                                    </div>
+                                    <field name="name"/>
+                                </strong>
+                                <span class="o_kanban_record_subtitle"><field name="job_title"/></span>
+                            </div>
+                        </div>
+                        <ul>
+                            <li id="last_login"/>
+                            <li class="o_force_ltr">
+                                <t t-if="record.mobile_phone.raw_value and record.work_phone.raw_value">
+                                    <field name="work_phone"/> / <field name="mobile_phone"/>
+                                </t>
+                                <t t-if="record.mobile_phone.raw_value and !record.work_phone.raw_value">
+                                    <field name="mobile_phone"/>
+                                </t>
+                                <t t-if="record.work_phone.raw_value and !record.mobile_phone.raw_value">
+                                    <field name="work_phone"/>
+                                </t>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li t-if="record.hr_attendance_display.raw_value == 'attend'"><strong>Check in:</strong> <field name="last_attendance_check_in"/></li>
+                            <li t-if="record.hr_attendance_display.raw_value == 'attend'" t-attf-class="#{record.attendance_running_work_hours.raw_value &lt; 9 ? 'text-danger' : ''}"><strong>Duration:</strong> <field name="attendance_running_work_hours" widget="float_time"/></li>
+                            <li t-if="record.hr_attendance_display.raw_value == 'not_attend'"><strong>Not attend reason:</strong><br/> <span t-esc="record.current_date_leave_id.value" t-att-title="moment(record.leave_date_from.raw_value).format('ddd Do MMM') + ' - ' + moment(record.leave_date_to.raw_value).format('ddd Do MMM')"/></li>
+                        </ul>
+                        <div class="oe_kanban_content">
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left"/>
+                                <div class="oe_kanban_bottom_right">
+                                    <a title="Chat" icon="fa-comments" href="#" t-attf-class="#{record.im_status.raw_value == 'online' ? 'ml8 o_employee_chat_btn text-success' : 'ml8 o_employee_chat_btn'}" invisible="not user_id" role="button"><i class="fa fa-comments"/></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="oe_kanban_content mt-auto">
+                            <div class="o_kanban_record_bottom d-inline-block text-center w-100">
+                                <a class="o_project_kanban_box mx-2" style="font-size: 18px;" name="action_view_calendar" type="object">
+                                    <i class="fa fa-calendar" role="img" aria-label="Calendar" title="Calendar"/>
+                                </a>
+                                <a class="o_project_kanban_box mx-2" style="font-size: 18px;" name="action_view_timesheet" type="object">
+                                    <i class="fa fa-clock-o" role="img" aria-label="Timesheet" title="Timesheet"/>
+                                </a>
+                                <a class="o_project_kanban_box mx-2" style="font-size: 18px;" name="action_view_okr" type="object">
+                                    <i class="fa fa-key" role="img" aria-label="OKR" title="OKR"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_kanban_view_employees_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.kanban.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='hr_icon_display']" position="after">
+                    <field name="mobile_phone"/>
+                    <field name="hr_attendance_display"/>
+                    <field name="last_attendance_check_in"/>
+                    <field name="last_attendance_check_out"/>
+                    <field name="attendance_running_work_hours"/>
+                    <field name="leave_date_from"/>
+                    <field name="leave_date_to"/>
+                    <field name="current_date_leave_id"/>
+                    <field name="im_status"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_kanban_details')]" position="replace">
+                    <div class="oe_kanban_details" style="display: grid;">
+                        <div class="o_kanban_record_top">
+                            <div class="o_kanban_record_headings">
+                                <strong class="o_kanban_record_title">
+                                    <div class="float-right" t-if="record.hr_attendance_display.raw_value == 'attend'">
+                                        <span class="fa fa-circle text-success" role="img" aria-label="Attend" title="Attend" name="attend"></span>
+                                    </div>
+                                    <div class="float-right" t-if="record.hr_attendance_display.raw_value == 'not_attend'">
+                                        <span class="fa fa-circle text-warning" role="img" aria-label="Not Attend with Reason" title="Not Attend with Reason" name="not_attend"></span>
+                                    </div>
+                                    <div class="float-right" t-if="record.hr_attendance_display.raw_value == 'absent'">
+                                        <span class="fa fa-circle text-danger" role="img" aria-label="Absent" title="Absent" name="presence_absent_active"></span>
+                                    </div>
+                                    <field name="name"/>
+                                </strong>
+                                <span class="o_kanban_record_subtitle"><field name="job_title"/></span>
+                            </div>
+                        </div>
+                        <ul>
+                            <li id="last_login"/>
+                            <li class="o_force_ltr">
+                                <t t-if="record.mobile_phone.raw_value and record.work_phone.raw_value">
+                                    <field name="work_phone"/> / <field name="mobile_phone"/>
+                                </t>
+                                <t t-if="record.mobile_phone.raw_value and !record.work_phone.raw_value">
+                                    <field name="mobile_phone"/>
+                                </t>
+                                <t t-if="record.work_phone.raw_value and !record.mobile_phone.raw_value">
+                                    <field name="work_phone"/>
+                                </t>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li t-if="record.hr_attendance_display.raw_value == 'attend'"><strong>Check in:</strong> <field name="last_attendance_check_in"/></li>
+                            <li t-if="record.hr_attendance_display.raw_value == 'attend'" t-attf-class="#{record.attendance_running_work_hours.raw_value &lt; 9 ? 'text-danger' : ''}"><strong>Duration:</strong> <field name="attendance_running_work_hours" widget="float_time"/></li>
+                            <li t-if="record.hr_attendance_display.raw_value == 'not_attend'"><strong>Not attend reason:</strong><br/> <span t-esc="record.current_date_leave_id.value" t-att-title="moment(record.leave_date_from.raw_value).format('ddd Do MMM') + ' - ' + moment(record.leave_date_to.raw_value).format('ddd Do MMM')"/></li>
+                        </ul>
+                        <div class="oe_kanban_content">
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left"/>
+                                <div class="oe_kanban_bottom_right">
+                                    <a title="Chat" icon="fa-comments" href="#" t-attf-class="#{record.im_status.raw_value == 'online' ? 'ml8 o_employee_chat_btn text-success' : 'ml8 o_employee_chat_btn'}" invisible="not user_id" role="button"><i class="fa fa-comments"/></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="oe_kanban_content mt-auto">
+                            <div class="o_kanban_record_bottom d-inline-block text-center w-100">
+                                <a class="o_project_kanban_box mx-2" style="font-size: 18px;" name="action_view_calendar" type="object">
+                                    <i class="fa fa-calendar" role="img" aria-label="Calendar" title="Calendar"/>
+                                </a>
+                                <a class="o_project_kanban_box mx-2" style="font-size: 18px;" name="action_view_timesheet" type="object">
+                                    <i class="fa fa-clock-o" role="img" aria-label="Timesheet" title="Timesheet"/>
+                                </a>
+                                <a class="o_project_kanban_box mx-2" style="font-size: 18px;" name="action_view_okr" type="object">
+                                    <i class="fa fa-key" role="img" aria-label="OKR" title="OKR"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

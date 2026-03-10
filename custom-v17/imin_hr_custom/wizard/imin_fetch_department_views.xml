@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_imin_fetch_department" model="ir.ui.view">
+        <field name="name">imin.fetch.department</field>
+        <field name="model">imin.fetch.department</field>
+        <field name="arch" type="xml">
+            <form string="Fetch Departments">
+                <p>To fetch existing departments from iMin, click on Confirm button below.</p>
+                <footer>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_imin_fetch_department" model="ir.actions.act_window">
+        <field name="name">Fetch Departments</field>
+        <field name="res_model">imin.fetch.department</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem id="imin_fetch_department" parent="imin_hr_custom.menu_imin_hr_employee_api" action="action_imin_fetch_department" sequence="5"/>
+</odoo>

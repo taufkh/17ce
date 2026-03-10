@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- v16: stock.inventory.line removed; entire view disabled -->
+    <!--
+
+    <record id="stock_inventory_line_tree_iconnexion" model="ir.ui.view">
+        <field name="name">stock.inventory.line.tree3</field>
+        <field name="model">stock.inventory.line</field>
+        <field name="inherit_id" ref="stock.stock_inventory_line_tree"/>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="icpo_no" groups="iconnexion_custom.group_iconnexion_company"/>
+                <field name="ic_cpn" groups="iconnexion_custom.group_iconnexion_company"/>
+            </field>
+            <field name="product_id" position="after">
+                <field name="ic_datecode" groups="iconnexion_custom.group_iconnexion_company"/>
+            </field>
+            <field name="state" position="after">
+                <field name="ic_customer" groups="iconnexion_custom.group_iconnexion_company"/>
+            </field>
+        </field>
+    </record>
+    -->
+</odoo>

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- CONTACT / COMPANY (res.partner) matrix -->
+        <record id="rule_partner_sales_exec_read_all" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Exec Read All</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_user')), (4, ref('iconn_user_access_setup.group_iconn_sales_executive'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_partner_sales_exec_create_company_draft" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Exec Create Company Draft</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_user')), (4, ref('iconn_user_access_setup.group_iconn_sales_executive'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('is_company', '=', True), ('iconn_company_approval_state', '=', 'draft')]</field>
+        </record>
+
+        <record id="rule_partner_sales_exec_create_contact_under_approved_company" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Exec Create Contact Under Approved Company</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_user')), (4, ref('iconn_user_access_setup.group_iconn_sales_executive'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                [('is_company', '=', False), ('parent_id', '!=', False), ('parent_id.iconn_company_approval_state', '=', 'approved')]
+            </field>
+        </record>
+
+        <record id="rule_partner_sales_exec_write_limited" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Exec Write Limited</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_user')), (4, ref('iconn_user_access_setup.group_iconn_sales_executive'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                ['|',
+                    '&amp;', ('is_company', '=', False), ('parent_id.iconn_company_approval_state', '=', 'approved'),
+                    '&amp;', ('is_company', '=', True), '&amp;', ('iconn_company_approval_state', '=', 'draft'), ('create_uid', '=', user.id)
+                ]
+            </field>
+        </record>
+
+        <record id="rule_partner_sales_exec_unlink_deny" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Exec No Delete</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_user')), (4, ref('iconn_user_access_setup.group_iconn_sales_executive'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('id', '=', -1)]</field>
+        </record>
+
+        <record id="rule_partner_sales_mgr_read_all" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Manager Read All</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_country_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_partner_sales_mgr_create_company_draft" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Manager Create Company Draft</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_country_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('is_company', '=', True), ('iconn_company_approval_state', '=', 'draft')]</field>
+        </record>
+
+        <record id="rule_partner_sales_mgr_create_contact_under_approved_company" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Manager Create Contact Under Approved Company</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_country_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                [('is_company', '=', False), ('parent_id', '!=', False), ('parent_id.iconn_company_approval_state', '=', 'approved')]
+            </field>
+        </record>
+
+        <record id="rule_partner_sales_mgr_write_limited" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Manager Write Limited</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_country_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                ['|',
+                    '&amp;', ('is_company', '=', False), ('parent_id.iconn_company_approval_state', '=', 'approved'),
+                    '&amp;', ('is_company', '=', True), ('iconn_company_approval_state', '=', 'draft')
+                ]
+            </field>
+        </record>
+
+        <record id="rule_partner_sales_mgr_unlink_deny" model="ir.rule">
+            <field name="name">Iconn Access / Partner Sales Manager No Delete</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_country_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('id', '=', -1)]</field>
+        </record>
+
+        <record id="rule_partner_customer_service_read_all" model="ir.rule">
+            <field name="name">Iconn Access / Partner Customer Service Read All</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_customer_service_manager')), (4, ref('iconn_user_access_setup.group_iconn_org_customer_service_user')), (4, ref('iconn_user_access_setup.group_iconn_customer_service'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_partner_customer_service_create_all_needed" model="ir.rule">
+            <field name="name">Iconn Access / Partner Customer Service Create Company Draft or Contact Approved Parent</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_customer_service_manager')), (4, ref('iconn_user_access_setup.group_iconn_org_customer_service_user')), (4, ref('iconn_user_access_setup.group_iconn_customer_service'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                ['|',
+                    '&amp;', ('is_company', '=', True), ('iconn_company_approval_state', '=', 'draft'),
+                    '&amp;', '&amp;', ('is_company', '=', False), ('parent_id', '!=', False), ('parent_id.iconn_company_approval_state', '=', 'approved')
+                ]
+            </field>
+        </record>
+
+        <record id="rule_partner_customer_service_write_all" model="ir.rule">
+            <field name="name">Iconn Access / Partner Customer Service Write All</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_customer_service_manager')), (4, ref('iconn_user_access_setup.group_iconn_org_customer_service_user')), (4, ref('iconn_user_access_setup.group_iconn_customer_service'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_partner_customer_service_unlink_deny" model="ir.rule">
+            <field name="name">Iconn Access / Partner Customer Service No Hard Delete</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_customer_service_manager')), (4, ref('iconn_user_access_setup.group_iconn_org_customer_service_user')), (4, ref('iconn_user_access_setup.group_iconn_customer_service'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('id', '=', -1)]</field>
+        </record>
+
+        <record id="rule_partner_finance_read_all_officer" model="ir.rule">
+            <field name="name">Iconn Access / Partner Finance Officer Read All</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_finance_manager')), (4, ref('iconn_user_access_setup.group_iconn_finance_officer'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_partner_finance_read_all_processing" model="ir.rule">
+            <field name="name">Iconn Access / Partner Finance Processing Read All</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_finance_user')), (4, ref('iconn_user_access_setup.group_iconn_finance_processing'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_partner_finance_officer_write_deny" model="ir.rule">
+            <field name="name">Iconn Access / Partner Finance Officer No Create/Delete</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_finance_manager')), (4, ref('iconn_user_access_setup.group_iconn_finance_officer'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('id', '=', -1)]</field>
+        </record>
+
+        <record id="rule_partner_finance_officer_write_approved_company" model="ir.rule">
+            <field name="name">Iconn Access / Partner Finance Officer Write Approved Company</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_finance_manager')), (4, ref('iconn_user_access_setup.group_iconn_finance_officer'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('is_company', '=', True), ('iconn_company_approval_state', '=', 'approved')]</field>
+        </record>
+
+        <record id="rule_partner_finance_processing_write_deny" model="ir.rule">
+            <field name="name">Iconn Access / Partner Finance Processing No Write</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_finance_user')), (4, ref('iconn_user_access_setup.group_iconn_finance_processing'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('id', '=', -1)]</field>
+        </record>
+
+        <!-- CRM / Sales own-doc restriction for Sales Executive wrapper -->
+        <record id="rule_crm_lead_iconn_sales_exec_own" model="ir.rule">
+            <field name="name">Iconn Access / Sales Executive CRM Leads - Own Only</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_user')), (4, ref('iconn_user_access_setup.group_iconn_sales_executive'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_sale_order_iconn_sales_exec_own" model="ir.rule">
+            <field name="name">Iconn Access / Sales Executive Sales Orders - Own Only</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_user')), (4, ref('iconn_user_access_setup.group_iconn_sales_executive'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+
+        <!-- Sales Manager: own docs + teams they manage or belong to -->
+        <record id="rule_crm_lead_iconn_sales_mgr_all" model="ir.rule">
+            <field name="name">Iconn Access / Sales Manager CRM Leads - Team</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_country_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+            <field name="domain_force">
+                ['|', '|', ('user_id', '=', user.id), ('team_id.user_id', '=', user.id), ('team_id.member_ids', 'in', [user.id])]
+            </field>
+        </record>
+
+        <record id="rule_sale_order_iconn_sales_mgr_all" model="ir.rule">
+            <field name="name">Iconn Access / Sales Manager Sales Orders - Team</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_sales_team_country_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+            <field name="domain_force">
+                ['|', '|', ('user_id', '=', user.id), ('team_id.user_id', '=', user.id), ('team_id.member_ids', 'in', [user.id])]
+            </field>
+        </record>
+
+        <!-- Sales Operations can work across CRM/Sales/Purchase operational documents -->
+        <record id="rule_crm_lead_iconn_sales_ops_all" model="ir.rule">
+            <field name="name">Iconn Access / Sales Operations CRM Leads - All</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_shipping_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_operations'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_sale_order_iconn_sales_ops_all" model="ir.rule">
+            <field name="name">Iconn Access / Sales Operations Sales Orders - Sent/Sale</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_shipping_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_operations'))]"/>
+            <field name="domain_force">[('state', 'in', ['sent', 'sale'])]</field>
+        </record>
+
+        <record id="rule_purchase_order_iconn_sales_ops_all" model="ir.rule">
+            <field name="name">Iconn Access / Sales Operations Purchase Orders - All</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_shipping_manager')), (4, ref('iconn_user_access_setup.group_iconn_sales_operations'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!-- Purchasing role defaults to own PO documents -->
+        <record id="rule_purchase_order_iconn_purchasing_own" model="ir.rule">
+            <field name="name">Iconn Access / Purchasing Purchase Orders - Own Only</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_purchasing_user')), (4, ref('iconn_user_access_setup.group_iconn_purchasing'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+
+        <!-- Finance / HR Support: billing user restricted to vendor bills -->
+        <record id="rule_account_move_iconn_finance_processing_vendor_bills" model="ir.rule">
+            <field name="name">Iconn Access / Finance Processing Vendor Bills Only</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_finance_user')), (4, ref('iconn_user_access_setup.group_iconn_finance_processing'))]"/>
+            <field name="domain_force">[('move_type', '=', 'in_invoice')]</field>
+        </record>
+
+        <!-- Customer Service (Margaret): own docs + draft SO focus -->
+        <record id="rule_sale_order_iconn_customer_service_draft" model="ir.rule">
+            <field name="name">Iconn Access / Customer Service Sales Orders - Draft Own</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_customer_service_manager')), (4, ref('iconn_user_access_setup.group_iconn_org_customer_service_user')), (4, ref('iconn_user_access_setup.group_iconn_customer_service'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id), ('state', '=', 'draft')]</field>
+        </record>
+
+        <record id="rule_crm_lead_iconn_customer_service_own" model="ir.rule">
+            <field name="name">Iconn Access / Customer Service CRM Leads - Own</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_customer_service_manager')), (4, ref('iconn_user_access_setup.group_iconn_org_customer_service_user')), (4, ref('iconn_user_access_setup.group_iconn_customer_service'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+
+        <!-- Barry warehouse assistant: incoming receipts only on stock picking -->
+        <record id="rule_stock_picking_warehouse_incoming_only" model="ir.rule">
+            <field name="name">Iconn Access / Warehouse Incoming Only</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="groups" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_warehouse_incoming_only')), (4, ref('iconn_user_access_setup.group_iconn_warehouse_incoming_only'))]"/>
+            <field name="domain_force">[('picking_type_id.code', '=', 'incoming')]</field>
+        </record>
+    </data>
+</odoo>

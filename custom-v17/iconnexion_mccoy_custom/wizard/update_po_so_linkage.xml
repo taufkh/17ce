@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_update_po_so_linkage_form" model="ir.ui.view">
+        <field name="name">update.po.so.linkage.form</field>
+        <field name="model">update.po.so.linkage</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="picking_type" readonly="1"/><span> : </span>
+                <field name="picking_id" readonly="1"/>
+                <group>
+                    <field name="line_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="linkage_id" invisible="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="name" string="CPN" readonly="1"/>
+                            <field name="product_uom_qty" readonly="1"/>
+                            <field name="quantity_done" readonly="1"/>
+                            <field name="product_uom" readonly="1"/>
+                            <field name="stock_move_id" required="1" invisible="1"/>
+                            <field name="sale_line_id" column_invisible="parent.picking_type != 'outgoing'" options="{'no_create': True, 'limit': 1}" domain="[('product_id', '=', product_id)]"/>
+                            <field name="purchase_line_id" column_invisible="parent.picking_type != 'incoming'" options="{'no_create': True, 'limit': 1}" domain="[('product_id', '=', product_id)]"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="update_po_so_linkage" string="Update" type="object" class="btn-primary" groups="iconnexion_mccoy_custom.group_iconnexion_update_po_so_linkage"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_update_po_so_linkage" model="ir.actions.act_window">
+        <field name="name">Update Purchase Sale Linkage</field>
+        <field name="res_model">update.po.so.linkage</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

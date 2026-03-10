@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_imin_hr_department_tree" model="ir.ui.view">
+        <field name="name">imin.hr.department.tree</field>
+        <field name="model">imin.hr.department</field>
+        <field name="arch" type="xml">
+            <tree string="iMin HR Departments" create="0" edit="0">
+                <field name="name"/>
+                <field name="parent_id"/>
+                <field name="imin_id"/>
+                <field name="imin_parent_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_imin_hr_department_form" model="ir.ui.view">
+        <field name="name">imin.hr.department.form</field>
+        <field name="model">imin.hr.department</field>
+        <field name="arch" type="xml">
+            <form string="iMin HR Departments" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="imin_id"/>
+                        </group>
+                        <group>
+                            <field name="parent_id" options="{'no_create': 1}"/>
+                            <field name="imin_parent_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_imin_hr_department" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">imin.hr.department</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smmiling_face">
+                Click on fetch iMin HR Departments to get records.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_imin_hr_department" parent="imin_hr_custom.menu_imin_hr_employee_master" action="action_imin_hr_department" sequence="5"/>
+</odoo>

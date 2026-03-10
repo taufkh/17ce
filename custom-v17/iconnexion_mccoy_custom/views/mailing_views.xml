@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>  
+    <record id="view_iconn_mccoy_mailing_contact_tree_inherit_mass_mailing_mailing_contact_view_tree" model="ir.ui.view">
+        <field name="name">iconn.mccoy.mailing.contact.tree.inherit.mass.mailing.mailing.contact.view.tree</field>
+        <field name="model">mailing.contact</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_contact_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="list_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

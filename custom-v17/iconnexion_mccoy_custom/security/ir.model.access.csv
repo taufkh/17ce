@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_icon_quotation_history,icon.quotation.history,model_icon_quotation_history,,1,1,1,1
+access_buffer_stock_line,buffer.stock.line,model_buffer_stock_line,,1,1,1,1
+access_buffer_stock,buffer.stock,model_buffer_stock,,1,1,1,1
+access_update_po_so_linkage,update.po.so.linkage,model_update_po_so_linkage,,1,1,1,1
+access_update_po_so_linkage_line,update.po.so.linkage.line,model_update_po_so_linkage_line,,1,1,1,1

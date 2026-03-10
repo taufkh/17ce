@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_move_line_product_selector" model="ir.ui.view">
+        <field name="name">stock.move.line.product.selector</field>
+        <field name="model">stock.move.line</field>
+        <field name="arch" type="xml">
+            <form string="Select a Product" class="o_barcode_line_form">
+                <group>
+                    <field name="company_id" invisible="1"/>
+                    <field name="product_id" readonly="1"/>
+                    <field name="quantity"/>
+                    <field name="lot_id" options="{'no_create': True}"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_barcode_action_main_menu" model="ir.actions.client">
+        <field name="name">Barcode Scanner</field>
+        <field name="tag">reload</field>
+    </record>
+
+    <menuitem id="menu_stock_barcode_root"
+              name="Barcode"
+              parent="stock.menu_stock_warehouse_mgmt"
+              action="stock_barcode_action_main_menu"
+              sequence="99"
+              groups="stock.group_stock_user"/>
+</odoo>

@@ -1,0 +1,7 @@
+{
+    'name': 'Documents Sign (Community Compatibility)',
+'version': '17.0.1.0.0',    'depends': ['documents', 'sign'],
+    'data': [],
+    'installable': True,
+    'license': 'LGPL-3',
+}

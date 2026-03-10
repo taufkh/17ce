@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="user_keith_goh" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_administrator'))]"/>
+        </record>
+
+        <record id="user_alicia_liew" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_shipping_manager'))]"/>
+        </record>
+        <record id="user_rashim" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_shipping_user'))]"/>
+        </record>
+        <record id="user_barry" model="res.users">
+            <field name="groups_id" eval="[
+                (4, ref('iconn_user_access_setup.group_iconn_org_shipping_user')),
+                (4, ref('iconn_user_access_setup.group_iconn_org_warehouse_incoming_only'))
+            ]"/>
+        </record>
+
+        <record id="user_sk" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_hr_manager'))]"/>
+        </record>
+        <record id="user_shermaine" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_hr_assistant_manager'))]"/>
+        </record>
+        <record id="user_kewei" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_hr_user'))]"/>
+        </record>
+
+        <record id="user_nick" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_fae_manager'))]"/>
+        </record>
+        <record id="user_hemanth" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_fae_user'))]"/>
+        </record>
+        <record id="user_akshay" model="res.users">
+            <field name="groups_id" eval="[(4, ref('iconn_user_access_setup.group_iconn_org_fae_user'))]"/>
+        </record>
+    </data>
+</odoo>

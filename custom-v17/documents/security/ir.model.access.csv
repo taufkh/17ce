@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_documents_document_user,documents.document.user,model_documents_document,base.group_user,1,1,1,1
+access_documents_folder_user,documents.folder.user,model_documents_folder,base.group_user,1,1,1,1
+access_documents_tag_user,documents.tag.user,model_documents_tag,base.group_user,1,1,1,1
+access_documents_share_user,documents.share.user,model_documents_share,base.group_user,1,1,1,1
+access_documents_upload_url_wizard_user,documents.upload.url.wizard.user,model_documents_upload_url_wizard,base.group_user,1,1,1,1

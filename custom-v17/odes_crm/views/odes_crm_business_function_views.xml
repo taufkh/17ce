@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_odes_crm_business_function_tree" model="ir.ui.view">
+        <field name="name">odes.crm.business.function.tree</field>
+        <field name="model">odes.crm.business.function</field>
+        <field name="arch" type="xml">
+            <tree string="Business Functions">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_business_function_form" model="ir.ui.view">
+        <field name="name">odes.crm.business.function.form</field>
+        <field name="model">odes.crm.business.function</field>
+        <field name="arch" type="xml">
+            <form string="Business Functions">
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="order_id" invisible="1"/>
+                        <field name="project_id" invisible="1"/>
+                        <field name="requirement_ids">
+                            <tree create="0">
+                                <field name="date"/>
+                                <field name="module_id"/>
+                                <field name="type"/>
+                                <field name="priority"/>
+                                <field name="name"/>
+                                <field name="description" widget="html"/>
+                                <field name="attachment_ids"/>
+                                <field name="date_deadline"/>
+                                <field name="state"/>
+                                <field name="order_id" invisible="1"/>
+                                <field name="project_id" invisible="1"/>
+                                <button type="object" name="action_client_confirm" invisible="state != 'new'" groups="odes_crm.group_odes_customer,project.group_project_manager" class="oe_highlight" string="Confirm"/>
+                                <button type="object" name="action_done" invisible="state != 'pm_confirmed'" groups="odes_crm.group_odes_customer" class="oe_highlight" string="Set as Done"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

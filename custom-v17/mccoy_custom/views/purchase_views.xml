@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="mccoy_purchase_order_view_form" model="ir.ui.view">
+        <field name="name">mccoy_purchase_order_view_form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="name" readonly="state in ('purchase', 'done')"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,88 @@
+<!--#############################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+    <data>
+        <template  id="assets_mccoy_website_theme_frontend" inherit_id="web.assets_frontend">
+            <xpath expr="//link[last()]" position="after">
+            	<script src="/mccoy_website/static/src/js/website.js"/>
+                <script src="/mccoy_website/static/src/js/website_json.js"/>
+                <script src="/mccoy_website/static/src/js/cookie.js"/>
+                <script src="/mccoy_website/static/src/js/product_configurator_modal.js"/>
+            </xpath>
+        </template>
+
+        <template  id="assets_mccoy_website_theme_frontend_layout" inherit_id="website.layout">
+            <xpath expr="." position="inside">
+                <!-- css section -->
+                <link rel="stylesheet" type="text/css" href="/mccoy_website/static/src/css/animate.css"/>
+                <link rel="stylesheet" type="text/css" href="/mccoy_website/static/src/css/style.css"/>
+            </xpath>
+        </template>
+
+        <template id="web_editor_assets_frontend" inherit_id="web_editor.assets_frontend" name="McCoy web editor Assets">
+            <xpath expr="//script[@src='/portal_rating/static/src/js/portal_chatter.js']" position="replace">
+                <script src="/mccoy_website/static/src/js/portal_chatter.js"/>
+            </xpath> 
+        </template>
+
+        <template id="assets_mccoy_website_wishlist" inherit_id="website_sale_wishlist.assets_frontend" name="Wishlist assets frontend Mccoy Website Inherit">
+                <xpath expr="//script[@src='/website_sale_wishlist/static/src/js/website_sale_wishlist.js']" position="replace">
+                    <script src="/mccoy_website/static/src/js/website_sale_wishlist.js"/>
+                </xpath>
+        </template>
+
+        <template id="assets_mccoy_website_sale" inherit_id="website_sale.assets_frontend" name="Web Sale assets frontend Mccoy Website Inherit">
+                <xpath expr="//script[@src='/website_sale/static/src/js/website_sale.js']" position="after">
+                    <script type="text/javascript" src="/mccoy_website/static/src/js/website_sale.js"/>
+                </xpath>
+        </template>
+
+        <template id="assets_mccoy_website_assets_wysiwyg" inherit_id="website_blog.assets_wysiwyg" name="McCoy Blog posts snippet options">
+            <xpath expr="//script[@src='/website_blog/static/src/snippets/s_latest_posts/options.js']" position="replace">
+                <script type="text/javascript" src="/mccoy_website/static/src/js/snippets/options.js"/>
+            </xpath>
+        </template>
+
+
+        <template id="mccoy_assets_snippet_s_latest_posts_js_000" inherit_id="website_blog.assets_snippet_s_latest_posts_js_000">
+             <xpath expr="//script[@src='/website_blog/static/src/snippets/s_latest_posts/000.js']" position="replace">
+                <script type="text/javascript" src="/mccoy_website/static/src/js/snippets/000.js"/>
+            </xpath>
+        </template>
+
+
+<!-- 
+        <template id="assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/website_sale/static/src/scss/website_sale.scss" />
+            <link rel="stylesheet" type="text/scss" href="/website_sale/static/src/scss/website_mail.scss" />
+            <link rel="stylesheet" type="text/scss" href="/website_sale/static/src/scss/website_sale_frontend.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/sale/static/src/scss/sale_portal.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/sale/static/src/scss/product_configurator.scss"/>
+        </xpath>
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/sale/static/src/js/variant_mixin.js"></script>
+            <script type="text/javascript" src="/website_sale/static/src/js/variant_mixin.js"></script>
+            <script type="text/javascript" src="/website_sale/static/src/js/website_sale.js"></script>
+            <script type="text/javascript" src="/website_sale/static/src/js/website_sale_utils.js"></script>
+            <script type="text/javascript" src="/website_sale/static/src/js/website_sale_payment.js"></script>
+            <script type="text/javascript" src="/website_sale/static/src/js/website_sale_validate.js"></script>
+            <script type="text/javascript" src="/website_sale/static/src/js/website_sale_recently_viewed.js"></script>
+            <script type="text/javascript" src="/website_sale/static/src/js/website_sale_tracking.js"></script>
+        </xpath>
+    </template>
+ -->
+    
+
+    </data>
+</odoo>

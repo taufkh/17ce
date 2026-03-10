@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_data_brand" model="odes.rebrand.data">
+        <field name="name">odoo</field>
+        <field name="website">www.odoo.com</field>
+    </record>
+
+</odoo>

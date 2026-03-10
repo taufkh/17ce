@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_website_page_form_inherit" model="ir.ui.view">
+            <field name="name">website.page.inherit.form</field>
+            <field name="model">website.page</field>
+            <field name="inherit_id" ref="website.website_pages_form_view"/>
+            <field name="arch" type="xml">
+                <!-- v16: cache_key_expr removed from website_pages_form_view; use date_publish as anchor instead -->
+                <xpath expr="//field[@name='date_publish']" position="after">
+                    <field name="mailing_list_id" />
+                    <field name="user_id" />
+                    <field name="team_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_mailing_contact_form_inherit" model="ir.ui.view">
+            <field name="name">mailing.contact.inherit.form</field>
+            <field name="model">mailing.contact</field>
+            <field name="inherit_id" ref="mass_mailing.mailing_contact_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='message_bounce']" position="after">
+                    <field name="preferred_date_to_call" />
+                    <field name="preferred_time_to_call" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- <record id="view_crm_lead_form_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.inherit.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="after">
+                    <field name="preferred_date_to_call" />
+                    <field name="preferred_time_to_call" />
+                </xpath>
+            </field>
+        </record> -->
+    </data>
+</odoo>

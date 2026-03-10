@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_crm_team","access.crm.team","model_crm_team","",1,1,1,1
+"access_crm_team_list","access.crm.team.list","model_crm_team_list","",1,1,1,1

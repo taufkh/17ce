@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+    	<record id="hr_work_entry_type_total_number_of_days_for_previous_month" model="hr.work.entry.type">
+            <field name="name">Total number of days for previous month</field>
+            <field name="code">TTLPREVDAYINMTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_sundays_in_previous_month" model="hr.work.entry.type">
+            <field name="name">Total sundays in previous month</field>
+            <field name="code">TTLPREVSUNINMONTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_saturdays_in_previous_month" model="hr.work.entry.type">
+            <field name="name">Total saturdays in previous month</field>
+            <field name="code">TTLPREVSATINMONTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_weekdays_in_previous_month" model="hr.work.entry.type">
+            <field name="name">Total weekdays in previous month</field>
+            <field name="code">TTLPREVWKDAYINMTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_public_holidays_in_current_month" model="hr.work.entry.type">
+            <field name="name">Total Public Holidays in current month</field>
+            <field name="code">PUBLICHOLIDAYS</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_days_for_current_month" model="hr.work.entry.type">
+            <field name="name">Total days for current month</field>
+            <field name="code">TTLDAYINMTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_number_of_days_for_current_month" model="hr.work.entry.type">
+            <field name="name">Total number of days for current month</field>
+            <field name="code">TTLCURRDAYINMTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_sundays_in_current_month" model="hr.work.entry.type">
+            <field name="name">Total sundays in current month</field>
+            <field name="code">TTLCURRSUNINMONTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_saturdays_in_current_month" model="hr.work.entry.type">
+            <field name="name">Total saturdays in current month</field>
+            <field name="code">TTLCURRSATINMONTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_weekdays_in_current_month" model="hr.work.entry.type">
+            <field name="name">Total weekdays in current month</field>
+            <field name="code">TTLCURRWKDAYINMTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_weekdays_in_whole_current_month" model="hr.work.entry.type">
+            <field name="name">Total weekdays in whole current month</field>
+            <field name="code">TTLCURRWKDAYINHMTH</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_current_contract_days_in_current_month" model="hr.work.entry.type">
+            <field name="name">Total current contract days in current month</field>
+            <field name="code">TTLCURCONTDAY</field>
+        </record>
+
+        <record id="hr_work_entry_type_total_normal_working_days_paid_at" model="hr.work.entry.type">
+            <field name="name">Normal Working Days paid at 100%</field>
+            <field name="code">WORK100%</field>
+        </record>
+
+        <record id="hr_work_entry_type_sick_leaves" model="hr.work.entry.type">
+            <field name="name">Sick Leaves</field>
+            <field name="code">SL</field>
+        </record>
+
+    </data>
+</odoo>

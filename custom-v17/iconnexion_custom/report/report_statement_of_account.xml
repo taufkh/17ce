@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_statement_of_account_template">
+               <t t-foreach="docs" t-as="o">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <t t-set="o" t-value="o.with_context(lang=o.lang)"/>
+                        <div class="page">
+                          <div class="row mt32 mb32">
+                            <div class="col-auto">
+                                <img t-if="o.user_id.company_id.logo" t-att-src="image_data_uri(o.user_id.company_id.logo)" style="max-height: 65px;" alt="Logo"/>
+                            </div>
+                            <div class="col-auto">
+                              <h3 style="text-align: right;">Statement Of Account</h3>
+                            </div>
+                            </div>
+                            <br/>
+                            
+                             <div class="row mt32 mb32">
+                            <div class="col-auto">
+                           <div><span style="font-size : 15px; text-decoration: underline; font-weight: bold;" t-field="o.company_id.name"/></div>
+                           <div style="font-size : 12px;"><span t-field="o.user_id.company_id.street"/> </div>
+                           <div style="font-size : 12px;"> <span t-field="o.user_id.company_id.country_id"/> <span t-field="o.company_id.zip"/> </div>
+                           <div style="font-size : 12px;">Tel : <span t-field="o.user_id.company_id.partner_id.phone"/></div>
+                           <div style="font-size : 12px;">Fax : <span t-field="o.user_id.company_id.fax"/></div>                      
+                            </div>
+                            <div style="font-size : 12px;width:60%;">
+                              
+                              <div class="row mt32 mb32">
+                                <div class="col-auto" style="text-align : right;">
+                                Statement Date : <t t-esc="datetime.datetime.now().strftime('%d.%m.%Y')"/>
+                                </div>
+                                <div class="col-auto" style="text-align : right;">
+                                </div>
+                              </div>
+
+                            </div>
+                            </div>
+                            <br/>
+                             <table style=" font-size : 14px; width:80%;height:200px; border:1px solid #000;">
+                              <tr>
+                                  <th style="border-right: 1px solid #000 !important;">
+                                      <div style="width:340px;height:130px;">
+                                        <br/>
+                                          <div class="col-auto">
+                                            <div class="row mt32 mb32">
+                                              <table style="margin-top:-20px;padding : 15px; width: 100%;">
+                                                <tr>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px; width:120px;">Company Name</td>
+                                                    <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-field="o.self.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px">Company Address</td>
+                                                    <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-if="o.self.street" t-field="o.self.street"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px"/>
+                                                    <td style="font-size:12px; padding-left: 5px;"/>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-if="o.self.street2" t-field="o.self.street2"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px"/>
+                                                    <td style="font-size:12px; padding-left: 5px;"/>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-if="o.self.country_id" t-field="o.self.country_id"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px"/>
+                                                    <td style="font-size:12px; padding-left: 5px;"/>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-if="o.self.city" t-field="o.self.city"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px"/>
+                                                    <td style="font-size:12px; padding-left: 5px;"/>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-if="o.self.state_id" t-field="o.self.state_id"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px; width:50px"/>
+                                                    <td style="font-size:12px; padding-left: 5px;"/>
+                                                    <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                      <span t-if="o.self.zip" t-field="o.self.zip"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                                
+                                              </div>
+                                              
+                                          </div>
+                                      </div>
+                                  </th>
+                                  <th>
+                                      <div style="width:340px;height:120px;">
+                                        <br/>
+                                          <div class="col-auto">
+                                            <div class="row mt32 mb32">
+                                                <table style="margin-top:-20px;padding : 15px; width: 100%;">
+                                                    <tr>
+                                                        <td style="padding-left: 10px; text-align:left; font-size:12px; width:120px;">Details Bank</td>
+                                                        <td style="font-size:12px; padding-left: 5px;"/>
+                                                    </tr>
+                                                    <tr> 
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Beneficiary</td>
+                                                      <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                        <span t-if="o.user_id.company_id.name" t-field="o.user_id.company_id.name"/>
+                                                      </td>
+                                                    </tr>
+                                                    <tr> 
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Beneficiary Add</td>
+                                                      <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                        <span t-if="o.user_id.company_id.street" t-field="o.user_id.company_id.street"/>
+                                                        <span t-if="o.user_id.company_id.street2" t-field="o.user_id.company_id.street2"/>
+                                                        <span t-if="o.user_id.company_id.city" t-field="o.user_id.company_id.city"/>
+                                                        <span t-if="o.user_id.company_id.state_id" t-field="o.user_id.company_id.state_id.name"/>
+                                                        <span t-if="o.user_id.company_id.country_id" t-field="o.user_id.company_id.country_id"/>
+                                                        <span>(<span t-if="o.user_id.company_id.zip" t-field="o.user_id.company_id.zip"/>)</span>
+                                                      </td>
+                                                    </tr>
+                                                    <tr> 
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Name of Bank</td>
+                                                      <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.name"/>
+                                                      </td>
+                                                    </tr>
+                                                    <tr> 
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Address of Bank</td>
+                                                      <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.street"/>
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.street2"/>
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.city"/>
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.state"/>
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.country"/>
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.zip"/>
+                                                      </td>
+                                                    </tr>
+                                                    <tr> 
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Account No</td>
+                                                      <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].acc_number"/>
+                                                        <span t-if="o.user_id.company_id.bank_ids">(<span t-field="o.user_id.company_id.bank_ids[0].currency_id"/>)</span>
+                                                      </td>
+                                                    </tr>
+                                                    <tr> 
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px; width:80px">Swift Code</td>
+                                                      <td style="font-size:12px; padding-left: 5px;">:</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size:12px;">
+                                                        <span t-if="o.user_id.company_id.bank_ids" t-field="o.user_id.company_id.bank_ids[0].bank_id.bic"/>
+                                                      </td>
+                                                    </tr>
+                                                    
+                                                    
+                                                </table>
+                                              </div>
+                                              
+                                          </div>
+                                      </div>
+                                  </th>
+                              </tr>
+                          </table>
+                        <div style="min-height : 280px">
+                        <table style=" margin-top : 8px;font-size:15px!important;" class="table table-sm o_main_table">
+                              <thead style="font-size : 12px;">
+                                  <tr style="background-color: lightgrey;">
+                                      <th style="width: 120px" class="text-left"><span>DOC NO.</span></th>
+                                      <!--<th style="width: 120px" class="text-left"><span>TYPE</span></th>-->
+                                      <th style="width: 120px" class="text-left"><span>INVOICE DATE</span></th>
+                                      <th style="width: 120px" class="text-left"><span>DUE DATE</span></th>
+                                      <th style="width: 120px" class="text-left"><span>CURRENCY</span></th>
+                                      <th style="width: 120px" class="text-right"><span>DEBIT</span></th>
+                                      <th style="width: 120px" class="text-right"><span>CREDIT</span></th>
+                                      <th style="width: 80px" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>BALANCE</span></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <t t-set="amount" t-value="0.0"/>
+                                  <t t-set="paid_amount" t-value="0.0"/>
+                                  <t t-set="balance" t-value="0.0"/>
+                                  <t t-foreach="o.sh_customer_statement_ids" t-as="line">
+                                      <t t-set="amount" t-value="amount+line.sh_customer_amount"/>
+                                      <t t-set="paid_amount" t-value="paid_amount+line.sh_customer_paid_amount"/>
+                                      <t t-set="balance" t-value="balance+line.sh_customer_balance"/>
+                                      <t t-if="line.sh_customer_amount == line.sh_customer_balance and line.sh_customer_balance &gt; 0.0 or line.sh_customer_amount == line.sh_customer_balance and line.sh_customer_balance &lt; 0.0">
+                                          <tr>
+                                              <td>
+                                                  <span t-field="line.name"/>
+                                              </td>
+                                              <!--<td>-->
+                                              <!--    <span t-field="line.sh_account"/>-->
+                                              <!--</td>-->
+                                              <td>
+                                                  <span t-field="line.sh_customer_invoice_date"/>
+                                              </td>
+                                              <td>
+                                                  <span t-field="line.sh_customer_due_date"/>
+                                              </td>
+                                              <td>
+                                                  <span t-field="line.currency_id"/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_amount" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_paid_amount" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span  t-esc="line.icon_customer_balance" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                          </tr>
+                                      </t>
+                                      <t t-if="line.sh_customer_balance == 0.0">
+                                          <tr>
+                                              <td>
+                                                  <span t-field="line.name"/>
+                                              </td>
+                                              <!--<td>-->
+                                              <!--    <span t-field="line.sh_account"/>-->
+                                              <!--</td>-->
+                                              <td>
+                                                  <span t-field="line.sh_customer_invoice_date"/>
+                                              </td>
+                                              <td>
+                                                  <span t-field="line.sh_customer_due_date"/>
+                                              </td>
+                                              <td>
+                                                  <span t-field="line.currency_id"/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_amount" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_paid_amount" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_balance" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                          </tr>
+                                      </t>
+                                      <t t-if="line.sh_customer_amount != line.sh_customer_balance and line.sh_customer_balance &gt; 0.0 or line.sh_customer_amount != line.sh_customer_balance and line.sh_customer_balance &lt; 0.0">
+                                          <tr>
+                                              <td>
+                                                  <span t-field="line.name"/>
+                                              </td>
+                                              <!--<td>-->
+                                              <!--    <span t-field="line.sh_account"/>-->
+                                              <!--</td>-->
+                                              <td>
+                                                  <span t-field="line.sh_customer_invoice_date"/>
+                                              </td>
+                                              <td>
+                                                  <span t-field="line.sh_customer_due_date"/>
+                                              </td>
+                                              <td>
+                                                  <span t-field="line.currency_id"/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_amount" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_paid_amount" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="line.icon_customer_balance" t-options='{"widget": "float", "precision": 2}'/>
+                                              </td>
+                                          </tr>
+                                      </t>
+                                  </t>
+                                  <tr>
+                                      <td/>
+                                      <!--<td/>-->
+                                      <td/>
+                                      <td/>
+                                      <td/>
+                                      <td class="text-right">
+                                          <b>
+                                              <span t-esc="amount" t-options='{"widget": "float", "precision": 2}'/>
+                                          </b>
+                                      </td>
+                                      <td class="text-right">
+                                          <b>
+                                              <span t-esc="paid_amount" t-options='{"widget": "float", "precision": 2}'/>
+                                          </b>
+                                      </td>
+                                      <td class="text-right">
+                                          <b>
+                                              <span t-esc="balance" t-options='{"widget": "float", "precision": 2}'/>
+                                          </b>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                        </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        
+        <record id="report_statement_of_account" model="ir.actions.report">
+            <field name="name">Statement Of Account (Iconnexion)</field>
+            <field name="model">res.partner</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">iconnexion_custom.report_statement_of_account_template</field>
+            <field name="report_file">iconnexion_custom.report_statement_of_account_template</field>
+            <field name="binding_model_id" search="[('model', '=', 'res.partner')]"/>
+            <field name="binding_type">report</field>
+        </record>
+        
+        <record id="report_statement_of_account" model="ir.actions.report">
+            <field name="paperformat_id" ref="odes_custom.paperformat_a4_no_header"/>
+            <field name="groups_id" eval="[(4, ref('iconnexion_custom.group_iconnexion_company'))]"/>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,612 @@
+<!--##########################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+    <data>
+        <!-- Ecommerce Header -->
+        <template id="ecommerce_header_search" name="Ecommerce Header Search">
+            <div class="header-search">
+                <t t-if="category">
+                    <t t-if="len(category) == 1">
+                        <form t-att-action="keep('/shop'+ ('/category/'+slug(category)) if category else None, search=0)"
+                              method="get" t-att-class="o_website_sale_search">
+                            <t t-call="ecommerce_theme.ecommerce_product_search_count"/>
+                        </form>
+                    </t>
+                    <t t-else="len(category) > 1">
+                        <form action="/shop" method="get">
+                            <t t-call="ecommerce_theme.ecommerce_product_search_count"/>
+                        </form>
+                    </t>
+                </t>
+                <t t-else="">
+                    <form action="/shop" method="get">
+                        <t t-call="ecommerce_theme.ecommerce_product_search_count"/>
+                    </form>
+                </t>
+            </div>
+        </template>
+
+        <template id="ecommerce_frontend_layout" inherit_id="portal.frontend_layout" priority="17">
+            <xpath expr="//header" position="replace">
+                <header>
+                    <nav class="custom_header">
+                        <div class="container">
+                            <div class="header-top-t">
+                                <div class="navbar-header logo">
+                                    <a href="/" class="navbar-brand logo">
+                                        <span t-field="website.logo"
+                                              t-options="{'widget': 'image'}"
+                                              t-att-alt="'Logo of %s' % website.name"
+                                              t-att-title="website.name"/>
+                                    </a>
+                                </div>
+                                <t t-call="ecommerce_theme.ecommerce_header_search"/>
+                                <div class="header-right">
+                                    <ul id="ecommerce_cart">
+                                        <li class="dropdown">
+                                            <t t-if="website.user_id != user_id">
+                                                <a href="#" class="dropdown-toggle"
+                                                   data-toggle="dropdown">
+                                                    <i class="fa fa-user"/>
+                                                    <span t-esc="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>
+                                                </a>
+                                            </t>
+
+                                            <t t-else="">
+                                                <a t-attf-href="/web/login" class="dropdown-toggle"
+                                                   id="dropdownMenu1"
+                                                   data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="true">
+                                                    <i class="fa fa-user"/>
+                                                    Login/Register
+                                                </a>
+                                            </t>
+
+                                            <ul class="dropdown-menu js_usermenu" role="menu">
+                                                <li groups="base.group_public">
+                                                    <a t-attf-href="/web/login">
+                                                        Login
+                                                    </a>
+                                                </li>
+                                                <li groups="base.group_public" t-if="signup_enabled">
+                                                    <a t-attf-href="/web/signup">
+                                                        Register
+                                                    </a>
+                                                </li>
+                                                <t t-if="website.user_id != user_id">
+                                                    <li>
+                                                        <a id="o_logout" class="dropdown-item"
+                                                           t-attf-href="/web/session/logout?redirect=/"
+                                                           role="menuitem">
+                                                            Logout
+                                                        </a>
+                                                    </li>
+                                                </t>
+                                            </ul>
+
+                                        </li>
+
+                                        <t t-set="website_sale_order"
+                                           t-value="website.sale_get_order()"/>
+                                        <li id="my_cart">
+                                            <a href="/shop/cart" class="nav-link">
+                                                <i class="fa fa-shopping-cart"/>
+                                                My Cart
+                                                <sup t-attf-class="my_cart_quantity badge badge-primary"
+                                                     t-esc="website_sale_order and website_sale_order.cart_quantity or 0"/>
+                                            </a>
+                                        </li>
+                                        <t t-set="wishcount" t-value="len(request.env['product.wishlist'].current())"/>
+                                        <t t-set="show_wishes" t-value="True"/>
+                                        <li t-attf-class="o_wsale_my_wish #{not show_wishes and 'd-none'} #{_item_class}">
+                                            <a href="/shop/wishlist" t-attf-class="#{_link_class}">
+                                                <i class="fa fa-heart"></i>
+                                                <span>Wishlist</span>
+                                                <sup t-esc="wishcount" t-attf-class="my_wish_quantity o_animate_blink badge badge-primary"/>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <nav class="navbar navbar-expand-md">
+                                <button type="button" class="navbar-toggler" data-toggle="collapse"
+                                        data-target="#top_menu_collapse">
+                                    <span class="navbar-toggler-icon fa fa-bars"/>
+                                </button>
+                                <div class="collapse navbar-collapse" id="top_menu_collapse">
+                                    <ul class="nav navbar-nav" id="top_menu">
+                                        <t t-foreach="website.menu_id.child_id" t-as="submenu">
+                                            <t t-call="website.submenu">
+                                                <t t-set="item_class" t-value="'nav-item'"/>
+                                                <t t-set="link_class" t-value="'nav-link'"/>
+                                            </t>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </nav>
+                </header>
+            </xpath>
+        </template>
+
+        <template id="ecommerce_product_search_count">
+            <div class="input-group">
+                <div class="oe_search">
+                    <input type="text" name="search" class="search-query form-control oe_search_box"
+                           placeholder="Search product..." t-att-value="search"/>
+                </div>
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default oe_search_button">
+                        <i class="fa fa-search"/>
+                        <t t-if="request.env.ref('website_sale.search_count_box').sudo().active">
+                            <span t-if='search and search_count_box' class='oe_search_found'>
+                                <small>(
+                                    <t t-esc="search_count_box"/>
+                                    found)
+                                </small>
+                            </span>
+                        </t>
+                    </button>
+                </span>
+            </div>
+        </template>
+
+<!--         <template id="ecommerce_sosmed_layout" inherit_id="website.footer_custom" priority="17">
+            <xpath expr="//div[hasclass('s_share')]" position="replace">
+                <div class="s_share text-left" data-name="Social Media">
+                    <h5 class="s_share_title d-none">Follow us</h5>
+                    <p>
+                        <a class="btn btn-sm btn-link" href="/website/social/facebook" target="_blank"><i class="fa fa-2x fa-facebook-square"></i></a>
+                        <a class="btn btn-sm btn-link" href="/website/social/twitter" target="_blank"><i class="fa fa-2x fa-twitter"></i></a>
+                        <a class="btn btn-sm btn-link" href="/website/social/linkedin" target="_blank"><i class="fa fa-2x fa-linkedin"></i></a>
+                        <a class="btn btn-sm btn-link" href="/website/social/youtube" target="_blank"><i class="fa fa-2x fa-youtube-play"></i></a>
+                        <a class="btn btn-sm btn-link" href="/website/social/github" target="_blank"><i class="fa fa-2x fa-github"></i></a>
+                        <a class="btn btn-sm btn-link" href="/website/social/instagram" target="_blank"><i class="fa fa-2x fa-instagram"></i></a>
+                    </p>
+                </div>
+            </xpath>
+        </template> -->
+
+
+
+        <template id="layout_footer_copyright_inherit" inherit_id="web.frontend_layout">
+           <!--  <xpath expr="//div[hasclass('col-sm')]" position="attributes">
+                <attribute name="class">col-sm-4 text-center text-sm-left text-muted</attribute>
+            </xpath> -->
+        </template>
+
+        <template id="ecommerce_accessories_product" name="Ecommerce Accessories Product">
+            <div class="container s_wsale_accessory_product_viewed" t-if="product.accessory_product_ids">
+                <h3 class="text-center mb32">ACCESSORIES</h3>
+                <div class="s_wsale_accessory_product_viewed_content">
+                    <div class="owl-carousel owl-theme" id="owl-carousel-accessory-product">
+                        <t t-foreach="product.accessory_product_ids" t-as="accessory_product">
+                            <div class="o_carousel_product_card_wrap" style="float:unset;">
+                                <div class="o_carousel_product_card card h-100">
+                                    <input type="hidden" name="product-id" t-att-data-product-id="accessory_product.id"/>
+                                    <a class="o_carousel_product_img_link" t-att-href="accessory_product.website_url">
+                                        <img class="o_carousel_product_card_img_top card-img-top" t-attf-src="/web/image/product.product/#{accessory_product.id}/image_512"/>
+                                    </a>
+                                    <div class="o_carousel_product_card_body card-body border-top">
+                                        <a t-att-href="accessory_product.website_url" class="text-decoration-none">
+                                            <h6 class="card-title mb-0 text-truncate" t-out="accessory_product.display_name"/>
+                                        </a>
+                                        <t t-if="accessory_product.sudo().ecomerce_rating()" t-out="accessory_product.sudo().ecomerce_rating()"/>
+                                    </div>
+                                    <div class="o_carousel_product_card_footer card-footer d-flex align-items-center">
+                                        <div class="d-block font-weight-bold">
+                                            <span t-field="accessory_product.price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        </div>
+                                        <button type="button" role="button" class="btn btn-primary js_add_cart ml-auto" title="Add to Cart">
+                                            <i class="fa fa-fw fa-shopping-cart"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            
+            </div>
+        </template>
+
+
+        <!-- Product's detail page -->
+        <template id="ecommerce_product_details" inherit_id="website_sale.product" name="Product"
+                  priority="2">
+
+            <xpath expr="//div[@id='product_details']" position="inside">
+                <div class="brand_product_in_detail_product" t-if="product.product_brand_id">
+                    <span><b>Brand :    &#160;  &#160;</b></span>
+
+                    <a t-attf-href="/shop?brand=#{product.product_brand_id.id}" target="_blank" t-if="product.product_brand_id.image">
+                        <img class="brand_product_img img img-responsive" t-attf-src="/web/image/product.brand/#{product.product_brand_id.id}/image"/>
+                    </a>
+
+                    <a t-attf-href="/shop?brand=#{product.product_brand_id.id}" target="_blank" t-if="not product.product_brand_id.image"><span t-field="product.product_brand_id.name"/></a>
+                </div>
+                    
+            </xpath>
+
+            <!-- Odoo 16 shop header structure changed; skip removing search block -->
+
+            <xpath expr="//div[@id='product_details']/h1" position="before">
+                    <div class="social_icon">
+                        <span>Share</span>
+                        <a>
+                            <i class="fa fa-facebook fb_product_share"/>
+                        </a>
+                        <a>
+                            <i class="fa fa-twitter tw_product_share"/>
+                        </a>
+                        <a>
+                            <i class="fa fa-linkedin li_product_share"/>
+                        </a>
+                    </div>
+            </xpath>
+
+            <xpath expr="//div[@t-field='product.website_description']" position="after">
+                <t t-call="ecommerce_theme.ecommerce_accessories_product"/>
+
+                <t t-if="request.env.ref('website_sale.recommended_products').sudo().active">
+                    <t t-call="ecommerce_theme.ecommerce_suggested_alternatives"/>
+                </t>
+
+                <t t-if="request.website.viewref('website_sale.product_comment').active">
+                    <div id="product_rating" class="container tab-pane">
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="product"/>
+                            <t t-set="display_rating" t-value="True"/>
+                        </t>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Community-safe: website_sale.recommended_products is not available in this stack -->
+
+        
+        <!--Remove search bar-->
+        <template id="ecommerce_products" inherit_id="website_sale.products">
+            <xpath expr="//t[@t-call='website_sale.search']" position="replace">
+            </xpath>
+        </template>
+
+        <!-- Community-safe: categories sidebar structure differs in this stack -->
+
+        <template id="ecommerce_suggested_alternatives">
+            <div class="container" t-if="product.alternative_product_ids">
+                <t t-set="ids"
+                   t-value="str(product.product_variant_id.id) + ','+ ','.join([str(a) for a in product.alternative_product_ids.mapped('product_variant_id.id')])"/>
+                <div class="suggested_product_title">
+                    <h3>
+                        <span class='h3'><strong>RELATED PRODUCTS:</strong></span>
+                        <a class="btn btn-primary" t-attf-href="/shop/compare/?products=#{ids}">
+                            <i class="fa fa-exchange"/>
+                            Compare
+                        </a>
+                    </h3>
+                    <div class="mt16 owl-carousel owl-theme" id="owl-carousel">
+                        <t t-foreach="product.alternative_product_ids" t-as="alt_product">
+                            <div class="thumbnail item">
+                                <div class="mt16 text-center" style="height: 100%;">
+                                    <div t-field="alt_product.image_512"
+                                         t-options="{'widget': 'image', 'class': 'img-rounded shadow o_alternative_product' }"/>
+                                    <h5>
+                                        <a t-attf-href="/shop/product/#{ slug(alt_product) }"
+                                           style="display: block">
+                                            <span t-att-title="alt_product.name"
+                                                  t-field="alt_product.name"
+                                                  class="o_text_overflow" style="display: block;"/>
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="ecommerce_product_comment" inherit_id="website_sale.product_comment"
+                  priority="5">
+            <xpath expr="//div[hasclass('o_shop_discussion_rating')]" position="replace"/>
+        </template>
+
+
+        <template id="ecommerce_product_brand" inherit_id="website_sale.products" active="True"
+                  customize_show="True"
+                  name="Product Brands">
+            <xpath expr="//div[hasclass('row','o_wsale_products_main_row')]" position="attributes">
+                <attribute name="class">row mt-3 o_wsale_products_main_row</attribute>
+            </xpath>
+            <xpath expr="//div[@id='products_grid']" position="replace">
+                <div id="products_grid"
+                     t-attf-class="col #{' o_wsale_layout_list' if layout_mode == 'list' else ''}">
+                    <div class="productlist-top">
+                        <div class="productlist-top-right">
+                            <ul>
+                                <li id="product_count">
+                                    <small>Showing
+                                        <t t-esc="search_count"/>
+                                        Product(s)
+                                    </small>
+                                </li>
+                                <li>
+                                    <div class="btn-group btn-group-toggle mt-2 ml-md-2 d-sm-inline-flex o_wsale_apply_layout"
+                                         data-toggle="buttons">
+                                        <label t-attf-class="btn btn-secondary #{'active' if layout_mode != 'list' else None} fa fa-th-large o_wsale_apply_grid"
+                                               title="Grid">
+                                            <input type="radio" name="wsale_products_layout"
+                                                   t-att-checked="'checked' if layout_mode != 'list' else None"/>
+                                        </label>
+                                        <label t-attf-class="btn btn-secondary #{'active' if layout_mode == 'list' else None} fa fa-th-list o_wsale_apply_list"
+                                               title="List">
+                                            <input type="radio" name="wsale_products_layout"
+                                                   t-att-checked="'checked' if layout_mode == 'list' else None"/>
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <t t-if="category">
+                        <t t-set='editor_msg'>Drag building blocks here to customize the header for
+                            "<t t-esc='category.name'/>" category.
+                        </t>
+                        <div class="mb16" id="category_header"
+                             t-att-data-editor-message="editor_msg"
+                             t-field="category.website_description"/>
+                    </t>
+                    <div t-if="bins" class="o_wsale_products_grid_table_wrapper">
+                        <table class="table table-borderless m-0" t-att-data-ppg="ppg"
+                               t-att-data-ppr="ppr">
+                            <colgroup t-ignore="true">
+                                <!-- Force the number of columns (useful when only one row of (x < ppr) products) -->
+                                <col t-foreach="ppr" t-as="p"/>
+                            </colgroup>
+                            <tbody>
+                                <tr t-foreach="bins" t-as="tr_product">
+                                    <t t-foreach="tr_product" t-as="td_product">
+                                        <t t-if="td_product">
+                                            <t t-set="product" t-value="td_product['product']"/>
+                                            <td t-att-colspan="td_product['x'] != 1 and td_product['x']"
+                                                t-att-rowspan="td_product['y'] != 1 and td_product['y']"
+                                                t-attf-class="oe_product">
+                                                <div t-attf-class="o_wsale_product_grid_wrapper o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}">
+                                                    <t t-call="website_sale.products_item">
+                                                        <t t-set="product_image_big"
+                                                           t-value="td_product['x'] + td_product['y'] &gt; 2"/>
+                                                    </t>
+                                                </div>
+                                            </td>
+                                        </t>
+                                        <td t-else=""/>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <t t-else="">
+                        <div class="text-center text-muted">
+                            <t t-if="not search">
+                                <h3 class="mt8">No product defined</h3>
+                                <p t-if="category">No product defined in category "<strong
+                                        t-esc="category.display_name"/>".
+                                </p>
+                            </t>
+                            <t t-else="">
+                                <h3 class="mt8">No results</h3>
+                                <p>No results for "<strong t-esc='search'/>"
+                                    <t t-if="category">in category "<strong
+                                            t-esc="category.display_name"/>"
+                                    </t>
+                                    .
+                                </p>
+                            </t>
+                            <p t-ignore="true" groups="sales_team.group_sale_manager">Click <i>
+                                'New'
+                            </i> in the top-right corner to create your first product.
+                            </p>
+                        </div>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="add_grid_or_list_option_inherit"
+                  inherit_id="website_sale.add_grid_or_list_option">
+            <xpath expr="//div[hasclass('o_wsale_apply_layout')]" position="replace">
+                <div></div>
+            </xpath>
+        </template>
+
+        <!--Add brand parameter in '/shop' url to filter products by brands-->
+        <template id="ecommerce_product_brand_attributes"
+                  inherit_id="website_sale.products_attributes">
+            <xpath expr="//form[hasclass('js_attributes')]" position="inside">
+                <t t-if="request_brands">
+                    <t t-foreach="request_brands" t-as="brand">
+                        <input type="hidden" name="brand" t-att-value="brand.id"/>
+                    </t>
+                </t>
+            </xpath>
+            <xpath expr="//form[hasclass('js_attributes')]" position="after">
+                <form class="js_product_brands" method="get">
+                    <t t-if="attrib_values">
+                        <t t-foreach="attrib_values" t-as="a">
+                            <input type="hidden" name="attrib"
+                                   t-att-value="'%s-%s' % (a[0], a[1])"/>
+                        </t>
+                    </t>
+                    <t t-if="search">
+                        <input type="hidden" name="search" t-att-value="search"/>
+                    </t>
+                    <t t-if="product_brands">
+                        <ul class="nav nav-pills flex-column mt16">
+                            <li>
+                                <div>
+                                    <strong>Featured Brands</strong>
+                                </div>
+                            </li>
+                            <t t-foreach="product_brands" t-as="brand">
+                                <li class="nav-item">
+                                    <label style="margin: 0 20px;" class="nav-link">
+                                        <input type="checkbox" name="brand"
+                                               t-att-value="brand.id"
+                                               t-att-title="brand.name"
+                                               t-att-checked="'checked' if brand.id in product_brand_set else None"/>
+                                        <span style="font-weight: normal"
+                                              t-field="brand.name"/>
+                                    </label>
+                                </li>
+                            </t>
+                        </ul>
+                    </t>
+                </form>
+            </xpath>
+        </template>
+
+        <template id="ecommerce_products_item" inherit_id="website_sale.products_item">
+            <xpath expr="//div[hasclass('oe_product_image')]" position="inside">
+                <div class="item-img-ho">
+                    <a t-att-href="keep('/shop/product/%s' % slug(product), page=(pager['page']['num'] if pager['page']['num']>1 else None))"
+                       title="View">
+                        <i class="fa fa-eye"/>
+                    </a>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- Contact us page -->
+        <template id="ecommerce_contactus_form" name="Contact Form" inherit_id="website.contactus">
+            <xpath expr="//div[hasclass('container')]" position="attributes">
+                <attribute name="class">container contact_us</attribute>
+            </xpath>
+            <xpath expr="//h1" position="replace"/>
+        </template>
+
+        <!--Shopping cart flow -->
+        <template id="ecommerce_wizard_checkout" inherit_id="website_sale.wizard_checkout">
+            <!--progress-wizard-step-->
+            <xpath expr="//div[@id='wizard-step10']" position="attributes">
+                <attribute name="t-att-class">(step==10 and 'text-primary') or 'text-muted' + (' fill-line' if step&gt;10 and step&lt;=40 else '')</attribute>
+            </xpath>
+            <xpath expr="//div[@id='wizard-step10']/span" position="before">
+                <i class="fa fa-shopping-cart"/>
+            </xpath>
+            <xpath expr="//div[@id='wizard-step20']" position="attributes">
+                <attribute name="t-att-class">(step==20 and 'text-primary') or 'text-muted' + (' fill-line' if step&gt;20 and step&lt;=40 else '')</attribute>
+            </xpath>
+            <xpath expr="//div[@id='wizard-step20']/span" position="before">
+                <i class="fa fa-truck"/>
+            </xpath>
+
+            <xpath expr="//div[@id='wizard-step40']" position="attributes">
+                <attribute name="t-att-class">(step==40 and 'text-primary') or 'text-muted' + (' fill-line' if step==40 else '')</attribute>
+            </xpath>
+
+            <xpath expr="//div[@id='wizard-step40']/span" position="before">
+                <i class="fa fa-check-circle"/>
+            </xpath>
+
+        </template>
+
+        <template id="ecommerce_extra_info_option" inherit_id="website_sale.extra_info_option">
+            <xpath expr="//div[@id='wizard-step30']" position="attributes">
+                <attribute name="t-att-class">(step==30 and 'text-primary') or 'text-muted' + (' fill-line' if step>30 and step&lt;=40 else '')</attribute>
+            </xpath>
+
+            <xpath expr="//div[@id='wizard-step30']/span" position="before">
+                <i class="fa fa-info-circle"/>
+            </xpath>
+        </template>
+
+        <template id="ecommerce_checkout" inherit_id="website_sale.checkout">
+            <xpath expr="//div[hasclass('col-md-12','col-lg-12','one_kanban')]" position="replace"/>
+            <xpath expr="//h3[hasclass('o_page_header','mt8')]" position="replace"/>
+            <xpath expr="//h3[hasclass('o_page_header','mt16','mb4')]" position="replace"/>
+            <xpath expr="//div[hasclass('col-lg-6','one_kanban')]/t[@t-call='website_sale.address_kanban']"
+                   position="before">
+                <h2 class="page-header mt8">Billing Address</h2>
+            </xpath>
+            <xpath expr="//div[hasclass('row')]/div[hasclass('col-lg-6','one_kanban')]"
+                   position="after">
+                <div class="col-sm-12 col-lg-6 one_kanban">
+                    <h2 class="page-header mt8">Shipping Address</h2>
+                    <t t-foreach="shippings" t-as="ship">
+                        <div class="one_kanban">
+                            <t t-call="website_sale.address_kanban">
+                                <t t-set="actual_partner"
+                                   t-value="order.partner_id"/>
+                                <t t-set='contact' t-value="ship"/>
+                                <t t-set='selected'
+                                   t-value="order.partner_shipping_id==ship"/>
+                                <t t-set='readonly'
+                                   t-value="bool(len(shippings)==1)"/>
+                                <t t-set='edit_billing'
+                                   t-value="bool(ship==order.partner_id)"/>
+                            </t>
+                        </div>
+                    </t>
+                    <form action="/shop/address" method="post" class=''>
+                        <input type="hidden" name="csrf_token"
+                               t-att-value="request.csrf_token()"/>
+                        <a class='a-submit btn btn-default mb16 btn-block'>
+                            <i class="fa fa-plus-square"
+                               aria-hidden="true"/>
+                            Add an address
+                        </a>
+                    </form>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('row','all_shipping')]" position="replace">
+            </xpath>
+        </template>
+
+        <template id="ecommerce_cart_lines" inherit_id="website_sale.cart_lines">
+            <xpath expr="//thead/tr/th[hasclass('td-img')]" position="attributes">
+                <attribute name="class">td-img text-center</attribute>
+            </xpath>
+            <xpath expr="//thead/tr/th[2]" position="replace">
+                <th class="text-center description">Description</th>
+            </xpath>
+            <xpath expr="//thead/tr/th[hasclass('text-center','td-price')]" position="after">
+                <th class="text-center td-line-delete" style="width: 50px;"/>
+            </xpath>
+            <xpath expr="//a[hasclass('js_delete_product')]" position="replace"/>
+            <xpath expr="//tbody/t/tr/td[hasclass('text-center','td-price')]" position="after">
+                <td class="text-center td-line-delete" name="delete line">
+                    <a href='#' class='js_delete_product hidden-xs no-decoration'>
+                        <small>
+                            <i class='fa fa-times'/>
+                        </small>
+                    </a>
+                </td>
+            </xpath>
+        </template>
+
+        <template id="ecommerce_shorcut_on_login" inherit_id="auth_signup.login" name="Ecommerce Shorcut On Login">
+            <xpath expr="//div[hasclass('justify-content-between')]" position="replace">
+                <div class="justify-content-between mt-2 d-flex small">
+                    <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}">Don't have an account?</a>
+                    <a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
+                </div>
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>

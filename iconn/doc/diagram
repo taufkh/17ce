@@ -1,0 +1,56 @@
+@startuml
+|Requestor (CS/Sales)|
+start
+:Raise purchase request;
+
+|Purchasing User|
+:Create RFQ/PO;
+
+|Purchasing Manager|
+:Approve PO;
+
+|Warehouse Incoming|
+:Receive goods;
+:Validate receipt;
+
+|Finance User|
+:Register vendor bill;
+
+|Finance Manager|
+:Approve financial posting;
+stop
+@enduml
+
+@startuml
+|Sales User|
+start
+:Create lead/opportunity;
+:Create quotation/SO;
+
+|Sales Manager|
+:Approve commercial terms;
+
+|Shipping/Warehouse|
+:Prepare delivery;
+:Validate shipment;
+
+|Finance|
+:Issue/validate financial documents;
+stop
+@enduml
+
+@startuml
+|Customer Service / Sales|
+start
+:Create draft company/contact;
+
+|Customer Service Manager|
+:Review and approve company;
+
+|Finance Manager|
+:Update tax data on approved company;
+
+|Sales/Purchasing/Finance|
+:Use approved master data in transactions;
+stop
+@enduml

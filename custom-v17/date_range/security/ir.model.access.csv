@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_date_range_type_user","date.range.type user","model_date_range_type","base.group_user",1,1,1,1
+"access_date_range_user","date.range user","model_date_range","base.group_user",1,1,1,1
+"access_date_range_generator_user","date.range.generator user","model_date_range_generator","base.group_user",1,1,1,1
+

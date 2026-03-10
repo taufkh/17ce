@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_odes_request_purchase_order_wizard","odes.request.purchase.order.wizard","model_odes_request_purchase_order_wizard",,1,1,1,1
+"access_odes_request_purchase_order_wizard_line","odes.request.purchase.order.wizard.line","model_odes_request_purchase_order_wizard_line",,1,1,1,1
+"access_res_partner","res.partner","model_res_partner",,1,1,1,1
+"access_odes_change_partner_name_wizard","odes.change.partner.name.wizard","model_odes_change_partner_name_wizard",,1,1,1,1
+"access_hr_employee_update","hr.employee.update","model_hr_employee_update",,1,1,1,1

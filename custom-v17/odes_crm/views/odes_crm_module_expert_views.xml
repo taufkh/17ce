@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_odes_crm_module_expert_tree" model="ir.ui.view">
+        <field name="name">odes.crm.module.expert.tree</field>
+        <field name="model">odes.crm.module.expert</field>
+        <field name="arch" type="xml">
+            <tree string="Module Subject Expert">
+                <field name="name" invisible="1"/>
+                <field name="module_id"/>
+                <field name="expert_user_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_module_expert_form" model="ir.ui.view">
+        <field name="name">odes.crm.module.expert.form</field>
+        <field name="model">odes.crm.module.expert</field>
+        <field name="arch" type="xml">
+            <form string="Module Subject Expert">
+                <sheet>
+                    <field name="name" invisible="1"/>
+
+                    <group>
+                        <field name="module_id" required="1"/>
+                        <field name="expert_user_id" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

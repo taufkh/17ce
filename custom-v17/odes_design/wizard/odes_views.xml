@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_odes_enterprise_text_language" model="ir.ui.view">
+            <field name="name">ODES Rebrand Text</field>
+            <field name="model">odes.enterprise.text</field>
+            <field name="arch" type="xml">
+                <form string="ODES Enterprise Text">
+                    <group>
+                        <group>
+                            <field name ="name"/>
+                                <field name ="website_url"/>
+                                
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="enterprise_text" string="Replace Text" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_odes_enterprise_text_language" model="ir.actions.act_window">
+            <field name="name">ODES Enterprise Rebrand Text</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">odes.enterprise.text</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+        action="action_view_odes_enterprise_text_language"
+        id="menu_view_odes_enterprise_text_language"
+        parent="odes_design.rebranding_config_parent_action"
+        sequence="99"/>
+
+    </data>
+</odoo>

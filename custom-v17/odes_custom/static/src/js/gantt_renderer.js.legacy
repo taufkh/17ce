@@ -1,0 +1,38 @@
+odoo.define('odes_custom.GanttRenderer', function (require) {
+"use strict";
+
+var GanttRenderer = require('web_gantt.GanttRenderer');
+
+GanttRenderer.include({
+    _getSlotsDates: function () {
+        var token = this.SCALES[this.state.scale].interval;
+        var stopDate = this.state.stopDate;
+        var day = this.state.startDate;
+        var dates = [];
+
+        if(this.state.scale == 'year') {
+            var dateWeek = null;
+            while (day <= stopDate) {
+                var weeks = [];
+                dateWeek = day.clone();
+                while (dateWeek.isSame(day, 'month')){
+                    dateWeek.week_number = dateWeek.isoWeek();
+                    weeks.push(dateWeek);
+                    dateWeek = dateWeek.clone().add(7, 'days');
+                }
+                day.weeks = weeks;
+                dates.push(day);
+                day = day.clone().add(1, token);
+            }
+        } else {
+            while (day <= stopDate) {
+                dates.push(day);
+                day = day.clone().add(1, token);
+            }
+        }
+        
+        return dates;
+    },
+});
+
+});

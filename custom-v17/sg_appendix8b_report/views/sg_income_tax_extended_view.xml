@@ -1,0 +1,23 @@
+<odoo>
+
+    <record id="inherit_view_hr_contract_income_tax_form" model="ir.ui.view">
+        <field name="name">inherit.view.hr.contract.income.tax.form</field>
+        <field name="model">hr.contract.income.tax</field>
+        <field name="inherit_id" ref="sg_income_tax_report.view_hr_contract_income_tax_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/notebook/page[2]" position="after">
+                <page string="APPENDIX 8B" >
+                    <separator string="APPENDIX 8B" colspan="4"/>
+                    <field name="app_8b_income_tax">
+                     <tree>
+                         <field name="section"/>
+                         <field name="tax_plan"/>
+                         <field name="tax_plan_grant_date"/>
+                     </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

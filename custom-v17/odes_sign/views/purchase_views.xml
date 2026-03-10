@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_odes_sign_purchase_inherit_form" model="ir.ui.view">
+            <field name="name">odes.sign.purchase.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+
+                <!-- legacy replacements intentionally kept as comments -->
+
+                <xpath expr="//tree/field[@name='product_id']" position="attributes">
+                      <attribute name="context">{'from_purchase_order' : True}</attribute>
+                  </xpath>
+
+                <xpath expr="//button[@id='draft_confirm']" position="replace">
+                        <button name="button_confirm" type="object" string="Confirm Order" id="draft_confirm" groups="odes_sign.group_odes_purchase_confirm" invisible="state != 'draft'" />
+                    </xpath>
+
+                    <xpath expr="//field[@name='origin']" position="after">
+                        <field name="is_submit" readonly="1"/>
+                    </xpath>
+
+                <xpath expr="//button[@name='action_rfq_send']" position="after">
+                        <button name="action_submit" type="object" string="Action Submit Order" id="submit_confirm" invisible="state != 'draft'" />
+                </xpath>
+
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button o_stock_move_tip_opp" type="object"
+                        name="action_view_sale"
+                        icon="fa-usd"
+                        invisible="move_count == 0">
+                        <field string="Sale Order" name="move_count" widget="statinfo"/>
+                    </button>
+                </div>
+  
+            </field>
+        </record>
+
+        <record id="view_odes_sign_purchase_kpis_inherit_tree" model="ir.ui.view">
+            <field name="name">odes.sign.purchase.kpis.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="is_submit" optional="hide" />
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_odes_sign_purchase_inherit_tree" model="ir.ui.view">
+            <field name="name">odes.sign.purchase.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="is_submit" optional="hide" />
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+</odoo>

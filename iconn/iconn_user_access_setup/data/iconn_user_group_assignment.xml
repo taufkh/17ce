@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="user_adarsh" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_executive')])]"/>
+    </record>
+
+    <record id="user_alicia_liew" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_operations'), ref('iconn_user_access_setup.group_iconn_warehouse_manager')])]"/>
+    </record>
+
+    <record id="user_alma" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_executive')])]"/>
+    </record>
+
+    <record id="user_barry" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_warehouse_incoming_only')])]"/>
+    </record>
+
+    <record id="user_david" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_executive')])]"/>
+    </record>
+
+    <record id="user_dm" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_marketing_user')])]"/>
+    </record>
+
+    <record id="user_federick" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_warehouse_manager')])]"/>
+    </record>
+
+    <record id="user_hemanth" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_executive'), ref('iconn_user_access_setup.group_iconn_project_user')])]"/>
+    </record>
+
+    <record id="user_iman" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_marketing_user')])]"/>
+    </record>
+
+    <record id="user_jenny" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_finance_processing'), ref('iconn_user_access_setup.group_iconn_hr_support')])]"/>
+    </record>
+
+    <record id="user_keith_goh" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+    <record id="user_kewei" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_finance_officer')])]"/>
+    </record>
+
+    <record id="user_louise" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_operations'), ref('iconn_user_access_setup.group_iconn_purchasing')])]"/>
+    </record>
+
+    <record id="user_lyvian" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_purchasing'), ref('iconn_user_access_setup.group_iconn_sales_executive')])]"/>
+    </record>
+
+    <record id="user_margaret" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_customer_service')])]"/>
+    </record>
+
+    <record id="user_naidu" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_executive')])]"/>
+    </record>
+
+    <record id="user_nick" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_manager'), ref('iconn_user_access_setup.group_iconn_project_manager')])]"/>
+    </record>
+
+    <record id="user_rajesh" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_manager')])]"/>
+    </record>
+
+    <record id="user_rashim" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_warehouse_user')])]"/>
+    </record>
+
+    <record id="user_ray" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_executive')])]"/>
+    </record>
+
+    <record id="user_shermaine" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_finance_processing'), ref('iconn_user_access_setup.group_iconn_hr_support')])]"/>
+    </record>
+
+    <record id="user_sk" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_finance_officer')])]"/>
+    </record>
+
+    <record id="user_veena" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_operations')])]"/>
+    </record>
+
+    <record id="user_yeoh" model="res.users">
+        <field name="groups_id" eval="[(6, 0, [ref('iconn_user_access_setup.group_iconn_sales_executive')])]"/>
+    </record>
+
+</odoo>

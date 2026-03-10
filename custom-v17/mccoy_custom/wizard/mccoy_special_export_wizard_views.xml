@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp> 
+    <data>
+        
+        <record id="mccoy_special_export_form_view" model="ir.ui.view">
+            <field name="name">mccoy_special_export_form_view</field>
+            <field name="model">mccoy.special.export.wizard</field>
+            <field name="type">form</field>
+    		<field name="arch" type="xml">
+                <form>
+                    <footer>
+                        <button name="export" type="object" class="oe_highlight" string="Export"/> 
+                        <button string="Cancel" special="cancel" type="button"/>
+                    </footer>
+                </form>
+    		</field>
+        </record>
+        
+
+
+        <record id="mccoy_special_pt_export_act" model="ir.actions.act_window">
+            <field name="name">Special Export</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mccoy.special.export.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="product.model_product_template" />
+        </record>
+
+        <record id="mccoy_special_pp_export_act" model="ir.actions.act_window">
+            <field name="name">Special Export</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mccoy.special.export.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="product.model_product_product" />
+        </record>
+
+
+    </data>
+</openerp>
