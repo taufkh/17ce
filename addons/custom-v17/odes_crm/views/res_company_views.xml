@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_quotation_company_configuration_form_inherit" model="ir.ui.view">
+        <field name="name">quotation.company.configuration.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="odes_quotation.view_quotation_company_configuration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="CRM">
+                    <group>
+                        <field name="pms_simulation"/>
+                        <div class="alert alert-warning" role="alert" invisible="not pms_simulation">
+                            PMS Simulation is enabled. PMS cron jobs run in simulation mode and do not call the external PMS endpoint.
+                        </div>
+                        <field name="nda_content" widget="html"/>
+                        <field name="doc_config_ids">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name" invisible="1"/>
+                                <field name="title_id" string="Name" required="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
