@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--#########################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+
+
+
+    <record model="ir.ui.view" id="mccoy_custom_blog_form_view">
+        <field name="name">mccoy_custom_blog_form_view</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_form"/>
+        <field name="arch" type="xml">
+            <field name="website_id" position="before">
+                <field name="brand_id"/>
+            </field>
+            <xpath expr="//page[@name='seo']" position="after">
+                <page name="product" string="Products">
+                    <group name="related_blog_product" string="Related Blog Products">
+                        <field name="related_blog_product_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="case_study_blog_product" string="Case Study Blog Products">
+                        <field name="case_study_blog_product_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

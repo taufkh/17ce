@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_crm_lead_form_customer_contact" model="ir.ui.view">
+        <field name="name">crm.lead.form.customer.contact</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_company', '=', True)]</attribute>
+                <attribute name="context">{'default_is_company': True}</attribute>
+                <attribute name="string">Customer</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']//label[@for='email_from']" position="before">
+                <label for="contact_id"/>
+                <div class="o_row o_row_readonly">
+                    <field name="contact_id" string="Contact"
+                        domain="[('parent_id', '=', partner_id), ('is_company', '=', False)]"
+                        context="{'default_parent_id': partner_id, 'default_is_company': False}"
+                        invisible="not partner_id"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_quick_create_customer" model="ir.ui.view">
+        <field name="name">crm.lead.quick.create.customer</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_company', '=', True)]</attribute>
+                <attribute name="context">{'default_is_company': True}</attribute>
+                <attribute name="string">Customer</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="contact_id" string="Contact"
+                    domain="[('parent_id', '=', partner_id), ('is_company', '=', False)]"
+                    context="{'default_parent_id': partner_id, 'default_is_company': False}"
+                    invisible="not partner_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

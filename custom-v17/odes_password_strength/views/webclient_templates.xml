@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="odes_password_strength assets backend" inherit_id="web.assets_backend">
+        <xpath expr="//link[last()]" position="after">
+            <script type="text/javascript" src="/odes_password_strength/static/src/js/CheckPassword.js"></script>
+            <script type="text/javascript" src="/odes_password_strength/static/src/js/PasswordStrength.js"></script>
+            <link rel="stylesheet" type="text/scss" href="/odes_password_strength/static/src/css/cssfile.css"/>
+        </xpath>
+                
+    </template>
+    
+    <template id="assets_frontend_inherit_odes_password_strength" inherit_id="web.assets_frontend" name="odes_password_strength frontend assets">
+        <xpath expr="link[last()]" position="after">
+            
+           <script type="text/javascript" src="/odes_password_strength/static/src/js/CheckPassword.js"></script>
+            <script type="text/javascript" src="/odes_password_strength/static/src/js/PasswordStrength.js"></script>
+            <link rel="stylesheet" type="text/scss" href="/odes_password_strength/static/src/css/cssfile.css"/>
+        </xpath>
+    </template>
+    
+    
+    
+
+    
+</odoo>

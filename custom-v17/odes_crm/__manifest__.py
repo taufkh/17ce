@@ -1,0 +1,60 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'ODES CRM',
+'version': '17.0.1.0.0',    'license': 'LGPL-3',
+    'category': 'Custom',
+    'summary': 'ODES CRM',
+    'author': 'SGEEDE',
+    'description': '''
+        Customization for ODES CRM.
+    ''',
+    'depends': ['web','crm', 'sale', 'project', 'odes_custom', 'odes_quotation','website'],
+    'data': [
+        'data/odes_crm_data.xml',
+        'data/ir_cron_data.xml',
+        'data/ir_sequence_data.xml',
+        'data/mail_data.xml',
+        'security/odes_security.xml',
+        'security/ir.model.access.csv',
+        'wizard/odes_crm_transfer_feedback_views.xml',
+        'wizard/odes_crm_create_customer_user_views.xml',
+        'wizard/odes_calendar_event_create_timesheet.xml',
+        'wizard/mandays_monthly_report_wizard_views.xml',
+        'wizard/odes_crm_deadline_change_request_views.xml',
+        'wizard/odes_crm_reject_dcr_wizard_views.xml',
+        'wizard/amalgamation_report_wizard_views.xml',
+        'report/odes_crm_requirement_task_report.xml',
+        'views/res_company_views.xml',
+        'views/calendar_views.xml',
+        'views/crm_lead_views.xml',
+        'views/odes_crm_menu_views.xml',
+        'views/odes_crm_nda_views.xml',
+        'views/odes_crm_doc_title_views.xml',
+        'views/odes_crm_doc_config_views.xml',
+        'views/odes_crm_doc_views.xml',
+        #'views/sale_views.xml',
+        'views/project_views.xml',
+        'views/odes_crm_requirement_views.xml',
+        'views/odes_crm_module_expert_views.xml',
+        'views/odes_crm_business_function_views.xml',
+        # v16: odes_crm_gantt_template.xml removed — assets declared in 'assets' dict below
+        'views/attachment_views.xml',
+        'views/requirement_customer_attributes_views.xml',
+        'views/odes_crm_deadline_change_approvement_views.xml',
+        # 'views/website_templates.xml',
+        'views/landing_page_template.xml',
+        'views/landing_page_requirement_views.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'odes_crm/static/src/scss/web_gantt.scss',
+            'odes_crm/static/src/css/ribbon.css',
+            'odes_crm/static/src/xml/view_group.xml',
+            # v16: gantt JS files are .legacy (not loaded); web_gantt is Enterprise-only
+        ],
+        'web.assets_frontend': [
+            'odes_crm/static/src/css/landing_page.css',
+        ],
+    },
+    'demo': [],
+}

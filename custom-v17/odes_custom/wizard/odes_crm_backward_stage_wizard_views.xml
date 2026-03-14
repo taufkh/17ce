@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="odes_crm_backward_stage_wizard2" model="ir.ui.view">
+        <field name="name">odes.crm.backward.stage.wizard</field>
+        <field name="model">odes.crm.backward.stage.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Backward Stage">
+                <group>
+                    <group invisible="1">
+                        <field name="lead_id"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group class="oe_title">
+                        <field name="stage_id" domain="([('sequence', '&lt;', stage_sequence), ('company_ids', '=', company_id)])" options='{"no_open": True, "no_create": True}' required="1"/>
+                        <field name="stage_sequence" invisible="1"/>
+                        <field name="lead_team_id" invisible="1"/>
+                        <field name="reason" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_change_stage" type="object" class="oe_highlight" string="Change"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_backward_stage_wizard" model="ir.actions.server">
+        <field name="name">Backward Stages</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_odes_crm_backward_stage()</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_wizard_mandays_monthly_report" model="ir.actions.act_window">
+        <field name="name">Mandays Report</field>
+        <field name="res_model">mandays.monthly.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="mandays_monthly_report_wizard_form" model="ir.ui.view">
+        <field name="name">mandays.monthly.report.wizard.form</field>
+        <field name="model">mandays.monthly.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Mandays Monthly Report">
+
+                <group invisible="file">
+                    <group>
+                        <field name="start_date" string="Start Date" required="1"/>
+                        <field name="end_date" string="End Date" required="1"/>
+                        <field name="is_done" string="Show Only Completed Tasks"/>
+                        <field name="project_ids" string="Projects" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="file" invisible="1"/>
+                    <separator string="Report Generated" colspan="4" invisible="file == False"/>
+                    <p invisible="file == False">
+                        Here is the Excel Report: 
+                        <field name="document" filename="file" invisible="file == False" readonly="1"/>
+                    </p>
+                </group>
+                <footer>
+                    <button name="mandays_monthly_report_xlsx" string="Mandays Monthly Report XLSX" invisible="file" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

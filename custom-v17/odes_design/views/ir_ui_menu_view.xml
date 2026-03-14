@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <record id="view_odes_edit_menu_access_inherited" model="ir.ui.view">
+            <field name="name">odes.ir.ui.menu.inherited</field>
+            <field name="model">ir.ui.menu</field>
+            <field name="inherit_id" ref="base.edit_menu_access"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="category_menu_id"/>
+                </xpath>
+            </field>
+        </record>
+        
+        
+        <record id="odes_ir_ui_menu_category_view_tree" model="ir.ui.view">
+            <field name="name">odes.ir.ui.menu.category.view.tree</field>
+            <field name="model">odes.ir.ui.menu.category</field>
+            <field name="type">tree</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml"> 
+                <tree >
+                    <field name="name"/> 
+                </tree>
+            </field>
+        </record>
+        
+        <record id="odes_ir_ui_menu_category_view_form" model="ir.ui.view">
+            <field name="name">odes.ir.ui.menu.category.view.form</field>
+            <field name="model">odes.ir.ui.menu.category</field>
+            <field name="arch" type="xml"> 
+                <form string="Menu Category">
+                    <sheet>
+                        
+                            <group>
+                                <field name="name"/> 
+                            </group>
+                        <group>
+                            <field name="menu_line_ids"/> 
+                            
+                        </group>
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+        
+        
+        
+        
+        <record id="action_odes_ir_ui_menu_category_view" model="ir.actions.act_window">
+            <field name="name">Menu Category</field>
+            <field name="res_model">odes.ir.ui.menu.category</field>
+            <field name="view_mode">tree,form</field>  
+        </record>
+        
+        <menuitem id="menu_odes_ir_ui_menu_category_view"
+            name="Menu Category"
+            action="action_odes_ir_ui_menu_category_view"
+            parent="odes_design.rebranding_category_parent_action"
+            sequence="1"/>
+
+</odoo>
+

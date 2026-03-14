@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_sign_res_partner_form_view_inherit" model="ir.ui.view">
+        <field name="name">odes.sign.res.partner.form.view.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/*" position="before">
+                <header>
+                    <button string="Change Name" class="btn btn-primary" name="%(odes_change_partner_name_wizard_action)d" type="action" context="{'default_old_partner_id': id}"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_followup.action_view_list_customer_statements" model="ir.actions.act_window">
+        <field name="domain">['|', ('parent_id', '=', False), ('is_company', '=', True), '|', ('company_id', 'in', allowed_company_ids), ('company_id', '=', False)]</field>
+    </record>
+
+    <record id="view_res_partner_inherit_form_inherit" model="ir.ui.view">
+        <field name="name">view.res.partner.inherit.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_sg_hr_payroll.view_res_partner_inherit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='house_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='level_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='unit_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="customer_code"/>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

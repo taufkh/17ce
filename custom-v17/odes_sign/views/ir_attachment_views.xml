@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+    <record id="view_odes_sign_ir_attachment_inherit_form" model="ir.ui.view">
+            <field name="name">odes.sign.ir.attachment.form.inherit</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="odes_custom.odes_ir_attachment_view_form"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='po_type_id']" position="after">
+                    <field invisible="context.get('read_only')" name="sale_id" domain="[('opportunity_id', '=', crm_lead_id)]"/>
+                            
+                </xpath>
+  
+            </field>
+        </record>
+
+
+</odoo>

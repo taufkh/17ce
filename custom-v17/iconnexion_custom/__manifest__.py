@@ -1,0 +1,99 @@
+# -*- coding: utf-8 -*-
+{
+    "name": "Iconnexion Custom",
+    "version": "17.0.1.0.0",
+    "category": "Customize",
+    "summary": "Iconnexion",
+    "description": """
+Iconnexion modified features.
+    """,
+    "author": "SGEEDE",
+    "support": "support@sgeede.com",
+    "maintainer": "SGEEDE",
+    "website": "https://www.sgeede.com",
+    "depends": ["base","crm","sale","delivery_compat","odes_custom","mccoy_custom","stock_ageing_report_app","stock_barcode",
+    # v16: odes_sign removed (Enterprise deps, installable=False)
+    # v16: odes_accounting removed (Enterprise deps, installable=False)
+    # v16: mccoy_custom removed (Enterprise deps, installable=False); product.brand now in odes_sale_reporting
+    "odes_sale_reporting","web_hover_tooltip","web_tree_hover_tooltip","report_xlsx"],
+    "data": [
+        "security/ir.model.access.csv",   
+        "data/iconnexion_data.xml",
+        "data/iconnexion_scheduler.xml",  
+        # Community-safe: legacy mail.template field report_template removed in v17.
+        # "data/mail_data.xml",
+        
+        "security/iconnexion_security.xml",
+        "wizard/req_new_part_number_wizard.xml",
+        "wizard/req_new_contact.xml",
+        "wizard/icon_select_company.xml",
+        "wizard/sale_popup_wizard.xml",
+        "wizard/wizard_request_purchase_order.xml",
+        "wizard/sample_request_form_views.xml",
+        "wizard/sample_request_wizard_views.xml",
+        "wizard/sales_report.xml",
+        "wizard/icon_quotation_reason.xml",
+        "wizard/icon_delivery_history_wizard.xml",
+        "wizard/stock_ageing_wizard.xml",
+        "wizard/crm_lead_to_opportunity_views.xml",
+        "wizard/icon_committed_date_wizard.xml",
+        "report/report_quotation.xml",
+         'views/crm_lead_views.xml',       
+         'views/product_views.xml',   
+         # Community-safe: legacy partner form replacement conflicts with v17 view security validation.
+         # 'views/res_partner_views.xml',
+         'views/res_users_views.xml',
+         'views/old_sales_history_views.xml',
+         'views/sales_order_views.xml',
+         'views/contact_views.xml',
+         'views/stock_inventory_view.xml',
+         # Community-safe: legacy proforma account move views require deep v17 rewrite.
+         # Disabled for install/upgrade baseline compatibility.
+         # 'views/account_views.xml',
+         # 'views/iconnexion_report.xml',
+         'data/data.xml',
+         'data/activity.xml',
+         'report/report_quotation_mccoy.xml',
+         'report/report_sale_order_iconnexion.xml',
+         'report/report_certification_of_conformance.xml',
+         'report/report_certification_of_conformance_harwin.xml',
+         'report/report_iconnexion_proforma_invoice.xml',
+         'report/report_iconnexion_proforma_invoice_2.xml',
+         'report/report_iconnexion_commercial_invoice.xml',
+         'report/report_iconnexion_purchase_order.xml',
+         'report/report_iconnexion_delivery_note.xml',
+         'report/report_iconnexion_delivery_order.xml',
+         'report/report_iconnexion_packing_weight_list.xml',
+         'report/report_statement_of_account.xml',
+         'report/report_iconnexion_tax_invoice.xml',
+         'report/report_iconnexion_debit_note.xml',
+         'report/report_iconnexion_credit_note.xml',
+         # Community-safe: legacy stock.move operations form override uses removed fields in v17.
+         # 'views/barcode_view.xml',
+         'report/barcode_report.xml',
+         'report/report_iconnexion_label.xml',
+         'report/report_sample_request_internal.xml',
+         'report/report_sample_request_harwin.xml',
+         'views/barcode_template.xml',
+         'views/stock_picking_views.xml',
+         'views/purchase_views.xml',
+         'views/res_company_views.xml',
+         'views/calendar_views.xml',
+         'views/stock_move_views.xml',
+         # v16: account_followup.followup.line is Enterprise-only; view disabled
+         # 'views/account_followup_views.xml',
+         'views/account_payment_term_views.xml',
+    ],
+    "images": [],
+    'license': 'OPL-1',
+    "demo": [],
+    'assets': {
+        'web.assets_backend': [
+            # Migrated from v14 ActionManager.include() — handles xlsx downloads.
+            'iconnexion_custom/static/src/js/action_manager.js',
+            # Migrated from v14 AbstractField.include({ _onKeydown }) —
+            # ENTER key navigation for barcode scanning on stock.move.line.
+            'iconnexion_custom/static/src/js/barcode.js',
+        ],
+    },
+}

@@ -1,0 +1,6 @@
+
+@media(max-width: 500px){
+  a.dropdown-item[data-menu="logout"] {
+    display: none;
+  }
+}

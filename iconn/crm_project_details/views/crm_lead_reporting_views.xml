@@ -1,0 +1,51 @@
+<odoo>
+    <record id="crm_lead_opportunity_tree_project_details" model="ir.ui.view">
+        <field name="name">crm.lead.opportunity.tree.project.details</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="application_id"/>
+                <field name="end_customer_id"/>
+                <field name="end_product_id"/>
+                <field name="contract_manufacturer"/>
+                <field name="design_location"/>
+                <field name="annual_quantity"/>
+                <field name="mass_production_schedule"/>
+                <field name="pilot_run_quantity"/>
+                <field name="pilot_run_schedule"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_search_project_details" model="ir.ui.view">
+        <field name="name">crm.lead.search.project.details</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="group_by_application" string="Application" domain="[]"
+                    context="{'group_by': 'application_id'}"/>
+                <filter name="group_by_end_customer" string="End Customer" domain="[]"
+                    context="{'group_by': 'end_customer_id'}"/>
+                <filter name="group_by_mass_production_month" string="Mass Production Month" domain="[]"
+                    context="{'group_by': 'mass_production_schedule:month'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_pivot_view_project_details" model="ir.ui.view">
+        <field name="name">crm.lead.pivot.project.details</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//pivot" position="inside">
+                <field name="application_id" type="row"/>
+                <field name="end_customer_id" type="row"/>
+                <field name="mass_production_schedule" type="col" interval="month"/>
+                <field name="annual_quantity" type="measure"/>
+                <field name="pilot_run_quantity" type="measure"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

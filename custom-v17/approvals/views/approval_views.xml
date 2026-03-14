@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_category_view_tree" model="ir.ui.view">
+        <field name="name">approval.category.tree</field>
+        <field name="model">approval.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="approval_minimum"/>
+                <field name="request_to_validate_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="approval_category_view_form" model="ir.ui.view">
+        <field name="name">approval.category.form</field>
+        <field name="model">approval.category</field>
+        <field name="arch" type="xml">
+            <form string="Approval Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="automated_sequence"/>
+                    </group>
+                    <notebook>
+                        <page name="options" string="Options">
+                            <group>
+                                <field name="has_amount"/>
+                                <field name="requirer_document"/>
+                                <field name="approval_minimum"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group name="approvers" string="Approvers">
+                        <field name="approver_ids">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="user_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="approval_category_view_kanban" model="ir.ui.view">
+        <field name="name">approval.category.kanban</field>
+        <field name="model">approval.category</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="image"/>
+                <field name="request_to_validate_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <div class="o_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div class="text-muted mt-1">
+                                    To Review: <field name="request_to_validate_count"/>
+                                </div>
+                            </div>
+                            <div class="oe_module_action mt-2">
+                                <button name="create_request" type="object" class="btn btn-primary btn-sm">New Request</button>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="approval_request_view_tree" model="ir.ui.view">
+        <field name="name">approval.request.tree</field>
+        <field name="model">approval.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="request_owner_id"/>
+                <field name="date"/>
+                <field name="amount" widget="monetary" optional="show"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="request_status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="approval_request_view_search" model="ir.ui.view">
+        <field name="name">approval.request.search</field>
+        <field name="model">approval.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="request_owner_id"/>
+                <filter string="My Requests" name="my_requests" domain="[('request_owner_id', '=', uid)]"/>
+                <filter string="Pending My Approval" name="pending_me"
+                        domain="[('approver_ids.user_id', '=', uid), ('approver_ids.status', '=', 'pending')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Category" name="group_category" context="{'group_by': 'category_id'}"/>
+                    <filter string="Status" name="group_status" context="{'group_by': 'request_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="approval_request_view_form" model="ir.ui.view">
+        <field name="name">approval.request.form</field>
+        <field name="model">approval.request</field>
+        <field name="arch" type="xml">
+            <form string="Approval Request">
+                <header>
+                    <button name="action_confirm" type="object" string="Submit" class="btn-primary"
+                            invisible="request_status not in ['new', 'cancel']"/>
+                    <button name="action_approve" type="object" string="Approve" class="btn-primary"
+                            invisible="request_status != 'pending'"/>
+                    <button name="action_refuse" type="object" string="Refuse"
+                            invisible="request_status != 'pending'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="request_status in ['approved', 'refused', 'cancel']"/>
+                    <button name="action_draft" type="object" string="Reset to Draft"
+                            invisible="request_status == 'new'"/>
+                    <field name="request_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="request_owner_id"/>
+                        <field name="category_id"/>
+                        <field name="date"/>
+                        <field name="date_confirmed" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="has_amount" invisible="1"/>
+                        <field name="requirer_document" invisible="1"/>
+                        <field name="currency_id" options="{'no_open': 1, 'no_create': 1}"
+                               invisible="has_amount == 'no'" required="has_amount == 'required'"/>
+                        <field name="amount" widget="monetary"
+                               options="{'currency_field': 'currency_id'}"
+                               invisible="has_amount == 'no'" required="has_amount == 'required'"/>
+                    </group>
+                    <notebook>
+                        <page string="Approvers">
+                            <field name="approver_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="user_id"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="reason" placeholder="Reason / details..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="approval_category_action" model="ir.actions.act_window">
+        <field name="name">Approval Categories</field>
+        <field name="res_model">approval.category</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="approval_request_action" model="ir.actions.act_window">
+        <field name="name">Approval Requests</field>
+        <field name="res_model">approval.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="approval_request_view_search"/>
+    </record>
+
+    <menuitem id="approvals_menu_root" name="Approvals" sequence="70" groups="approvals.group_approval_user"/>
+    <menuitem id="approvals_menu_requests" name="Requests" parent="approvals_menu_root"
+              action="approval_request_action" sequence="10" groups="approvals.group_approval_user"/>
+    <menuitem id="approvals_menu_manager" name="Configuration" parent="approvals_menu_root"
+              action="approval_category_action" sequence="20" groups="approvals.group_approval_manager"/>
+</odoo>

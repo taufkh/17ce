@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="odes_ir_attachment_view_form" model="ir.ui.view">
+        <field name="name">odes.attachment.view.form</field>
+        <field name="model">ir.attachment</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Attachments">
+                <sheet>
+                    <label invisible="context.get('read_only')" for="name" class="oe_edit_only"/>
+                    <h1 invisible="context.get('read_only')">
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field invisible="context.get('read_only')" name="po_type_id"/>
+                            <field invisible="context.get('read_only')" name="type"/>
+                            <field readonly="context.get('read_only')" name="datas" string="File Content" filename="name" invisible="type == 'url'"/>
+                            <!-- v16: merged duplicate invisible attrs into one expression -->
+                            <field name="url" widget="url" invisible="context.get('read_only') or type == 'binary'"/>
+                            <field name="crm_lead_id" invisible="1"/>
+                            <field name="mimetype" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="datas_view" filename="name" widget="pdf_viewer" invisible="type == 'url'"/>
+                    <field name="datas_image" filename="name" widget="image" invisible="type == 'url'"/>
+                </sheet>
+                <footer invisible="context.get('read_only')"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="odes_ir_attachment_kanban_form" model="ir.ui.view">
+        <field name="name">odes.attachment.view.kanban</field>
+        <field name="model">ir.attachment</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <kanban edit="false" import="false">
+                <field name="id"/>
+                <field name="mimetype"/>
+                <field name="type"/>
+                <field name="po_type_id"/>
+                <field name="create_uid"/>
+                <field name="url"/>
+                <field name="create_date"/>
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_area oe_kanban_global_click o_kanban_attachment">
+                            <div class="row">
+                                <div class="offset-10">
+                                    <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_kanban_image">
+                                <div class="o_kanban_image_wrapper">
+                                    <t t-set="webimage" t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
+                                    <div t-if="record.type.raw_value == 'url'" class="o_url_image fa fa-link fa-3x text-muted" aria-label="Image is a link"/>
+                                    <img t-elif="webimage" t-attf-src="/web/image/#{record.id.raw_value}" width="100" height="100" alt="Document" class="o_attachment_image"/>
+                                    <div t-else="!webimage" class="o_image o_image_thumbnail" t-att-data-mimetype="record.mimetype.value"/>
+                                </div>
+                            </div>
+                            <div class="o_kanban_details">
+                                <div class="o_kanban_details_wrapper">
+                                    <div t-att-title="record.name.raw_value" class="o_kanban_record_title">
+                                        <field name="name" class="o_text_overflow"/>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <t t-if="record.type.raw_value == 'url'">
+                                            <span class="o_document_url"><i class="fa fa-globe" aria-label="Document url"/> <field name="url" widget="url"/></span>
+                                        </t>
+                                        <samp t-else="" class="text-muted"> </samp>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <field name="crm_lead_id"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <time class="oe_kanban_bottom_left">
+                                            <field name="create_date" widget="date"/>
+                                        </time>
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="create_uid" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>

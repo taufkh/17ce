@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--#########################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+
+    <record id="mccoy_subscribe_form_view" model="ir.ui.view">
+        <field name="name">mccoy_subscribe_form_view</field>
+        <field name="model">mccoy.subscribe</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mccoy_subscribe_tree_view" model="ir.ui.view">
+        <field name="name">mccoy_subscribe_tree_view</field>
+        <field name="model">mccoy.subscribe</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                        <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="mccoy_subscribe_action_view" model="ir.actions.act_window">
+        <field name="name">Subscribe</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mccoy.subscribe</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="mccoy_newsletter_action_view" model="ir.actions.act_window">
+        <field name="name">Newsletter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mailing.contact</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('subscription_list_ids.list_id','=','Newsletter')]</field>
+    </record>
+
+    <menuitem id="mccoy_subscribe_menu_view" name="Subscribe"
+              action="mccoy_subscribe_action_view"
+              parent="website.menu_website_configuration"
+               sequence="3" active="false"/>
+
+    <menuitem id="mccoy_newssleter_menu_view" name="Newsletter"
+              action="mccoy_newsletter_action_view"
+              parent="mass_mailing.mass_mailing_menu_root"
+               sequence="1" active="true"/>
+    
+
+</odoo>

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="iconnexion_mccoy_report_icon_label_doc_inherited"
+      inherit_id="iconnexion_custom.report_icon_label_doc">
+      <xpath expr="." position="replace">
+        <t t-foreach="docs" t-as="o">
+        <t t-call="web.html_container">
+          <t t-call="web.basic_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+            <style>
+                .photos div {
+                    width: 50%;
+                    aspect-ratio: 3/2;
+                    object-fit: contain;
+                    padding: 0px;
+                }
+            </style>
+            <div class="page">
+              <t t-foreach="o.move_line_ids_without_package" t-as="move">
+                <table class="table table-sm o_main_table table-borderless mt-4"
+                  style="font-size: 15px; width: 100%; border-bottom: 1px solid #000; margin-top: -50mm;">
+                  <tr>
+                    <td>
+                      <table style="padding: 15px; width: 95%;">
+                        <tr>
+                          <td style="padding-left: 5px; text-align: left; font-size: 15px; width: 30px">From</td>
+                          <td style="font-size: 15px; padding-left: 5px;">:</td>
+                          <td style="padding-left: 15px; text-align: left; font-size: 15px;">
+                            <span t-if="o.company_id.partner_id" t-field="o.company_id.partner_id"
+                              t-options="{'widget': 'contact', 'fields': ['name', 'address'], 'no_marker': True}" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-left: 5px; text-align: left; font-size: 15px; width: 30px"></td>
+                          <td style="font-size: 15px; padding-left: 5px;"></td>
+                          <td style="padding-left: 15px; text-align: left; font-size: 15px;">
+                            <span>Tel: </span><span t-field="o.company_id.partner_id.phone" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-left: 5px; text-align: left; font-size: 15px; width: 30px"></td>
+                          <td style="font-size: 12px; padding-left: 5px;"></td>
+                          <td style="padding-left: 15px; text-align: left; font-size: 15px;"></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td style="vertical-align: middle; text-align: center;">
+                      <table
+                        style="padding: 15px; width: 95%; display: flex; justify-content: center; align-items: center; height: 100%;">
+                        <tr>
+                          <td>
+                            <img t-att-src="'/report/barcode/QR/' + move.product_id.name" style="height: 90px; width: 90px;"
+                              alt="QR Code" />
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table class="table table-sm o_main_table table-borderless"
+                      style="font-size: 15px; width: 100%; border-bottom: 1px solid #000; margin-top: -4mm;">
+                  <tr>
+                    <td>
+                      <div style="width: 170px; padding-left: 5px;">
+                        <table>
+                          <tr>
+                            <td>
+                              <span>To:</span><br />
+                              <div style="margin-left: 7mm; white-space: nowrap; position: relative;">
+                                <strong>
+                                  <t t-if="o.sale_id.partner_id">
+                                    <span t-field="o.sale_id.partner_id"/>
+                                  </t>
+                                  <t t-else="">
+                                    <span t-field="o.partner_id"/>
+                                  </t>
+                                </strong>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <table class="table table-sm o_main_table table-borderless" style="font-size: 15px; width: 100%; border-bottom: 1px solid #000; margin-top: -4mm;">
+                  <tr>
+                    <td colspan="1">
+                      <div style="width: 170px; padding-left: 5px;">
+                        <table>
+                          <tr>
+                            <td>
+                              <span>PO#:</span>
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-field="o.sale_id.client_order_ref"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="o.sale_id.client_order_ref" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <table class="table table-sm o_main_table table-borderless"
+                  style="font-size: 15px; width: 100%; border-bottom: 1px solid #000;margin-top:-4mm;">
+                  <tr>
+                    <td colspan="1">
+                      <div style="width: 170px; padding-left: 5px;">
+                        <table>
+                          <tr>
+                            <td>
+                              <span>CPN:</span>
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-field="move.move_id.name"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="move.move_id.name" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <table class="table table-sm o_main_table table-borderless"
+                  style="font-size: 15px; width: 100%; border-bottom: 1px solid #000; margin-top: -4mm;">
+                  <tr>
+                    <td>
+                      <div style="width:170px;padding-left: 5px">
+
+                        <table>
+                          <tr>
+                            <td>
+                              <span>Quantity:</span>
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-esc="str(move.qty_done)"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="int(move.qty_done)" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+
+                    </td>
+                    <td>
+                      <div style="width:170px;padding-left: 5px">
+
+                        <table>
+                          <tr>
+                            <td>
+                              <span>COO:</span><br />
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-field="move.product_id.coo_id.name"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="move.product_id.coo_id.name" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <table class="table table-sm o_main_table table-borderless"
+                  style="font-size: 15px; width: 100%; border-bottom: 1px solid #000;margin-top:-4mm;">
+                  <tr>
+                    <td colspan="1">
+                      <div style="width:170px;padding-left: 5px">
+                        <table>
+                          <tr>
+                            <td>
+                              <span>Mfr P/N:</span><br />
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-field="move.product_id.name"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="move.product_id.name" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+
+                  </tr>
+                </table>
+                <table class="table table-sm o_main_table table-borderless"
+                  style="font-size: 15px; width: 75%; margin-top: -4mm;">
+                  <tr>
+                    <td>
+                      <div style="width:170px;padding-left: 5px">
+
+                        <table>
+                          <tr>
+                            <td>
+                              <span>Date Code:</span><br />
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-field="move.dc"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="move.dc" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+
+                    </td>
+                    <td>
+                      <div style="width:170px;padding-left: 5px">
+
+                        <table>
+                          <tr>
+                            <td>
+                              <span>Batch No:</span><br />
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-field="move.lot_id.name"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="move.lot_id.name" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                    <td>
+                      <div style="width:100px;padding-left: 5px">
+                        <table>
+                          <tr>
+                            <td>
+                              <span>MFG:</span><br />
+                              <div style="text-align: left;">
+                                <div style="width: 160px; margin: 0;">
+                                  <div style="text-align: center; display: inline-block;">
+                                    <div t-field="move.product_id.product_brand_id.name"
+                                        t-options="{'widget': 'barcode', 'width': 160, 'height': 40}"
+                                        style="display: inline-block;">
+                                    </div>
+                                  </div>
+                                  <strong style="display: block; font-weight: bold; text-align: center;">
+                                    <t t-esc="move.product_id.product_brand_id.name" />
+                                  </strong>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <p style="page-break-after: always;" />
+              </t>
+            </div>
+          </t>
+        </t>
+      </t>
+      </xpath>
+    </template>
+  </data>
+</odoo>

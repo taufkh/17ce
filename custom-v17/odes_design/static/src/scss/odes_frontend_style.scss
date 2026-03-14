@@ -1,0 +1,53 @@
+.o_home_menu_background {
+    background: url(/odes_design/static/src/img/home-menu-bg-overlay.svg), linear-gradient(to right bottom, #efe8e8, #efe8e8) !important;
+    background-size: cover !important;
+}
+
+.btn-fill-secondary, .btn-secondary {
+    color: #FFFFFF;
+    background-color: #F0C130 !important;
+    border-color: #F0C130 !important;
+}
+
+.form-control {
+    &:focus {
+            color: #495057;
+		background-color: #FFFFFF;
+		border-color: #efc00f7a !important;
+		outline: 0;
+                box-shadow: 0 0 0 2px  rgba(#efc00f, .3) ;
+		/*box-shadow: 0 0 0 2px rgb(239, 192, 15, 0.3);*/ 
+        }
+	
+}
+
+.btn-fill-primary, .btn-primary {
+    color: black;
+    background-color: #F0C130;
+    border-color: #F0C130;
+}
+
+.btn-fill-primary:hover, .btn-primary:hover {
+    color: black;
+    background-color: #F0C130;
+    border-color: #F0C130;
+}
+
+.btn-link {
+    font-weight: 400;
+    color: #F0C130;
+    text-decoration: none;
+}
+
+a {
+    color: #F0C130;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a {
+    &:hover {
+        color: #F9CA08;
+        text-decoration: underline;}
+    
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_layout" inherit_id="website.layout" name="website_enterprise layout compatibility">
+        <xpath expr="//head" position="inside">
+            <script id="web.layout.odooscript" type="text/javascript"/>
+        </xpath>
+        <xpath expr="//body" position="attributes">
+            <attribute name="class" add="o_website_enterprise_compat" separator=" "/>
+        </xpath>
+    </template>
+</odoo>

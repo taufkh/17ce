@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_view_order_form_inherit" model="ir.ui.view">
+        <field name="name">odes.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="after">
+                <field name="sale_delay"/>
+            </xpath>
+            <field name="currency_id" position="attributes">
+                <attribute name="force_save">1</attribute>
+                <attribute name="invisible">0</attribute>
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="currency_id" position="after">
+                <field name="is_mccoy" invisible="1"/>
+            </field>
+            <!-- <field name="partner_invoice_id" position="attributes">
+                <attribute name="invisible">is_mccoy</attribute>
+            </field>
+            <field name="partner_shipping_id" position="attributes">
+                <attribute name="invisible">is_mccoy</attribute>
+            </field> -->
+ <!--            <field name="date_order" position="attributes">
+                <attribute name="readonly">is_mccoy</attribute>
+            </field> -->
+            <!-- <label for="pricelist_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+            <field name="pricelist_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field> -->
+
+            <sheet position="inside">
+                <field name="so_type" invisible="1"/>
+            </sheet>
+            <header position="attributes">
+                <attribute name="invisible">so_type == "sf" and sf_state != "sent"</attribute>
+            </header>
+            <header position="after">
+                <header invisible="so_type == 'so' or (so_type == 'sf' and sf_state == 'sent')">
+                    <button name="button_sf_raised" string="Raise Quotation" type="object" class="btn-primary" invisible="sf_state != 'draft'"/>
+                    <button name="button_sf_sent" string="Sent Quotation" type="object" class="btn-primary" invisible="sf_state != 'raised'"/>
+                    <button name="button_sf_draft" string="Set to Draft" type="object" invisible="sf_state != 'cancel'"/>
+                    <button name="button_sf_cancel" string="Cancel" type="object" invisible="sf_state == 'cancel'"/>
+                    <field name="sf_state" widget="statusbar" statusbar_visible="draft,raised,sent"/>
+                </header>
+            </header>
+
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_open': 1, 'no_create': 1}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form//field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_open': 1, 'no_create': 1}</attribute>
+            </xpath>
+
+            <notebook position="inside">
+                <page string="McCoy Information" name="mccoy_info" invisible="not is_mccoy">
+                    <group>
+                        <group>
+                            <field name="min_order"/>
+                            <field name="cancellation_window"/>
+                            <field name="reschedule_window"/>
+                            <label for="validity_quote"/>
+                            <div>
+                                <field name="validity_quote" class="oe_inline" style="vertical-align:baseline"/> days
+                            </div>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- account.move inherit search view -->
+    <record id="view_sale_order_filter_inherit" model="ir.ui.view">
+        <field name="name">sale.order.inherit.view.search</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//group/filter[@name='salesperson']" position="after">
+                    <filter string="Invoice Status" name="invoicestatus" context="{'group_by': 'invoice_status'}"/>
+                    <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="odes_sale_order_form_quote_inherit" model="ir.ui.view">
+        <field name="name">odes.sale.order.form.quote.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
+        <field name="arch" type="xml">
+            <page name="optional_products" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
+        </field>
+    </record>
+
+    <record id="sale.act_res_partner_2_sale_order" model="ir.actions.act_window">
+        <field name="context">{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'search_default_state': 1}</field>
+    </record>
+
+    <record id="action_odes_sale_order_by_salesperson" model="ir.actions.act_window">
+        <field name="name">Sales Order by Salesperson</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="context">{'search_default_salesperson': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+            </p>
+            <p>
+                Once the quotation is confirmed by the customer, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
+            </p>
+        </field>
+    </record>
+</odoo>

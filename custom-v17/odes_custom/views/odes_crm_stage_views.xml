@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_lead_stage_tree" model="ir.ui.view">
+        <field name="name">odes.lead.stage.tree</field>
+        <field name="model">odes.lead.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Lead Stages" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="odes_lead_stage_action" model="ir.actions.act_window">
+        <field name="name">Lead Stages</field>
+        <field name="res_model">odes.lead.stage</field>
+        <field name="view_id" ref="odes_custom.odes_lead_stage_tree"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_odes_lead_lead_stage_act" parent="crm.menu_crm_config_lead" sequence="1" name="Lead Stages" action="odes_lead_stage_action"/>
+
+</odoo>

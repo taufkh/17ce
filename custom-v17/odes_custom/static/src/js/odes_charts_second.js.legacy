@@ -1,0 +1,107 @@
+$.ajax({
+    type: 'GET', 
+    url: '/odes_custom/fetch_chart_data_second', 
+    data: { },
+    dataType: 'json',
+    success: function (data) {
+
+        var ctx = document.getElementById('lead_chart_second');
+        var lead_chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.lead_second_label,
+                datasets: [{
+                    label: 'Expected Revenue',
+                    data: data.lead_second_data,
+                    backgroundColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 10,
+                            min: 0,
+                            beginAtZero: true,
+                            maxTicksLimit: 10,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx = document.getElementById('pending_chart');
+        var opp_chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.pending_label,
+                datasets: [{
+                    label: 'Expected Revenue',
+                    data: data.pending_data,
+                    backgroundColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 10,
+                            min: 0,
+                            beginAtZero: true,
+                            maxTicksLimit: 10,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+        }
+    });
+
+
+function change_table_sm() {
+    if ($('.div-table-button-sm').css('height') === '412px'){
+        $('.div-table-button-sm').addClass('open');
+        $('.collapse-button').css({
+            'transition': 'all 0.45s', 
+            'transform': 'rotate(180deg)',
+        });
+
+    } else {
+        $('.div-table-button-sm').removeClass('open');
+        $('.collapse-button').css({
+            'transition': 'all 0.45s', 
+            'transform': 'rotate(0deg)',
+        });
+    }
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_odes_account_move_form" model="ir.ui.view">
+        <field name="name">odes.account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <!--<field name="priority">1</field>-->
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sale_info_group']/field[@name='invoice_user_id']" position="after">
+                <field name="delivery_terms"/>
+                <field name="est_del_date"/>
+                <field name="freight_terms"/>
+            </xpath>
+            <xpath expr="//button[@name='button_cancel']" position="after">
+                <button name="recompute_line" string="Recompute Journal Item" type="object" groups="account.group_account_invoice" invisible="not id or state != 'draft'" context="{'recompute_entries': True}" />
+                        
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="amount_unbalance" readonly="1" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_odes_accounting_tree_invoice" model="ir.ui.view">
+        <field name="name">view.odes.accounting.tree.inherit.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="amount_unbalance" optional="hide" />
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-bf">
+                    amount_unbalance &gt;  0
+                </attribute>
+            </xpath>
+            
+        </field>
+    </record>
+       
+        
+        
+        <record id="view_odes_account_invoice_line_tree" model="ir.ui.view">
+            <field name="name">view.odes.account.move.line.tree</field>
+            <field name="model">account.move.line</field>
+            <field eval="100" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Journal Items" create="false" edit="false" sample="1">
+                    <field name="date" optional="show"/>
+                    <!--<field name="company_id" groups="base.group_multi_company"/>-->
+                    <field name="move_id" string="Invoice" optional="show"/>
+                    <field name="product_id" optional="show"/>
+                    <field name="name" optional="show"/>
+                    <field name="account_id" optional="show"/>
+                    <field name="quantity" optional="show"/>
+                    <field name="price_unit" optional="show"/>
+                    <field name="price_subtotal" sum="total" optional="show"/>
+                    <field name="date_maturity" optional="hide"/>
+                    <field name="currency_id" readonly="1" invisible="1"/>
+                    <field name="company_currency_id" invisible="1"/>
+                    <field name="parent_state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+        <record id="action_odes_accounting_moves_all_tree" model="ir.actions.act_window">
+            <field name="name">Invoices Line</field>
+            <field name="res_model">account.move.line</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="odes_accounting.view_odes_account_invoice_line_tree"/>
+        </record>
+</odoo>

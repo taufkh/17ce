@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_social_media_webhooks_view_form" model="ir.ui.view">
+        <field name="name">odes.social.media.webhooks.view.form</field>
+        <field name="model">odes.social.media.webhooks</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml"> 
+            <form>
+                <sheet> 
+                    <group> 
+                        <field name="name" required="1"/>
+                        <field name="callback_url" required="1"/>
+                        <field name="media_type" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="odes_social_media_webhooks_view_tree" model="ir.ui.view">
+        <field name="name">odes.social.media.webhooks.view.tree</field>
+        <field name="model">odes.social.media.webhooks</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml"> 
+            <tree>
+                <field name="name" required="1"/>
+                <field name="callback_url" required="1"/>
+                <field name="media_type" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="odes_social_media_webhooks_configuration_menu"
+        name="Social Webhooks"
+        parent="base.menu_custom"
+        sequence="10"
+        groups="base.group_system"/>
+
+    <record id="odes_social_media_webhooks_facebook_action" model="ir.actions.act_window">
+        <field name="name">Facebook</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.social.media.webhooks</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('media_type','=','facebook')]</field>
+        <field name="context">{
+                'default_media_type': 'facebook'
+            }</field>
+    </record>
+
+    <menuitem
+        id="odes_social_media_webhooks_facebook_menu"
+        name="Facebook"
+        action="odes_social_media_webhooks_facebook_action" 
+        parent="odes_social_media_webhooks_configuration_menu" 
+        sequence="10" />
+    
+
+    <record id="odes_social_media_webhooks_instagram_action" model="ir.actions.act_window">
+        <field name="name">Instagram</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.social.media.webhooks</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('media_type','=','instagram')]</field>
+        <field name="context">{
+                'default_media_type': 'instagram'
+            }</field>
+    </record>
+
+    <menuitem
+        id="odes_social_media_webhooks_instagram_menu"
+        name="Instagram"
+        action="odes_social_media_webhooks_instagram_action" 
+        parent="odes_social_media_webhooks_configuration_menu" 
+        sequence="15" />
+
+
+
+
+    <record id="odes_social_media_webhooks_facebook_account_callback_redirect_view_tree" model="ir.ui.view">
+        <field name="name">odes.social.media.webhooks.facebook.account.callback.redirect.view.tree</field>
+        <field name="model">odes.social.media.webhooks</field>
+        <field name="type">tree</field>
+        <field name="priority">200</field>
+        <field name="arch" type="xml"> 
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name" required="1"/>
+                <field name="callback_url" required="1" string="Redirect to"/>
+                <field name="media_type" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="odes_social_media_webhooks_facebook_account_callback_redirect_view_form" model="ir.ui.view">
+        <field name="name">odes.social.media.webhooks.facebook.account.callback.redirect.view.form</field>
+        <field name="model">odes.social.media.webhooks</field>
+        <field name="type">form</field>
+        <field name="priority">200</field>
+        <field name="arch" type="xml"> 
+            <form>
+                <sheet>
+                    <group> 
+                        <field name="name" required="1"/>
+                    </group>
+                    <group invisible="media_type != 'facebook_account_callback_redirect'">
+                        <table>
+                            <tr>
+                                <td style="min-width: 150px;">From</td>
+                                <td><span class="text-muted">https://odes.com.sg/odes_social_media_webhooks/facebook/account_callback_redirect</span></td>
+                            </tr>
+                        </table>
+                    </group>
+                    <group>  
+                        <field name="callback_url" required="1" string="Redirect to"/>
+                        <field name="media_type" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="odes_social_media_webhooks_facebook_account_action" model="ir.actions.act_window">
+        <field name="name">Facebook Account Callback Redirect Helper</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.social.media.webhooks</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('media_type','=','facebook_account_callback_redirect')]</field>
+        <field name="context">{
+                'default_media_type': 'facebook_account_callback_redirect',
+                'form_view_ref':'odes_social_media_webhooks.odes_social_media_webhooks_facebook_account_callback_redirect_view_form',
+                'tree_view_ref':'odes_social_media_webhooks.odes_social_media_webhooks_facebook_account_callback_redirect_view_tree',
+            }</field>
+    </record>
+
+    <menuitem
+        id="odes_social_media_webhooks_facebook_account_menu"
+        name="Facebook Account Callback"
+        action="odes_social_media_webhooks_facebook_account_action" 
+        parent="odes_social_media_webhooks_configuration_menu" 
+        sequence="17" />
+
+</odoo>

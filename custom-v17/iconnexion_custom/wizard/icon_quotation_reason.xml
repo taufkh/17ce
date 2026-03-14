@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="icon_quotation_reason_wizard" model="ir.ui.view">
+        <field name="name">icon.quotation.reason.wizard</field>
+        <field name="model">icon.quotation.reason.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Add Reason">
+                <group>                    
+                        <field name="reason" required="1"/>
+                </group>
+                <footer>
+                    <button name="button_change_reason" type="object" class="oe_highlight" string="Confirm"/>
+                     <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_icon_quotation_reason_wizard" model="ir.actions.server">
+        <field name="name">Input Reason</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_icon_quotation_reason()</field>
+    </record>
+    <record id="icon_quotation_approve_wizard" model="ir.ui.view">
+        <field name="name">icon.quotation.approve.wizard</field>
+        <field name="model">icon.quotation.approve.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Approve">
+                <group>        
+                <field name="date" readonly="1"/>
+                <field name="reason" readonly="1"/>            
+                <field name="request_user_id" readonly="1" string="Request By"/>
+                </group>
+                <footer>
+                    <button name="button_approve" type="object" class="oe_highlight" string="Approve"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_icon_quotation_approve_wizard" model="ir.actions.server">
+        <field name="name">Approve</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_icon_quotation_approve()</field>
+    </record>
+
+</odoo>

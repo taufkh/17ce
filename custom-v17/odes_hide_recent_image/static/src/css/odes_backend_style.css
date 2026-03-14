@@ -1,0 +1,11 @@
+.o_we_existing_attachments.o_we_images {
+    display: none !important;
+}
+
+.o_we_existing_attachments.o_we_documents {
+    display: none !important;
+}
+
+.o_we_load_more {
+    display: none !important;
+}

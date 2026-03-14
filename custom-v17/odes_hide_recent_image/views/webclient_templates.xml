@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend" name="Backend Assets">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/css" href="/odes_hide_recent_image/static/src/css/odes_backend_style.css"/>
+        </xpath>
+    </template>
+    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Frontend Assets">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/css" href="/odes_hide_recent_image/static/src/css/odes_backend_style.css"/>
+        </xpath>
+    </template>
+</odoo>

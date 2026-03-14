@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <template id="odes_google_api" name="Odes Google API Captcha" inherit_id="web.frontend_layout">
+            <xpath expr="//head" position="inside">
+                <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallbackCaptcha&amp;render=explicit&amp;hl=en" async="true" defer="true"></script>
+                <script> 
+                    <![CDATA[
+                        var onloadCallbackCaptcha = function() {
+                            var html_element_captcha =  document.getElementById('html_element_captcha');
+                            if (typeof(html_element_captcha) != 'undefined' && html_element_captcha != null){
+                                html_element_captcha.innerHTML = ''; 
+                                grecaptcha.render('html_element_captcha', {
+                                    'sitekey' : '6LefeOMZAAAAAKSTrY3uF_lfqg4Mv2PPz3cEOGu2'
+                                });
+                            }
+                        };
+                        onloadCallbackCaptcha();
+                    ]]>
+                </script>
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>

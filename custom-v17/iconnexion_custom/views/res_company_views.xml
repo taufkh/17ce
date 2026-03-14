@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_quotation_company_configuration_form_inherit" model="ir.ui.view">
+        <field name="name">quotation.company.configuration.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="odes_quotation.view_quotation_company_configuration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quotation_default_product_id']" position="after">
+                <field name="company_reg_no" groups="iconnexion_custom.group_iconnexion_company"/>
+                <field name="gst_reg_no" groups="iconnexion_custom.group_iconnexion_company"/>
+                <field name="min_margin" groups="iconnexion_custom.group_iconnexion_company"/>
+
+                <field name="icon_customer_service_ids" groups="iconnexion_custom.group_iconnexion_company" widget="many2many_tags"/>
+                <field name="icon_finance_ids" groups="iconnexion_custom.group_iconnexion_company" widget="many2many_tags"/>
+                <field name="icon_product_manager_ids" groups="iconnexion_custom.group_iconnexion_company" widget="many2many_tags"/>
+                <field name="icon_sales_manager_ids" groups="iconnexion_custom.group_iconnexion_company" widget="many2many_tags"/>
+                <field name="property_product_pricelist" widget="selection"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Pro-Forma Invoice">
+                    <group string="Pro-Forma Invoice Account">
+                        <field name="pi_credit_account_id"/>
+                    </group>
+                    
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

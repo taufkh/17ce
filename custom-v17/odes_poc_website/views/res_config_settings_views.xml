@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">odes.res.config.settings.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='website']" position="inside">
+                <block title="Cookies" name="odes_poc_website_setting">
+                    <setting id="odes_is_active_cookies_setting" string="Active Cookies" company_dependent="1">
+                        <field name="odes_is_active_cookies"/>
+                    </setting>
+                    <setting id="odes_button_text_cookies_setting" string="Button Text" company_dependent="1">
+                        <field name="odes_button_text_cookies"/>
+                    </setting>
+                    <setting id="odes_message_title_cookies_setting" string="Message Title" company_dependent="1">
+                        <field name="odes_message_title_cookies"/>
+                    </setting>
+                    <setting id="odes_message_cookies_setting" string="Message" company_dependent="1">
+                        <field name="odes_message_cookies"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record> 
+
+</odoo>

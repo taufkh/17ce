@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_application_tree" model="ir.ui.view">
+        <field name="name">odes.application.tree</field>
+        <field name="model">odes.application</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name" required="1"/>
+                <field invisible="True" name="name_small" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+     <record id="odes_application_action" model="ir.actions.act_window">
+        <field name="name">Odes Application</field>
+        <field name="res_model">odes.application</field>
+        <field name="view_id" ref="odes_custom.odes_application_tree"/>
+    </record>
+        <record id="odes_application1" model="odes.application">
+            <field name="name">Agriculture</field>
+            <field name="name_small">agriculture</field>
+        </record>
+        <record id="odes_application2" model="odes.application">
+            <field name="name">Automotive &amp; EV</field>
+            <field name="name_small">automotive</field>
+        </record>
+        <record id="odes_application3" model="odes.application">
+             <field name="name">Computers &amp; Peripherals</field>
+             <field name="name_small">computers</field>
+        </record>
+        <record id="odes_application4" model="odes.application">
+            <field name="name">Home Appliance</field>
+             <field name="name_small">home</field>
+        </record>
+        <record id="odes_application5" model="odes.application">
+            <field name="name">In-Building</field>
+             <field name="name_small">in_building</field>
+        </record>
+        <record id="odes_application6" model="odes.application">
+             <field name="name">Industrial Automation</field>
+             <field name="name_small">industrial</field>
+        </record>
+        <record id="odes_application7" model="odes.application">
+             <field name="name">Lighting</field>
+             <field name="name_small">lighting</field>
+        </record>
+        <record id="odes_application8" model="odes.application">
+             <field name="name">Medical</field>
+             <field name="name_small">medical</field>
+        </record>
+        <record id="odes_application9" model="odes.application">
+            <field name="name">Network Infrastructure</field>
+            <field name="name_small">network</field>
+        </record>
+        <record id="odes_application10" model="odes.application">
+            <field name="name">Oil, Gas &amp; Energy</field>
+            <field name="name_small">oil</field>
+        </record>
+        <record id="odes_application11" model="odes.application">
+             <field name="name">Personal Electronics</field>
+             <field name="name_small">electronics</field>
+        </record>
+        <record id="odes_application12" model="odes.application">
+           <field name="name">Rail &amp; Mass Transit</field>
+           <field name="name_small">rail</field>
+        </record>
+        <record id="odes_application13" model="odes.application">
+             <field name="name">Retail &amp; Warehousing</field>
+             <field name="name_small">retail</field>
+        </record>
+        <record id="odes_application14" model="odes.application">
+           <field name="name">Security &amp; Surveillance</field>
+           <field name="name_small">security</field>
+        </record>
+        <record id="odes_application15" model="odes.application">
+            <field name="name">Smart Energy &amp; Metering</field>
+            <field name="name_small">smart_energy</field>
+        </record>
+        <record id="odes_application16" model="odes.application">
+            <field name="name">Space, Avionics &amp; Defense</field>
+            <field name="name_small">space</field>
+        </record>
+        <record id="odes_application17" model="odes.application">
+           <field name="name">Test &amp; Instrumentation</field>
+           <field name="name_small">test</field>
+        </record>
+        <record id="odes_application18" model="odes.application">
+            <field name="name">Others</field>
+            <field name="name_small">others</field>
+        </record>
+        
+    <menuitem id="menu_odes_application" parent="crm.crm_menu_config" sequence="25" name="Application" action="odes_application_action"/>
+</odoo>

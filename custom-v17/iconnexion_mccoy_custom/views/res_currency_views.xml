@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_iconn_mccoy_res_currency_form_inherit_base_view_currency_form" model="ir.ui.view">
+            <field name="name">iconn.mccoy.res.currency.form.inherit.base.view.currency.form</field>
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='rounding']" position="after">
+                    <field name="rounding_decimal"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

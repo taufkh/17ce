@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- limit original employee menu to certain hr admin only -->
+    <record id="hr.menu_hr_employee_user" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('odes_hr2_custom.group_see_all_record_hr'))]"/>
+    </record>
+
+    <!-- own employee menu available to everyone-->
+    <!-- Inherited Action in HR Employee -->
+    <record id="action_open_own_employee_record" model="ir.actions.act_window">
+        <field name="name">Employee</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+        <field name="context">{'search_default_active': 1, 'group_by':
+            ['department_id']}
+        </field>
+        <field name="view_id" eval="False" />
+        <field name="search_view_id" ref="hr.view_employee_filter" />
+        <field name="help">Here you can manage your work force by creating
+            employees and assigning them specific properties in the system.
+            Maintain all employee related information and keep track of anything
+            that needs to be recorded for them. The personal information tab
+            will help you maintain their identity data. The Categories tab gives
+            you the opportunity to assign them related employee categories
+            depending on their position and activities within the company. A
+            category can be a seniority level within the company or a
+            department. The Timesheets tab allows to assign them a specific
+            timesheet and analytic journal where they will be able to enter time
+            through the system. In the note tab, you can enter text data that
+            should be recorded for a specific employee.
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_hr_own_employee"
+        name="Employee"
+        action="odes_hr2_custom.action_open_own_employee_record"
+        parent="hr.menu_hr_employee_payroll"
+        sequence="1"/>
+
+    <!-- Subordinate/Employee under user -->
+    <record id="action_open_subordinate_employee_record" model="ir.actions.act_window">
+        <field name="name">Employee</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('parent_id.user_id', '=', uid)]</field>
+        <field name="context">{'search_default_active': 1, 'group_by':
+            ['department_id']}
+        </field>
+        <field name="view_id" eval="False" />
+        <field name="search_view_id" ref="hr.view_employee_filter" />
+        <field name="help">Here you can manage your work force by creating
+            employees and assigning them specific properties in the system.
+            Maintain all employee related information and keep track of anything
+            that needs to be recorded for them. The personal information tab
+            will help you maintain their identity data. The Categories tab gives
+            you the opportunity to assign them related employee categories
+            depending on their position and activities within the company. A
+            category can be a seniority level within the company or a
+            department. The Timesheets tab allows to assign them a specific
+            timesheet and analytic journal where they will be able to enter time
+            through the system. In the note tab, you can enter text data that
+            should be recorded for a specific employee.
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_hr_subordinate_employee"
+        name="Subordinate"
+        action="odes_hr2_custom.action_open_subordinate_employee_record"
+        parent="hr.menu_hr_employee_payroll"
+        sequence="1"/>
+
+    
+    <record id="hr_view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr_view_employee_form_inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='managers']" position="inside">
+                <field name="substitute_approver_ids"/>
+            </xpath>
+        </field>
+    </record>        
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_approval_category_view_form_inherit" model="ir.ui.view">
+        <field name="name">odes.approval.category.form.inherit</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group//field[@name='automated_sequence']" position="after">
+                <field name="is_art_result"/>
+            </xpath>
+        </field>
+    </record>
+   
+</odoo>

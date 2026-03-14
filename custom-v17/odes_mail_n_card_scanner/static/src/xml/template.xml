@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <!--
+        Kanban view with OCR button.
+        Inherits web.KanbanView and adds the "OCR" button in the layout-buttons slot.
+    -->
+    <t t-name="odes_mail_n_card_scanner.ScannerKanbanView"
+       t-inherit="web.KanbanView"
+       t-inherit-mode="primary"
+       owl="1">
+        <xpath expr="//t[@t-set-slot='layout-buttons']" position="inside">
+            <button class="btn btn-primary ms-1 odes-contact-button-scanner"
+                    t-on-click="onOcrClick">
+                OCR
+            </button>
+        </xpath>
+    </t>
+
+    <!--
+        List view with OCR button.
+        Inherits web.ListView and adds the "OCR" button in the layout-buttons slot.
+    -->
+    <t t-name="odes_mail_n_card_scanner.ScannerListView"
+       t-inherit="web.ListView"
+       t-inherit-mode="primary"
+       owl="1">
+        <xpath expr="//t[@t-set-slot='layout-buttons']" position="inside">
+            <button class="btn btn-primary ms-1 odes-contact-button-scanner"
+                    t-on-click="onOcrClick">
+                OCR
+            </button>
+        </xpath>
+    </t>
+</templates>

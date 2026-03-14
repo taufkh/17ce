@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record model="ir.ui.view" id="view_ir_attachment_inherit_form">
+        <field name="name">ir.attachment.inherit.form</field>       
+        <field name="model">ir.attachment</field>       
+        <field name="inherit_id" ref="base.view_attachment_form" />
+        <!-- v16: groups_id on inherited view not allowed; removed -->
+        <field name="arch" type="xml">          
+            <xpath expr="//form" position="attributes">
+                <attribute name="edit">false</attribute>
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>   
+    </record>
+</odoo>

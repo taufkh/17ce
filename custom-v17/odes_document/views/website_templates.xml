@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+    <template id="download_form" name="Odes Download Form">
+        <div class="form-download-wrapper">
+            <div class="form-download-inner">
+                <div class="lp-element lp-pom-box" id="lp-pom-box-419">
+                    <div class="lp-element lp-pom-text nlh" id="lp-pom-text-420">
+                        <span>We are excited to share our latest thinking with you</span>
+                    </div>
+                    <div class="lp-element lp-code" id="lp-code-547">
+                        <form method="GET" class="form" id="pardot-form">
+                            <input name="token" type="hidden" class="hidden" t-att-value="token" />
+                            <input name="res_id" type="hidden" class="hidden" t-att-value="share_id" />
+                            <input name="doc_id" type="hidden" class="hidden" t-att-value="document and document.id or 'False'" />
+                            <input name="download_type" type="hidden" class="hidden" t-att-value="download_type" />
+                            <div class="row">
+                                <p class="form-field label-text-1 pd-text">
+                                    <span>Please fill in the form below and your download will start automatically</span>
+                                </p>
+                                <p class="form-field first_name pd-text required">
+                                    <input placeholder="First Name" type="text" class="text odes-form-input" size="30" maxlength="40" id="first_name" name="first_name" required="1" />
+                                </p>
+                                <p class="form-field last_name pd-text required">
+                                    <input placeholder="Last Name" type="text" class="text odes-form-input" size="30" maxlength="80" id="last_name" name="last_name" required="1"/>
+                                </p>
+
+                                <p class="form-field email pd-text required">
+                                    <input placeholder="Email Address" type="email" class="text odes-form-input" size="30" maxlength="255" id="email" name="email" required="1"/>
+                                </p>
+
+                                <p class="form-field company pd-text required">
+                                    <input placeholder="Company Name" type="text" class="text odes-form-input" size="30" maxlength="255" id="company" name="company" required="1" />
+                                </p>
+
+                                <p class="form-field phone pd-text required">
+                                    <input placeholder="Phone Number" type="number" class="text odes-form-input" size="30" maxlength="255" id="phone" name="phone" required="1" />
+                                </p>
+                                <!-- <p class="form-field country_ati pd-select required">
+                                     <select name="country_id" id="country_id" class="select odes-form-input"  required="1">
+                                        <t t-set="country_ids" t-value="country_list"/>
+                                        <option selected="selected">Country? *</option>
+                                        <t t-foreach="country_ids" t-as="s">
+                                            <option t-att-value="s.id">
+                                                <t t-esc="s.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </p> -->
+
+                                <input type="text" class="doc-submit-link" t-att-data-link="submit_URL" style="display:none;" />
+                                <button type="submit" class="btn-pardot-form" t-att-data-link="file_URL">
+                                    DOWNLOAD NOW
+                                </button>
+                                <p class="form-field odes-info pd-select required">
+                                    <em>We're committed to respecting users' privacy and promoting the fundamental values of data protection.</em>
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="download_single_page" name="Odes Download Single Page">
+        <t t-call="web.layout">
+
+            <t t-set="head">
+                <script type="text/javascript"> 
+                    odoo.session_info = <t t-out="json.dumps({
+                        'is_admin': request.env.user._is_admin(),
+                        'is_system': request.env.user._is_system(),
+                        'user_id': request.env.user.id,
+                    })"/>;
+                </script>
+
+                <t t-call-assets="web.assets_common" t-css="false"/>
+                <t t-call-assets="web.assets_common" t-js="false"/>
+                <!-- this page probably don't need much of assets_backend css -->
+                <t t-call-assets="web.assets_backend" t-js="false"/>
+                <t t-call="web.conditional_assets_tests"/>
+                <t t-call-assets="documents.public_page_assets"/>
+
+                <style>
+                    html, body {
+                        overflow: auto;
+                    }
+                </style>
+
+                <t t-out="head"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+            </t>
+
+            <t t-set="body_classname" t-value="'o_docs_share_page o_home_menu_background'"/>
+            <t t-set="shareType" t-value="shareType or ''"/>
+            <t t-set="file_URL" t-value="base_url + '/document/download/' + share_id + '/' + token + '/' + str(document.id)"/>
+            <t t-set="submit_URL" t-value="base_url + '/form/save/' + share_id" />
+
+            <t t-set="download_type" t-value="'single'"/>
+
+            <div class="container register">
+                <!-- Script For Hide Header & Footer -->
+                <script>
+                    $(document).ready(function(){
+                        $('.o_affix_enabled').hide()
+                        $('.o_footer').hide()
+                        $('.o_cc').hide()
+                        $('.o_main_navbar').hide()
+                    });
+                </script>
+               
+                <t t-call="odes_document.download_form"/>
+
+            </div>
+        </t>
+    </template>
+
+
+    <template id="download_multiple_page" name="Odes Download Multiple Page">
+         <t t-call="web.layout">
+
+            <t t-set="head">
+                <script type="text/javascript"> 
+                    odoo.session_info = <t t-out="json.dumps({
+                        'is_admin': request.env.user._is_admin(),
+                        'is_system': request.env.user._is_system(),
+                        'user_id': request.env.user.id,
+                    })"/>;
+                </script>
+
+                <t t-call-assets="web.assets_common" t-css="false"/>
+                <t t-call-assets="web.assets_common" t-js="false"/>
+                <!-- this page probably don't need much of assets_backend css -->
+                <t t-call-assets="web.assets_backend" t-js="false"/>
+                <t t-call="web.conditional_assets_tests"/>
+                <t t-call-assets="documents.public_page_assets"/>
+
+                <style>
+                    html, body {
+                        overflow: auto;
+                    }
+                </style>
+
+                <t t-out="head"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+                
+            </t>
+
+            <t t-set="body_classname" t-value="'o_docs_share_page o_home_menu_background'"/>
+            <t t-set="shareType" t-value="shareType or ''"/>
+            <t t-set="shareType" t-value="'o_share_multiple'"/>
+            <t t-set="file_URL" t-value="base_url + '/document/download/all/' + share_id + '/' + token"/>
+            <t t-set="submit_URL" t-value="base_url + '/form/save/' + share_id" />
+
+            <t t-set="download_type" t-value="'multiple'"/>
+
+            <div class="container register">
+                <!-- Script For Hide Header & Footer -->
+                <script>
+                    $(document).ready(function(){
+                        $('.o_affix_enabled').hide()
+                        $('.o_footer').hide()
+                        $('.o_cc').hide()
+                        $('.o_main_navbar').hide()
+                    });
+                </script>
+                
+                <t t-call="odes_document.download_form"/>
+
+            </div>
+        </t>
+    </template>
+
+
+
+
+
+</odoo>

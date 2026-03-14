@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_odes_replace_image" model="ir.ui.view">
+            <field name="name">ODES Replace Image</field>
+            <field name="model">odes.replace.image</field>
+            <field name="arch" type="xml">
+                <form string="ODES Replace Image Icons">
+                    <group>
+                        <newline/>
+                        <p>Click the button below to change all Menu Icons</p>
+                    </group>
+                    <footer>
+                        <button name="enterprise_image" string="Replace Image" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_odes_replace_image" model="ir.actions.act_window">
+            <field name="name">ODES Replace Image Icons</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">odes.replace.image</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+        action="action_view_odes_replace_image"
+        id="menu_view_odes_odes_replace_image"
+        parent="odes_design.rebranding_config_parent_action"
+        sequence="99"/>
+
+    </data>
+</odoo>

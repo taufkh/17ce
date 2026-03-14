@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+	    <record id="req_new_contact_wizard_view_tree" model="ir.ui.view">
+	    	<field name="name">req.new.contact.wizard.view.tree</field>
+	    	<field name="model">req.new.contact.wizard</field>
+	    	<field name="arch" type="xml">
+	    		<tree string="New Part Number">
+		    		<header>
+		    			<button name="button_confirm" string="Confirm" class="btn-primary" type="object"/>	
+		    			<button name="button_create" string="Create" class="btn-primary" type="object" groups="iconnexion_custom.group_iconnexion_contact_approve"/>
+		    			<button name="button_reject" string="Reject" class="btn-primary" type="object" groups="iconnexion_custom.group_iconnexion_contact_approve"/>
+		    		</header>
+		    		<field name="create_uid" string="Requested By"/>
+		    		<field name="id_number"/>
+		    		<field name="name"/>
+		    		<field name="street"/>
+		    		<field name="phone"/>
+		    		<field name="mobile"/>
+		    		<field name="email"/>
+		    		<field name="email_icon"/>
+		    		<field name="category_id"/>
+		    		<field name="customer_code"/>
+		    		<field name="user_id"/>
+		    		<field name="state"/>			    
+	    		</tree>
+	    	</field>
+	    </record>
+
+	     <record id="req_new_contact_wizard_view_form" model="ir.ui.view">
+	    	<field name="name">req.new.contact.wizard.view.form</field>
+	    	<field name="model">req.new.contact.wizard</field>
+	    	<field name="type">form</field>
+	    	<field name="arch" type="xml">
+	    		<form string="New Part Number">
+
+	    			<header>	
+	    				<button name="button_confirm" string="Confirm" class="btn-primary" type="object" invisible="state != 'request'"/>	
+		    			<button name="button_create" string="Create" class="btn-primary" type="object" invisible="state != 'inprocess'" groups="iconnexion_custom.group_iconnexion_contact_approve"/>
+		    			<button name="button_reject" string="Reject" class="btn-primary" type="object" invisible="state != 'inprocess'"/>
+			    			<field name="state" widget="statusbar"/>
+		    		</header>
+		    		<sheet>
+			    		<group>
+			    			<!-- <field name="create_uid" string="Requested By"/>
+			    			<field name="id_number" readonly="1"/> -->
+			    			<group>
+			    				<field name="name"/>
+			    				<field name="company_type" widget="radio"/>
+			    				<field name="house_no"/>
+			    				<field name="level_no"/>
+			    				<field name="unit_no"/>
+					    		<field name="street"/>
+					    		<field name="street2"/>
+					    		<field name="country_id"/>
+					    		<field name="city"/>
+					    		<field name="state_id"/>
+					    		<field name="zip_code"/>
+					    		<field name="uen"/>
+					    		<field name="vat"/>
+					    		<field name="peppol_id"/>	
+					    	</group>	
+					    	<group>	    		
+					    		<field name="phone"/>
+					    		<field name="mobile"/>
+					    		<field name="email"/>
+					    		<field name="email_icon"/>
+					    		<field name="website"/>
+					    		<field name="category_id"/>
+					    		<field name="customer_code"/>
+					    	</group>
+			    		</group>
+			    		<group string="Sales and Purchase">
+			    			<group>
+			    				<field name="user_id"/>
+			    				<field name="property_delivery_carrier_id"/>
+			    				<field name="property_payment_term_id"/>
+			    				<field name="freight_terms"/>
+			    				<field name="property_product_pricelist"/>
+			    			</group>
+			    			<group>
+			    			</group>
+			    			<group string="Bill to Address">
+			    				<field name="bill_to_street"/>
+			    				<field name="bill_to_block"/>
+			    				<field name="bill_to_city"/>
+			    				<field name="bill_to_zip"/>
+			    				<field name="bill_to_state"/>
+			    				<field name="bill_to_country_id"/>
+			    			</group>
+			    			<group string = "Ship to Address">
+			    				<field name="ship_to_street"/>
+			    				<field name="ship_to_block"/>
+			    				<field name="ship_to_city"/>
+			    				<field name="ship_to_zip"/>
+			    				<field name="ship_to_state"/>
+			    				<field name="ship_to_country_id"/>
+			    			</group>
+			    			<group string="Bill to Address 2">
+			    				<field name="bill_to_street2"/>
+			    				<field name="bill_to_block2"/>
+			    				<field name="bill_to_city2"/>
+			    				<field name="bill_to_zip2"/>
+			    				<field name="bill_to_state2"/>
+			    				<field name="bill_to_country2_id"/>
+			    			</group>
+			    			<group string = "Ship to Address 2">
+			    				<field name="ship_to_street2"/>
+			    				<field name="ship_to_block2"/>
+			    				<field name="ship_to_city2"/>
+			    				<field name="ship_to_zip2"/>
+			    				<field name="ship_to_state2"/>
+			    				<field name="ship_to_country2_id"/>
+			    			</group>
+			    			<group string="Bill to Address 3">
+			    				<field name="bill_to_street3"/>
+			    				<field name="bill_to_block3"/>
+			    				<field name="bill_to_city3"/>
+			    				<field name="bill_to_zip3"/>
+			    				<field name="bill_to_state3"/>
+			    				<field name="bill_to_country3_id"/>
+			    			</group>
+			    			<group string = "Ship to Address 3">
+			    				<field name="ship_to_street3"/>
+			    				<field name="ship_to_block3"/>
+			    				<field name="ship_to_city3"/>
+			    				<field name="ship_to_zip3"/>
+			    				<field name="ship_to_state3"/>
+			    				<field name="ship_to_country3_id"/>
+			    			</group>
+
+			    		</group>
+			    	</sheet>
+			    	<div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+	    		</form>
+	    	</field>
+	    </record>
+
+	    <record id="req_new_contact_wizard" model="ir.actions.act_window">
+	    	<field name="name">Req New Contact</field>
+	    	<field name="type">ir.actions.act_window</field>
+	    	<field name="res_model">req.new.contact.wizard</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="help" type="html">
+				<p class="o.view_nocontent_smiling_face">
+					Create Your First Request Contact
+				</p>
+			</field>
+	    	
+	    </record>
+	    
+
+    	<menuitem id ="req_new_contact_wizard_menu" name="New Contact" parent= "contacts.menu_contacts" action="req_new_contact_wizard" sequence="150" groups="iconnexion_custom.group_iconnexion_company"/>
+    </data>
+
+</odoo>

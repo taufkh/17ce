@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="iconnexion_custom.icon_pipeline_remark_tree" model="ir.ui.view">
+        <field name="name">icon.pipeline.remark.tree</field>
+        <field name="model">icon.pipeline.remark</field>
+        <field name="arch" type="xml">
+            <tree string="Pipeline items" create='1' editable='bottom'>     
+                <field name="part_id" invisible="1"/>
+                <field name="lead_id" invisible="1"/>
+                <field name="date" invisible="0" readonly="1"/>
+                <field name="remarks" invisible="0" required="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="iconnexion_custom.action_icon_pipeline_remark_wizard" model="ir.actions.act_window">
+        <field name="name">Remarks</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">icon.pipeline.remark</field>
+        <field name="view_mode">tree,form</field>        
+        <field name="domain">[('part_id','=',active_id)]</field>
+        <field name="view_id" ref="iconnexion_custom.icon_pipeline_remark_tree"/>        
+    </record>
+
+    <record id="view_icon_pipeline_remark_form" model="ir.ui.view">
+        <field name="name">icon.pipeline.remark.form</field>
+        <field name="model">icon.pipeline.remark</field>
+        <field name="arch" type="xml">
+            <form string="Remark">
+                <sheet>
+                    <field name="date" invisible="0" readonly="1"/>
+                    <field name="remarks" invisible="0" required="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_crm_lead_form_inherit" model="ir.ui.view">
+        <field name="name">iconn.mccoy.crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group//field[@name='user_id']" position="before">
+                <!-- <label for="design_owner_id" string="Design Owner"/>
+                <div class="oe_inline">
+                    <field name="design_owner_id" string="Design Owner" style="width: 35%;padding-right: 10px;" readonly="1" widget="many2one_avatar_user"/>
+                    <i class="fa fa-long-arrow-left" aria-label="Arrow icon" title="Arrow" style="padding-right: 10px;"></i>
+                    <field name="design_owner_prepare_id" string="" style="width: 32%; padding-right: 10px;"/>
+                    <button name="approve_change_design_owner" string="Approve" type="object" style="width: 25%;background-color: #2E8BC0; color: white; border-radius: 5px;" invisible="not design_owner_prepare_id" groups="iconnexion_mccoy_custom.group_iconnexion_design_owner_approve_button"/>
+                </div> -->
+                <field name="is_group_iconnexion_design_owner_manager" invisible="1"/>
+                <field name="design_owner_id" readonly="not is_group_iconnexion_design_owner_manager" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" widget="many2one_avatar_user"/>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']//field[@name='phone']" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="string">Phone *</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']//field[@name='email_from']" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="string">Email *</attribute>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Customer *</attribute>
+            </xpath>
+            <xpath expr="//header/button[3]" position="replace">
+                <button name="action_apply_lost_stage" string="Mark Lost"
+                            type="object" class="oe_highlight" invisible="type == 'lead' or not active"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_odes_part_tree_inherit_icon_odes_part_tree" model="ir.ui.view">
+        <field name="name">iconn.mccoy.odes.part.tree.inherit.icon.odes.part.tree</field>
+        <field name="model">odes.part</field>
+        <field name="inherit_id" ref="iconnexion_custom.icon_odes_part_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id_rel']" position="before">
+                <field name="is_group_iconnexion_design_owner_manager" invisible="1"/>
+                <field name="design_owner_id" readonly="not is_group_iconnexion_design_owner_manager" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" widget="many2one_avatar_user"/>
+            </xpath>
+            <xpath expr="//field[@name='is_show_on_dashboard']" position="replace">
+                <field name="is_show_on_dashboard" optional="show" groups="iconnexion_mccoy_custom.group_iconnexion_show_on_dashboard"/>      
+            </xpath>
+            <xpath expr="//field[@name='is_show_on_dashboard']" position="after">
+                <field name="is_show_on_dashboard_rel" optional="show" readonly="1" groups="iconnexion_mccoy_custom.group_iconnexion_show_on_dashboard_readonly"/>      
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_email_rel']" position="after">
+                <field name="phone_rel" optional="show"/>
+                <field name="customer_zip_rel" optional="show"/>
+                <field name="customer_state_id_rel" optional="show"/>
+                <field name="source_rel" optional="show"/>
+                <field name="sales_team_id_rel" optional="show"/>
+                <field name="date_deadline_rel" optional="show"/>
+                <field name="priority_rel" optional="show"/>
+                <field name="stage_latest_update_rel" optional="show"/>
+                <field name="company_id_rel" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='project_name_rel']" position="after">
+                <field name="end_partner_char_rel" optional="show"/>
+                <field name="end_product_display_name_rel" optional="show"/>
+                <field name="contract_site_rel" optional="show"/>
+                <field name="design_location_rel" optional="show"/>
+                <field name="annual_qty_rel" optional="show"/>
+                <field name="mass_schedule_date_rel" optional="show"/>
+                <field name="pilot_qty_rel" optional="show"/>
+                <field name="pilot_schedule_date_rel" optional="show"/>
+                <field name="dip_type_rel" optional="show"/>
+                <field name="project_status_id_rel" optional="show"/>
+                <field name="project_lifespan_rel" optional="show"/>
+                <field name="estimated_closing_date_rel" optional="show"/>
+                <field name="engagement_date_rel" optional="show"/>
+                <!-- <field name="sample_qty_rel" optional="show"/> -->
+                <!-- <field name="received_date_rel" optional="show"/>
+                <field name="given_date_rel" optional="show"/> -->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_crm_lead_form_inherit_icon_crm_lead_view_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.crm.lead.form.inherit.icon.crm.lead.view.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="iconnexion_custom.icon_crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='contact_id']" position="attributes">
+                <attribute name="required">type == 'opportunity'</attribute>
+                <attribute name="string">Contact *</attribute>
+            </xpath>
+            <xpath expr="//page[@name='req_new_part_number']" position="replace">
+                <page name="req_new_part_number" string="Req New Part Number" invisible="not is_iconnexion">
+                        <field name="req_new_part_number_ids">
+                             <tree>                                
+                                    <field name="id_number"/>
+                                    <field name="name"/>
+                                    <field name="desc"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="brand_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" domain="[('company_id','=',allowed_company_ids)]"/>
+                                    <field name="icon_type_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    <field name="product_type" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    
+                                    <field name="class_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    <field name="category_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    <field name="uom_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>   
+                                    <field name="req_new_part_number_id" invisible="1"/>   
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="id_number"/>
+                                    <field name="name"/>
+                                    <field name="desc"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="brand_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" domain="[('company_id','=',allowed_company_ids)]"/>
+                                    <field name="icon_type_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    <field name="product_type" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+
+                                    <field name="class_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    <field name="category_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    <field name="uom_id" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                    <field name="req_new_part_number_id" invisible="1"/>   
+                                    <field name="company_id" invisible="1"/>   
+                                </group>
+                            </form>
+                        </field>                      
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_crm_lead_form_inherit_odes_crm_lead_view_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.crm.lead.form.inherit.odes.crm.lead.view.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="odes_custom.odes_crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='project']/group/group[1]" position="replace">
+                <group>
+                    <field name="is_mccoy" invisible="1"/>
+                    <field name="project_name" required="not is_odes" string="Project Name *"/>
+                    <!-- <field name="application" required="not is_odes"/> -->
+                    <field name="application_id" required="not is_odes" options="{'no_open': 1, 'no_create': 1}" string="Application *"/>
+                    <field name="end_partner_id" required="0" invisible="1"/>
+                    <field name="end_partner_char" required="not is_odes" string="End Customer *"/>                               
+                    <field name="end_product_id" invisible="1" required="not is_odes"/>
+                    <field name="end_product_display_name" required="not is_odes" string="End Product *"/>
+                    <field name="contract_site" required="not is_odes" string="Contract Manufacturing Company/Site *"/>
+                    <field name="design_location" required="not is_odes" string="Design Location *"/>
+                    <field name="annual_qty" required="not is_odes" string="Annual Qty *"/>
+                    <field name="mass_schedule_date" required="not is_odes" string="Mass Production Schedule *"/>
+                </group>
+            </xpath>
+            <xpath expr="//page[@name='project']/group/separator[@name='competitor_info']" position="attributes">  <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='project']/group/field[@name='odes_competitor_ids']" position="attributes">  <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='currency_revenue'][1]" position="replace">
+                <field name="currency_revenue" required="1"/>
+            </xpath>
+            <xpath expr="//span[hasclass('oe_edit_only')][1]/field[@name='currency_revenue']" position="replace">
+                <field name="currency_revenue" required="1"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_edit_only', 'o_row')][1]/field[@name='currency_revenue']" position="replace">
+                <field name="currency_revenue" required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='manufacture']" position="after">
+                <field name="is_odes" invisible="1"/>
+                <field name="no_of_per" string="No of PER *" readonly="0" required="not is_odes" column_invisible="parent.is_odes"/>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='product_id']" position="attributes">
+                <attribute name="string">Part No. *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='manufacture']" position="attributes">
+                <attribute name="string">Manufacture *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='competitor_information']" position="attributes">
+                <attribute name="string">Competitor *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='competitor_mpn']" position="attributes">
+                <attribute name="string">Competitor MPN *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='competitor_pricing']" position="attributes">
+                <attribute name="string">Competitor Pricing *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='competitor_moq']" position="attributes">
+                <attribute name="string">Competitor MOQ *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']" position="inside">
+                <form>
+                    <sheet>
+                        <group>
+                            <group id="header_left_group">
+                                <field name="product_id"/>
+                                <field name="lead_id"/>
+                                <field name="price" groups="iconnexion_mccoy_custom.group_iconnexion_view_cost_price"/>
+                                <field name="competitor_price"/>
+                                <field name="item_quantity"/>
+                                <field name="competitor_pricing"/>
+                                <field name="icon_date"/>
+                                <field name="stage_id_rel"/>
+                                <field name="contact_name_rel"/>
+                                <field name="contact_email_rel"/>
+                                <field name="project_name_rel"/>
+                                <field name="total_potential"/>
+                                <field name="reason"/>
+                                <field name="remarks_ids"/>
+                                <field name="quoted_price_2"/>
+                                <field name="customer_type_id"/>
+                                <field name="last_remark_date"/>
+                                <field name="last_reason"/>
+                            </group>
+                            <group id="header_right_group">
+                                <field name="manufacture"/>
+                                <field name="competitor_information"/>
+                                <field name="competitor_mpn"/>
+                                <field name="competitor_moq"/>
+                                <field name="user_id_rel"/>
+                                <field name="customer_name_rel"/>
+                                <field name="contact_number_rel"/>
+                                <field name="application_rel"/>
+                                <field name="deu"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']//field[@name='icon_date']" position="replace">
+                <field name="create_date" string="Date"/>
+            </xpath>
+            <xpath expr="//field[@name='pilot_schedule_date']" position="attributes">
+                <attribute name="string">Pilot Run Schedule Date *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='odes_part_ids']" position="after">
+                <span><b>Fields marked with * are required</b></span>
+            </xpath>
+            <xpath expr="//field[@name='quoted_price']" position="replace">
+                <field name="quoted_price"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_crm_lead_form_inherit_iconnexion_custom_odes_crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">iconn.mccoy.crm.lead.form.inherit.iconnexion.custom.odes.crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="iconnexion_custom.odes_crm_lead_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='dip_type']" position="attributes">
+                <attribute name="required">not is_odes</attribute>
+                <attribute name="string">Category *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_status_id']" position="attributes">
+                <attribute name="required">not is_odes</attribute>
+                <attribute name="string">Project Status *</attribute>
+            </xpath>
+            <xpath expr="//field[@name='engagement_date']" position="attributes">
+                <attribute name="invisible">is_odes</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sample_qty']" position="attributes">
+                <attribute name="invisible">is_odes</attribute>
+            </xpath>
+            <xpath expr="//field[@name='received_date']" position="attributes">
+                <attribute name="invisible">is_odes</attribute>
+            </xpath>
+            <xpath expr="//field[@name='given_date']" position="attributes">
+                <attribute name="invisible">is_odes</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="iconn_mccoy_crm_lead_search_inherit_crm_view_crm_case_opportunities_filter" model="ir.ui.view">
+        <field name="name">iconn.mccoy.crm.lead.search.inherit.crm.view.crm.case.opportunities.filter</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="product_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="iconnexion_custom.sample_request_form_view_tree" model="ir.ui.view">
+        <field name="name">sample.request.form.view.tree</field>
+        <field name="model">sample.request.form</field>
+        <field name="arch" type="xml">
+            <tree string="Sample Request" create="0">
+                <field name="name"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_icon_mccoy_sample_request_form_inherit_iconnexion_custom_sample_request_form_view_form" model="ir.ui.view">
+        <field name="name">icon.mccoy.sample.request.form.inherit.iconnexion.custom.sample.request.form.view.form</field>
+        <field name="model">sample.request.form</field>
+        <field name="inherit_id" ref="iconnexion_custom.sample_request_form_view_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="." position="replace">
+                <form string="Sample Request Form">
+		    		<header>
+		    			<button name="button_confirm" string="Confirm" class="btn-primary" type="object" invisible="state != 'request'"/>	
+		    			<button name="button_approve" string="Approve" class="btn-primary" type="object" invisible="state != 'inprocess'" groups="iconnexion_custom.group_iconnexion_sales_manager"/>
+		    			<button name="button_reject" string="Reject" class="btn-primary" type="object" invisible="state != 'inprocess'" groups="iconnexion_custom.group_iconnexion_sales_manager"/>
+		    			<!-- <button name="button_sample_crm" class="btn-primary" string="Product From CRM" invisible="state == 'created'" groups="iconnexion_custom.group_iconnexion_sales_manager" type="object"/> -->
+		    			<button name="button_send_item" string="Send Item" context="{'action_create_do_from_sample': True}" type="object" invisible="state != 'approved'" class="btn-primary"/>
+		    			<field name="state" widget="statusbar"/>
+		    		</header>
+		    		
+
+		    		<sheet>
+		    			<div class="oe_button_box" name="button_box">
+			                <button name="action_view_picking" type="object"
+			                    class="oe_stat_button" icon="fa-truck"
+			                    context="{'partner_id': partner_id}"			                    >
+			                    <div class="o_stat_info">
+			                        <field name="picking_count" class="o_stat_value"/>
+			                        <span class="o_stat_text" invisible="picking_count &lt; 2"> Receipts</span>
+			                        <span class="o_stat_text" invisible="picking_count &gt; 1"> Receipt</span>
+			                    </div>
+			                </button>
+			                <button name="action_view_out_picking" type="object"
+			                    class="oe_stat_button" icon="fa-truck"
+			                    context="{'partner_id': partner_id}"			                    >
+			                    <div class="o_stat_info">
+			                        <field name="picking_out_count" class="o_stat_value"/>
+			                        <span class="o_stat_text" invisible="picking_out_count &lt; 2"> Outgoing</span>
+			                        <span class="o_stat_text" invisible="picking_out_count &gt; 1"> Outgoing</span>
+			                    </div>
+			                </button>
+			           </div>
+			            <div class="oe_title">                            
+                            <h1><field name="name" placeholder="e.g. Sample Number"  readonly="1"/></h1>
+                        </div>
+	    				<field name="crm_id" invisible="1"/>
+	    				<field name="opportunity_id" invisible="1"/>
+	    				<group>
+	    					<field name="picking_id" invisible="1" />
+	    					<field name="location_id" readonly="0" required="1" domain="[('usage','=','internal')]"/>
+			    		</group>	
+			    		<group string="Distributor Details">
+			    			<group>
+			    				<field name="company_id" readonly="1" />
+			    			</group>
+			    			<group>
+			    				<field name="user_id" string="Contact" domain="[('share','=',False)]" widget="many2one_avatar_user"/>
+			    			</group>
+			    		</group>
+			    		<group string="Customer Details">
+			    			<group>
+			    				<field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options="{&quot;always_reload&quot;: True}" string="Company" />
+			    			</group>
+			    			<group>
+			    				<field name="contact_id"  domain="[('parent_id','=',partner_id)]"/>
+			    				<field name="postcode" />
+			    				<field name="email" />
+			    				<field name="courir" string="Courier"/>
+			    				<field name="telephone" />
+			    			</group>
+			    		</group>
+			    		<group string="Project Information">
+		    				<field name="aplication"/>
+		    				<field name="project_name"/>
+		    				<field name="project_desc"/>
+		    				<field name="project_start_date"/>
+	    					<field name="project_reference_no"/>
+			    		</group>
+			    		<group string="Product Information">
+			    			<field name="product_line" nolabel="1">
+		                        <tree editable="bottom">
+		                            <field name="product_id" required="1"/>
+		                            <field name="delivery_date"/>
+		                            <field name="qty"/>
+		                        </tree>
+		                    </field>
+			    		</group>
+			    		<group string="Project EAU">
+			    			<group>
+			    				<field name="quantity_1" string="Year 1 (EAU)"/>
+			    				<field name="quantity_2" string="Year 2 (EAU)" />
+			    			</group>
+			    			<group>
+			    				<field name="prototype_quantity"/>
+			    				<field name="production_start_date"/>
+			    			</group>
+			    		</group>
+			    		<group string="Completed By">
+			    			<group>
+			    				<field name="company_id" string="Signed (Distributor)" />
+			    				<field name="print_name" />
+			    			</group>
+			    			<group>
+			    				<field name="date_now"/>
+			    				<field name="given_date"/>
+								<field name="received_date"/>
+			    			</group>
+			    		</group>
+			    	</sheet>
+			    	<div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+	    		</form>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Community-safe fallback: removed crm_iap_lead_enrich inherited view. -->
+
+    <record id="view_sample_request_line_search_sample_line" model="ir.ui.view">
+        <field name="name">sample.request.line.search.sample.line</field>
+        <field name="model">sample.request.line</field>
+        <field name="priority">15</field>
+        <field name="arch" type="xml">
+            <search string="Search Sample Request Line">
+                <field name="product_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="iconnexion_custom.action_sample_request_line" model="ir.actions.act_window">
+        <field name="name">Sample Request Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sample.request.line</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="iconnexion_mccoy_custom.view_sample_request_line_search_sample_line"/>
+        <field name="context">{'tree_view_ref': 'iconnexion_custom.sample_request_line_view_tree'}</field>
+        <field name="help" type="html">
+            <p class="o.view_nocontent_smiling_face">
+                Create Your First Sample Request Line
+            </p>
+        </field>
+    </record>
+
+    <record id="action_server_change_crm_stage" model="ir.actions.server">
+        <field name="name">Change Stage</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="odes_custom.model_odes_part"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_change_crm_stage()
+        </field>
+        <field name="binding_model_id" ref="odes_custom.model_odes_part"/>
+    </record>
+</odoo>

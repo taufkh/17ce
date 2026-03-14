@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+	<record id="odes_sale_link_po_to_supplier_views_wizard_form" model="ir.ui.view">
+        <field name="name">odes.sale.link.po.to.supplier.views.wizard.form</field>
+        <field name="model">odes.sale.link.po.to.supplier</field>
+        <field name="arch" type="xml">
+            <form> 
+                <group>
+                    <field name="sale_order_line_id" 
+                        nolabel="1"
+                        class="odes_field_readonly text-muted odes_field_noborder"
+                        options="{'no_create': True,'no_open': True}" domain="[('id','=','-1')]"/> 
+                </group>
+            	<group string="Select the record you want to link.">
+            		<field name="line_ids" nolabel="1" force_save="1">
+            			<tree editable="bottom" delete="false" create="false" force_save="1" 
+                            class="odes_sale_link_po_to_supplier_views_wizard">
+            				<field name="wizard_id" invisible="1"/>
+                            <field name="purchase_number" class="odes_field_readonly"/>
+            				<field name="purchase_order_line_id" 
+                                class="odes_field_readonly"
+                                options="{'no_create': True,'no_open': True}" domain="[('id','=','-1')]"/> 
+                            <field name="purchase_price_unit" class="odes_field_readonly"/>
+                            <field name="is_checked" string="Select"/>
+            			</tree>
+            		</field>
+            	</group>
+                
+                <footer>
+                    <button name="action_confirm" string="Confirm" class="btn btn-primary" type="object"/>
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-default oe_inline"/>
+                    <button name="action_remove_link" string="Remove Link" class="btn btn-secondary pull-right" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

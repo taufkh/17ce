@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_iconn_custom_res_config_settings_inherit_account_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">iconn.custom.res.config.settings.inherit.account.res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='default_taxes_setting_container']//div[@class='content-group']" position="inside">
+                <div class="row">
+                    <label string="Customer Product Tax" for="company_customer_tax_product_id"
+                        class="col-lg-3 o_light_label" />
+                    <field name="company_customer_tax_product_id"
+                        domain="[('type_tax_use', 'in', ('sale', 'all')), ('company_id', '=', company_id)]" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="iconn_res_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="95"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Configuration" string="Configuration" data-key="iconnexion_mccoy_custom">
+                    <h2>Shipping Methods</h2>
+                    <div class="row mt16 o_settings_container" name="iconn_delivery_method_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="delivery_method_id">
+                            <div class="o_setting_right_pane">
+                                <label for="delivery_method_id" string="Default Delivery Method"/>
+                                <div class="content-group mt16">
+                                    <field name="delivery_method_id" colspan="4" nolabel="1" required="0" domain="[('is_delivery_method', '!=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="freight_term_id">
+                            <div class="o_setting_right_pane">
+                                <label for="freight_term_id" string="Default Freight Term"/>
+                                <div class="content-group mt16">
+                                    <field name="freight_term_id" colspan="4" nolabel="1" required="0" domain="[('is_delivery_method', '=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Sequences</h2>
+                    <div class="row mt16 o_settings_container" name="iconn_sequence_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="company_sequence_customer_credit_note_id">
+                            <div class="o_setting_right_pane">
+                                <label for="company_sequence_customer_credit_note_id" string="Credit Note Running Number"/>
+                                <div class="content-group mt16">
+                                    <field name="company_sequence_customer_credit_note_id" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="company_sequence_income_input_id">
+                            <div class="o_setting_right_pane">
+                                <label for="company_sequence_income_input_id" string="Income Input Running Number"/>
+                                <div class="content-group mt16">
+                                    <field name="company_sequence_income_input_id" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="debit_note_sequence_id">
+                            <div class="o_setting_right_pane">
+                                <label for="debit_note_sequence_id" string="Debit Note Running Number"/>
+                                <div class="content-group mt16">
+                                    <field name="debit_note_sequence_id" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="vendor_credit_note_sequence_id">
+                            <div class="o_setting_right_pane">
+                                <label for="vendor_credit_note_sequence_id" string="Vendor Credit Note Running Number"/>
+                                <div class="content-group mt16">
+                                    <field name="vendor_credit_note_sequence_id" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="delivery_order_invoice_sequence_id">
+                            <div class="o_setting_right_pane">
+                                <label for="delivery_order_invoice_sequence_id" string="Delivery Order Invoice Running Number"/>
+                                <div class="content-group mt16">
+                                    <field name="delivery_order_invoice_sequence_id" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="delivery_order_invoice_taiwan_sequence_id">
+                            <div class="o_setting_right_pane">
+                                <label for="delivery_order_invoice_taiwan_sequence_id" string="Delivery Order Invoice Taiwan Running Number"/>
+                                <div class="content-group mt16">
+                                    <field name="delivery_order_invoice_taiwan_sequence_id" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="delivery_order_invoice_india_sequence_id">
+                            <div class="o_setting_right_pane">
+                                <label for="delivery_order_invoice_india_sequence_id" string="Delivery Order Invoice India Running Number"/>
+                                <div class="content-group mt16">
+                                    <field name="delivery_order_invoice_india_sequence_id" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Report Configuration</h2>
+                    <div class="row mt16 o_settings_container" name="iconn_report_config_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="current_tax">
+                            <div class="o_setting_right_pane">
+                                <label for="current_tax" string="Current Tax"/>
+                                <div class="content-group mt16">
+                                    <field name="current_tax" colspan="4" nolabel="1" required="0"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

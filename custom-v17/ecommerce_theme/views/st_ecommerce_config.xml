@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--#########################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+    <data noupdate="0">
+
+        <!-- Activate Ecommerce Categories -->
+        <record id="website_sale.products_categories" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Activate Product Description -->
+        <record id="website_sale.products_description" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Activate Add to Cart -->
+        <record id="website_sale.products_add_to_cart" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Activate List View -->
+        <record id="website_sale.products_list_view" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Activate Collapsible Category List -->
+        <record id="website_sale.option_collapse_products_categories" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Activate Product Attribute's Filters -->
+        <record id="website_sale.products_attributes" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Activate Search Count -->
+        <record id="website_sale.search_count_box" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Activate Discussion and Rating -->
+        <record id="website_sale.product_comment" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- website_sale_comparison.add_to_compare -->
+        <!-- product_add_to_compare -->
+        <!-- products_categories -->
+        <!-- product_add_to_wishlist -->
+        <!-- products_attributes -->
+    </data>
+</odoo>

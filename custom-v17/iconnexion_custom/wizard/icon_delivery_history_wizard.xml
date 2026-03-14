@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="icon_delivery_history_wizard" model="ir.ui.view">
+        <field name="name">icon.delivery.history.wizard</field>
+        <field name="model">icon.delivery.history.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Reason">
+                <group>
+                    <group invisible="1">
+                        <field name="purchase_line_id"/>
+                    </group>
+                    <group class="oe_title">
+                        <field name="date" required="1" widget="date"/>                        
+                        <field name="change_reason" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_change_delivery" type="object" class="oe_highlight" string="Change"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+</odoo>

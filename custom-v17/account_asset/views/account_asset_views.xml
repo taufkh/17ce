@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_asset_purchase_tree" model="ir.ui.view">
+        <field name="name">account.asset.tree</field>
+        <field name="model">account.asset</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="acquisition_date"/>
+                <field name="location" optional="hide"/>
+                <field name="asset_register_no" optional="hide"/>
+                <field name="original_value" widget="monetary" optional="show"/>
+                <field name="book_value" widget="monetary"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_asset_form" model="ir.ui.view">
+        <field name="name">account.asset.form</field>
+        <field name="model">account.asset</field>
+        <field name="arch" type="xml">
+            <form string="Asset">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="acquisition_date"/>
+                        </group>
+                        <group>
+                            <field name="location"/>
+                            <field name="asset_register_no"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="original_value" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <field name="book_value" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="1"/>
+                    </group>
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_asset" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">account.asset</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_account_asset_root"
+              name="Assets"
+              parent="account.menu_finance_configuration"
+              action="action_account_asset"
+              sequence="95"
+              groups="account.group_account_user"/>
+</odoo>

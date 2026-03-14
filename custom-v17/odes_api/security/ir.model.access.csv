@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odes_apps_database,access.odes.apps.database,model_odes_apps_database,,1,1,1,0
+access_odes_apps_database_settings,access.odes.apps.database.settings,model_odes_apps_database_settings,,1,1,1,0

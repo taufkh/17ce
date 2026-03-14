@@ -1,0 +1,20 @@
+<odoo>
+    <record id="crm_project_application_automotive" model="crm.project.application">
+        <field name="name">Automotive</field>
+    </record>
+    <record id="crm_project_application_consumer_electronics" model="crm.project.application">
+        <field name="name">Consumer Electronics</field>
+    </record>
+    <record id="crm_project_application_industrial" model="crm.project.application">
+        <field name="name">Industrial</field>
+    </record>
+    <record id="crm_project_application_healthcare" model="crm.project.application">
+        <field name="name">Healthcare</field>
+    </record>
+    <record id="crm_project_application_iot" model="crm.project.application">
+        <field name="name">IoT</field>
+    </record>
+    <record id="crm_project_application_others" model="crm.project.application">
+        <field name="name">Others</field>
+    </record>
+</odoo>

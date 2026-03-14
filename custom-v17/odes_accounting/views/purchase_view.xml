@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_odes_purchase_order_form" model="ir.ui.view">
+        <field name="name">odes.purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <!--<field name="priority">1</field>-->
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='purchase_delivery_invoice']//group[@name='invoice_info']/field[@name='payment_term_id']" position="after">
+                <field name="freight_terms"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

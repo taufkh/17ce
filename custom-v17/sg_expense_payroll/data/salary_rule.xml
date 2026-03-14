@@ -1,0 +1,18 @@
+<odoo noupdate="0">
+
+    <record id="hr_salary_rule_expense" model="hr.salary.rule">
+        <field name="code">EXPC</field>
+        <field name="sequence" eval="212"/>
+        <field eval="1" name="appears_on_payslip"/>
+        <field name="condition_range">contract.wage</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="active" eval="1"/>
+        <field name="name">Expense Auto Calculation</field>
+        <field name="amount_python_compute">result = expense > 0 and expense or 0.0</field>
+        <field name="category_id" ref="l10n_sg_hr_payroll.ALW"/>
+        <field name="quantity">1.0</field>
+    </record>
+
+</odoo>

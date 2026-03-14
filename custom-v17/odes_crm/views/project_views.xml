@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_project_inherit" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(odes_crm.action_odes_crm_create_customer_user)d" string="Create User for Client" type="action" class="oe_highlight" groups="project.group_project_manager"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_requirement" type="object"
+                    class="oe_stat_button" icon="fa-file-text-o">
+                    <field string="Requirements" name="requirement_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <!-- v16: attachment_tree_view button removed from project form; moved to button_box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_create_meeting" type="object" class="text-center">Create Meeting</button>
+                <button name="action_view_meetings" type="object" class="oe_stat_button" icon="fa-calendar">
+                    <span>
+                        Meetings (Multiple Req)
+                    </span>
+                </button>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <group>
+                    <field name="project_type" widget="radio"/>
+                    <!-- <field name="type_ids" widget="many2many_tags" /> -->
+                    <field name="stages_ids" widget="many2many_tags" />
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="project_live_date" />
+                <field name="credited_mandays" />
+                <field name="consumed_mandays" readonly="1" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="internal_user_ids" widget="many2many_tags" />
+                <field name="developer_ids" widget="many2many_tags" />
+            </xpath>
+            <!-- v16: lead_id field removed from project form view -->
+
+            <!-- <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="credited_mandays" />
+                <field name="consumed_mandays" readonly="1" />
+            </xpath> -->
+        </field>
+    </record>
+
+    <record id="view_project_kanban_inherit" model="ir.ui.view">
+        <field name="name">project.project.kanban.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//templates" position="before">
+                <field name="is_requirement_visible"/>
+                <field name="requirement_count"/>
+                <field name="draft_requirement_count"/>
+                <field name="doc_count"/>
+                <field name="display_project_live_date"/>
+                <field name="project_progress"/>
+                <field name="project_type"/>
+            </xpath>
+            <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="replace">
+                <div class='o_project_kanban_boxes'>
+                    <a class="o_project_kanban_box" name="action_view_requirement" type="object" t-if="record.is_requirement_visible.raw_value">
+                        <div>
+                            <span class="o_value"><t t-esc="record.requirement_count.value"/></span>
+                            <span class="o_label">Requirements</span>
+                        </div>
+                    </a>
+                    <a class="o_project_kanban_box" name="action_view_business_function" type="object" t-if="record.is_requirement_visible.raw_value">
+                        <div>
+                            <span class="o_label">Business Func.</span>
+                        </div>
+                    </a>
+                    <a t-if="record.analytic_account_id.raw_value" class="o_project_kanban_box o_project_timesheet_box" name="action_view_account_analytic_line" type="object" groups="analytic.group_analytic_accounting">
+                        <div>
+                            <span class="o_label">Profitability</span>
+                        </div>
+                    </a>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_primary_left')]" position="inside">
+                <div class="d-flex flex-column">
+                    <span class="o_label ml-1">Target Live Date: <field name="display_project_live_date" /></span>
+                    <span class="o_label ml-1">PM Consumed: <field name="consumed_mandays" /> Mandays</span>
+                    <span class="o_label ml-1">Dev Completed: <field name="dev_consumed_mandays" /> Mandays</span>
+                    <span class="o_label ml-1">Total Project Consumed: <field name="total_project_mandays_consumed" /> Mandays</span>
+                </div>
+
+                <div class="d-flex">
+                    <div class="mt-2 mb16 mr-5 pr-5">
+                        <!-- v16: attachment_tree_view removed --><span><field name="doc_count"/> Documents</span>
+                    </div>
+                    <div class="mt-2 mb16 ml-5 pl-3">
+                        <h2>
+                            <!-- <field name="project_progress" widget="percentage" /> -->
+                            <field name="project_progress_percentage" widget="percentage" invisible="project_type == 'internal'" />
+                            <field name="internal_project_progress_percentage" widget="percentage" invisible="project_type == 'external'" />
+                        </h2>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[hasclass('o_primary')]" position="replace">
+                <div class="o_primary">
+                    <span>
+                        <div class="d-flex align-items-center flex-wrap">
+                            <t t-esc="record.name.value"/>
+                            <span class="o_label ml-2" style="font-size: 12px;"><field name="budgeted_mandays_left" /> / <field name="credited_mandays" /> Mandays</span>
+                        </div>
+                    </span>
+                    <span t-if="record.partner_id.value">
+                        <strong><t t-esc="record.partner_id.value"/></strong>
+                    </span>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[hasclass('o_project_kanban_boxes')]" position="after">
+                <div class="d-flex flex-row-reverse justify-content-between">
+                    <!-- <span class="o_label ml-1">Target Live Date: <field name="display_project_live_date" /></span> -->
+                    <a class="o_project_kanban_box" name="action_view_developer_task" type="object" t-if="record.is_requirement_visible.raw_value">
+                        <div style="font-weight: 500">
+                            <span class="o_label mr-2">Dev Task</span>
+                        </div>
+                    </a>
+                    <a class="o_project_kanban_box" name="action_view_draft_requirement" type="object" t-if="record.is_requirement_visible.raw_value">
+                        <div class="ml-2">
+                            <span class="o_value"><t t-esc="record.draft_requirement_count.value"/></span>
+                            <span class="o_label">Draft Requirements</span>
+                        </div>
+                    </a>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- v16: project_forecast is Enterprise-only; this inherited view removed -->
+    <!-- <record id="project_view_kanban_inherit_project_forecast_inherit" ...> -->
+
+    <record id="view_odes_crm_project_project_kanban" model="ir.ui.view">
+        <field name="name">odes.crm.project.project.kanban</field>
+        <field name="model">project.project</field>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors" on_create="project.open_create_project" sample="1">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="color"/>
+                <field name="task_count"/>
+                <field name="label_tasks"/>
+                <field name="alias_id"/>
+                <field name="alias_name"/>
+                <field name="alias_domain"/>
+                <field name="is_favorite"/>
+                <field name="rating_percentage_satisfaction"/>
+                <field name="rating_status"/>
+                <field name="rating_active" />
+                <field name="analytic_account_id"/>
+                <field name="is_requirement_visible"/>
+                <field name="requirement_count"/>
+                <field name="doc_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="#{kanban_color(record.color.raw_value)} o_has_icon">
+                            <div class="o_project_kanban_main">
+                                <div class="o_kanban_card_content">
+                                    <div class="o_kanban_primary_left">
+                                        <div class="o_primary">
+                                            <span><t t-esc="record.name.value"/></span>
+                                            <span t-if="record.partner_id.value">
+                                                <strong><t t-esc="record.partner_id.value"/></strong>
+                                            </span>
+                                        </div>
+                                        <div t-if="record.alias_name.value and record.alias_domain.value">
+                                            <span><i class="fa fa-envelope" role="img" aria-label="Domain Alias" title="Domain Alias"></i> <a t-att-href="'mailto:' + record.alias_id.value" title="Send an email"><t t-esc="record.alias_id.value"/></a></span>
+                                        </div>
+                                        <div t-if="record.rating_active.raw_value" class="mt8 text-primary" title="Percentage of happy ratings over the past 30 days." groups="project.group_project_rating">
+                                            <b>
+                                                <a name="action_view_all_rating" type="object" context="{'search_default_rating_last_30_days':1}">
+                                                    <t t-if="record.rating_percentage_satisfaction.value != -1">
+                                                        <i class="fa fa-smile-o" role="img" aria-label="Percentage of satisfaction" title="Percentage of satisfaction"/> <t t-esc="record.rating_percentage_satisfaction.value"/>%
+                                                    </t>
+                                                </a>
+                                            </b>
+                                        </div>
+                                        <div class="mt16">
+                                            <!-- v16: attachment_tree_view removed --><span><field name="doc_count"/> Documents</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_card_manage_pane dropdown-menu" groups="project.group_project_manager" role="menu">
+                                    <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                        <div role="menuitem">
+                                            <a name="%(portal.portal_share_action)d" type="action">Share</a>
+                                        </div>
+                                        <div role="menuitem">
+                                            <a type="edit">Edit</a>
+                                        </div>
+                                    </div>
+                                    <div role="menuitem" aria-haspopup="true" class="o_no_padding_kanban_colorpicker">
+                                        <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
+                                    </div>
+                                </div>
+                                <a class="o_kanban_manage_toggle_button o_left" href="#" groups="project.group_project_manager"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
+                                <span class="o_right"><field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" /></span>
+                            </div>
+
+                            <div class="o_project_kanban_boxes mt-3 mb-2">
+                                <a class="o_project_kanban_box" name="action_view_requirement" type="object" t-if="record.is_requirement_visible.raw_value">
+                                    <div>
+                                        <span class="o_value"><t t-esc="record.requirement_count.value"/></span>
+                                        <span class="o_label">Requirements</span>
+                                    </div>
+                                </a>
+                                <a class="o_project_kanban_box" name="action_view_business_function" type="object" t-if="record.is_requirement_visible.raw_value">
+                                    <div>
+                                        <span class="o_label">Business Func.</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_project_project" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">project.project</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="view_odes_crm_project_project_kanban"/>
+        <field name="search_view_id" ref="project.view_project_project_filter"/>
+        <field name="target">main</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No project found.
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_odes_crm_project_project" id="menu_odes_crm_project" name="Projects" parent="odes_crm.odes_crm_customer_portal" sequence="6"/>
+</odoo>

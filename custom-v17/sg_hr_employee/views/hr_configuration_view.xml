@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_hr_employee_configuration" model="ir.ui.view">
+        <field name="name">view.hr.employee.configuration</field>
+        <field name="model">res.config.settings</field>
+        <field name='inherit_id' ref='hr.res_config_settings_view_form'/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='hr']" position="inside">
+                <block title="Employee" name="sg_employee_configuration">
+                    <setting id="sg_document_expiry_setting" help="Send reminder mail for expiring employee documents.">
+                        <field name="module_sg_document_expiry"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

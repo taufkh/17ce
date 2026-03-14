@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+f    <template id="iconnexion_mccoy_report_odes_sale_order_sgd_inherited"
+      inherit_id="odes_custom.report_odes_sale_order_sgd">
+      <xpath expr="." position="replace">
+        <t t-foreach="docs" t-as="o">
+          <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+              <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+              <div class="page">
+                <div class="row mt32 mb32">
+                  <div class="col-auto">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                      style="max-height: 65px;" alt="Logo" />
+                    <!--                                <t t-if="o.journal_id.logo_journal">
+                                  <img t-if="o.journal_id.logo_journal" t-att-src="image_data_uri(o.journal_id.logo_journal)" style="max-height: 65px;" alt="Logo"/>
+                                  
+                                
+                                </t> 
+                                <t t-if="not o.journal_id.logo_journal">
+                                  <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 65px;" alt="Logo"/>
+                                </t> -->
+
+                  </div>
+                  <div class="col-auto">
+                    <h3 style="text-align: right;">OFFICIAL QUOTATION</h3>
+                  </div>
+                </div>
+                <br />
+
+                <div class="row mt32 mb32">
+                  <div class="col-auto">
+                    <div><span style="font-size: 12px; text-decoration: underline; font-weight: bold;"
+                        t-field="o.company_id.name" /></div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.house_no"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.unit_no"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.street"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.street2"/> </div>
+                    <div style="font-size : 12px;"><span t-field="o.company_id.city"/> <span t-field="o.company_id.state_id"/></div>
+                    <div style="font-size : 12px;"> <span t-field="o.company_id.country_id"/> <span t-field="o.company_id.zip"/> </div>
+                    <div style="font-size : 12px;">Tel : <span t-field="o.company_id.partner_id.phone"/></div>
+                    <div style="font-size : 12px;">Fax : <span t-field="o.company_id.fax"/></div>
+                  </div>
+                  <div style="font-size: 12px;" class="col-auto">
+
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        DATE :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span class="text-uppercase" t-esc="o.date_order.strftime('%d.%m.%Y')" />
+                      </div>
+
+                    </div>
+                    <!--<div class="row mt32 mb32">-->
+                    <!--  <div class="col-auto" style="text-align : right;">-->
+                    <!--  INVOICE NO :-->
+                    <!--  </div>-->
+                    <!--  <div class="col-auto" style="text-align : right;">-->
+                    <!--<span class="text-uppercase" t-field="o.name"/>-->
+                    <!--  </div>-->
+
+                    <!--</div>-->
+                    <!--<div class="row mt32 mb32">-->
+                    <!--  <div class="col-auto" style="text-align : right;">-->
+                    <!--  CUSTOMER PO NO :-->
+                    <!--  </div>-->
+                    <!--  <div class="col-auto" style="text-align : right;">-->
+                    <!--<span t-field="o.partner_id.ref"/>-->
+                    <!--  </div>-->
+
+                    <!--</div>-->
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        QUOTATION NO :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <!-- <span t-field="o.partner_id.ref"/> -->
+                        <span class="text-uppercase" t-field="o.name" />
+                      </div>
+
+                    </div>
+
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        TO :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span t-if="o.partner_id.parent_id" t-field="o.partner_id.parent_id.name" />
+                        <span t-else="" t-field="o.partner_id.name" />
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        ATTN :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <t t-if="o.contact_id">
+                          <span t-field="o.contact_id.name" />&amp;nbsp;
+                          <t t-if="o.contact_id.phone">
+                            <span class="text-nowrap">(<span t-field="o.contact_id.phone" />)</span>
+                          </t>
+                          <t t-else="">
+                            <span class="text-nowrap">(<span t-field="o.partner_id.phone" />)</span>
+                          </t>
+                        </t>
+                        <t t-else="">
+                          <span t-field="o.partner_id.name" />&amp;nbsp;
+                          <span class="text-nowrap" t-if="o.partner_id">(<span t-field="o.partner_id.phone" />)</span>
+                        </t>
+                      </div>
+
+                    </div>
+                    <div class="row mt32 mb32">
+                      <div class="col-auto" style="text-align : right;">
+                        ADDRESS :
+                      </div>
+                      <div class="col-auto" style="text-align : right;">
+                        <span t-if="o.partner_id.parent_id" t-field="o.partner_id.parent_id"
+                          t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}" />
+                        <span t-else="" t-field="o.partner_id"
+                          t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}" />
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+                <br />
+                <div class="row mt32 mb32">
+                  <div class="col-auto">
+                    <!-- <table  style=" font-size: 12px; width:100%; border:1px solid #000;">
+                              <tr>
+                                  <th style="border-right: 1px solid #000 !important;">
+                                      <div style="width:400px;height:175px;">
+                                        <br/>
+                                          <div class="col-auto" t-if="o.partner_id">
+                                            <div class="row mt32 mb32">
+                                              <table style="padding : 20px; width: 100%;">
+                                                <tr>
+                                                    <td style="padding-left: 20px; text-align:left; font-size: 12px; width:50px">
+                                                      <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 90px;" alt="Logo"/>
+                                                    </td>
+                                              </tr>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </th>
+                                  <th style="border-right: 1px solid #000 !important;">
+                                      <div style="width:350px;height:175px;">
+                                        <br/>
+                                          <div class="col-auto" t-if="o.partner_id">
+                                            <div class="row mt32 mb32">
+                                            <table style="padding : 20px; width: 100%;">
+                                            <tr>
+                                                    <td style="padding-left: 20px; text-align:center; font-size: 12px; width:50px"> <br/><br/>OFFICIAL QUOTATION
+                                                    </td>
+                                              </tr></table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </th>
+                                      <th style="border-right: 1px solid #000 !important;">
+                                      <div style="width:350px;height:175px;">
+                                        <br/>
+                                          <div class="col-auto" t-if="o.partner_id">
+                                            <div class="row mt32 mb32">
+                                              <table style="padding : 20px; width: 100%;">
+                                              <tr>
+                                                    <td style="padding-right: 10px; text-align:right; font-size: 12px; width:50px">
+                                                      <div style="font-size: 12px;"><span t-field="o.company_id.name"/> </div><br/>
+                                                      <div style="font-size: 12px;"><span t-field="o.company_id.street"/> </div><br/>
+                                                       <div style="font-size: 12px;"> <span t-field="o.company_id.country_id"/> <span t-field="o.company_id.zip"/> </div><br/>
+                                                       <div style="font-size: 12px;">Tel : <span t-field="o.company_id.partner_id.phone"/>
+                                                       Fax : <span t-field="o.company_id.fax"/></div>
+                                                    </td>
+                                              </tr></table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </th>
+                                  </tr>
+                                </table>
+                                <table  style=" font-size: 12px; width:100%;">
+                                <tr>
+                                    <th>
+                                        <div style="width:400px;height:100px;">
+                                          <br/>
+                                            <div class="col-auto" t-if="o.partner_id">
+                                              <div class="row mt32 mb32">
+                                                <table style="padding : 15px; width: 100%;">
+                                                  <tr>
+                                                      <td style="padding-left: 10px; text-align:left; font-size: 12px; font-weight: bold; width:50px">To</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size: 12px;">:
+                                                        <span style="padding-left: 10px; text-align:left; font-size: 12px; text-decoration: underline;" t-field="o.partner_id.name"/><br/>
+                                                      </td>
+                                                </tr>
+                                                <tr>
+                                                      <td style="padding-left: 10px; text-align:left; font-size: 12px; font-weight: bold; width:50px">Attn</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size: 12px;">:
+                                                        <span style="padding-left: 10px; text-align:left; font-size: 12px; text-decoration: underline;" t-field="o.partner_id.contact_person"/><br/>
+                                                      </td>
+                                                </tr>
+                                                <tr>
+                                                      <td style="padding-left: 10px; text-align:left; font-size: 12px; font-weight: bold; width:50px">Address</td>
+                                                      <td style="padding-left: 10px; text-align:left; font-size: 12px;">:
+                                                        <span style="padding-left: 10px; text-align:left; font-size: 12px; text-decoration: underline;" t-field="o.partner_id.street"/><br/>
+                                                      </td>
+                                                </tr>
+                                              </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </th>
+                                      <th>
+                                          <div style="width:400px;height:100px;">
+                                            <br/>
+                                              <div class="col-auto" t-if="o.partner_id">
+                                                <div class="row mt32 mb32">
+                                                  <table style="padding : 20px; width: 100%;">
+                                                    <tr>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px; font-weight: bold; width:50px">From</td>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px;">:
+                                                          <span style="padding-left: 20px; text-align:left; font-size: 12px; text-decoration: underline;" t-field="o.company_id.name"/><br/>
+                                                        </td>
+                                                  </tr>
+                                                  <tr>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px; font-weight: bold; width:50px">Cc</td>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px;">:
+                                                          <span style="padding-left: 20px; text-align:left; font-size: 12px; text-decoration: underline;" t-field="o.company_id.name"/><br/>
+                                                        </td>
+                                                  </tr>
+                                                </table>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </th>
+                                        <th>
+                                          <div style="width:400px;height:100px;">
+                                            <br/>
+                                              <div class="col-auto">
+                                                <div class="row mt32 mb32">
+                                                  <table style="padding : 20px; width: 100%;">
+                                                    <tr>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px; font-weight: bold; width:50px">Date</td>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px;">:
+                                                          <span style="padding-left: 10px; text-align:left; font-size: 12px; text-decoration: underline;" t-field="o.date_order"/><br/>
+                                                        </td>
+                                                  </tr>
+                                                  <tr>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px; font-weight: bold; width:50px">Ref</td>
+                                                        <td style="padding-left: 20px; text-align:left; font-size: 12px;">:
+                                                          <span style="padding-left: 20px; text-align:left; font-size: 12px; text-decoration: underline;" /><br/>
+                                                        </td>
+                                                  </tr>
+                                                </table>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </th>
+                                    </tr>
+                                  </table>   -->
+                    <span style="padding-left: 20px; text-align:left; font-size: 12px;"> We are pleased to submit our
+                      quotation for the following products : </span>
+                    <div style="min-height : 100px">
+                      <table style=" margin-top : 8px;" class="table table-sm o_main_table" name="invoice_line_table">
+                        <thead style="font-size: 12px;">
+                          <tr style="background-color: lightgrey;">
+                            <th name="th_description" class="text-center"><span>Brand</span></th>
+                            <th width="40%" name="th_desc" class="text-left"><span>Product Description</span></th>
+                            <th name="th_mpn" class="text-left"><span>MPN</span></th>
+                            <th name="th_qty" class="text-center"><span>Qty</span></th>
+                            <th name="th_qty" class="text-center"><span>MOQ</span></th>
+                            <th name="th_qty" class="text-center"><span>SPQ</span></th>
+                            <th name="th_unit_price" class="text-center"><span>U/Price</span></th>
+                            <th name="th_total" class="text-center"><span> Total Price (SGD)</span></th>
+                            <th name="th_total" class="text-center"><span> L/T (ARO)</span></th>
+
+                          </tr>
+                        </thead>
+                        <tbody style="font-size: 12px;" class="invoice_tbody">
+                          <t t-set="current_subtotal" t-value="0" />
+                          <t t-set="line_count" t-value="0" />
+                          <t t-set="sgd_subtotal" t-value="0" />
+                          <t t-set="sgd_tax" t-value="0" />
+
+                          <t t-set="lines" t-value="o.order_line" />
+
+                          <t t-foreach="lines" t-as="line">
+                            <t t-set="line_count" t-value="line_count + 1" />
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                              groups="account.group_show_line_subtotals_tax_excluded" />
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                              groups="account.group_show_line_subtotals_tax_included" />
+                            <t t-if="line.tax_id">
+                              <t t-set="sgd_tax"
+                                t-value="sgd_tax+(o.get_sgd_total_value(line.price_unit, line.product_uom_qty)*0.07)" />
+                            </t>
+
+                            <tr
+                              t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                              <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                                <td name="account_invoice_line_name"><span
+                                    t-field="line.product_id.product_brand_id.name" t-options="{'widget': 'text'}" />
+                                </td>
+                                <td class="text-left"><span t-field="line.product_id.name"
+                                    t-options="{'widget': 'text'}" /></td>
+                                <td class="text-left"><span t-field="line.product_id.default_code"
+                                    t-options="{'widget': 'text'}" /></td>
+                                <td class="text-center">
+                                  <span class="text-nowrap" t-field="line.product_uom_qty"
+                                    groups="account.group_show_line_subtotals_tax_excluded"
+                                    t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}" />
+                                  <span class="text-nowrap" t-esc="o.get_sgd_value(line.price_total)"
+                                    groups="account.group_show_line_subtotals_tax_included"
+                                    t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" />
+                                </td>
+                                <td class="text-center"><span t-field="line.moq" /></td>
+                                <td class="text-center"><span t-field="line.spq" /></td>
+                                <td class="text-center">
+                                  <span class="text-nowrap" t-esc="o.get_sgd_value(line.price_unit)"
+                                    groups="account.group_show_line_subtotals_tax_excluded"
+                                    t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" />
+                                  <span class="text-nowrap" t-esc="o.get_sgd_value(line.price_total)"
+                                    groups="account.group_show_line_subtotals_tax_included"
+                                    t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" />
+                                </td>
+                                <td class="text-center o_price_total">
+                                  <span class="text-nowrap"
+                                    t-esc="o.get_sgd_total_value(line.price_unit, line.product_uom_qty)"
+                                    groups="account.group_show_line_subtotals_tax_excluded"
+                                    t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" />
+                                  <span class="text-nowrap" t-esc="o.get_sgd_value(line.price_total)"
+                                    groups="account.group_show_line_subtotals_tax_included"
+                                    t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" />
+                                  <t t-set="sgd_subtotal"
+                                    t-value="sgd_subtotal+o.get_sgd_total_value(line.price_unit, line.product_uom_qty)" />
+                                </td>
+                                <td class="text-center o_lead_time">
+                                  <span t-esc="int(line.customer_lead)" /> weeks
+                                </td>
+                              </t>
+                              <t t-if="line.display_type == 'line_section'">
+                                <td colspan="99">
+                                  <span t-field="line.name" t-options="{'widget': 'text'}" />
+                                </td>
+                                <t t-set="current_section" t-value="line" />
+                                <t t-set="current_subtotal" t-value="0" />
+                              </t>
+                              <t t-if="line.display_type == 'line_note'">
+                                <td colspan="99">
+                                  <span t-field="line.name" t-options="{'widget': 'text'}" />
+                                </td>
+                              </t>
+                            </tr>
+
+                            <t
+                              t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                              <tr class="is-subtotal text-right">
+                                <td colspan="99">
+                                  <!-- <strong class="mr16">Subtotal</strong>
+                                                  SG$ 
+                                                  <span t-esc="o.get_sgd_value(current_subtotal)" t-options='{"widget": "float", "precision": 2}'/> -->
+                                  <strong class="mr16">Subtotal</strong>
+                                  SG$
+                                  <span t-esc="sgd_subtotal"
+                                    t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" />
+                                </td>
+                              </tr>
+                            </t>
+                          </t>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-auto">
+
+                      <table class="table"
+                        style="  font-size: 12px; font-weight : 700; width:40%; float : right; border:1px solid #000;">
+                        <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                          <td
+                            style="padding: 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important;">
+                            <strong style="padding-left : 8px;">SUBTOTAL</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <!-- <strong>SG$ 
+                                                    <span t-esc="o.get_sgd_value(o.amount_untaxed)" t-options='{"widget": "float", "precision": 2}'/></strong> -->
+                            <strong>SG$ <span t-esc="sgd_subtotal"
+                                t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" /></strong>
+                          </td>
+                        </tr>
+                        <t t-foreach="o.taxes()" t-as="tx">
+                            <t t-if="tx['amount'] * (tx['tax']/100) != 0">
+                              <tr style="">
+                                <td
+                                  style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important;">
+                                  <strong style="padding-left : 8px;">GST <span t-esc="int(tx['tax'])" />%</strong>
+                                </td>
+                                <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                                  <strong>SG$
+                                    <t t-esc="o.get_sgd_value(tx['amount'] * (tx['tax']/100))"
+                                          t-options="{'widget': 'float', 'precision': 2}" />
+                                  </strong>
+                                </td>
+                              </tr>
+                            </t>
+                          </t>
+                        <tr style="">
+                          <td
+                            style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important; ">
+                            <strong style="padding-left : 8px;">Total Amount</strong></td>
+                          <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                            <strong>SG$ <span class="text-nowrap" t-esc="o.get_sgd_value(o.amount_total)" t-options='{"widget": "float", "precision": 2}'/></strong>
+                          </td>
+                        </tr>
+
+                      </table>
+                      <br />
+                    </div>
+                    <!-- <table  style=" font-size: 12px; width:100%;">
+                                <tr>
+                                    <th>
+                                        <div style="width:400px;height:100px;">
+                                          <br/>
+                                            <div class="col-auto" t-if="o.partner_id">
+                                              <div class="row mt32 mb32">
+                                                <table style="padding : 15px; width: 100%;">
+                                                  <tr>
+                                                    <td ></td>
+                                                  </tr>
+                                                </table>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </th>
+                                        <th>
+                                        <div style="width:400px;height:100px;">
+                                          <br/>
+                                            <div class="col-auto" t-if="o.partner_id">
+                                              <div class="row mt32 mb32">
+                                                <table style="padding : 15px; width: 100%;">
+                                                  <tr>
+                                                    <td ><strong>7 % GST :</strong></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td ><strong>Total Due :</strong></td>
+                                                  </tr>
+                                                </table>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </th>
+                                      </tr>
+                                    </table> -->
+                    <table class="table" style="  font-size: 12px; font-weight : 500; width:100%;">
+                      <tr>
+                        <td><strong style="padding-left : 8px;">Remarks: <span t-field="o.note" /></strong></td>
+                      </tr>
+                    </table>
+                    <table style=" font-size: 12px; width:100%; border:1px solid #000;">
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • P/O address to</td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.company_id.name" /> </td>
+                        <td style="padding-left: 10px;"> • Cancellation Window</td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.cancellation_window" /> </td>
+                      </tr>
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • All prices quoted in </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> SGD </td>
+                        <td style="padding-left: 10px;"> • Reschedule Window</td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.reschedule_window" /> </td>
+                      </tr>
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • Min. Order Value </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> SG$
+                          <span t-esc="o.get_sgd_value(o.min_order)"
+                            t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" /> </td>
+                        <td style="padding-left: 10px;"> • Validity of quote </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.validity_quote" /> days</td>
+                      </tr>
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • Payment Term </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.payment_term_id.name" /> </td>
+                        <td style="padding-left: 10px;"> </td>
+                        <td style="padding-left: 10px;"> </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> </td>
+                      </tr>
+                      <tr style=" border-bottom:1px solid #000;">
+                        <td style="padding-left: 10px;"> • Shipment Term </td>
+                        <td style="padding-left: 10px;"> : </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> <span
+                            t-field="o.freight_terms_id.name" /> </td>
+                        <td style="padding-left: 10px;"> </td>
+                        <td style="padding-left: 10px;"> </td>
+                        <td style="padding-left: 10px; border-right: 1px solid #000 !important;"> </td>
+                      </tr>
+                    </table>
+                    <br />
+
+                    <div class="row mt32 mb32">
+
+                      <div class="col-auto">
+
+                        <div style="margin-left : -15px" class="col-auto">
+                          <div><span style="font-size: 12px;"> We look forward to your continuous support. </span></div>
+                          <div><span style="font-size: 12px; font-weight: bold;"> Email address : <span
+                                t-field="o.user_id.login" /> </span></div>
+
+                          <br />
+
+                          <!-- <div><span style="font-size: 12px; text-decoration: underline;"> Bank Details </span></div> -->
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 15px" width="150px">Best Regards</td>
+                              </tr>
+                            </table>
+
+
+                          </div>
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 15px" width="150px">
+                                  <b><span t-field="o.user_id.partner_id.name" /></b>
+                                </td>
+                              </tr>
+                            </table>
+
+
+                          </div>
+
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <b>
+                                  <td style="padding-left: 15px" width="150px"><span
+                                      t-field="o.user_id.partner_id.function" /></td>
+                                </b>
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <b>
+                                  <td style="padding-left: 15px" width="150px">Tel: <span
+                                      t-field="o.user_id.partner_id.phone" /></td>
+                                </b>
+                              </tr>
+                            </table>
+                          </div>
+
+                          <div class="row mt32 mb32">
+                            <table style="font-size: 12px; width: 100%;">
+                              <tr>
+                                <td style="padding-left: 15px" width="150px">https://www.mccoy.com.sg</td>
+                              </tr>
+                            </table>
+
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+
+                      <div class="col-auto" style="margin-top : 2px; max-height: 90px;">
+                        <table style="font-size: 12px; width:100%; float : right; border:1px solid #000;">
+                          <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                            <td
+                              style="padding: 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important;">
+                              <strong>Acceptance of Quotation</strong></td>
+                          </tr>
+                          <tr>
+                            <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                              <span style="padding-left: 2px; text-align:left; font-size: 12px;">We hereby enter this
+                                acceptance in accordance wtth the prices, qty, MFG P/N, L/T and terms and delivery
+                                method listed above.</span>
+                              <br /><br />
+
+                              <strong>Company Stamp:</strong><br />
+                              <strong>Name:</strong><br />
+                              <strong>Signature of Acceptance::</strong><br />
+                              <strong>Date:</strong>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- <th style="border-right: 1px solid #000 !important;">
+                                      <div style="width:300px;height:220px;">
+                                        <br/>
+                                          <div class="col-auto">
+                                            <div class="row mt32 mb32">
+                                              <table style="padding : 5px; width: 100%;">
+                                                <tr>
+                                                    <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                                                        <span style="padding-left: 2px; text-align:left; font-size: 12px;">We hereby enter this acceptance in accordance wtth the prices, qty,</span><br/>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                                                        <span style="padding-left: 2px; text-align:left; font-size: 12px;">MFG P/N, L/T and terms and delivery method listed above.</span><br/>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                                                        <span style="padding-left: 2px; text-align:left; font-size: 12px;"></span><br/>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                                                        <span style="padding-left: 2px; text-align:left; font-size: 12px;"><strong>Company Stamp:</strong></span><br/>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                                                        <span style="padding-left: 2px; text-align:left; font-size: 12px;"><strong>Name:</strong></span><br/>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                                                        <span style="padding-left: 2px; text-align:left; font-size: 12px;"><strong>Signature of Acceptance:</strong></span><br/>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding-left: 2px; text-align:left; font-size: 12px;">
+                                                        <span style="padding-left: 2px; text-align:left; font-size: 12px;"><strong>Date:</strong></span><br/>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </th>
+                                      </tr>
+                                  </table> -->
+                        <!-- <table class="table" style="  font-size: 12px; font-weight : 800; width:100%; float : right; border:1px solid #000;">
+                                    <tr class="border-black o_total" style="border-bottom: 1px solid #000 !important;">
+                                        <td  style="padding: 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important;"><strong style="padding-left : 8px;">Acceptance of Quotation</strong></td>
+                                    </tr>
+                                    <tr style="">
+                                        <td style="padding : 5px; ">We hereby enter this acceptance in accordance wtth the prices, qty,</td>
+                                        <br/>
+                                        <td style="padding : 5px; ">MFG P/N, L/T and terms and delivery method listed above.</td>
+                                    </tr>
+                                    <tr style="">
+                                        <td style="padding : 5px; border-bottom: 1px solid #000 !important; border-right: 1px solid #000 !important; "><strong style="padding-left : 8px;">
+                                        </strong></td>
+                                        <td style="padding : 5px; border-bottom: 1px solid #000 !important;" class="text-right">
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                                <br/> -->
+
+
+                      </div>
+
+
+                      <!--<img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 65px;" alt="Logo"/>-->
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </t>
+          </t>
+        </t>
+      </xpath>
+    </template>
+  </data>
+</odoo>

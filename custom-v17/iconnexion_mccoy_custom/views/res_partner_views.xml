@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_partner_view_icon_mccoy" model="ir.ui.view">
+        <field name="name">res.partner.view.icon.mccoy</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='internal_notes']" position="after">
+                <page string="Quotation History" name="quotation_history" groups="iconnexion_custom.group_iconnexion_company">
+                    <field name="quotation_history_ids">
+                        <tree>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="date" widget="date"/>
+                            <field name="order_id" optional="hide"/>
+                            <field name="partner_id" optional="hide"/>
+                            <field name="user_id" optional="hide"/>
+                            <field name="product_id"/>
+                            <field name="qty"/>
+                            <field name="price_unit" digits="[42,4]" options="{'currency_field': 'currency_id'}"/>
+                            <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>                            
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <group>
+                                    <field name="order_id"/>
+                                    <field name="partner_id"/>                    
+                                    <field name="user_id"/>
+                                    </group>
+                                    <group>
+                                    <field name="date" widget="date"/>
+                                    <field name="currency_id"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//notebook/page[@name='contact_addresses']//form//field[@name='title']" position="replace">
+                <field name="title" placeholder="e.g. Mr." invisible="type != 'contact'" required="type == 'contact'"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='contact_addresses']//form//field[@name='function']" position="replace">
+                <field name="function" placeholder="e.g. Sales Director" invisible="type != 'contact'" required="type == 'contact'"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='contact_addresses']//form//field[@name='email']" position="replace">
+                <field name="email" widget="email" required="type == 'contact'"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='contact_addresses']//form//field[@name='phone']" position="replace">
+                <field name="phone" widget="phone" required="type == 'contact'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_res_partner_form_inherit_odes_view_partners_form_inherit" model="ir.ui.view">
+        <field name="name">iconn.mccoy.res.partner.form.inherit.odes.view.partners.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="odes_custom.odes_view_partners_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='freight_terms']" position="replace">
+                <field name="freight_terms_id" domain="[('is_delivery_method', '=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Community-safe fallback: removed delivery.view_partner_property_form inherited view. -->
+
+    <record id="view_iconn_mccoy_res_partner_form_inherit_view_partner_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.res.partner.form.inherit.view.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//group[@name='purchase']" position="inside">
+                <field name="purchase_delivery_method_id" string="Delivery Method" domain="[('is_delivery_method', '!=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                <field name="purchase_freight_terms_id" string="Freight Terms" domain="[('is_delivery_method', '=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_res_partner_form_inherit_sh_account_statement_sh_res_partner_view" model="ir.ui.view">
+        <field name="name">iconn.mccoy.res.partner.form.inherit.sh.account.statement.sh.res.partner.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sh_account_statement.sh_res_partner_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sh_customer_statement_ids']/tree/field[@name='name']" position="after">
+                <field name="customer_ref" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='sh_customer_due_statement_ids']/tree/field[@name='name']" position="after">
+                <field name="customer_ref" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_res_partner_tree_inherit_base_view_partner_tree" model="ir.ui.view">
+        <field name="name">iconn.mccoy.res.partner.tree.inherit.base.view.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='city']" position="after">
+                <!-- <field name="state_id" optional="show"/> -->
+                <field name="zip" optional="show" string="Postal Code"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

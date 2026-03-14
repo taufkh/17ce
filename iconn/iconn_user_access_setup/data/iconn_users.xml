@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="user_adarsh" model="res.users">
+            <field name="name">Adarsh</field>
+            <field name="login">adarsh@mail.com</field>
+            <field name="email">adarsh@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_alicia_liew" model="res.users">
+            <field name="name">Alicia Liew</field>
+            <field name="login">alicia.liew@mail.com</field>
+            <field name="email">alicia.liew@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_alma" model="res.users">
+            <field name="name">Alma</field>
+            <field name="login">alma@mail.com</field>
+            <field name="email">alma@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_barry" model="res.users">
+            <field name="name">Barry</field>
+            <field name="login">barry@mail.com</field>
+            <field name="email">barry@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_david" model="res.users">
+            <field name="name">David</field>
+            <field name="login">david@mail.com</field>
+            <field name="email">david@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_dm" model="res.users">
+            <field name="name">DM</field>
+            <field name="login">dm@mail.com</field>
+            <field name="email">dm@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_federick" model="res.users">
+            <field name="name">Federick</field>
+            <field name="login">federick@mail.com</field>
+            <field name="email">federick@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_hemanth" model="res.users">
+            <field name="name">Hemanth</field>
+            <field name="login">hemanth@mail.com</field>
+            <field name="email">hemanth@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_iman" model="res.users">
+            <field name="name">Iman</field>
+            <field name="login">iman@mail.com</field>
+            <field name="email">iman@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_jenny" model="res.users">
+            <field name="name">Jenny</field>
+            <field name="login">jenny@mail.com</field>
+            <field name="email">jenny@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_keith_goh" model="res.users">
+            <field name="name">Keith Goh</field>
+            <field name="login">keith.goh@mail.com</field>
+            <field name="email">keith.goh@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_kewei" model="res.users">
+            <field name="name">Kewei</field>
+            <field name="login">kewei@mail.com</field>
+            <field name="email">kewei@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_louise" model="res.users">
+            <field name="name">Louise</field>
+            <field name="login">louise@mail.com</field>
+            <field name="email">louise@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_lyvian" model="res.users">
+            <field name="name">Lyvian</field>
+            <field name="login">lyvian@mail.com</field>
+            <field name="email">lyvian@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_margaret" model="res.users">
+            <field name="name">Margaret</field>
+            <field name="login">margaret@mail.com</field>
+            <field name="email">margaret@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_naidu" model="res.users">
+            <field name="name">Naidu</field>
+            <field name="login">naidu@mail.com</field>
+            <field name="email">naidu@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_nick" model="res.users">
+            <field name="name">Nicholas</field>
+            <field name="login">nicholas@mail.com</field>
+            <field name="email">nicholas@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_rajesh" model="res.users">
+            <field name="name">Rajesh</field>
+            <field name="login">rajesh@mail.com</field>
+            <field name="email">rajesh@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_rashim" model="res.users">
+            <field name="name">Rashim</field>
+            <field name="login">rashim@mail.com</field>
+            <field name="email">rashim@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_ray" model="res.users">
+            <field name="name">Ray</field>
+            <field name="login">ray@mail.com</field>
+            <field name="email">ray@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_shermaine" model="res.users">
+            <field name="name">Shermaine</field>
+            <field name="login">shermaine@mail.com</field>
+            <field name="email">shermaine@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_sk" model="res.users">
+            <field name="name">SK</field>
+            <field name="login">sk@mail.com</field>
+            <field name="email">sk@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_veena" model="res.users">
+            <field name="name">Veena</field>
+            <field name="login">veena@mail.com</field>
+            <field name="email">veena@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_yeoh" model="res.users">
+            <field name="name">Yeoh</field>
+            <field name="login">yeoh@mail.com</field>
+            <field name="email">yeoh@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+        <record id="user_akshay" model="res.users">
+            <field name="name">Akshay</field>
+            <field name="login">akshay@mail.com</field>
+            <field name="email">akshay@mail.com</field>
+            <field name="password">123</field>
+            <field name="active" eval="True"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
+        </record>
+
+    </data>
+</odoo>

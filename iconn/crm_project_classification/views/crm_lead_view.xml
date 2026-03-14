@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_crm_lead_form_project_classification" model="ir.ui.view">
+        <field name="name">crm.lead.form.project.classification</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group[.//field[@name='team_id']]" position="after">
+                <group string="Project Classification">
+                    <field name="project_category_id"/>
+                    <field name="project_status_id"
+                        domain="[('category_id', '=', project_category_id)]"
+                        invisible="not project_category_id"
+                        readonly="not project_category_id"
+                    />
+                    <field name="x_possibility"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ce_invoice_now_configuration_view_tree" model="ir.ui.view">
+        <field name="name">ce.invoice.now.configuration.tree</field>
+        <field name="model">ce.invoice.now.configuration</field>
+        <field name="arch" type="xml">
+            <tree string="CE InvoiceNow Configuration">
+                <field name="active"/>
+                <field name="name"/>
+                <field name="client_id"/>
+                <field name="base_uri"/>
+                <field name="ce_xml_auto_generate"/>
+                <field name="ce_xml_profile"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ce_invoice_now_configuration_view_form" model="ir.ui.view">
+        <field name="name">ce.invoice.now.configuration.form</field>
+        <field name="model">ce.invoice.now.configuration</field>
+        <field name="arch" type="xml">
+            <form string="CE InvoiceNow Configuration">
+                <header>
+                    <button name="action_generate_token" string="Generate Token" class="oe_highlight" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="name"/>
+                            <field name="client_id"/>
+                            <field name="secret_key" password="True"/>
+                            <field name="auth_uri"/>
+                            <field name="base_uri"/>
+                            <field name="status_uri"/>
+                            <field name="api_version"/>
+                        </group>
+                        <group>
+                            <field name="inv_document_type"/>
+                            <field name="inv_document_format"/>
+                            <field name="credit_document_type"/>
+                            <field name="credit_document_format"/>
+                        </group>
+                    </group>
+                    <group string="CE XML Generation">
+                        <field name="ce_xml_auto_generate"/>
+                        <field name="ce_xml_profile"/>
+                        <field name="ce_xml_force_regenerate"/>
+                        <field name="ce_xml_include_tax_breakdown"/>
+                    </group>
+                    <group string="Token">
+                        <field name="ce_access_token_masked" readonly="1"/>
+                        <field name="ce_refresh_token_masked" readonly="1"/>
+                        <field name="access_token" readonly="1" groups="base.group_no_one"/>
+                        <field name="refresh_token" readonly="1" groups="base.group_no_one"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ce_invoice_now_configuration_action" model="ir.actions.act_window">
+        <field name="name">CE InvoiceNow Configuration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce.invoice.now.configuration</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="ce_invoice_now_configuration_menu"
+              action="ce_invoice_now_configuration_action"
+              parent="account.account_invoicing_menu"
+              name="CE InvoiceNow Configuration"
+              sequence="4"/>
+</odoo>

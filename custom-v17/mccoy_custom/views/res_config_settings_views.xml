@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mccoy_custom_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">mccoy_custom_res_config_settings_view_form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <div id="webmaster_settings" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" id="template_blog_email_id">
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Template Email</span>
+                        <div class="text-muted">
+                            Template Email New Blog Post
+                        </div>
+                         <div class="mt8">
+                            <field name="template_blog_email_id"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="email_submit_order_id">
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Template Email Notification Submit Order</span>
+                         <div class="mt8">
+                            <field name="email_submit_order_id"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record> 
+
+</odoo>

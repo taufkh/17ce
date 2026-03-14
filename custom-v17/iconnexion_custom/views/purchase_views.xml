@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_odes_purchase_order_form" model="ir.ui.view">
+        <field name="name">icon.purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <!--<field name="priority">1</field>-->
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='products']/field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                <attribute name="string">CPN</attribute>
+            </xpath>
+            <xpath expr="//page[@name='products']/field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                <field name="serial_numbers"/>
+            </xpath>
+            <!-- v16: account_analytic_id replaced by analytic_distribution -->
+            <xpath expr="//field[@name='order_line']/form//field[@name='analytic_distribution']" position="after">
+                <field name="icon_sale_ids" groups="iconnexion_custom.group_iconnexion_company" widget="many2many_tags"/>
+                <field name="icpo_request_deliver_date" groups="iconnexion_custom.group_iconnexion_company"/>
+                <field name="date_planned" groups="iconnexion_custom.group_iconnexion_company"/>
+                <field name="icon_factory_reschedule_date" groups="iconnexion_custom.group_iconnexion_company"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form//page[@name='invoices_incoming_shiptments']" position="after">                                             
+                <page string="Delivery Date Change History" name="delivery_date_change" groups="iconnexion_custom.group_iconnexion_company">
+                    <field name="icon_delivery_history_ids" groups="iconnexion_custom.group_iconnexion_company">
+                        <tree>
+                            <field name="date" widget="date"/>
+                            <field name="change_reason"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+            <xpath expr="//page[@name='products']/field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="date_planned" groups="iconnexion_custom.group_iconnexion_company" widget="date" invisible="1"/>
+                <field name="icon_factory_reschedule_date" groups="iconnexion_custom.group_iconnexion_company" widget="date" invisible="0"/>
+                 <field name="icpo_request_deliver_date" groups="iconnexion_custom.group_iconnexion_company"/>
+            </xpath>
+            <xpath expr="//page[@name='products']/field[@name='order_line']/tree/field[@name='product_qty']" position="after">
+                <field name="r_code" groups="iconnexion_custom.group_iconnexion_company"/>
+                <field name="icon_so_line_qty" groups="iconnexion_custom.group_iconnexion_company"/>
+            </xpath>
+            <xpath expr="//page[@name='products']/field[@name='order_line']/tree/field[@name='qty_received']" position="after">
+                <field name="buffer_stock" string="Buffer Stock" digits="[42,2]"/>            
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+                <field name="is_combine" groups="iconnexion_custom.group_iconnexion_company" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="before">
+                 <field name="contact_id"  domain="[('parent_id','=',partner_id)]" context="{'default_parent_id': partner_id,'form_view_ref': 'iconnexion_custom.view_partner_form3','mail_create_nolog':True}" widget="res_partner_many2one" />
+            </xpath>
+            <xpath expr="//button[@name='button_cancel']" position="after">
+                <button  name="button_combine" string="Combine" type="object"/>
+            </xpath>
+            <xpath expr="//button[@name='button_combine']" position="after">
+                <!-- v16: states attribute deprecated → use invisible expression -->
+                <button name="button_confirm_bypass" string="Confirm Order" class="btn-primary" type="object"
+                    invisible="state != 'draft'"
+                    groups="iconnexion_custom.group_iconnexion_bypass_confirm_po"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                <field name="icon_related_so_ids" readonly="1"  context="{'tree_view_ref': 'iconnexion_custom.sale_order_icon_tree'}" groups="iconnexion_custom.group_iconnexion_company">
+                   
+                </field>
+            </xpath>
+           
+        </field>
+    </record>
+    <record id="purchase_order_line_icon_tree" model="ir.ui.view">
+            <field name="name">purchase.order.line.icon.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines" create="1" editable="bottom">
+                    <field name="order_id" readonly="1" optional="show"/>
+                    <field name="partner_id" string="Vendor" invisible="1" optional="show"/>
+                    <field name="product_id" readonly="1" optional="show"/>
+                    <field name="name" string="CPN" readonly="1" optional="show"/>
+                    <field name="product_qty" readonly="1" optional="show"/>
+                    <field name="date_planned" widget="date" readonly="1" string="Factory Delivery Date" optional="show"/>
+                    <field name="icon_reschedule_date" groups="iconnexion_custom.group_iconnexion_company" optional="show"/>
+                    <field name="icon_factory_reschedule_date" groups="iconnexion_custom.group_iconnexion_company" optional="show"/>
+                    <field name="icpo_request_deliver_date" string="Iconn Request Date" readonly="1" optional="show"/>
+                    <field name="value_purchase_aging" optional="show"/>
+                    <field name="so_reference_id" invisible="0" optional="show"/>
+                    <field name="partner_id" invisible="0" string="Supplier Name" optional="show"/>
+                    <field name="customer_name_id" invisible="0" optional="show"/>
+                    <field name="salesperson_id" invisible="0" optional="show"/>
+                    <field name="customer_po_number" invisible="0" optional="show"/>
+                    <field name="price_unit" invisible="1"/>
+                    <field name="icon_total_sale_current" invisible="1" optional="show"/>
+                    <field name="icon_total_sale" invisible="0" optional="show"/>
+                    <button name="action_delivery_history_wizard" string="Change Delivery Date" type="object" class="btn-primary"/>
+                    
+                </tree>
+            </field>
+        </record>
+        <record id="purchase_order_line_icon2_tree" model="ir.ui.view">
+            <field name="name">purchase.order.line.icon2.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines" create="false" editable="bottom">
+                    <field name="order_id" readonly="1" optional="show" string="ICPO"/>
+                    <field name="name" string="CPN" readonly="1" optional="show"/>
+                    <field name="product_qty" readonly="1" optional="show" string="QTY"/>
+                    <!-- <field name="partner_id" string="Vendor" invisible="1" optional="show"/> -->
+                    <!-- icon_total_sale -->
+                    <field name="icon_coo" readonly="1" optional="show" string="COO"/>
+                    <field name="product_id" readonly="1" optional="show" string="MPN"/>
+                    <field name="icon_date_code" readonly="1" optional="show" string="DC"/>
+                    <field name="icon_lot_batch_1" readonly="1" optional="show" string="LOT BATCH"/>
+                    <field name="icon_l" readonly="1" optional="show" string="L"/>
+                    <field name="icon_w" readonly="1" optional="show" string="W"/>
+                    <field name="icon_h" readonly="1" optional="show" string="H"/>
+                    <field name="icon_weight" readonly="1" optional="show" string="Weight"/>
+                    <field name="icon_location" readonly="1" optional="show" string="LOCATION"/>
+                    <field name="icon_uid" readonly="1" optional="show" string="UID"/>
+                    <field name="icon_qty_taken" readonly="1" optional="show" string="QTY Taken"/>
+                    <field name="icon_date_taken" readonly="1" optional="show" string="Date Taken"/>
+                    <field name="icon_scan_date" readonly="1" optional="show" string="Scan Date"/>
+                    <field name="customer_po_number" invisible="0" optional="show" string="CUST PO NO"/>
+                    <field name="customer_name_id" invisible="0" optional="show" string="Customer"/>
+                    <field name="so_reference_id" invisible="0" optional="show" string="SO"/>
+                    <field name="icon_total_sale" invisible="1" optional="show" string="Value"/>
+                   
+                </tree>
+            </field>
+        </record>
+        <record id="purchase_order_line_view_search" model="ir.ui.view">
+            <field name="name">purchase.order.line.select</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Order">
+                    <field name="order_id" string="Order Reference" filter_domain="[('order_id.name', 'ilike', self)]"/>
+                    <field name="order_id" string="Source Document" filter_domain="[('order_id.origin', 'ilike', self)]"/>                    
+                    <field name="name" string="CPN"/>
+                    <field name="product_id" string="MPN"/> 
+                    <field name="product_qty" string="Qty"/>                    
+                    <field name="order_id" string="Vendor" filter_domain="[('order_id.partner_id', 'ilike', self)]"/>
+                    
+                    <field name="icpo_request_deliver_date" string="Iconn Request Date"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Location" name="icon_location" context="{'group_by':'icon_location'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="purchase_order_line_action" model="ir.actions.act_window">
+            <field name="name">Purchase Orders Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="purchase_order_line_icon_tree"/>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="purchase_order_line_view_search"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+               
+              </p><p>
+                
+              </p>
+            </field>
+        </record>
+        <record id="purchase_order_line2_action" model="ir.actions.act_window">
+            <field name="name">Purchase Orders Line 2</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="purchase_order_line_icon2_tree"/>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="purchase_order_line_view_search"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+               
+              </p><p>
+                
+              </p>
+            </field>
+        </record>
+        <menuitem
+            id="icon_item_purchase_order_line"
+            name="Purchase Order Line"
+            action="iconnexion_custom.purchase_order_line_action"
+            parent="purchase.menu_procurement_management"
+            sequence="7"/> 
+</odoo>

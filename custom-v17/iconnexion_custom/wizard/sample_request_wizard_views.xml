@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record id="sample_request_wizard" model="ir.ui.view">
+        <field name="name">sample.request.wizard</field>
+        <field name="model">sample.request.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <p>Do you want to Create Sample Request? or immediately View Sample Request</p>                    
+                </group>
+                <footer>
+                    <button name="action_sample_request_create" type="object" class="oe_highlight" string="Create"/>
+                    <button name="action_sample_request_view" type="object" class="oe_highlight" string="View"/>
+                </footer>
+            </form>
+        </field>
+    </record> -->
+</odoo>

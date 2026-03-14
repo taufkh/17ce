@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <record id="odes_view_company_form_inherit" model="ir.ui.view">
+        <field name="name">odes.res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="favicon" position="after">
+                <field name="is_odes" invisible="1"/>
+                <field name="is_mccoy" invisible="1"/>
+                <field name="company_code"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="odes_custom_poc_website_view_company_form_inherit" model="ir.ui.view">
+        <field name="name">odes.custom.poc.website.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="odes_poc_website.odes_poc_view_company_form_inherit"/>
+        <field name="arch" type="xml">
+            <group name="group_left" position="inside">
+                <field name="crm_stage_ids" widget="many2many_tags" options="{'no_create': 1}"/>
+                <field name="odes_currency_ids" widget="many2many_tags"/>
+            </group>
+            <group name="group_right" position="inside">
+                <field name="is_project"/>
+            </group>
+        </field>
+    </record> -->
+</odoo>

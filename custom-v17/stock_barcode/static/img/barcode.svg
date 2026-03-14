@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="40" viewBox="0 0 128 40" role="img" aria-label="Barcode">
+  <rect width="128" height="40" fill="#fff"/>
+  <rect x="2" y="4" width="2" height="32" fill="#111"/>
+  <rect x="7" y="4" width="1" height="32" fill="#111"/>
+  <rect x="10" y="4" width="3" height="32" fill="#111"/>
+  <rect x="16" y="4" width="1" height="32" fill="#111"/>
+  <rect x="20" y="4" width="2" height="32" fill="#111"/>
+  <rect x="25" y="4" width="1" height="32" fill="#111"/>
+  <rect x="29" y="4" width="3" height="32" fill="#111"/>
+  <rect x="35" y="4" width="1" height="32" fill="#111"/>
+  <rect x="39" y="4" width="2" height="32" fill="#111"/>
+  <rect x="44" y="4" width="1" height="32" fill="#111"/>
+  <rect x="47" y="4" width="3" height="32" fill="#111"/>
+  <rect x="53" y="4" width="1" height="32" fill="#111"/>
+  <rect x="57" y="4" width="2" height="32" fill="#111"/>
+  <rect x="62" y="4" width="1" height="32" fill="#111"/>
+  <rect x="65" y="4" width="3" height="32" fill="#111"/>
+  <rect x="71" y="4" width="1" height="32" fill="#111"/>
+  <rect x="75" y="4" width="2" height="32" fill="#111"/>
+  <rect x="80" y="4" width="1" height="32" fill="#111"/>
+  <rect x="84" y="4" width="3" height="32" fill="#111"/>
+  <rect x="90" y="4" width="1" height="32" fill="#111"/>
+  <rect x="94" y="4" width="2" height="32" fill="#111"/>
+  <rect x="99" y="4" width="1" height="32" fill="#111"/>
+  <rect x="102" y="4" width="3" height="32" fill="#111"/>
+  <rect x="108" y="4" width="1" height="32" fill="#111"/>
+  <rect x="112" y="4" width="2" height="32" fill="#111"/>
+  <rect x="117" y="4" width="1" height="32" fill="#111"/>
+  <rect x="121" y="4" width="3" height="32" fill="#111"/>
+</svg>
+

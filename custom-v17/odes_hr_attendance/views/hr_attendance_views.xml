@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_view_filter_inherit" model="ir.ui.view">
+        <field name="name">hr_attendance_view_filter.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='employee']" position="after">
+                <filter string="Department" name="department" context="{'group_by': 'department_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_attendance_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.attendance.tree.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">worked_hours&lt;9</attribute>
+            </xpath>
+            <xpath expr="//tree" position="inside">
+                <field name="normal_worked_hours" widget="float_time"/>
+                <field name="overtime_worked_hours" widget="float_time"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

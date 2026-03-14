@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payroll_configuration_inherit_report" model="ir.ui.view">
+        <field name="name">view.hr.payroll.configuration.inherit.report</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='payroll']" position="inside">
+                <block title="Singapore Payroll Add-ons" name="sg_payroll_addons">
+                    <setting id="sg_nric_verification_setting" help="Validate employee identification number for NRIC employee ID type.">
+                        <field name="module_sg_nric_verification"/>
+                    </setting>
+                    <setting id="sg_cimb_report_setting" help="Generate CIMB bank text file report.">
+                        <field name="module_sg_cimb_report"/>
+                    </setting>
+                    <setting id="sg_ocbc_report_setting" help="Generate OCBC bank text file report.">
+                        <field name="module_sg_ocbc_report"/>
+                    </setting>
+                    <setting id="sg_dbs_giro_setting" help="Generate DBS GIRO file for employee salary payments.">
+                        <field name="module_sg_dbs_giro"/>
+                    </setting>
+                    <setting id="sg_appendix8a_report_setting" help="Generate APPENDIX8A income-tax report.">
+                        <field name="module_sg_appendix8a_report"/>
+                    </setting>
+                    <setting id="sg_appendix8b_report_setting" help="Generate APPENDIX8B income-tax report.">
+                        <field name="module_sg_appendix8b_report"/>
+                    </setting>
+                    <setting id="sg_ir21_report_setting" help="Generate IR21 report as per Singapore payroll.">
+                        <field name="module_sg_ir21"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

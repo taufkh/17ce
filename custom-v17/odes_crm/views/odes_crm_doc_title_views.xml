@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_odes_crm_doc_title_tree" model="ir.ui.view">
+        <field name="name">odes.crm.doc.title.tree</field>
+        <field name="model">odes.crm.doc.title</field>
+        <field name="arch" type="xml">
+            <tree string="Documentation Titles">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_odes_crm_doc_title_form" model="ir.ui.view">
+        <field name="name">odes.crm.doc.title.form</field>
+        <field name="model">odes.crm.doc.title</field>
+        <field name="arch" type="xml">
+            <form string="Documentation Titles">
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_odes_crm_doc_title" model="ir.actions.act_window">
+        <field name="name">Documentation Titles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.crm.doc.title</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click create button to create new documentation title.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_odes_crm_doc_title" parent="sale.menu_sale_config" action="action_odes_crm_doc_title" sequence="60"/>
+</odoo>

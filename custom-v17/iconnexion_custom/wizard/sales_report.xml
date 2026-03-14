@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="icon_sales_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">icon.sales.report.wizard.form</field>
+        <field name="model">icon.sales.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="date_start" required="1"/>
+                    <field name="date_end" required="1"/>
+                </group>
+                <footer>
+                    <button string="Confirm" name="print_report_xlsx" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+                
+            </form>            
+        </field>
+    </record>
+    <record id="action_icon_sales_report_wizard" model="ir.actions.act_window">
+            <field name="name">Sales Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">icon.sales.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="o.view_nocontent_smiling_face">
+                </p>
+            </field>
+            
+        </record>
+        
+
+        <menuitem id ="action_icon_sales_report_wizard_menu" name="Sales Report" parent="sale.menu_sale_report" action="action_icon_sales_report_wizard" sequence="150" groups="iconnexion_custom.group_iconnexion_company"/>
+</odoo>

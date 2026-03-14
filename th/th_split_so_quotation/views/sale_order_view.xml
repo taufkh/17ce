@@ -1,0 +1,54 @@
+<odoo>
+    <record id="view_sale_order_form_split_extract" model="ir.ui.view">
+        <field name="name">sale.order.form.split.extract</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_extract_wizard" string="Extract Quotation" type="object"
+                    class="btn-secondary" groups="th_split_so_quotation.group_split_extract_quotation"
+                    invisible="state != 'draft'"/>
+                <button name="action_open_split_wizard" string="Split Quotation" type="object"
+                    class="btn-secondary" groups="th_split_so_quotation.group_split_extract_quotation"
+                    invisible="state != 'draft'"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_split_children"
+                    invisible="split_count == 0" icon="fa-code-fork">
+                    <field name="split_count" string="Split" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="action_view_extracted_children"
+                    invisible="extracted_count == 0" icon="fa-external-link">
+                    <field name="extracted_count" string="Extracted" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="extracted_from_id" readonly="1"/>
+                <field name="split_from_id" string="Source Quotation" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']" position="before">
+                <div class="o_row" invisible="state != 'draft'">
+                    <button name="action_select_all_split_lines" type="object" icon="fa-check"
+                        class="btn btn-secondary btn-sm"
+                        groups="th_split_so_quotation.group_split_extract_quotation"/>
+                    <button name="action_unselect_all_split_lines" type="object" icon="fa-times"
+                        class="btn btn-secondary btn-sm"
+                        groups="th_split_so_quotation.group_split_extract_quotation"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/*[self::tree or self::list]/field[@name='product_id']" position="before">
+                <field name="x_split_select" string="Select Product" widget="boolean_toggle"
+                    groups="th_split_so_quotation.group_split_extract_quotation"
+                    readonly="order_state != 'draft'"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/*[self::tree or self::list]" position="inside">
+                <field name="order_state" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

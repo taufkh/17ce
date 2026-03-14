@@ -1,0 +1,62 @@
+<odoo>
+    <record id="crm_lead_opportunity_tree_timeline" model="ir.ui.view">
+        <field name="name">crm.lead.opportunity.tree.timeline</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="x_estimated_closing_date"/>
+                <field name="x_engagement_date"/>
+                <field name="x_sample_quantity"/>
+                <field name="x_project_lifespan"/>
+                <field name="x_possibility"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_search_timeline" model="ir.ui.view">
+        <field name="name">crm.lead.search.timeline</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="group_by_estimated_closing" string="Estimated Closing Date" domain="[]"
+                    context="{'group_by': 'x_estimated_closing_date'}"/>
+                <filter name="group_by_engagement_date" string="Engagement Date" domain="[]"
+                    context="{'group_by': 'x_engagement_date'}"/>
+                <filter name="group_by_project_lifespan" string="Project Lifespan" domain="[]"
+                    context="{'group_by': 'x_project_lifespan'}"/>
+                <filter name="group_by_possibility" string="Possibility" domain="[]"
+                    context="{'group_by': 'x_possibility'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_pivot_view_timeline" model="ir.ui.view">
+        <field name="name">crm.lead.pivot.timeline</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//pivot" position="inside">
+                <field name="x_estimated_closing_date" type="col" interval="month"/>
+                <field name="x_engagement_date" type="col" interval="month"/>
+                <field name="x_sample_quantity" type="measure"/>
+                <field name="x_project_lifespan" type="row"/>
+                <field name="x_possibility" type="measure"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_graph_view_timeline" model="ir.ui.view">
+        <field name="name">crm.lead.graph.timeline</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_graph"/>
+        <field name="arch" type="xml">
+            <xpath expr="//graph" position="inside">
+                <field name="x_estimated_closing_date" type="row" interval="month"/>
+                <field name="x_sample_quantity" type="measure"/>
+                <field name="x_possibility" type="measure"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

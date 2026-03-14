@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_brand,product.brand,model_product_brand,,1,0,0,0
+access_product_brand_manager,product.brand.manager,model_product_brand,sales_team.group_sale_manager,1,1,1,1
+access_odes_sale_tracker_report,odes.sale.tracker.report,model_odes_sale_tracker_report,,1,1,1,1
+access_odes_sale_tracker_product_report,odes.sale.tracker.product.report,model_odes_sale_tracker_product_report,,1,1,1,1
+access_odes_sale_billing_detail_report,odes.sale.billing.detail.report,model_odes_sale_billing_detail_report,,1,1,1,1
+access_odes_yearly_sale_summary_report,odes.yearly.sale.summary.report,model_odes_yearly_sale_summary_report,,1,1,1,1
+access_odes_yearly_billing_summary_report,odes.yearly.billing.summary.report,model_odes_yearly_billing_summary_report,,1,1,1,1
+access_odes_sale_link_po_to_supplier,odes.sale.link.po.to.supplier,model_odes_sale_link_po_to_supplier,,1,1,1,1
+access_odes_sale_link_po_to_supplier_line,odes.sale.link.po.to.supplier.line,model_odes_sale_link_po_to_supplier_line,,1,1,1,1

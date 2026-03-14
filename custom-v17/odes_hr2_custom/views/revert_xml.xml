@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <menuitem id="hr_expense.menu_hr_expense_my_expenses" name="My Expenses" sequence="1" parent="hr_expense.menu_hr_expense_root" groups="base.group_user"/>
+        <menuitem id="hr_expense.menu_hr_expense_my_expenses_to_submit" sequence="1" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.hr_expense_actions_my_all" name="My Expenses to Report"/>
+        <menuitem id="hr_expense.menu_hr_expense_my_expenses_all" sequence="2" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.hr_expense_actions_my_all" name="All My Expenses"/>
+        <menuitem id="hr_expense.menu_hr_expense_sheet_my_reports" sequence="3" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.action_hr_expense_sheet_my_all" name="My Reports"/>
+
+</odoo>

@@ -1,0 +1,12 @@
+<odoo>
+    <data noupdate="1">
+        <record model="ir.config_parameter" id="api_key_translations">
+            <field name="key">odes_mail_n_card_scanner.api_key_translations</field>
+            <field name="value" type="char"></field>
+        </record>
+        <record model="ir.config_parameter" id="api_key_covve">
+            <field name="key">odes_mail_n_card_scanner.api_key_covve</field>
+            <field name="value" type="char"></field>
+        </record>
+    </data>
+</odoo>

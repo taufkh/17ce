@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_task_tree2_inherit" model="ir.ui.view">
+        <field name="name">project.task.tree</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="task_progressbar" widget="progressbar"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_form2_inherit" model="ir.ui.view">
+        <field name="name">project.task.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_schedule_meeting" type="object"
+                    class="oe_stat_button" icon="fa-calendar">
+                    <div class="o_stat_info">
+                        <field name="meeting_count" class="o_stat_value"/>
+                        <span class="o_stat_text" invisible="meeting_count &lt; 2"> Meetings</span>
+                        <span class="o_stat_text" invisible="meeting_count &gt; 1"> Meeting</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="task_progress"/>
+                
+                <label for="task_progressbar" string=""/>
+                <field name="task_progressbar" nolabel="1" widget="progressbar"/>
+
+                <field name="task_color" invisible="1"/>
+                <field name="task_color_sel" required="1"/>
+                <label for="task_color_render" string=""/>
+                <field name="task_color_render" widget="color" nolabel="1" readonly="1" force_save="1"/>
+            </xpath>
+            <page name="extra_info" position="after">
+                <page name="page_minutes_record" string="Minutes Record">
+                    <field name="event_ids" readonly="1">
+                        <tree>
+                            <field name="name" string="Subject" readonly="1"/>
+                            <field name="allday" invisible="True"/>
+                            <field name="start" string="Start Date"/>
+                            <field name="stop" string="End Date"/>
+                            <field name="duration" widget="float_time" readonly="1"/>
+                            <button name="view_event" string="View" type="object"/>
+                        </tree>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <!-- Enterprise-only: project_enterprise.project_task_view_gantt not available in Community
+    <record id="odes_project_task_view_gantt_inherit" model="ir.ui.view">
+        <field name="name">odes.project.task.view.gantt.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_enterprise.project_task_view_gantt"/>
+        <field name="arch" type="xml">
+            <gantt position="replace">
+                <gantt date_start="planned_date_begin"
+                    date_stop="planned_date_end"
+                    default_scale="week"
+                    scales="day,week,month,year"
+                    color="task_color"
+                    progress="task_progress"
+                    string="Planning"
+                    thumbnails="{'user_id': 'image_128'}"
+                    js_class="task_gantt"
+                    display_unavailability="1"
+                    sample="1"
+                    precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:full'}">
+                    <templates>
+                        <div t-name="gantt-popover" class="container-fluid">
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <ul class="pl-1 mb-0">
+                                        <li t-if="partner_id"><strong>Customer: </strong> <t t-esc="partner_id[1]"/></li>
+                                        <li><strong>Start Date: </strong> <t t-esc="userTimezoneStartDate.format('YYYY-MM-DD HH:mm:ss')"/></li>
+                                        <li><strong>Stop Date: </strong> <t t-esc="userTimezoneStopDate.format('YYYY-MM-DD HH:mm:ss')"/></li>
+                                        <li><strong>Progress: </strong> <t t-esc="task_progress"/>%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </templates>
+                    <field name="partner_id"/>
+                    <field name="task_progress"/>
+                </gantt>
+            </gantt>
+
+        </field>
+    </record>
+    -->
+</odoo>

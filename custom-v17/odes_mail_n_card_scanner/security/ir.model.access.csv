@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odes_mail_to_crm_wizard,odes.mail.to.crm.wizard,model_odes_mail_to_crm_wizard,,1,1,1,1
+access_odes_card_scanner_wizard,odes.card.scanner.wizard,model_odes_card_scanner_wizard,,1,1,1,1
+access_odes_card_scanner_contact_wizard,odes.card.contact.scanner.wizard,model_odes_card_scanner_contact_wizard,,1,1,1,1

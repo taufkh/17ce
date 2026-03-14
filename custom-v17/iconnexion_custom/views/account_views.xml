@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">                
+                <header position="inside">
+                <button name="button_send_notif" type="object"  string="Send CS Notif" invisible="payment_state == 'not_paid'" class="btn-primary"/>
+                </header>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="customer_ref" string="Customer Reference"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="contact_id"  domain="[('parent_id','=',partner_id)]"/>
+                </xpath>
+                <xpath expr="//div[@name='journal_div']" position="after">
+                    <field name="currency_rate" string="Currency" digits="[12,12]" invisible="move_type != 'in_invoice'"/>
+                    <field name="sale_quotation_no_id"/>    
+                    <field name="sale_order_no_id"/>    
+                    <field name="po_no" string="PO No" readonly="1"/>    
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_view_form_inherit" model="ir.ui.view">
+            <field name="name">account.view.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//sheet/group/group[2]/div/field[@name='journal_id']" position="after">
+                    <field name="currency_rate"/>
+                </xpath> -->
+
+                <!-- v16: is_split_by_line_downpayment removed; use product_id as anchor instead -->
+                <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='product_id']" position="before">
+                    <field name="serial_numbers"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_account_payments2" model="ir.actions.act_window">
+            <field name="name">PI Payments</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="domain">[('sale_id','!=',False)]</field>
+            <field name="context">{
+                'default_payment_type': 'inbound',
+                'default_partner_type': 'customer',
+                'search_default_inbound_filter': 1,
+                'default_move_journal_types': ('bank', 'cash'),
+            }</field>
+            <field name="view_id" ref="account.view_account_payment_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Register a PI payment
+                </p><p>
+                  
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_action_account_payments_receivable2" action="action_account_payments2" sequence="18" parent="account.menu_finance_receivables"/>
+
+
+        <record id="proforma_invoice_view_move_tree" model="ir.ui.view">
+            <field name="name">proforma.account.move.tree</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <tree string="Journal Entries" sample="1" create="0">
+                    <field name="name"/>
+                    <field name="partner_id" string="Customer" optional="show"/>
+                    <field name="ref" optional="hide"/>
+                    <field name="activity_ids" widget="list_activity" optional="show"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                    <field name="amount_untaxed_signed" string="Tax Excluded" sum="Total" optional="show"/>
+                    <field name="amount_total_signed" sum="Total Amount" string="Total" decoration-bf="1"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'posted'"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="proforma_invoice_view_move_form" model="ir.ui.view">
+            <field name="name">proforma.account.move.form</field>
+            <field name="model">account.move</field>
+            <!-- v16: type="html" → type="xml" to avoid HTML parser stripping attribute values -->
+            <field name="arch" type="xml">
+                <form>
+                    <!--invisible field-->
+                    <field name="is_proforma_invoice" invisible="1"/>
+                    <field name="payment_state" invisible="1"/>
+                    <field name="show_reset_to_draft_button" invisible="1"/>
+                    <field name="show_name_warning" invisible="1"/>
+                    <field name="posted_before" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="suitable_journal_ids" invisible="1"/>
+                    <field name="invoice_filter_type_domain" invisible="1"/>
+                    <field name="commercial_partner_id" invisible="1"/>
+                    <field name="bank_partner_id" invisible="1"/>
+                    <field name="display_qr_code" invisible="1"/>
+                    <field name="is_pi_clear" invisible="1"/>
+                    <field name="is_generate_proforma_partial" invisible="1"/>
+                    <field name="is_generate_proforma_partial_before_delivery" invisible="1"/>
+
+                    <header>
+                        <!-- Post -->
+                        <button name="action_post" string="Confirm" class="oe_highlight"
+                                type="object" groups="account.group_account_invoice"
+                                invisible="state != 'draft' or not is_proforma_invoice"/>
+                        <!-- Register Payment (only invoices / receipts) -->
+                        <button name="action_register_payment_proforma" id="account_invoice_payment_btn"
+                                type="object" class="oe_highlight"
+                                invisible="((state != 'posted' or is_pi_clear) or amount_dep_paid_2nd != 0) or not is_generate_proforma_partial_before_delivery"
+                                context="{'dont_redirect_to_payments': True}"
+                                string="Register Payment"
+                                groups="account.group_account_invoice"/>
+                        <button name="action_register_payment_proforma" id="account_invoice_payment_btn"
+                                type="object" class="oe_highlight"
+                                invisible="((state != 'posted' or is_pi_clear) or amount_dep_paid_2nd != 0) or not is_generate_proforma_partial"
+                                context="{'dont_redirect_to_payments': True}"
+                                string="Register Payment"
+                                groups="account.group_account_invoice"/>
+                        <button name="action_register_payment_proforma_so" id="account_invoice_payment_btn"
+                                type="object" class="oe_highlight"
+                                invisible="((state != 'posted' or is_pi_clear) or amount_dep_paid != 0) or not is_generate_proforma_partial_before_delivery"
+                                context="{'dont_redirect_to_payments': True}"
+                                string="Register Payment"
+                                groups="account.group_account_invoice"/>
+                        <button name="action_register_payment_proforma_quo" id="account_invoice_payment_btn"
+                                type="object" class="oe_highlight"
+                                invisible="((state != 'posted' or is_pi_clear) or is_generate_proforma_partial_before_delivery) or is_generate_proforma_partial"
+                                context="{'dont_redirect_to_payments': True}"
+                                string="Register Payment"
+                                groups="account.group_account_invoice"/>
+                        <!-- Cancel -->
+                        <button name="button_cancel" string="Cancel" type="object" groups="account.group_account_invoice"
+                                invisible="not id or state != 'draft'"/>
+                        <button name="button_draft" string="Reset to Draft" type="object" groups="account.group_account_invoice"
+                                invisible="not show_reset_to_draft_button"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Paid"
+                                invisible="not is_pi_clear"/>
+                        <div class="oe_title">
+                            <!-- Invoice draft header -->
+                            <h1>
+                                <span invisible="state != 'draft' or name != '/'">Draft</span>
+                            </h1>
+
+                            <!-- Number -->
+                            <span class="text-warning" invisible="not show_name_warning">The current highest number is <field name="highest_name"/>. You might want to put a higher number here.</span>
+                            <h1 class="mt0" invisible="name == '/'">
+                                <field name="name" placeholder="PI/2016/00001" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group id="header_left_group">
+                                <div class="o_td_label">
+                                    <label for="partner_id" string="Customer" style="font-weight:bold;"
+                                           invisible="not is_proforma_invoice"/>
+                                </div>
+                                <field name="partner_id" widget="res_partner_many2one" nolabel="1"
+                                       context="{
+                                            'res_partner_search_mode': (context.get('default_move_type', 'entry') in ('out_invoice', 'out_refund', 'out_receipt') and 'customer') or (context.get('default_move_type', 'entry') in ('in_invoice', 'in_refund', 'in_receipt') and 'supplier') or False,
+                                            'show_address': 1, 'default_is_company': True, 'show_vat': True}"
+                                       options='{"always_reload": True, "no_quick_create": True}'
+                                       invisible="not is_proforma_invoice"/>
+                                <field name="contact_id"/>
+                                <field name="partner_shipping_id"/>
+                                <field name="ref"/>
+                            </group>
+                            <group id="header_right_group">
+                                <!-- Invoice payment terms (only invoices) + due date (only invoices / receipts) -->
+                                <label for="invoice_payment_term_id" string="Due Date"
+                                       invisible="not is_proforma_invoice"/>
+                                <div class="d-flex" invisible="not is_proforma_invoice">
+                                    <field name="invoice_date_due" force_save="1"
+                                           placeholder="Date"
+                                           invisible="invoice_payment_term_id"/>
+                                    <span class="o_form_label mx-3 oe_edit_only"
+                                          invisible="state != 'draft' or invoice_payment_term_id"> or </span>
+                                    <field name="invoice_payment_term_id"
+                                           placeholder="Terms"/>
+                                </div>
+
+                                <field name="sale_order_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page id="invoice_tab"
+                                  string="Proforma Invoice Line"
+                                  invisible="not is_proforma_invoice">
+                                <field name="invoice_line_ids" mode="tree,kanban"
+                                readonly="state in ('posted', 'cancel')">
+                                    <tree editable="bottom" string="Journal Items" default_order="sequence, date desc, move_name desc, id">
+                                        <control>
+                                            <create name="add_line_control" string="Add a line"/>
+                                            <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                        </control>
+
+                                        <!-- Displayed fields -->
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="move_name" invisible="1"/>
+                                        <field name="serial_numbers"/>
+                                        <field name="product_id"
+                                               optional="show"/>
+                                        <field name="name" widget="section_and_note_text"/>
+                                        <field name="quantity"/>
+                                        <field name="product_uom_category_id" invisible="1"/>
+                                        <field name="product_uom_id" string="UoM" groups="uom.group_uom" optional="show"/>
+                                        <field name="price_unit" string="Price"/>
+                                        <field name="discount" string="Disc.%" optional="hide"/>
+                                        <field name="tax_ids" widget="many2many_tags"
+                                               options="{'no_create': True}"
+                                               optional="show"/>
+                                        <field name="price_subtotal"
+                                               string="Subtotal"
+                                               groups="account.group_show_line_subtotals_tax_excluded"/>
+                                        <field name="price_total"
+                                               string="Total"
+                                               groups="account.group_show_line_subtotals_tax_included"/>
+
+                                        <!-- Others fields -->
+                                        <field name="partner_id" invisible="1"/>
+                                        <field name="amount_currency" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="debit" invisible="1"/>
+                                        <field name="credit" invisible="1"/>
+                                        <field name="date" invisible="1"/>
+                                        <field name="date_maturity" invisible="1"/>
+
+                                        <field name="tax_line_id" invisible="1"/>
+                                        <field name="tax_repartition_line_id" invisible="1"/>
+                                        <field name="tax_tag_ids" invisible="1"/>
+                                        <field name="tax_base_amount" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="company_currency_id" invisible="1"/>
+                                        <field name="display_type" force_save="1" invisible="1"/>
+                                        <field name="account_internal_type" invisible="1"/>
+                                        <field name="account_internal_group" invisible="1"/>
+                                    </tree>
+
+                                    
+                                </field>
+
+                                <!-- Totals (only invoices / receipts) -->
+                                <group class="oe_subtotal_footer oe_right"
+                                    invisible="not is_proforma_invoice">
+                                    <field name="amount_untaxed" invisible="amount_tax == 0"/>
+                                    <field name="amount_dep_paid" invisible="amount_dep_paid == 0 or not is_proforma_invoice"/>
+                                    <field name="amount_dep_paid_2nd" invisible="amount_dep_paid_2nd == 0 or not is_proforma_invoice"/>
+                                    <!-- <field name="amount_by_group" widget="tax-group-custom-field" nolabel="1" colspan="2" invisible="amount_tax == 0"/> -->
+                                    <field name="amount_tax" string="Taxes"/>
+                                    <field name="amount_total" invisible="amount_tax != 0"/>
+                                    <field name="amount_total" class="oe_subtotal_footer_separator" invisible="amount_tax == 0"/>
+                                    <field name="amount_balance" invisible="amount_dep_paid_2nd == 0"/>
+                                    <field name="amount_balance" invisible="amount_dep_paid == 0"/>
+
+                                    
+                                </group>
+                                <field name="narration" placeholder="Terms and Conditions" class="oe_inline" nolabel="1"/>
+                            </page>
+                            <page id="aml_tab" string="Journal Items" groups="account.group_account_readonly">
+                                <div class="alert alert-info text-center mb-0" role="alert" invisible="payment_state != 'invoicing_legacy' or not is_proforma_invoice">
+                                    <span>This entry has been generated through the Invoicing app, before installing Accounting. Its balance has been imported separately.</span>
+                                </div>
+                                <field name="line_ids">
+                                    <tree editable="bottom" string="Journal Items" decoration-muted="display_type in ('line_section', 'line_note')" default_order="sequence, date desc, move_name desc, id">
+                                        <!-- Displayed fields -->
+                                        <field name="account_id"
+                                               invisible="display_type in ('line_section', 'line_note')" required="display_type not in ('line_section', 'line_note')"
+                                               domain="[('deprecated', '=', False), ('company_id', '=', parent.company_id)]" />
+                                        <field name="name" widget="section_and_note_text" optional="show"/>
+                                        <field name="tax_ids" widget="many2many_tags"
+                                               optional="hide"
+                                               domain="[('type_tax_use', '=?', parent.invoice_filter_type_domain)]"
+                                               context="{'append_type_to_tax_name': not parent.invoice_filter_type_domain}"
+                                               options="{'no_create': True}"
+                                               force_save="1"
+                                               />
+                                        <field name="debit"
+                                               sum="Total Debit"
+                                               invisible="display_type in ('line_section', 'line_note')"/>
+                                        <field name="credit"
+                                               sum="Total Credit"
+                                               invisible="display_type in ('line_section', 'line_note')"/>
+                                        <field name="tax_fiscal_country_id" invisible="1"/>
+                                        <field name="tax_tag_ids" widget="many2many_tags" string="Tax Grids" optional="show" domain="[('country_id', '=', tax_fiscal_country_id), ('applicability', '=', 'taxes')]"/>
+
+
+                                        <!-- Others fields -->
+                                        <field name="payment_id" invisible="1"/>
+
+                                        <field name="product_id" invisible="1"/>
+                                        <field name="quantity" invisible="1"/>
+                                        <field name="product_uom_category_id" invisible="1"/>
+                                        <field name="product_uom_id" invisible="1"/>
+                                        <field name="price_unit" invisible="1"/>
+                                        <field name="discount" invisible="1"/>
+                                        <field name="price_subtotal" invisible="1"/>
+                                        <field name="price_total" invisible="1"/>
+
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="move_name" invisible="1"/>
+                                        <field name="date" invisible="1"/>
+                                        <field name="tax_line_id" invisible="1"/>
+                                        <field name="tax_group_id" invisible="1"/>
+                                        <field name="tax_repartition_line_id" invisible="1" force_save="1"/>
+                                        <field name="tax_base_amount" invisible="1" force_save="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="company_currency_id" invisible="1"/>
+                                        <field name="display_type" force_save="1" invisible="1"/>
+                                        <field name="account_internal_type" invisible="1"/>
+                                        <field name="account_internal_group" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                             <page id="other_tab" string="Other Info" name="other_info"
+                                  invisible="not is_proforma_invoice">
+                                <group id="other_tab_group">
+                                    <group string="Pro-Forma Invoice"
+                                           name="sale_info_group"
+                                           invisible="not is_proforma_invoice">
+                                        <label for="ref" string="Customer Reference" />
+                                        <field name="ref" nolabel="1"/>
+                                        <field name="user_id" invisible="1" force_save="1"/>
+                                        <field name="invoice_user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"/>
+                                        <field name="invoice_origin" string="Source Document" force_save="1" invisible="1"/>
+                                        <field name="partner_bank_id"
+                                               context="{'default_partner_id': bank_partner_id}"
+                                               domain="[('partner_id', '=', bank_partner_id)]"
+                                               readonly="state != 'draft'"/>
+                                        <field name="qr_code_method"
+                                               invisible="not display_qr_code"/>
+                                    </group>
+                                    <group string="Accounting"
+                                           name="accounting_info_group"
+                                           invisible="not is_proforma_invoice">
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                        <field name="invoice_incoterm_id"/>
+                                        <field name="fiscal_position_id"/>
+                                        <field name="invoice_cash_rounding_id" groups="account.group_cash_rounding"/>
+                                        <field name="invoice_source_email"
+                                               widget="email"
+                                               invisible="not is_proforma_invoice"/>
+                                        <field name="auto_post"
+                                               readonly="state != 'draft'"/>
+                                        <field name="to_check"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="proforma_invoice_view_server_action" model="ir.actions.server">
+            <field name="name">Proforma Invoice</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">action = env.get('account.move').action_internal_proforma_invoice()</field>
+        </record>
+
+        <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+            <field name="name">Invoices</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="account.view_out_invoice_tree"/>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="domain">[('move_type', '=', 'out_invoice'),('is_proforma_invoice','=', False)]</field>
+            <field name="context">{'default_move_type': 'out_invoice'}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a customer invoice
+              </p><p>
+                Create invoices, register payments and keep track of the discussions with your customers.
+              </p>
+            </field>
+        </record>
+        
+
+        <record id="proforma_invoice_view_action" model="ir.actions.act_window">
+            <field name="name">Pro-Forma Invoice</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('is_proforma_invoice','=', True)]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a proforma invoice
+              </p><p>
+                Create proforma invoices, register payments and keep track of the discussions with your customers.
+              </p>
+            </field>
+        </record>
+
+        <record id="proforma_invoice_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="proforma_invoice_view_move_tree"/>
+            <field name="act_window_id" ref="proforma_invoice_view_action"/>
+        </record>
+
+        <record id="proforma_invoice_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="proforma_invoice_view_move_form"/>
+            <field name="act_window_id" ref="proforma_invoice_view_action"/>
+        </record>
+
+        <menuitem id="proforma_invoice_menu"
+            name="Pro-Forma Invoice"
+            parent="account.menu_finance_receivables"
+            action="proforma_invoice_view_server_action"
+            sequence="1"/>
+
+        <!-- v16: moved from sales_order_views.xml (load order fix) -->
+        <menuitem id="menu_sale_proforma_invoice"
+            action="proforma_invoice_view_server_action"
+            parent="sale.sale_order_menu"
+            sequence="8"
+            groups="sales_team.group_sale_salesman"/>
+    </data>
+</odoo>

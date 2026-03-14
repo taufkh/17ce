@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- <record id="group_odes_limited_currency" model="res.groups">
+            <field name="name">ODES / Limited Currency</field>
+        </record> -->
+
+        <record id="group_odes_view_price" model="res.groups">
+            <field name="name">View Item Purchase Price</field>
+        </record>
+
+        <record id="group_odes_manager" model="res.groups">
+            <field name="name">CRM Manager</field>
+        </record>
+
+        <record id="group_odes_company" model="res.groups">
+            <field name="name">CRM ODES</field>
+        </record>
+
+        <record id="group_mccoy_company" model="res.groups">
+            <field name="name">CRM McCoy / iConnexion</field>
+        </record>
+
+        <record id="group_confirm_so" model="res.groups">
+            <field name="name">Confirm Quotation</field>
+        </record>
+
+        <record id="group_full_employee" model="res.groups">
+            <field name="name">Full Access Employee</field>
+        </record>
+
+        <record id="group_ts_extra_columns" model="res.groups">
+            <field name="name">Timesheets Extra Columns</field>
+            <field name="share">True</field>
+        </record>
+
+        <!-- <record id="group_iconnexion_company" model="res.groups">
+            <field name="name">iConnexion Company</field>
+        </record> -->
+
+        <!-- <record id="odes_currency_rule" model="ir.rule">
+            <field name="name">ODES Limited Currency</field>
+            <field name="model_id" ref="model_res_currency"/>
+            <field name="domain_force">[('id', 'in', user.currency_ids.ids)]</field>
+            <field name="groups" eval="[(4, ref('odes_custom.group_odes_limited_currency'))]"/>
+        </record> -->
+
+        <!-- Enterprise-only: approval_request_followers_rule disabled (requires 'approvals' module not in Community)
+        <record id="approval_request_followers_rule" model="ir.rule">
+            <field name="name">Approval request followers rule</field>
+            <field name="model_id" ref="model_approval_request"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="domain_force">[('follower_ids','in', (user.id,))]</field>
+        </record>
+        -->
+
+        <record id="daily_work_report_visible_rule" model="ir.rule">
+            <field name="name">Daily Work Report: Own Report</field>
+            <field name="model_id" ref="model_hr_daily_work_report"/>
+            <field name="groups" eval="[(4, ref('hr_timesheet.group_hr_timesheet_user'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">['|', ('employee_id', 'in', user.employee_ids.ids), ('employee_id.timesheet_company_ids', 'in', user.timesheet_company_ids.ids)]</field>
+        </record>
+
+        <record id="daily_work_report_manager" model="ir.rule">
+            <field name="name">Daily Work Report: Manager</field>
+            <field name="model_id" ref="model_hr_daily_work_report"/>
+            <field name="groups" eval="[(4, ref('hr_timesheet.group_hr_timesheet_approver'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">['|', ('employee_id', 'in', user.employee_ids.ids), ('employee_id.timesheet_company_ids', 'in', user.timesheet_company_ids.ids)]</field>
+        </record>
+
+        <record id="daily_work_report_admin" model="ir.rule">
+            <field name="name">Daily Work Report: Administrator</field>
+            <field name="model_id" ref="model_hr_daily_work_report"/>
+            <field name="groups" eval="[(4, ref('hr_timesheet.group_timesheet_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+    </data>
+</odoo>

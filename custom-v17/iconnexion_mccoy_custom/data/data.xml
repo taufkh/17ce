@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="design_owner_approval_notification">
+            <div>
+                <p>Hi,</p>
+                <t t-if="not lead.design_owner_id">
+                    <p>The <strong>Design Owner</strong> for [<t t-esc="lead.name" />] needs to be approved. Please check!</p>
+                </t>
+                <t t-if="lead.design_owner_id">
+                    <p>The <strong>Design Owner</strong> for [<t t-esc="lead.name" />] needs to be changed from <strong><t t-esc="lead.design_owner_id.name" /></strong> to <strong><t t-esc="lead.design_owner_prepare_id.name" /></strong>. Please check!</p>
+                </t>
+                <t t-if="lead.reason_change_design_owner">
+                    <p>Reason for change: <strong><t t-esc="lead.reason_change_design_owner" /></strong></p>
+                </t>
+                <p>Thank You</p>
+            </div>
+        </template>
+        <template id="finance_cs_notif_paid_pi">
+            <div>
+                <p>Hi CS,</p>
+                <p>[<t t-esc="invoice.name" />] has been <t t-if="invoice.pi_payment_state == 'paid'">Paid</t><t t-if="invoice.pi_payment_state == 'partial'">Partially Paid</t>. Please check!</p>
+                <p>Thank You</p>
+            </div>
+        </template>
+    </data>
+</odoo>

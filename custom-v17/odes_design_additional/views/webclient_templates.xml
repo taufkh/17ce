@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="odes_design assets backend" inherit_id="web.assets_backend">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/odes_design_additional/static/src/scss/odes_style.scss"/>
+        </xpath>
+        
+                      
+                
+    </template>
+    
+    
+    
+
+    
+</odoo>

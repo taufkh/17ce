@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_location_form_inherit" model="ir.ui.view">
+        <field name="name">stock.location.form.inherit</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='comment']" position="before">
+                <group string="Technical Settings" groups="base.group_no_one">
+                    <field name="is_sample_location"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_location_tree2_inherit" model="ir.ui.view">
+        <field name="name">stock.location.tree.inherit</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_tree2" />
+        <field name="arch" type="xml">
+            <field name="complete_name" position="before">
+                <field name="is_sample_location" invisible="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

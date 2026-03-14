@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+        <menuitem id="rebranding_config_parent"
+            name="ODES Installer"
+            parent="base.menu_administration" 
+            sequence="99"
+             /> 
+        
+        <menuitem id="rebranding_config_parent_data"
+            name="Data"
+            parent="rebranding_config_parent" 
+            sequence="1"
+             /> 
+        <menuitem id="rebranding_config_parent_action"
+            name="Action"
+            parent="rebranding_config_parent" 
+            sequence="2"
+             /> 
+        
+        <menuitem id="rebranding_category_parent_action"
+            name="Menu Category"
+            parent="rebranding_config_parent" 
+            sequence="2"
+             /> 
+        
+        
+        
+        
+        
+
+</odoo>

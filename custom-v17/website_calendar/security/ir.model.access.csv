@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_calendar_appointment_type_user,calendar.appointment.type.user,model_calendar_appointment_type,base.group_user,1,1,1,1
+access_calendar_appointment_question_user,calendar.appointment.question.user,model_calendar_appointment_question,base.group_user,1,1,1,1
+access_calendar_appointment_answer_user,calendar.appointment.answer.user,model_calendar_appointment_answer,base.group_user,1,1,1,1

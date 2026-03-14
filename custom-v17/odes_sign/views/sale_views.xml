@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_odes_sign_sale_inherit_form" model="ir.ui.view">
+            <field name="name">odes.sign.sale.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+
+
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button" type="object" name="get_attachment" icon="fa-files-o" invisible="attach_oppurtunity_count == 0" >
+                    <div class="o_stat_info">
+                        <field name="attach_oppurtunity_count" class="o_stat_value"/>
+                        <span class="o_stat_text" invisible="attach_oppurtunity_count &lt; 2"> Attachments</span>
+                        <span class="o_stat_text" invisible="attach_oppurtunity_count &gt; 1"> Attachment</span>
+                    </div>
+                </button>
+                </div>
+
+                <xpath expr="//field[@name='order_line'/tree/product_uom]" position="after">
+                    <field name="request_date" optional="hide"/>
+                    <field name="promise_date" optional="hide"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+        <record id="odes_sign_sale_order_forecasted_inherit_form_view" model="ir.ui.view">
+            <field name="name">odes.sign.sale.order.forecasted.inherit.form.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority">101</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_forecats_line_ids']/tree/field[@name='amount']" position="after">
+                    <field name="percent_amount" />
+                </xpath>
+
+                <xpath expr="//header" position="inside">
+                    <button name="button_readjust_taxes" type="object" string="Update Taxes" invisible="state != 'sale'"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="odes_product_configurator_form_inherit" model="ir.ui.view">
+            <field name="name">odes.product.configuration.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_product_configurator.sale_order_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='product_template_id']" position="replace">
+                </xpath>
+                <xpath expr="//tree/field[@name='product_id']" position="before">
+                    <field name="product_template_id"
+                                      string="Product Picker"
+                                      readonly="not product_updatable" required="not display_type" column_invisible="parent.company_id != 2"
+                                      optional="hide"
+                                      options="{'no_open': True}"
+                                      context="{
+                                          'partner_id': parent.partner_id,
+                                          'quantity': product_uom_qty,
+                                          'pricelist': parent.pricelist_id,
+                                          'uom':product_uom,
+                                          'company_id': parent.company_id,
+                                          'default_list_price': price_unit,
+                                          'default_description_sale': name
+                                      }"
+                                      domain="[('sale_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
+                                      widget="product_configurator"/>
+                </xpath>
+            </field>
+        </record>
+
+
+</odoo>

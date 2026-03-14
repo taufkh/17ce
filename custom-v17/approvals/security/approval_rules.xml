@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_request_user_rule" model="ir.rule">
+        <field name="name">Approval Request User Access</field>
+        <field name="model_id" ref="model_approval_request"/>
+        <field name="groups" eval="[(4, ref('approvals.group_approval_user'))]"/>
+        <field name="domain_force">['|', ('request_owner_id', '=', user.id), ('approver_ids.user_id', '=', user.id)]</field>
+    </record>
+
+    <record id="approval_request_manager_rule" model="ir.rule">
+        <field name="name">Approval Request Manager Access</field>
+        <field name="model_id" ref="model_approval_request"/>
+        <field name="groups" eval="[(4, ref('approvals.group_approval_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>
+

@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_hr_expense_configuration_inherited_view" model="ir.ui.view">
+        <field name="name">view.hr.expense.configuration.inherited.view</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_expense.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='hr_expense']" position="inside">
+                <block title="Singapore Expense Add-ons" name="sg_expense_addons">
+                    <setting id="sg_expense_maxcap_setting" help="Manage maximum reimbursement amount per employee contract.">
+                        <field name="module_sg_expense_maxcap"/>
+                    </setting>
+                    <setting id="sg_expense_payroll_setting" help="Include reimbursable expense amounts in payslip computation.">
+                        <field name="module_sg_expense_payroll"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

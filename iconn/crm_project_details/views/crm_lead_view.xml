@@ -1,0 +1,27 @@
+<odoo>
+    <record id="view_crm_lead_form_project_details" model="ir.ui.view">
+        <field name="name">crm.lead.form.project.details</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Project Details">
+                    <group string="Basic Project Information" col="2">
+                        <field name="project_name"/>
+                        <field name="application_id"/>
+                        <field name="end_customer_id"/>
+                        <field name="end_product_id"/>
+                        <field name="contract_manufacturer"/>
+                        <field name="design_location"/>
+                        <field name="annual_quantity"/>
+                    </group>
+                    <group string="Production and Scheduling Information" col="2">
+                        <field name="mass_production_schedule"/>
+                        <field name="pilot_run_quantity"/>
+                        <field name="pilot_run_schedule"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

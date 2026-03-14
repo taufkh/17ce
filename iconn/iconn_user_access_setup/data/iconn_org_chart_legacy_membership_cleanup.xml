@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Users already managed via org-chart groups with safe implied mappings -->
+        <record id="user_keith_goh" model="res.users">
+            <field name="groups_id" eval="[(3, ref('base.group_system'))]"/>
+        </record>
+
+        <record id="user_alicia_liew" model="res.users">
+            <field name="groups_id" eval="[
+                (3, ref('iconn_user_access_setup.group_iconn_sales_operations')),
+                (3, ref('iconn_user_access_setup.group_iconn_warehouse_manager'))
+            ]"/>
+        </record>
+
+        <record id="user_rashim" model="res.users">
+            <field name="groups_id" eval="[(3, ref('iconn_user_access_setup.group_iconn_warehouse_user'))]"/>
+        </record>
+
+        <record id="user_barry" model="res.users">
+            <field name="groups_id" eval="[
+                (3, ref('iconn_user_access_setup.group_iconn_warehouse_incoming_only')),
+                (3, ref('iconn_user_access_setup.group_iconn_warehouse_user'))
+            ]"/>
+        </record>
+
+        <record id="user_sk" model="res.users">
+            <field name="groups_id" eval="[(3, ref('iconn_user_access_setup.group_iconn_finance_officer'))]"/>
+        </record>
+
+        <record id="user_kewei" model="res.users">
+            <field name="groups_id" eval="[(3, ref('iconn_user_access_setup.group_iconn_finance_officer'))]"/>
+        </record>
+
+        <record id="user_margaret" model="res.users">
+            <field name="groups_id" eval="[(3, ref('iconn_user_access_setup.group_iconn_customer_service'))]"/>
+        </record>
+
+        <record id="user_nick" model="res.users">
+            <field name="groups_id" eval="[(3, ref('iconn_user_access_setup.group_iconn_sales_manager'))]"/>
+        </record>
+    </data>
+</odoo>

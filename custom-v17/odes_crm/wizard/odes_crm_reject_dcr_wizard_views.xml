@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_odes_crm_reject_dcr_wizard_form" model="ir.ui.view">
+	    <field name="name">odes.crm.reject.dcr.wizard</field>
+	    <field name="model">odes.crm.reject.dcr.wizard</field>
+	    <field name="arch" type="xml">
+	        <form string="Reject Deadline Change Request">
+	            <group>
+                    <field name="reason" required="0"/>
+	            </group>
+
+	            <footer>
+	                <button type="object" name="action_confirm" class="oe_highlight" string="Confirm"/>
+	                <button string="Cancel" class="btn-secondary" special="cancel"/>
+	            </footer>
+	        </form>
+	    </field>
+	</record>
+</odoo>

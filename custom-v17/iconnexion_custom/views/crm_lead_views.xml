@@ -1,0 +1,661 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="icon_pipeline_remark_tree" model="ir.ui.view">
+        <field name="name">icon.pipeline.remark.tree</field>
+        <field name="model">icon.pipeline.remark</field>
+        <field name="arch" type="xml">
+            <tree string="Pipeline items" create='1' editable='bottom'>     
+                <field name="part_id" invisible="1"/>
+                <field name="lead_id" invisible="1"/>
+                <field name="date" invisible="0"/>
+                <field name="remarks" invisible="0" required="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_icon_pipeline_remark_wizard" model="ir.actions.act_window">
+        <field name="name">Remarks</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">icon.pipeline.remark</field>
+        <field name="view_mode">tree</field>        
+        <field name="domain">[('part_id','=',active_id)]</field>
+        <field name="view_id" ref="icon_pipeline_remark_tree"/>        
+    </record>
+    <record id="icon_crm_change_stage_wizard" model="ir.ui.view">
+        <field name="name">odes.crm.backward.stage.wizard</field>
+        <field name="model">odes.crm.backward.stage.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Change Stage">
+                <group>
+                    <group invisible="1">
+                        <field name="lead_id"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group class="oe_title">
+                        <field name="stage_id" domain="([('company_ids', '=', company_id)])" options='{"no_open": True, "no_create": True}' required="1"/>
+                        <field name="stage_sequence" invisible="1"/>
+                        <field name="lead_team_id" invisible="1"/>
+                        <field name="reason" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_change_stage" type="object" class="oe_highlight" string="Change"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_icon_change_stage_wizard" model="ir.actions.act_window">
+        <field name="name">Change Stage</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.crm.backward.stage.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="icon_crm_change_stage_wizard"/>
+        <field name="target">new</field>
+    </record>
+    <record id="icon_odes_part_tree" model="ir.ui.view">
+        <field name="name">odes.part.tree</field>
+        <field name="model">odes.part</field>
+        <field name="arch" type="xml">
+            <tree string="Pipeline items" create='0' editable="bottom">     
+            <field name="lead_id" invisible="0" optional="show" readonly="1" string="Opportunity"/>           
+                <field name="name" required="0" optional="show" readonly="1"/>
+                <field name="manufacture" invisible="0" optional="show" readonly="1"/>
+                <field name="quoted_price_2" invisible="0" optional="show" readonly="1"/>
+                <field name="competitor_information" invisible="0" optional="show" readonly="1"/>
+                <field name="competitor_mpn" invisible="0" optional="show" readonly="1"/>                
+                <field name="competitor_pricing" invisible="0" optional="show" readonly="1"/>
+                <field name="competitor_moq" invisible="0" optional="show" readonly="1"/>
+                <field name="icon_date" invisible="0" optional="show" readonly="1"/>
+                <field name="stage_id_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="create_date" invisible="0" optional="show" readonly="1"/>
+                <field name="create_uid" invisible="0" optional="hide" readonly="1"/>
+                <field name="user_id_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="customer_type_id" invisible="0" optional="show" readonly="1"/>
+                <!-- <field name="display_name" invisible="0" optional="show" readonly="1"/> -->
+                <field name="id" invisible="0" optional="show" readonly="1"/>
+                <field name="product_id" invisible="0" optional="show" readonly="1"/>
+                <field name="write_date" invisible="0" optional="show" readonly="1"/>
+                <field name="write_uid" invisible="0" optional="show" readonly="1"/>
+                
+                <field name="customer_name_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="contact_name_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="contact_number_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="contact_email_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="application_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="project_name_rel" invisible="0" optional="show" readonly="1"/>
+                <field name="deu" invisible="0" optional="show" readonly="1"/>
+                <field name="total_potential" invisible="0" optional="show" readonly="1"/>
+                <field name="last_remark_date" invisible="0" optional="show" readonly="1"/>                
+                <field name="last_remark" invisible="0" optional="show" readonly="1"/>  
+                <field name="last_reason" invisible="0" optional="show" readonly="1"/>      
+                <field name="is_show_on_dashboard" invisible="0" optional="show" readonly="0"/>      
+                 
+                <button name="%(iconnexion_custom.action_icon_pipeline_remark_wizard)d" type="action" string="Remarks" class="oe_highlight"/>
+                <button name="%(iconnexion_custom.action_icon_change_stage_wizard)d" type="action" string="Change Stage" class="oe_highlight"/>
+            </tree>
+        </field>
+    </record>
+    <record id="odes_part_view_search" model="ir.ui.view">
+        <field name="name">odes.part.select</field>
+        <field name="model">odes.part</field>
+        <field name="arch" type="xml">
+            <search string="Search Pipeline Itemsr">
+                <field name="lead_id" string="CRM Reference" filter_domain="[('lead_id.name', 'ilike', self)]"/>                    
+                <field name="name"/>
+                <field name="product_id"/> 
+                <field name="manufacture"/>        
+                <filter string="CRM Stage" name="stage_id_rel" context="{'group_by':'stage_id_rel'}"/>
+
+            </search>
+        </field>
+    </record>
+    <record id="icon_odes_part_action" model="ir.actions.act_window">
+        <field name="name">Pipeline items</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">odes.part</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="icon_odes_part_tree"/>
+        <field name="domain">[]</field>
+        <field name="search_view_id" ref="odes_part_view_search"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+           
+          </p><p>
+            
+          </p>
+        </field>
+    </record>
+	<record id="icon_crm_lead_view_form" model="ir.ui.view">
+        <field name="name">icon.crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']//field[@name='description']" position="replace">
+                 <!-- v16: duplicate invisible removed -->
+                 <field name="description" placeholder="Add a description..." invisible="is_iconnexion"/>
+                 <field name="remarks_ids" invisible="not is_iconnexion">
+                    <tree editable="bottom">
+                        <field name="part_id" invisible="1"/>
+                        <field name="lead_id" invisible="1"/>
+                        <field name="date" invisible="0"/>
+                        <field name="remarks" invisible="0"/>
+                    </tree>
+                 </field>
+            </xpath>
+            <!-- <xpath expr="//field[@name='source']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath> -->
+            <xpath expr="//group[@name='opportunity_partner']//field[@name='partner_id']" position="after">
+                <field name="contact_id"  domain="[('parent_id','=',partner_id)]" context="{'default_parent_id': partner_id,'form_view_ref': 'iconnexion_custom.view_partner_form3','mail_create_nolog':True}"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="button_sample_request" type="object"
+                    class="oe_stat_button" icon="fa-pencil-square-o"
+                    context="{'partner_id': partner_id}"
+                    invisible="type == 'lead'">
+                    <div class="o_stat_info">
+                        <field name="sample_request_count" class="o_stat_value"/>
+                        <span class="o_stat_text" invisible="sample_request_count &lt; 2"> Sample Requests</span>
+                        <span class="o_stat_text" invisible="sample_request_count &gt; 1"> Sample Request</span>
+                    </div>
+                </button>
+            </xpath>
+        	<xpath expr="//group[@name='lead_partner']//field[@name='partner_name']" position="after">
+
+        		<field name="business_type_id" domain="[('type','=','business')]" widget="selection" invisible="not is_iconnexion" />
+        		<field name="customer_type_id" domain="[('type','=','customer')]" widget="selection" invisible="not is_iconnexion"/>
+                <field name="business_activity_id" domain="[('type','=','activity')]" widget="selection" invisible="not is_iconnexion"/>
+                <field name="is_iconnexion" invisible="1" />
+
+        	</xpath>
+
+        	<xpath expr="//notebook" position="inside">
+        		<page name="dip" string="DIP" invisible="not is_iconnexion">
+        			<group>
+        				<field name="is_required_dip" invisible="1"/>
+        				<field name="dip_type_fill" required="is_required_dip" invisible="1"/>
+        				<field name="dip_type" widget="radio" invisible='1' />
+                    </group>
+	        		
+                    <separator string = "DIP Information"/>
+	        		<field name="crm_icon_dip_ids" invisible="dip_type != 'bidding'">
+
+                        <tree editable="bottom" create="0">
+                            <field name="product_id"/>
+                            <field name="bidding_id" domain="[('type','=','bidding')]" widget="hover2"/>
+                            <field name="dip_notes" string="Notes" nolabel="1" style="visibility:hidden;width:1px !important;"/>
+                            <field name="bidding_remark"/>
+                            <field name="crm_icon_dip_id" invisible="1"/>                        
+                          
+                        </tree>
+                        <form>
+                            <group>
+                                 <field name="product_id"/>
+                                 <field name="bidding_id"/>
+                                 <field name="bidding_remark"/>
+                             </group>
+                        </form>
+                      
+                    </field>
+	        	
+	        		<field name="crm_icon_dip_design_ids" invisible="dip_type != 'design'">
+                        <tree editable="bottom" create="0">
+                            <field name="product_id"/>
+                            <field name="design_id" domain="[('type','=','design')]" widget="hover2"/>
+                            <field name="dip_notes" string="Notes" nolabel="1" style="visibility:hidden;width:1px !important;"/>
+                            <field name="design_remark"/>                           
+                            
+                        </tree>
+
+                        <form>
+                             <field name="product_id"/>
+                             <field name="design_id"/>
+                             <field name="design_remark"/>
+                        </form>
+                      
+                    </field>
+	        		
+	        		<field name="crm_icon_dip_enquiry_ids" invisible="dip_type != 'technical'">
+                        <tree editable="bottom" create="0">
+                            <field name="product_id"/>
+                            <field name="technical_id" domain="[('type','=','technical')]" widget="hover2"/>
+                            <field name="dip_notes" string="Notes" nolabel="1" style="visibility:hidden;width:1px !important;"/>
+                            <field name="technical_remark"/>                           
+                         
+                        </tree>
+                         <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="technical_id"/>
+                                <field name="technical_remark"/>
+                            </group>
+                        </form>
+                      
+                    </field>
+	        		
+                    
+                    <field name="crm_icon_dip_trading_ids" invisible="dip_type != 'trading'">
+                        <tree editable="bottom" create="0">                           
+                            <field name="product_id"/>
+                            <field name="trading_id" domain="[('type','=','trading')]" widget="hover2"/>
+                            <field name="dip_notes" string="Notes" nolabel="1" style="visibility:hidden;width:1px !important;"/>
+                            <field name="trading_remark"/>                                                     
+                        </tree>
+                         <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="trading_id"/>
+                                <field name="trading_remark"/>
+                            </group>
+                        </form>
+
+                       
+                    </field>
+                    <separator string = "Remarks History"/>
+                    <field name="crm_bidding_history_ids" invisible="dip_type != 'bidding'">
+                        <tree create="0" edit="0" delete="0">                            
+                            <field name="product_id"/>
+                            <field name="bidding_remark"/>
+                            <field name="check_datetime" widget="datetime"/>                           
+                            
+                        </tree>
+                         <form>
+                            <group>
+                                <field name="product_id"/>                           
+                                <field name="bidding_remark"/>
+                                <field name="check_datetime" widget="datetime"/>
+                            </group>
+                        </form>
+
+                    </field>
+
+                    <field name="crm_design_history_ids" invisible="dip_type != 'design'">
+                        <tree create="0" edit="0" delete="0">
+                            
+                            <field name="product_id"/>
+                            <field name="design_remark"/>
+                            <field name="check_datetime" widget="datetime"/>                                                  
+                        </tree>
+
+                         <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="design_remark"/>
+                                <field name="check_datetime" widget="datetime"/>
+                            </group>
+                        </form>
+
+                    </field>
+
+                    <field name="crm_technical_history_ids" invisible="dip_type != 'technical'">
+                        <tree create="0" edit="0" delete="0">
+                            
+                            <field name="product_id"/>
+                            <field name="technical_remark"/>
+                            <field name="check_datetime" widget="datetime"/>
+                         
+                        </tree>
+                         <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="technical_remark"/>
+                                <field name="check_datetime" widget="datetime"/>
+                            </group>
+                        </form>
+
+                    </field>
+
+                    <field name="crm_trading_history_ids" invisible="dip_type != 'trading'">
+                        <tree create="0" edit="0" delete="0">
+                            
+                            <field name="product_id"/>
+                            <field name="trading_remark"/>
+                            <field name="check_datetime" widget="datetime"/>
+                            
+                            
+
+                        </tree>
+                         <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="trading_remark"/>
+                                <field name="check_datetime" widget="datetime"/>
+                            </group>
+                        </form>
+
+                    </field>
+
+                    <separator string = "Status History"/>
+                    <field name="crm_bidding_status_history_ids" invisible="dip_type != 'bidding'">
+                        <tree create="0" edit="0" delete="0">
+                            
+                            <field name="product_id"/>
+                            <field name="bidding_id"/>
+                            <field name="bidding_status_datetime" widget ="datetime"/>
+                            
+                            
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="bidding_id"/>
+                                <field name="bidding_status_datetime" widget ="datetime"/>
+                            </group>
+                        </form>
+
+                    </field>
+
+                     <field name="crm_design_status_history_ids" invisible="dip_type != 'design'">
+                        <tree create="0" edit="0" delete="0">
+                            
+                            <field name="product_id"/>
+                            <field name="design_id"/>
+                            <field name="design_status_datetime" widget ="datetime"/>
+                            
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="design_id"/>
+                                <field name="design_status_datetime" widget ="datetime"/>
+                            </group>
+                        </form>
+
+                    </field>
+
+                    <field name="crm_technical_status_history_ids" invisible="dip_type != 'technical'">
+                        <tree create="0" edit="0" delete="0">
+                            
+                            <field name="product_id"/>
+                            <field name="technical_id"/>
+                            <field name="technical_status_datetime" widget ="datetime"/>
+                            
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="technical_id"/>
+                                <field name="technical_status_datetime" widget ="datetime"/>
+                            </group>
+                        </form>
+
+                    </field>
+
+                      <field name="crm_trading_status_history_ids" invisible="dip_type != 'trading'">
+                        <tree create="0" edit="0" delete="0">
+                            
+                            <field name="product_id"/>
+                            <field name="trading_id"/>
+                            <field name="trading_status_datetime" widget ="datetime"/>
+          
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="trading_id"/>
+                                <field name="trading_status_datetime" widget ="datetime"/>
+                            </group>
+                        </form>
+                    </field>
+                   
+
+	        		
+	        	</page>
+        	</xpath> 
+
+            <xpath expr="//notebook" position="inside" groups="group_iconnexion_req_new_part_number">
+                <page name="req_new_part_number" string="Req New Part Number" invisible="not is_iconnexion">
+                    
+                        <field name="req_new_part_number_ids">
+                             <tree>                                
+                                    <field name="id_number"/>
+                                    <field name="name"/>
+                                    <field name="desc"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="brand_id"/>
+                                    <field name="icon_type_id"/>
+                                    <field name="product_type"/>
+                                    
+                                    <field name="class_id"/>
+                                    <field name="category_id"/>
+                                    <field name="uom_id"/>   
+                                    <field name="req_new_part_number_id" invisible="1"/>   
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="id_number"/>
+                                    <field name="name"/>
+                                    <field name="desc"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="brand_id"/>
+                                    <field name="icon_type_id"/>
+                                    <field name="product_type"/>
+
+                                    <field name="class_id"/>
+                                    <field name="category_id"/>
+                                    <field name="uom_id"/>
+                                    <field name="req_new_part_number_id" invisible="1"/>   
+                                    <field name="company_id" invisible="1"/>   
+                                </group>
+                                            
+                            </form>
+                        </field>                        
+                    
+                </page>
+            </xpath> 
+
+            <xpath expr="//header" position="inside">
+                <field name="state_approval" widget="statusbar" invisible="(not is_iconnexion or type == 'opportunity') or not state_approval"/>
+            </xpath>
+
+            <xpath expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="before">
+                <button name="approve_new_customer_lead" type="object" class="btn-primary" invisible="(not is_iconnexion or type == 'opportunity') or not state_approval" string="Approve"/>
+            </xpath>            
+
+            <xpath expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
+                
+                <attribute name="invisible">((type == "opportunity") or (not active)) or (state_approval)</attribute>
+            </xpath>
+        	
+        </field>
+    </record>
+    <record id="odes_crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">icon2.crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="odes_custom.odes_crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <field name="estimated_closing_date" position="after">                
+                <field name="is_iconnexion" invisible="1"/>
+                <field name="engagement_date" invisible="not is_iconnexion"/>
+                <field name="sample_qty" invisible="not is_iconnexion"/>
+                <field name="received_date" invisible="not is_iconnexion"/>
+                <field name="given_date" invisible="not is_iconnexion"/>
+
+            </field>
+            <xpath expr="//page[@name='project']/group/separator[@name='competitor_info']" position="attributes">  <attribute name="invisible">is_iconnexion</attribute>
+            </xpath>
+            <xpath expr="//page[@name='project']/group/field[@name='odes_competitor_ids']" position="attributes">  <attribute name="invisible">is_iconnexion</attribute>
+            </xpath>
+            <xpath expr="//page[@name='project']/group/field[@name='odes_part_ids']/tree/field[@name='manufacture']" position="after">
+                
+                <field name="quoted_price" invisible="not parent.is_iconnexion"/>
+                 <field name="competitor_information" required="parent.is_iconnexion"/>
+                <field name="competitor_mpn" required="parent.is_iconnexion"/>             
+                <field name="competitor_pricing" required="parent.is_iconnexion"/>
+                <field name="competitor_moq" required="parent.is_iconnexion"/>
+                <field name="icon_date" invisible="not parent.is_iconnexion"/>
+                <field name="lead_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='project_status']" position="replace">
+                <field name="dip_type" widget="radio" invisible="not is_iconnexion"/>
+                <field name="project_status_id" domain="[('type','=',dip_type)]" invisible="not is_iconnexion" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+            </xpath>
+        </field>
+    </record>
+    
+
+
+    <!-- <record id="icon_product_template_view_form" model="ir.ui.view">
+        <field name="name">icon.product.template.view.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">   
+            <xpath expr="//field[@name='purchase_method']" position = 'after'>
+                <field name="remarks"/>
+            </xpath>
+        </field>
+    </record> -->
+   
+    <record id="icon_lead_type_tree" model="ir.ui.view">
+        <field name="name">iconnexion.lead.type.tree</field>
+        <field name="model">iconnexion.lead.type</field>
+        <field name="arch" type="xml">
+            <tree string="iCon Type" editable="bottom">                
+                <field name="name" required="1"/>
+                <field name="notes" />
+                <field name="type" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="icon_lead_type_action" model="ir.actions.act_window">
+        <field name="name">iCon Type</field>
+        <field name="res_model">iconnexion.lead.type</field>
+        <field name="view_id" ref="icon_lead_type_tree"/>
+        <field name="domain">[('type', '=', 'business')]</field>  
+         <field name="context" eval="{
+		    'default_type': 'business',		    
+		                }"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_icon_lead_type_act" parent="crm.menu_crm_config_lead" sequence="99" name="Business Type" action="icon_lead_type_action" groups="group_iconnexion_business_type,group_iconnexion_company" />
+
+    <record id="icon_lead_type2_action" model="ir.actions.act_window">
+        <field name="name">iCon Type</field>
+        <field name="res_model">iconnexion.lead.type</field>
+        <field name="view_id" ref="icon_lead_type_tree"/>
+        <field name="domain">[('type', '=', 'customer')]</field>  
+         <field name="context" eval="{
+		    'default_type': 'customer',		    
+		                }"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_icon_lead_type2_act" parent="crm.menu_crm_config_lead" sequence="99" name="Customer Type" action="icon_lead_type2_action" groups="group_iconnexion_customer_type,group_iconnexion_company"/>
+
+    <record id="icon_lead_type3_action" model="ir.actions.act_window">
+        <field name="name">iCon Type</field>
+        <field name="res_model">iconnexion.lead.type</field>
+        <field name="view_id" ref="icon_lead_type_tree"/>
+        <field name="domain">[('type', '=', 'activity')]</field>  
+         <field name="context" eval="{
+            'default_type': 'activity',         
+                        }"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_icon_lead_type3_act" parent="crm.menu_crm_config_lead" sequence="99" name="Business Activity" action="icon_lead_type3_action" groups="group_iconnexion_business_activity,group_iconnexion_company"/>
+
+    <record id="icon_lead_type4_action" model="ir.actions.act_window">
+        <field name="name">iCon Type</field>
+        <field name="res_model">iconnexion.lead.type</field>
+        <field name="view_id" ref="icon_lead_type_tree"/>
+        <field name="domain">[('type', '=', 'bidding')]</field> 
+         <field name="context" eval="{
+            'default_type': 'bidding',         
+                        }"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_icon_lead_type4_act" parent="crm.menu_crm_config_lead" sequence="99" name="Bidding" action="icon_lead_type4_action" groups="group_iconnexion_bidding,group_iconnexion_company"/>
+
+     <record id="icon_lead_type5_action" model="ir.actions.act_window">
+        <field name="name">iCon Type</field>
+        <field name="res_model">iconnexion.lead.type</field>
+        <field name="view_id" ref="icon_lead_type_tree"/>
+        <field name="domain">[('type', '=', 'design')]</field>  
+         <field name="context" eval="{
+            'default_type': 'design',         
+                        }"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_icon_lead_type5_act" parent="crm.menu_crm_config_lead" sequence="99" name="Design" action="icon_lead_type5_action" groups="group_iconnexion_design,group_iconnexion_company,group_iconnexion_company"/>
+
+     <record id="icon_lead_type6_action" model="ir.actions.act_window">
+        <field name="name">iCon Type</field>
+        <field name="res_model">iconnexion.lead.type</field>
+        <field name="view_id" ref="icon_lead_type_tree"/>
+        <field name="domain">[('type', '=', 'technical')]</field>  
+         <field name="context" eval="{
+            'default_type': 'technical',         
+                        }"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_icon_lead_type6_act" parent="crm.menu_crm_config_lead" sequence="99" name="Technical Enquiry" action="icon_lead_type6_action" groups="group_iconnexion_technical_enquiry,group_iconnexion_company"/>
+
+     <record id="icon_lead_type7_action" model="ir.actions.act_window">
+        <field name="name">iCon Type</field>
+        <field name="res_model">iconnexion.lead.type</field>
+        <field name="view_id" ref="icon_lead_type_tree"/>
+        <field name="domain">[('type', '=', 'trading')]</field>  
+         <field name="context" eval="{
+            'default_type': 'trading',         
+                        }"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Set a new stage in your lead pipeline
+          </p><p>
+            Stages allow salespersons to easily track how a specific lead
+            is positioned.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_icon_lead_type7_act" parent="crm.menu_crm_config_lead" sequence="99" name="Trading" action="icon_lead_type7_action" groups="group_iconnexion_trading,group_iconnexion_company"/>
+</odoo>

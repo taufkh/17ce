@@ -1,0 +1,12 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_odes_enterprise_text","access.odes.enterprise.text","model_odes_enterprise_text","",1,1,1,0
+"access_odes_replace_image","access.odes.replace.image","model_odes_replace_image","",1,1,1,0
+
+"access_odes_rebrand_data","access.odes.rebrand.data","model_odes_rebrand_data","",1,1,1,0
+
+
+
+
+
+
+

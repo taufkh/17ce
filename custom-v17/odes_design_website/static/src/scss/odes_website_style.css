@@ -1,0 +1,112 @@
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: 0.5rem;
+  font-family: "Montserrat", "Odoo Unicode Support Noto", sans-serif;
+  font-weight: 500;
+  line-height: 1.2;
+}
+header .navbar-brand.logo img {
+    height: 2rem !important;
+}
+.navbar-brand, .navbar-text, .navbar .nav-link {
+    font-family: "Open Sans", "Odoo Unicode Support Noto", sans-serif;
+}
+.btn {
+    font-family: "Montserrat", "Odoo Unicode Support Noto", sans-serif;
+}
+
+
+
+.o_main_navbar {
+    position: relative;
+    height: 46px;
+    border-bottom: 1px solid #ffffff;
+    background-color: #1366B7;
+    color: white;
+}
+
+.o_main_navbar > ul > li > a:hover, .o_main_navbar > ul > li > label:hover {
+    background-color: #277bcc;
+}
+
+.o_main_navbar > a:hover, .o_main_navbar > a:focus, .o_main_navbar > button:hover, .o_main_navbar > button:focus {
+    background-color: #277bcc;
+    color: inherit;
+}
+
+.o_main_navbar .show .dropdown-toggle {
+    background-color: #277bcc;
+}
+
+.o_tooltip {
+    box-sizing: content-box !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    opacity: 0 !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 !important;
+    border: 2px solid #277bcc !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    z-index: 1070 !important;
+    background-color: #277bcc !important;
+    box-shadow: 0 2px 2px 1px rgba(150, 150, 150, 0.3) !important;
+    transition: width 100ms ease 0ms, height 100ms ease 0ms, margin 100ms ease 0ms, border-radius 100ms ease 50ms !important;
+}
+
+.o_tooltip.bottom::before {
+    position: absolute;
+    top: -8px;
+    left: 2px;
+    bottom: auto;
+    right: auto;
+    border-width: 0 10px 10px 10px;
+    border-bottom-color: #1366B7;
+}
+
+.o_tooltip::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    bottom: -2px;
+    right: -2px;
+    border-color: #1366B7;
+    border-radius: 50%;
+    transition: margin 100ms ease 0ms, border-radius 150ms linear 0s;
+    background: radial-gradient(#277bcc, #277bcc);
+}
+
+
+.o_thread_window .o_thread_window_header {
+    background-color: #1366B7 !important;
+    color: #ffffff !important;
+}
+
+#list_website_pages th {
+    background-color: #277bcc;
+    color: white;
+}
+
+#list_website_pages td > a.fa {
+    margin-left: 5px;
+    color: #277bcc;
+}
+
+#oe_main_menu_navbar .o_menu_systray > li > a[data-action="edit"], #oe_main_menu_navbar .o_menu_systray > li > a[data-action="translate"], #oe_main_menu_navbar .o_menu_systray > li > a.css_edit_dynamic {
+    color: #FFFFFF;
+    background-color: #F0C130;
+    border-color: #F0C130;
+}
+
+.card-body > a {
+    color: #000;
+}
+
+.card-body > a:hover,
+.card-body > a:focus{
+    color: #000;
+}

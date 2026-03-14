@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_city_import_wizard_form" model="ir.ui.view">
+        <field name="name">crm.city.import.wizard.form</field>
+        <field name="model">crm.city.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="City Import">
+                <group>
+                    <field name="country_id" required="1"/>
+                    <field name="state_id" invisible="import_all_states"/>
+                    <field name="import_all_states"/>
+                    <field name="enable_enforce_cities"/>
+                </group>
+                <footer>
+                    <button string="Import" type="object" name="action_import" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_city_import_wizard" model="ir.actions.act_window">
+        <field name="name">City Import</field>
+        <field name="res_model">crm.city.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_city_import" name="City Import" parent="contacts.res_partner_menu_config"
+              action="action_city_import_wizard" sequence="30"/>
+</odoo>

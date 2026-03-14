@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_res_business_grouping_tree" model="ir.ui.view">
+        <field name="name">res.business.grouping.tree</field>
+        <field name="model">res.business.grouping</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_res_business_grouping_form" model="ir.ui.view">
+        <field name="name">res.business.grouping.form</field>
+        <field name="model">res.business.grouping</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_res_business_grouping" model="ir.actions.act_window">
+        <field name="name">Business Groupings</field>
+        <field name="res_model">res.business.grouping</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_crm_business_grouping_root" name="Business Groupings"
+        parent="crm.crm_menu_config" action="action_res_business_grouping" sequence="90"/>
+</odoo>

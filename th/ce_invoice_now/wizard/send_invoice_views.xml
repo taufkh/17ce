@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ce_view_send_invoice_form" model="ir.ui.view">
+        <field name="name">ce.send.invoice.form</field>
+        <field name="model">ce.send.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Send Invoice to CE InvoiceNow">
+                <sheet>
+                    <group>
+                        <field name="move_type" readonly="1"/>
+                    </group>
+                    <field name="send_invoice_ids" nolabel="1">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="move_id" readonly="1"/>
+                            <field name="attachment_id" readonly="1"/>
+                        </tree>
+                    </field>
+                    <div class="o_form_label">
+                        If XML attachment is empty and auto-generation is enabled, CE XML will be generated before submit.
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_send_invoice" string="Send" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="ce_action_send_invoice" model="ir.actions.act_window">
+        <field name="name">Send Invoice to CE InvoiceNow</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce.send.invoice</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="ce_view_send_invoice_form"/>
+    </record>
+</odoo>

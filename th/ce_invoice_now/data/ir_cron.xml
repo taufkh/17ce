@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="ce_ir_cron_check_invoice_status" model="ir.cron">
+            <field name="name">CE InvoiceNow :: Check Status</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">model._check_ce_invoice_status()</field>
+            <field name="active" eval="True"/>
+            <field name="numbercall">-1</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="doall" eval="False"/>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(hours=1))"/>
+        </record>
+    </data>
+</odoo>

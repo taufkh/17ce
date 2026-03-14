@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-extend="res_config_edition">
+        <t t-jquery=".user-heading h3" t-operation="replace">
+            <h3>
+                ODES <t t-esc="widget.server_version"/> odes.com.sg Professional Edition)
+            </h3>
+        </t>
+        <t t-jquery=".tab-content #settings" t-operation="replace">
+            <div role="tabpanel" id="settings" class="tab-pane active text-muted o_web_settings_compact_subtitle">
+                <small>Copyright  <a target="_blank" href="https://www.odes.com.sg" style="text-decoration: underline;">ODES.</a> <a id="license" target="_blank" href="http://www.gnu.org/licenses/lgpl.html" style="text-decoration: underline;">GNU LGPL Licensed</a></small>
+            </div>
+        </t>
+        
+    </t>
+</templates>

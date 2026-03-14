@@ -1,0 +1,62 @@
+clear{
+    'name': 'ODES Custom',
+    'version': '1.1',
+    'category': 'Customize',
+    'author': "SGEEDE",
+    'website': "https://www.sgeede.com",
+    'summary': 'ODES Custom',
+    'description': """
+McCoy ODES Customization.
+===========================
+This module is using for customization of McCoy ODES System.
+
+**Installed on :** IP_SERVER | DB NAME :
+
+- 203.127.198.245 | ODES_PRODUCTION
+
+- 203.127.198.229 | ODES_PRODUCTION_COPY
+    """,
+    'depends': ['base', 'crm', 'calendar', 'sale_crm', 'sale', 'project', 'web_gantt', 'mccoy_custom', 'hr_expense'],
+
+    'data': [
+        'security/odes_security.xml',
+        'security/ir.model.access.csv',
+        'data/odes_data.xml',
+        'wizard/odes_crm_lead_history_wizard_views.xml',
+        'wizard/odes_revenue_history_wizard_views.xml',
+        'wizard/odes_crm_backward_stage_wizard_views.xml',
+        #'views/crm_lead_views.xml',
+        'views/crm_team_views.xml',
+        'views/crm_stage_views.xml',
+        'views/ir_attachment_views.xml',
+        'views/partner_views.xml',
+        'views/user_views.xml',
+        'views/calendar_views.xml',
+        'views/sale_views.xml',
+        'views/company_views.xml',
+        'views/project_task_views.xml',
+        'views/hr_views.xml',
+        'views/odes_dashboard_templates.xml',
+        'views/odes_dashboard_views.xml',
+        'views/odes_crm_stage_views.xml',
+        'views/leave_views.xml',
+        'views/expense_views.xml',
+        'views/application_views.xml',
+        'report/sale_report_templates.xml',
+        'report/report_sale_order.xml',
+        'report/report_sale_order_sgd.xml',
+        'report/hr_expense_report.xml',
+        'wizard/crm_lead_lost_views.xml',
+        'wizard/crm_lead_to_opportunity_views.xml',
+        'wizard/odes_crm_pipeline_wizard_views.xml',
+        'views/approval_request_views.xml',
+    ],
+    'demo': [],
+    'qweb': [
+        'static/src/xml/dashboard.xml',
+        'static/src/xml/dashboard_second.xml',
+        'static/src/xml/web_gantt.xml',
+    ],
+    'installable': True,
+    'auto_install': False
+}

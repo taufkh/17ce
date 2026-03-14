@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_form_inherit_odes_quotation" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.odes.quotation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="odes_quotation.view_order_form_inherit" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='start_date']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='end_date']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_view_order_form_inherit_to_iconn_mccoy" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.iconn.mccoy</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sales_person']/field[@name='user_id']" position="before">
+                <field name="design_owner_id" widget="many2one_avatar_user" invisible="not opportunity_id" groups="sales_team.group_sale_salesman"/>
+                <field name="user_confirm_id" widget="many2one_avatar_user" invisible="1"/>
+            </xpath>
+            <xpath expr="//group[@name='sale_shipping']" position="inside">
+                <field name="carrier_id" domain="[('is_delivery_method', '!=', False),('company_id','=',allowed_company_ids)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+            </xpath>
+            <!-- Community-safe fallback: skip legacy tree modifiers that fail strict v16 view validation. -->
+            <xpath expr="//button[@name='action_quotation_send']" position="before">
+                <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                        type="action" class="btn-primary"
+                        invisible="invoice_status != 'partial_invoice' or state != 'sale'"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+                <attribute name="string">EAU</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Community-safe fallback: removed inheritance of odes_accounting.view_odes_sale_order_form. -->
+
+
+    <!-- <record id="view_iconn.mccoy_sale_order_form_inherit_sale_stock_view_order_form_inherit_sale_stock" model="ir.ui.view">
+        <field name="name">iconn.mccoy.sale.order.form.inherit.sale.stock.view.order.form.inherit.sale.stock</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='warehouse_id']" position="before">
+                <field name="carrier_id"/>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="view_iconn_mccoy_sale_order_inherit_iconnexion_custom_view_icon_order_form" model="ir.ui.view">
+        <field name="name">iconn.mccoy.sale.order.inherit.iconnexion.custom.view.icon.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="iconnexion_custom.view_icon_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quote_price_unit']" position="replace">
+                <field name="quote_price_unit" optional="show" string="U/P" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="attributes">
+                <attribute name="column_invisible">parent.is_iconnexion or parent.is_mccoy</attribute>
+            </xpath>
+            <xpath expr="//field[@name='icon_purchase_ids']" position="after">
+                <field name="buffer_stock_ids" invisible="0" optional="show">
+                    <tree>
+                        <field name="product_id"/>
+                        <field name="stock_used"/>
+                        <field name="purchase_order_line_id"/>
+                    </tree>
+                </field>
+            </xpath>
+            <xpath expr="//page[@name='so_analyze']" position="replace">
+                <field name="is_mccoy" invisible="1"/>
+                <field name="is_iconnexion" invisible="1"/>
+                <page name="so_analyze" string="Order Analysis" groups="iconnexion_mccoy_custom.group_iconnexion_view_order_analysis" invisible="not is_mccoy">
+                    <field name="sale_order_line_analyze_ids">
+                        <tree editable="bottom" create="0" delete="0">
+                            <field name="serial_numbers"/>
+                            <field name="name" readonly="1" invisible="1"/>
+                            <field name="product_id" readonly="1" string="Code"/>
+                            <field name="product_uom_qty" readonly="1" string="Order Qty"/>
+                            <field name="moq" readonly="1"/>
+                            <field name="a_moq" readonly="1"/>
+                            <field name="spq" readonly="1"/>
+                            <field name="a_spq" readonly="1"/>
+                            <field name="ar_code" readonly="1"/>
+                            <field name="icon_sale_price" invisible="1"/>
+                            <field name="quote_price_unit" readonly="1" string="U/P"/>
+                            <field name="s_margin_char" readonly="1" string="S. Margin"/>
+                            <field name="price_unit" invisible="1"/>
+                            <field name="price_subtotal" invisible="1"/>
+                            <field name="cost_price" digits="[42,4]" readonly="1" groups="iconnexion_custom.group_iconnexion_sales_manager"/>
+                            <field name="a_margin_char" readonly="1" string="A. Margin"/>
+                            <field name="total_a_margin" readonly="1" string="Total A. Margin"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>       
+        </field>
+    </record>
+
+    <record id="iconn_sale_order_line_form_view" model="ir.ui.view">
+        <field name="name">iconn.sale.order.line.form.view</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="html">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <!-- <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-clipboard" invisible="invoice_count == 0">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div> -->
+                    <div class="oe_title">
+                        <span class="o_form_label">Sale Order No.</span>
+                        <h1 class="mt0">
+                            <field name="order_id" required="1"/>
+                        </h1>
+                    </div>
+                    <!-- <group>
+                        <group id="header_left_group">
+                            <field name="partner_id" options="{'no_create_edit': True, 'no_create':True}"/>
+                            <field name="product_id" required="1" options="{'no_create_edit': True, 'no_create':True}"/>
+                            <field name="brand_id" options="{'no_create_edit': True, 'no_create':True}"/>
+                            <field name="invoice_id"
+                                options="{'no_create_edit': True, 'no_create':True}"
+                                domain="[('move_type', '=', 'out_invoice')]"/>
+                            <field name="date_of_purchase" readonly="invoice_id"/>
+                            <field name="warranty_start_date" required="1"/>
+                            <field name="warranty_end_date" required="1"/>
+                            <field name="serial_number"/>
+                        </group>
+                        <group id="header_right_group">
+                            <field name="remarks"/>
+                            <field name="spare_part_ids" widget="many2many_tags" required="0" options="{'no_create_edit': True, 'no_create':True}"/>
+                            <field name="wantai_company_id" required="1" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                        </group>
+                    </group> -->
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+
+        </field>
+    </record>
+
+    <record id="view_iconn_mccoy_sale_order_line_tree_inherit_iconnexion_custom_view_icon_order_line_tree" model="ir.ui.view">
+        <field name="name">iconn.mccoy.sale.order.line.tree.inherit.iconnexion.custom.view.icon.order.line.tree</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="iconnexion_custom.view_icon_order_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_partner_id']" position="after">
+                <field name="contact_id" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='order_id']" position="before">
+                <field name="serial_numbers" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="iconnexion_custom.icon_sale_order_line_action" model="ir.actions.act_window">
+        <field name="name">Sale Orders Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="search_view_id" ref="iconnexion_custom.sale_order_line_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+    <record id="sale_order_lines_tree_view" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence" />
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="iconnexion_custom.view_icon_order_line_tree" />
+        <field name="act_window_id" ref="iconnexion_custom.icon_sale_order_line_action" />
+    </record>
+
+    <record id="sale_order_lines_form_view" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="iconn_sale_order_line_form_view" />
+        <field name="act_window_id" ref="iconnexion_custom.icon_sale_order_line_action" />
+    </record>
+
+    <record id="iconn_mccoy_sale_order_search_inherit_sale_view_sales_order_filter" model="ir.ui.view">
+        <field name="name">iconn.mccoy.sale.order.search.inherit.sale.view.sales.order.filter</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="order_line" position="after">
+                <field name="cpn"/>
+            </field>
+        </field>
+    </record>
+</odoo>

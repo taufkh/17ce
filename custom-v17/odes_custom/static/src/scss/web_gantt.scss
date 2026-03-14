@@ -1,0 +1,121 @@
+// Generate background and text for each color.
+@mixin o-gantt-hoverable-colors($color) {
+    $color-subdle: mix($color, white, 60%);
+    $color-hover: mix($color, white, 70%);
+    color: color-yiq($color-subdle);
+    background-color: $color-subdle;
+    cursor: pointer;
+
+    @include o-gantt-hover() {
+        background-color: $color-hover;
+        color: color-yiq($color-hover);
+    }
+}
+
+@mixin o-gantt-hoverable-progress-colors($color) {
+    $color-subdle: mix($color, white, 90%);
+    $color-hover: mix($color, white, 100%);
+    color: color-yiq($color-subdle);
+    background-color: $color-subdle;
+    cursor: pointer;
+
+    @include o-gantt-hover() {
+        background-color: $color-hover;
+        color: color-yiq($color-hover);
+    }
+}
+
+// .o_gantt_view {
+    
+//     .o_gantt_view_year{
+//         width:1200%;
+//     }
+//     .o_gantt_header_scale {
+//         .week_col {
+//             margin-left: -0.5rem;
+//             margin-right: -0.5rem;
+//         }
+//     }
+//     .o_gantt_row_nogroup {
+//         .o_gantt_pill {
+//             @include o-gantt-hoverable-colors(nth($o-colors-complete, 1));
+//             &.o_gantt_progress {
+//                 @include o-gantt-hoverable-colors(nth($o-colors-complete, 1));
+//                 background-repeat: no-repeat;
+
+//                 &.decoration-info {
+//                     @include gantt-gradient-decorations(nth($o-colors-complete, 1));
+//                 }
+//             }
+
+//             // used for `color` attribute on <gantt>
+//             @for $index from 2 through length($o-colors-complete) - 1 {
+//             // @for $index from 3 through length($o-colors) {
+//                 &.o_gantt_color_#{$index - 1} {
+//                     $gantt-color: nth($o-colors-complete, $index);
+
+//                     @include o-gantt-hoverable-colors($gantt-color);
+
+//                     &.o_gantt_progress {
+//                         @include o-gantt-hoverable-colors($gantt-color);
+//                     }
+
+//                     &.decoration-info {
+//                         @include gantt-gradient-decorations($gantt-color);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     .o_gantt_process {
+//         p {
+//             background: rgba(0,0,0,0.6);
+//             width: auto;
+//             display: inline;
+//             padding: 4px 10px;
+//         }
+//     }
+//     .odes_gantt_progressbar {
+//         @include o-gantt-hoverable-progress-colors(nth($o-colors-complete, 1));
+
+//         position: absolute;
+//         top: 0;
+//         height: 100%;
+    
+//         @for $index from 2 through length($o-colors-complete) - 1 {
+//             &.o_gantt_color_#{$index - 1} {
+//                 $gantt-color: nth($o-colors-complete, $index);
+//                 @include o-gantt-hoverable-progress-colors($gantt-color);
+//             }
+//         }
+//     }
+
+//     .o_gantt_row_container {
+//         .o_gantt_row {
+//             border-bottom: 1px solid $gantt-border-color;
+//             background: #FFFFFF;
+
+//             &:first-child {
+//                 > .o_gantt_slots_container, > .o_gantt_row_sidebar {
+//                     box-shadow: inset 0 4px 5px -3px rgba(black, .1);
+//                 }
+//             }
+
+//             .o_gantt_slots_container .o_gantt_cell.ui-drag-hover {
+//                 background: rgba(0, 160, 157, 0.3) !important;
+//                 .o_gantt_pill {
+//                     background: rgba(0, 160, 157, 0.3);
+//                 }
+//             }
+//         }
+//     }
+// }
+// .header_state_year .o_gantt_row_sidebar {
+//     max-width: 2%;
+// }
+// .rows_state_year .o_gantt_row_nogroup .o_gantt_row_sidebar {
+//     max-width: 2%;
+// }
+// .rows_state_year .o_gantt_row_group .o_gantt_row_sidebar {
+//     max-width: 2%;
+// }

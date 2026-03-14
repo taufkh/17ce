@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="odes_intelligent_automation_page" name="Odes Intelligent Automation">
+    	<t t-call="website.layout">
+            <div id="wrap" class="landing_page_intelligent_automation">
+            	<!--<div class="">-->
+      <!--  <img class="img img-responsive" style="position: absolute;width: 100%;" src="/odes_landing_page/static/src/img/bg-intelligent-automation.png" loading="lazy" data-original-title="" title="" aria-describedby="tooltip719049"/>-->
+      <!--</div>-->
+      <div class="content_in_bg" style="height: 100%;position: relative;    overflow: hidden;">
+          <img class="img img-responsive" style="position: absolute;width: 100%;height: 100%;left:0px;" src="/odes_landing_page/static/src/img/bg-intelligent-automation.png" />
+        <div class="row" style="margin-right: unset; display: flex;align-items: center;justify-content: center;">
+          <div class="col-md-7">
+            <p class="header_p">
+              <b>Let It Run On <br/> Its Own.</b>
+            </p>
+		            			<p class="text_in_top">Reimagine business operations by integrating intelligent automation into your system.</p>
+		            		</div>
+	            		<div class="col-md-5">
+            				<form style="background: #0664b899;border-radius: 5px;margin-top: 84px;" class="box_form_data" action="/intelligent-automation-temporary" method="post">
+            					<div style="padding: 30px 10%;" class="text-center">
+            						<p class="text-left" style="font-size: 20px;    margin-bottom: 10px;
+"><strong>Are you on the right track?</strong></p>
+	            					<p class="text-left" style="font-size: 20px;word-spacing: 6px;line-height: 20px;">Know where you stand on the digital landscape once you receive your results from our test.</p>
+	            					<input type="text" placeholder="Name*"  name="name" style="width:100%;" required="1"/>
+	            					<input type="text" placeholder="Phone Number*"  name="phone" style="width:100%;" required="1"/>
+	            					<input type="email" placeholder="Email Address*"  name="email" style="width:100%;" required="1"/>
+	            					<input type="text" placeholder="Company Name*"  name="companyname" style="width:100%;" required="1"/>
+
+	            					<button type="submit" class="text-center">Get In Touch</button>
+	            				</div>
+	            				<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+	            				<input type="hidden" name="website_id" t-att-value="website_id"/>
+            				</form>
+            				<p style="padding: 0 7%;font-size: 16px;margin-top: 10px;padding-bottom: 56px;">* Data entered in this form will only be used to contact you with regards to your enquiry.</p>
+	            		</div>
+	            	</div>
+	            </div>
+	            <div class="container">
+	            	<br/><br/><br/>
+	            	<div class="row">
+	            		<div class="col-md-12">
+	            			<p class="text-center header_p"><b>Realise Your Potential <br/> With Automation</b></p>
+	            			<div class="div_content_bottom">
+		            			<p class="text-center text_in_bottom">In a climate of uncertainty and constant technological evolution, organisations are increasingly reliant on digitalisation to transform their business operations worldwide.</p>
+		            			<p class="text-center text_in_bottom">Open the door to new, unexpected opportunities and be better prepared to tackle unprecedented hiccups with smart automation solutions.</p>
+		            		</div>
+	            		</div>
+	            	</div>
+	            	<br/><br/><br/>
+	            </div>
+            </div>
+        </t>
+        
+    </template>
+
+    
+    
+    
+    
+    
+</odoo>

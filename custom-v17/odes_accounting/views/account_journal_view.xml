@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_odes_view_account_journal_form_form" model="ir.ui.view">
+        <field name="name">odes.account.journal.form.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                    <field name="logo_journal" widget="image" />
+                    
+                </field>
+        </field>
+    </record>
+
+
+</odoo>

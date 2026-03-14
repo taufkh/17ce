@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_crm_lead_form_inherit_quotation" model="ir.ui.view">
+        <field name="name">crm.lead.form.quotation.lines</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <field name="x_quotation_outcome" invisible="1"/>
+                <widget name="web_ribbon" title="PARTIAL WON" bg_color="bg-success" class="o_web_ribbon_partial_won"
+                    invisible="x_quotation_outcome != 'partial'"/>
+            </xpath>
+            <xpath expr="//widget[@name='web_ribbon'][2]" position="attributes">
+                <attribute name="invisible">x_quotation_outcome == 'partial' or probability &lt; 100</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Quotation Lines">
+                    <div class="o_row mb-2">
+                        <button name="action_select_all_quotation_lines" type="object"
+                            class="btn btn-secondary btn-sm" string="Select All"/>
+                        <button name="action_clear_all_quotation_lines" type="object"
+                            class="btn btn-secondary btn-sm" string="Clear All"/>
+                    </div>
+                    <field name="quotation_line_ids" context="{'default_lead_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="select_line" string="Select"/>
+                            <field name="state"/>
+                            <field name="product_id" string="Part Number" width="180"/>
+                            <field name="manufacturer_id" string="Manufacturer" width="140"/>
+                            <field name="number_of_pr" string="Number of PR" width="110"/>
+                            <field name="quoted_price" string="Quoted Price" width="110"/>
+                            <field name="competitor_name" string="Competitor" width="150"/>
+                            <field name="competitor_mpn" string="Competitor MPN" width="140"/>
+                            <field name="competitor_price" string="Competitor Pricing" width="150"/>
+                            <field name="competitor_moq" string="Competitor MOQ" width="140"/>
+                            <field name="note" string="Notes" width="200"/>
+                            <field name="sale_order_id" string="Quotation"/>
+                            <field name="lost_reason_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

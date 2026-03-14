@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <!-- v16: web_kanban_gauge not installed; gauge widget no longer needed (v16 uses OWL).
+          Script was already commented out; comment out the whole template to avoid
+          "Cannot update missing record 'web_kanban_gauge.assets_backend'" error.
+     <template id="web_kanban_gauge.assets_backend" name="web_kanban_gauge assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+            </xpath>
+        </template>
+     -->
+       <!-- v16: assets now managed in __manifest__.py assets dict (web.assets_backend).
+            barcode.js is already loaded via manifest. Old-style <script> tag injection
+            does not work in v16 bundle system; this template is obsolete.
+       <template id="assets_backend" name="iconnexion_custom assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                 <script type="text/javascript" src="/iconnexion_custom/static/src/js/barcode.js"></script>
+            </xpath>
+        </template>
+       -->
+
+
+</odoo>

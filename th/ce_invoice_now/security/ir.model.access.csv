@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ce_send_invoice_line,access_ce_send_invoice_line,model_ce_send_invoice_line,base.group_user,1,1,1,1
+access_ce_send_invoice,access_ce_send_invoice,model_ce_send_invoice,base.group_user,1,1,1,1
+access_ce_invoice_now_configuration,access_ce_invoice_now_configuration,model_ce_invoice_now_configuration,account.group_account_manager,1,1,1,1

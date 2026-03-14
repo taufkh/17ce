@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="alias_hr_payroll_res_config_settings_view_form" model="ir.model.data">
+        <field name="module">hr_payroll</field>
+        <field name="name">res_config_settings_view_form</field>
+        <field name="model">ir.ui.view</field>
+        <field name="res_id" eval="ref('payroll.res_config_settings_view_form')"/>
+        <field name="noupdate" eval="True"/>
+    </record>
+
+    <record id="alias_hr_payroll_report_payslip" model="ir.model.data">
+        <field name="module">hr_payroll</field>
+        <field name="name">report_payslip</field>
+        <field name="model">ir.ui.view</field>
+        <field name="res_id" eval="ref('payroll.report_payslip')"/>
+        <field name="noupdate" eval="True"/>
+    </record>
+
+    <record id="alias_hr_payroll_hr_salary_rule_form" model="ir.model.data">
+        <field name="module">hr_payroll</field>
+        <field name="name">hr_salary_rule_form</field>
+        <field name="model">ir.ui.view</field>
+        <field name="res_id" eval="ref('payroll.hr_salary_rule_view_form')"/>
+        <field name="noupdate" eval="True"/>
+    </record>
+
+    <record id="alias_hr_payroll_model_hr_salary_rule" model="ir.model.data">
+        <field name="module">hr_payroll</field>
+        <field name="name">model_hr_salary_rule</field>
+        <field name="model">ir.model</field>
+        <field name="res_id" eval="ref('payroll.model_hr_salary_rule')"/>
+        <field name="noupdate" eval="True"/>
+    </record>
+
+</odoo>

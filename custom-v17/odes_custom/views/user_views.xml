@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_view_users_form_inherit" model="ir.ui.view">
+        <field name="name">odes.res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <field name="companies_count" position="after">
+                <field string="Allow View Timesheet" name="timesheet_company_ids" widget="many2many_tags" options="{'no_open': 1, 'no_create': 1}"/>
+            </field>
+            <!-- v16: page 'references' removed; add new page after 'preferences' instead -->
+            <xpath expr="//page[@name='preferences']" position="after">
+                <page string="Position" name="references">
+                    <group>
+                        <group string="Position" name="user_position">
+                            <field name="is_finance"/>
+                            <field name="is_director"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="odes_view_users_form_simple_modif_inherit" model="ir.ui.view">
+        <field name="name">odes.res.users.simple.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <field name="email" position="before">
+                <field name="user_code"/>
+            </field>
+        </field>
+    </record> -->
+
+    <record id="odes_view_users_tree_simple_view" model="ir.ui.view">
+        <field name="name">odes.view.users.tree.simple.view</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

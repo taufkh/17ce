@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="commission_with_decay" model="commission">
+        <field name="name">5% with decay</field>
+        <field name="commission_type">formula</field>
+        <field name="active">True</field>
+        <field name="settlement_type">sale_invoice</field>
+        <field name="formula">
+if line._name == 'sale.order.line':
+    result = 0
+
+decay = line.env['commission.decay'].search([('year', '=', line.move_id.year_project)], limit=1)
+decay_val = 0
+if decay:
+    decay_val = decay.percentage / 100
+if line._name == 'account.move.line':
+    partial = (line.price_subtotal / 100) * 5 * decay_val
+    result = partial / len(line.agent_ids)
+        </field>
+    </record>
+
+</odoo>

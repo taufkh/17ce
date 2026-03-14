@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--#########################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+
+    <!-- Add snippets into library -->
+    <template id="st_ecommerce_theme_snippets_include"
+              inherit_id="website.snippets"
+              name="Includes ST Ecommerce Theme Snippets">
+        <xpath expr="//div[@id='snippet_structure']/div[hasclass('o_panel_body')]" position="inside">
+            <t t-snippet="ecommerce_theme.snippet_product_carousel"
+               t-thumbnail="/ecommerce_theme/static/src/images/product_carousel.jpg"/>
+        </xpath>
+    </template>
+
+    <template id="snippet_product_carousel"
+              name="Popular Products">
+        <div id="wrap" class="oe_structure oe_empty"/>
+            <section class="popular_product_section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>
+                                <span>Popular Products</span>
+                            </h2>
+                            <div id="owl-popular-products" class="owl-carousel owl-theme popular_products" data-popular-product-days="5"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </template>
+
+    <template id="snippet_product_carousel_options" inherit_id="website.snippet_options"
+              name="Popular Products options">
+        <xpath expr="//div" position="after">
+            <div data-js='popular_products_option_type' data-selector="div.col-md-12"
+            data-drop-near="p, h1, h2, h3, blockquote, .well, .panel">
+                <li class="dropdown-submenu">
+                    <a tabindex="3" href="#">Latest items</a>
+                    <ul class="dropdown-menu">
+                        <li data-limit_product="5"><a href="#">5</a></li>
+                        <li data-limit_product="10"><a href="#">10</a></li>
+                        <li data-limit_product="15"><a href="#">15</a></li>
+                        <li data-limit_product="20"><a href="#">20</a></li>
+                    </ul>
+                </li>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

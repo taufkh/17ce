@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="view_odes_purchase_order_line_tree" model="ir.ui.view">
+            <field name="name">odes.accounting.purchase.order.line.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field eval="100" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines" create="false">
+                    <field name="date_order"/>
+                    <field name="order_id"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="product_uom_qty" string="Qty"/>
+
+                    <field name="product_uom" string="Unit of Measure" groups="uom.group_uom"/>
+                    <field name="price_subtotal" sum="Total" widget="monetary"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+        <record id="action_odes_purchase_order_line_tree" model="ir.actions.act_window">
+            <field name="name">Purchase Order Line</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="odes_accounting.view_odes_purchase_order_line_tree"/>
+        </record>
+
+<!--        <record id="view_odes_partner_tree_inherit" model="ir.ui.view">
+            <field name="name">view.odes.partners.tree.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="mobile" position="after">
+                    <field name="fax" optional="hide"/>
+                </field>
+            </field>
+        </record>-->
+</odoo>

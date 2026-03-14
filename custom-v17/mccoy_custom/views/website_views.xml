@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record id="mccoy_view_website_form_inherit" model="ir.ui.view">
+        <field name="name">mccoy_view_website_form_inherit</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form"/>
+        <field name="arch" type="xml">
+            <field name="logo" position="after">
+                <field name="background_subs" widget="image"/>
+            </field>
+        </field>
+    </record>
+</odoo>

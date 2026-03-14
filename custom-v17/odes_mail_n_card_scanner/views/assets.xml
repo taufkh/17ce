@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template  id="assets_backend_layout" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <!-- css section -->
+                <link rel="stylesheet" type="text/css" href="/odes_mail_n_card_scanner/static/src/css/style.css"/>
+                <script type="text/javascript" src="/odes_mail_n_card_scanner/static/src/js/contact.js"/>
+                <script type="text/javascript" src="/odes_mail_n_card_scanner/static/src/js/contact_scanner.js"/>
+            </xpath>
+        </template>
+  
+
+</odoo>

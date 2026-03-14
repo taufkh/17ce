@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="odes_card_scanner_wizard_form_view" model="ir.ui.view">
+        <field name="name">odes_card_scanner_wizard_form_view</field>
+        <field name="model">odes.card.scanner.wizard</field>
+        <field name="type">form</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form string="Card Scanner" class="text-center">
+
+                    <field name="image" widget="image" nolabel="1" style="margin: auto;text-align: center;" class="card_scanner_img" required="1" filename="name"/>
+                    <field name="name" invisible="1"/>
+
+                <footer>
+                    <button name="card_scanner" type="object" class="oe_highlight" string="Scan"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="odes_card_scanner_wizard_form_testing_view" model="ir.ui.view">
+        <field name="name">odes_card_scanner_wizard_form_testing_view</field>
+        <field name="model">odes.card.scanner.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Card Scanner" class="text-center">
+                <group>
+                    <field name="response" readonly="1"/>
+                </group>
+                <footer>
+                    <button string="Ok" class="oe_highlight" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="odes_card_scanner_wizard_action" model="ir.actions.act_window">
+        <field name="name">Card Scanner</field>
+        <field name="res_model">odes.card.scanner.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="odes_card_scanner_wizard_form_view"/>
+    </record>
+
+    <menuitem id="contacts.res_partner_menu_config"
+        name="Configuration"
+        parent="contacts.menu_contacts"
+        groups="base.group_system"
+        sequence="3"/>
+
+
+
+    <record id="odes_card_scanner_contact_wizard_form_view" model="ir.ui.view">
+        <field name="name">odes_card_scanner_contact_wizard_form_view</field>
+        <field name="model">odes.card.scanner.contact.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Card Scanner">
+                <group>
+                    <field name="company_id" required="1"/>
+                </group>
+                <separator string="Contact"/>
+                <group>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="phones" required="1"/>
+                        <field name="emails" required="1"/>
+                        <field name="addresses"/>
+                    </group>
+                    <group>
+                        <field name="title" required="1"/>
+                        <field name="company" required="1"/>
+                        <field name="website_company"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="notes"/>
+                </group>
+
+                <footer>
+                    <button name="create_contact" type="object" class="oe_highlight" string="Create Contact"/>
+                    <button name="scan_again" type="object" class="oe_highlight" string="Scan Again"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="odes_card_scanner_wizard_menu" name="Card Scanner" parent="contacts.menu_contacts" sequence="2" action="odes_card_scanner_wizard_action"/>
+
+</odoo>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sign_template_view_tree" model="ir.ui.view">
+        <field name="name">sign.template.tree</field>
+        <field name="model">sign.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="responsible_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sign_template_view_form" model="ir.ui.view">
+        <field name="name">sign.template.form</field>
+        <field name="model">sign.template</field>
+        <field name="arch" type="xml">
+            <form string="Sign Template">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="attachment_id"/>
+                        <field name="responsible_id"/>
+                        <field name="active"/>
+                    </group>
+                    <notebook>
+                        <page string="Fields">
+                            <field name="field_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="field_type"/>
+                                    <field name="role"/>
+                                    <field name="required"/>
+                                    <field name="page"/>
+                                    <field name="x"/>
+                                    <field name="y"/>
+                                    <field name="width"/>
+                                    <field name="height"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="sign_request_view_tree" model="ir.ui.view">
+        <field name="name">sign.request.tree</field>
+        <field name="model">sign.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="state"/>
+                <field name="completion_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sign_request_view_form" model="ir.ui.view">
+        <field name="name">sign.request.form</field>
+        <field name="model">sign.request</field>
+        <field name="arch" type="xml">
+            <form string="Sign Request">
+                <header>
+                    <button name="action_send" type="object" string="Send" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ['signed', 'cancel']"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="template_id"/>
+                        <field name="access_token" readonly="1"/>
+                        <field name="completion_date" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Signers">
+                            <field name="request_item_ids">
+                                <tree editable="bottom">
+                                    <field name="partner_id"/>
+                                    <field name="role"/>
+                                    <field name="state"/>
+                                    <field name="signed_on"/>
+                                    <field name="otp_expires_at" readonly="1"/>
+                                    <field name="otp_attempt_count" readonly="1"/>
+                                    <field name="otp_input" password="True"/>
+                                    <field name="signature_text"/>
+                                    <field name="signature" widget="image"/>
+                                    <button name="action_send_otp" type="object" string="Send OTP" class="btn-link"/>
+                                    <button name="action_sign_now" type="object" string="Sign" class="btn-link"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Audit Logs">
+                            <field name="log_ids" readonly="1">
+                                <tree>
+                                    <field name="create_date"/>
+                                    <field name="action"/>
+                                    <field name="item_id"/>
+                                    <field name="ip_address"/>
+                                    <field name="details"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sign_template" model="ir.actions.act_window">
+        <field name="name">Sign Templates</field>
+        <field name="res_model">sign.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_sign_request" model="ir.actions.act_window">
+        <field name="name">Sign Requests</field>
+        <field name="res_model">sign.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sign_root" name="Sign" parent="base.menu_custom" sequence="85"/>
+    <menuitem id="menu_sign_templates" name="Templates" parent="menu_sign_root" action="action_sign_template" sequence="10"/>
+    <menuitem id="menu_sign_requests" name="Requests" parent="menu_sign_root" action="action_sign_request" sequence="20"/>
+</odoo>

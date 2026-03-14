@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_inherit_stock" model="ir.ui.view">
+        <field name="name">stock.picking.view.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="source_type" invisible="picking_type_code not in ['incoming', 'internal']"/>
+                <field name="required_attachment" filename="required_attachment_filename" invisible="picking_type_code != 'outgoing'" readonly="state in ['done', 'cancel']"/>
+                <field name="required_attachment_filename" invisible="1"/>
+                <span colspan="2" class="text-danger" invisible="picking_type_code != 'outgoing'">*Upload invoice, shipping declaration, or other mandatory export documentation before validation.</span>
+                <field name="packing_note" invisible="picking_type_code != 'outgoing'" readonly="state in ['done', 'cancel']"/>
+            </field>
+        </field>
+    </record>
+    
+</odoo>

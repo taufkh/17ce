@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--#########################################################################
+#
+#       Copyright © SUREKHA TECHNOLOGIES PRIVATE LIMITED, 2020.
+#
+#	    You can not extend,republish,modify our code,app,theme without our
+#       permission.
+#
+#       You may not and you may not attempt to and you may not assist others
+#       to remove, obscure or alter any intellectual property notices on the
+#       Software.
+#
+##############################################################################-->
+<odoo>
+
+    <record id="product_brand_form_view" model="ir.ui.view">
+        <field name="name">product.brand.form</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                     <field name="image" widget='image' class="oe_avatar"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_brand_tree_view" model="ir.ui.view">
+        <field name="name">product.brand.tree</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_brand_action_form" model="ir.actions.act_window">
+        <field name="name">Product Brands</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.brand</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="product_brand_tree_view"/>
+    </record>
+
+    <menuitem id="product_brand" name="Product Brands"
+              action="ecommerce_theme.product_brand_action_form"
+              parent="website_sale.menu_ecommerce_settings"
+              groups="ecommerce_theme.group_product_brand_manager" sequence="2"/>
+
+</odoo>

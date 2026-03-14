@@ -1,0 +1,20 @@
+<odoo>
+    <record id="view_sg_leave_contract_form_inherited_view" model="ir.ui.view">
+        <field name="name">view.sg.leave.contract.form.inherited.view</field>
+        <field name="model">holiday.group.config</field>
+        <field name="inherit_id" ref="sg_holiday_extended.view_sg_leave_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group[2]/field[@name='holiday_group_config_line_ids']/tree" position="replace">
+                <tree>
+                    <field name="leave_type_id" required="1"/>
+                    <field name="default_leave_allocation" required="1"/>
+                    <!-- <field name="incr_leave_per_year"/> -->
+                    <field name="max_leave_kept"/>
+                    <field name="carryover"/>
+                    <!-- <field name="carry_expiry_period" required="1"/> -->
+                    <!-- <field name="carry_no_of_days" invisible="carryover in ('none', 'up_to', 'unlimited')" required="carryover == 'no_of_days'"/> -->
+                </tree>
+            </xpath>
+        </field>
+    </record>
+</odoo>

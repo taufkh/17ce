@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+  <record id="view_calendar_teams_link" model="ir.ui.view">
+    <field name="name">calendar.event.form.outlook</field>
+    <field name="model">calendar.event</field>
+    <field name='inherit_id' ref='calendar.view_calendar_event_form'/>
+    <field name="arch" type="xml">
+
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button string="Join Meeting" icon="fa-external-link" type="object"
+                name="action_redirect_link"
+                invisible="not teams_link"/>
+      </xpath>
+
+      <xpath expr="//notebook" position="inside">
+        <page name="page_teams_link" string="Teams Link">
+          <group>
+            <field name="teams_link" widget="url" invisible="not teams_link"/>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+</data>
+</odoo>

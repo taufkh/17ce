@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="landing_page_view_website_form_inherit" model="ir.ui.view">
+        <field name="name">landing_page_view_website_form_inherit</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="landing_page_tab" string="Landing Page" >
+                    <group>
+                        <field name="campaign_intelligent_automation_id"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

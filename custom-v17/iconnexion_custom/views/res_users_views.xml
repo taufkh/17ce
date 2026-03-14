@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odes_view_users_form_inherit" model="ir.ui.view">
+        <field name="name">odes.res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+           
+            <page name="references" position="inside">
+                <group>
+                    <group string="Contact" name="contact">
+                        <field name="report_user_id" options="{'no_open': 1, 'no_create': 1}"/>
+                        <field name="report_to_user_ids" widget="many2many_tags"/>
+                        <field name="report_to_user_crm_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Select Company" name="select_company">
+                        <field name="is_select_company"/>
+                        
+                    </group>
+                    
+                </group>
+            </page>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_odes_stock_picking_form" model="ir.ui.view">
+        <field name="name">odes.stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <!--<field name="priority">1</field>-->
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='extra']//group[@name='other_infos']/field[@name='company_id']" position="after">
+                <field name="payment_terms" widget="date"/>
+                <field name="freight_terms" widget="date"/>
+            </xpath>
+            <page name="note" position="before">
+                <page name="packing_list" string="Packing Weight List">
+                    <group>
+                        <group>
+                            <field name="flight_vessel"/>
+                            <field name="awb"/>
+                            <field name="by_courier"/>
+                            <field name="sailing_on"/>
+                            <field name="total_packages"/>
+                        </group>
+                        <group>
+                            <field name="container_no"/>
+                            <field name="seal_no"/>
+                            <field name="shipping_mark"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+            <xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='quantity_done']" position="after">
+                <field name="qty_ctn"/>
+                <field name="no_of_carton"/>
+                <field name="measurement"/>
+                <field name="weight_ctn"/>
+                <field name="total_gr_wt"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

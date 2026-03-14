@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="iconnexion_custom_product_product_form_view">
+        <field name="name">iconnexion_custom_product_product_form_view</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="attributes">
+               <attribute name="groups">iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- v16: mccoy_custom not installed (Enterprise deps); record disabled
+    <record model="ir.ui.view" id="mccoy_custom_product_template_form_view">
+        ...
+    </record>
+    -->
+    
+        <!-- v16: odes_accounting not installed (Enterprise deps); record disabled
+    <record id="view_icon_product_template_form_view" ...> ... </record>
+    -->
+
+<record id="stock.view_template_property_form" model="ir.ui.view">
+        <field name="name">product.template.stock.property.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_lots_and_weight']" position="inside">
+                <field name="is_iconnexion" invisible="1"/>
+                <field name="sale_ok" invisible="1"/>
+                <label for="sale_delay" invisible="not is_iconnexion" string="Supplier Lead Time"/>
+                <div invisible="not is_iconnexion">
+                    <field name="sale_delay" class="oe_inline" style="vertical-align:baseline" invisible="not is_iconnexion"/> Days
+                </div>
+
+                <label for="sale_delay" invisible="is_iconnexion" string="Supplier Lead Time"/>
+                <div invisible="is_iconnexion">
+                    <field name="sale_delay" class="oe_inline" style="vertical-align:baseline" invisible="is_iconnexion"/> Weeks
+                </div>
+            </xpath>
+            <xpath expr="//group[@name='group_lots_and_weight']" position="before">
+                <field name="has_available_route_ids" invisible="1"/>
+                <group string="Operations" name="operations">
+                    <label for="route_ids" invisible="type in ('service', 'digital')"/>
+                    <div>
+                        <field name="route_ids" class="mb-0" widget="many2many_checkboxes" invisible="not has_available_route_ids or type in ('service', 'digital')"/>
+                        <button id="stock.view_diagram_button" string="View Diagram" type="action" name="%(stock.action_open_routes)d" icon="fa-arrow-right"
+                             invisible="type not in ('product', 'consu')"
+                             class="btn btn-link pt-0" context="{'default_product_tmpl_id': id}"/>
+                    </div>
+                    <field name="route_from_categ_ids" widget="many2many_tags" readonly="1" invisible="route_from_categ_ids == ()"/>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='group_lots_and_weight']" position="after">
+                <group string="Traceability" name="traceability" groups="stock.group_production_lot"
+                       invisible="type == 'consu'">
+                    <field name="tracking" widget="radio" invisible="type in ('service', 'digital')"/>
+                </group>
+                 <group string="Counterpart Locations" name="stock_property" groups="base.group_no_one">
+                    <field name="property_stock_production"/>
+                    <field name="property_stock_inventory"/>
+                </group>
+            </xpath>
+            <page name="inventory" position="inside">
+                <group string="Description for Delivery Orders">
+                    <field name="description_pickingout" nolabel="1" placeholder="This note is added to delivery orders."/>
+                </group>
+                <group string="Description for Receipts">
+                    <field name="description_pickingin" nolabel="1" placeholder="This note is added to receipt orders (e.g. where to store the product in the warehouse)."/>
+                </group>
+                <group string="Description for Internal Transfers" groups="stock.group_stock_multi_locations">
+                    <field name="description_picking" placeholder="This note is added to internal transfer orders (e.g. where to pick the product in the warehouse)." nolabel="1"/>
+                </group>
+            </page>
+            <page name="inventory" position="attributes">
+                <attribute name="groups">stock.group_stock_user,product.group_stock_packaging</attribute>
+            </page>
+        </field>
+    </record>
+    <!-- v16: mccoy_custom not installed; iconnexion_product_template_form_view disabled
+    <record model="ir.ui.view" id="iconnexion_product_template_form_view"> ... </record>
+    -->
+    <record model="ir.ui.view" id="iconnexion_custom_product_template_form_view">
+        <field name="name">iconnexion_custom_product_template_form_view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">           
+            <field name="categ_id" position="before">
+                <field name="icon_type_id" string="Item Type" groups="iconnexion_custom.group_iconnexion_company"/>
+                <field name="class_id"/>
+            </field>
+            <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/label[@for='list_price']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_cs,iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>
+            <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/div[@name='pricing']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_cs,iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>
+            <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/label[@for='standard_price']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_cs,iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>
+             <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/div[@name='standard_price_uom']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_cs,iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>
+            <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']/field[@name='company_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+             <!-- v16: custom_lead_time_by_weeks from mccoy_custom (uninstallable); xpath disabled -->
+        </field>
+    </record>
+
+    <record id="product_template_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.tree.view.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>            
+            <xpath expr="//field[@name='standard_price']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>    
+            
+            <xpath expr="//field[@name='type']" position="after">
+               <field name="class_id" groups="iconnexion_custom.group_iconnexion_company"/>
+               <field name="icon_type_id" groups="iconnexion_custom.group_iconnexion_company"/>
+            </xpath>
+            <xpath expr="//field[@name='uom_id']" position="before">
+               <field name="product_brand_id" groups="iconnexion_custom.group_iconnexion_company"/>
+           </xpath>
+        </field>
+    </record>
+    <record id="product_template_search_form_view_icon" model="ir.ui.view">
+        <field name="name">product.template.search.icon.form</field>
+        <field name="model">product.template</field>        
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='type']" position="after">
+                <separator/>
+                <filter string="Item Class" name="class_id" context="{'group_by':'class_id'}"/>
+                <filter string="Item Type" name="icon_type_id" context="{'group_by':'icon_type_id'}"/>
+                <filter string="Brand" name="product_brand_id" context="{'group_by':'product_brand_id'}"/>
+                <field string="Brand" name="product_brand_id" groups="product.group_product_variant"/>
+                <!-- v16: manufacturing_company_id from mccoy_custom (uninstallable); field disabled -->
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.kanban.view.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='product_lst_price']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>                                  
+        </field>
+    </record>
+    <!-- Community-safe: product.product kanban DOM changed in v17; legacy xpath disabled. -->
+    
+    <record id="product_product_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.product.tree.view.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lst_price']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>            
+            <xpath expr="//field[@name='standard_price']" position="attributes">
+                <attribute name="groups">iconnexion_custom.group_iconnexion_sales_manager</attribute>
+            </xpath>            
+        </field>
+    </record>
+    <record id="product_supplierinfo_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.supplierinfo.tree.view.inherit</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price']" position="after">
+                <field name="customer_id" />
+                <field name="sale_price" />
+                <field name="moq" />
+            </xpath>            
+            <xpath expr="//field[@name='min_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_code']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- v16: mpn field from mccoy_custom (uninstallable); xpath disabled -->
+            <xpath expr="//field[@name='product_name']" position="replace">
+                <field name="product_name" string="CPN"/>
+            </xpath>
+        </field>
+    </record>
+    
+    
+    <record id="iconnexion_type_form_view" model="ir.ui.view">
+        <field name="name">iconnexion_type_form_view</field>
+        <field name="model">iconnexion.product.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="iconnexion_type_tree_view" model="ir.ui.view">
+        <field name="name">iconnexion_type_tree</field>
+        <field name="model">iconnexion.product.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="iconnexion_type_action" model="ir.actions.act_window">
+        <field name="name">Item Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">iconnexion.product.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="iconnexion_custom.iconnexion_type_tree_view"/>
+    </record>
+
+    <menuitem id="iconnexion_type_menu" name="Item Type"
+              action="iconnexion_type_action"
+              parent="sale.prod_config_main"
+               sequence="20"
+               groups="group_iconnexion_company"/>
+
+
+   <record id="iconnexion_coo_form_view" model="ir.ui.view">
+        <field name="name">icon_coo_form_view</field>
+        <field name="model">icon.coo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="iconnexion_coo_tree_view" model="ir.ui.view">
+        <field name="name">icon_coo_tree</field>
+        <field name="model">icon.coo</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="iconnexion_coo_action" model="ir.actions.act_window">
+        <field name="name">Country Of Origin</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">icon.coo</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="iconnexion_custom.iconnexion_coo_tree_view"/>
+    </record>
+
+    <menuitem id="iconnexion_coo_menu" name="Country Of Origin"
+              action="iconnexion_coo_action"
+              parent="sale.prod_config_main"
+               sequence="21"
+               groups="group_iconnexion_company"/>
+
+    <!-- v16: ecommerce_theme not installed; create standalone form view for product.brand instead -->
+    <record model="ir.ui.view" id="icon_product_brand_form_view">
+        <field name="name">icon_product_brand_form_view</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <form string="Product Brand">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="image" widget="image"/>
+                        <field name="icon_product_partner_manager_ids" groups="iconnexion_custom.group_iconnexion_company" widget="many2many_tags"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

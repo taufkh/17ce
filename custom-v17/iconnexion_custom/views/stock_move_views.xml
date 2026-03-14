@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="warehouse_daily_receiving_tree" model="ir.ui.view">
+        <field name="name">warehouse.daily.receiving.tree</field>
+        <field name="model">stock.move.line</field>
+        <!-- v16: type="html" → type="xml" -->
+        <field name="arch" type="xml">
+            <tree string="Daily Receive" create="false" editable="bottom">
+                <field name="origin" optional="show" string="ICPO No."/>
+                <field name="write_date" optional="show" string="Scan Date"/>
+                <field name="serial_numbers" optional="show" string="PO Line"/>
+                <field name="product_id" string="MPN" optional="show" />
+                <field name="product_cpn" string="CPN" optional="show" />
+                <field name="qty_done" optional="show" />
+                <field name="coo" optional="show" />
+                <field name="lot_id" optional="show" />
+                <field name="dc" optional="show" />
+                <field name="dimension_length" optional="show" />
+                <field name="dimension_width" optional="show" />
+                <field name="dimension_height" optional="show" />
+                <field name="weight" optional="show" />
+                <field name="location_dest_id" optional="show" />
+                <field name="sale_order_no" optional="show" />
+                <field name="sale_order_customer" optional="show" />
+                <field name="sale_order_cust_po" optional="show" />
+                <field name="sale_order_line_product_cpn" optional="show" />
+                <field name="so_order_quantity" optional="show" />
+                <field name="company_id" invisible="1" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="act_open_daily_receive_line" model="ir.actions.act_window">
+        <field name="name">Daily Receiving</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="warehouse_daily_receiving_tree" />
+        <field name="domain">[('origin','ilike','ICPO')]</field>
+        <!--            <field name="search_view_id" ref="purchase_order_line_view_search"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+    <!-- <menuitem id="daily_receiving" name="Daily Receiving" parent="stock.menu_warehouse_report"
+        action="act_open_daily_receive_line" /> -->
+</odoo>

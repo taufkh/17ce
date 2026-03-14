@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="hr_expense.menu_hr_expense_my_expenses_to_submit" active='False'/>
+    <menuitem id="hr_expense.menu_hr_expense_my_expenses_all" active='False'/>
+    <menuitem id="hr_expense.menu_hr_expense_sheet_my_reports" active='False'/>
+
+    <record id="apollo_hr_expense_rev_action" model="ir.actions.act_window">
+            <field name="name">Expense</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    <menuitem id="apollo_hr_expense_rev_menu" name="Expenses" parent="hr_expense.menu_hr_expense_root" action="apollo_hr_expense_rev_action" sequence="0"/>
+
+    <record model="ir.ui.view" id="apollo_hr_expense_line_settings_tree_view">
+            <field name="name">apollo_hr_expense_line_settings_tree_view</field>
+            <field name="model">apollo.hr.expense.line.settings</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="name" />
+                    <field name="account_id" />
+                    <field name="company_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="apollo_hr_expense_line_settings_form_view">
+            <field name="name">apollo_hr_expense_line_settings_form_view</field>
+            <field name="model">apollo.hr.expense.line.settings</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" required="1" />
+                            <field name="company_id" required="1" />
+                            <field name="account_id" required="1" domain="[('company_id','=',company_id)]"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+         <record id="apollo_hr_expense_line_settings_action" model="ir.actions.act_window">
+            <field name="name">Expense Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">apollo.hr.expense.line.settings</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="apollo_hr_expense_line_settings_menu" name="Expense Type" parent="hr_expense.menu_hr_expense_configuration" action="apollo_hr_expense_line_settings_action" sequence="3"/>
+
+
+    <record model="ir.ui.view" id="inherit_view_hr_expense_sheet_tree">
+        <field name="name">inherit_view_hr_expense_sheet_tree</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_tree" />
+        <field name="arch" type="xml">
+             <field name="total_amount" position="replace">
+                <field name="total_amount"  invisible="1"/>
+                 <field name="sgd_currency_id" invisible="1" />
+                <field name="total_amount_curr"  sum="Total Amount" string="Total Amount" decoration-bf="True"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="inherit_hr_expense_sheet_view_form">
+        <field name="name">inherit_hr_expense_sheet_view_form</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form" />
+        <field name="arch" type="xml">
+            <button name="action_submit_sheet" position="before">
+                 <widget name="attach_document" string="Attach Documents" action="message_post" invisible="attachment_number &lt; 1 or not id"/>
+                <widget name="attach_document" string="Attach Documents" action="message_post" highlight="1" invisible="attachment_number &gt;= 1 or not id"/>
+            </button>
+  
+            <group name="expense_total" position="replace">
+                <field name="sgd_currency_id" invisible="1" />
+                  <group class="oe_subtotal_footer oe_right" colspan="2" name="expense_total">
+<!--                          <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="total_amount_curr" string="Total Amount"/>
+                        </div> -->
+                        <field name="sgd_tax_amount" class="oe_subtotal_footer_separator" string="Tax Amount"/>
+
+                        <!-- <field name="company_tax_amount" class="oe_subtotal_footer_separator" string="Tax Amount"/> -->
+                        <!-- <br/><br/> -->
+                        <field name="total_amount_curr" class="oe_subtotal_footer_separator" string="Total Amount"/>
+
+                        <!-- <field name="total_amount" class="oe_subtotal_footer_separator" string="Total Amount"/> -->
+                     <!--    <field name="amount_residual" class="oe_subtotal_footer_separator" invisible="state not in ('post', 'done')"/> -->
+                 </group>
+            </group>
+             <field name="expense_line_ids" position="replace">
+                <field name="expense_line_ids" nolabel="1"  domain="[('state', '=', 'draft'), ('employee_id', '=', employee_id), ('company_id', '=', company_id)]" options="{'reload_on_button': True}" context="{'default_company_id': company_id, 'default_employee_id': employee_id}">
+                            <tree decoration-danger="is_refused" editable="bottom">
+                                <field name="date" optional="show" string="Date"/>
+                                <field name="expense_settings_id" required="1" options="{'no_create': True}" domain="[('company_id','=',parent.company_id)]"/>
+                                <field name="product_id" optional="hide"/>
+                                 <field name="employee_id" optional="hide"/>
+                                <field name="name"/>
+                                <field name="state" invisible="1"/>
+                                <field name="reference" optional="hide"/>
+                                <field name="payment_mode" optional="hide"/>
+                                <field name="analytic_account_id" optional="hide" domain="['|', ('company_id', '=', parent.company_id), ('company_id', '=', False)]" groups="analytic.group_analytic_accounting"/>
+                                <field name="analytic_tag_ids" optional="hide" widget="many2many_tags" groups="analytic.group_analytic_tags"/>
+                                <field name="account_id" optional="hide"/>
+                                <field name="message_unread" invisible="1"/>
+                                <field name="attachment_number" string=" " optional="hide"/>
+                         <!--        <button name="action_get_attachment_view" string="View Attachments" type="object" icon="fa-paperclip" invisible="1"/> -->
+                                <field name="unit_amount" optional="show" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="currency_id" optional="hide"/>
+                                <field name="quantity" optional="show"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="tax_ids" optional="show" widget="many2many_tags" groups="account.group_account_readonly" context="{'default_company_id': company_id}"/>
+                                <field name="total_amount" optional="show"/>
+                                <field name="company_currency_id" invisible="1"/>
+                                <field name="total_amount_company" invisible="1" groups="base.group_multi_currency"/>
+                                <field name="is_refused" invisible="True"/>
+                           </tree>
+                        </field>
+             </field>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="inherit_hr_leave_view_form">
+        <field name="name">inherit_hr_leave_view_form</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager" />
+        <field name="arch" type="xml">
+             <group groups="hr_holidays.group_hr_holidays_manager" position="after">
+                 <group  string="Notification" invisible="holiday_type != 'employee'">
+                    <field name="message_approval"/>
+                    <field name="message_approved"/>
+                    <field name="message_rejected"/>
+                 </group>
+             </group>
+     
+        </field>
+    </record>
+
+    <record id="hr_expense.hr_expense_actions_my_unsubmitted" model="ir.actions.act_window">
+            <field name="context">{'search_default_my_expenses': 1, 'search_default_no_report': 1}</field>
+        </record>
+
+     <record id="hr_expense.hr_expense_view_form" model="ir.ui.view">
+            <field name="name">hr.expense.view.form</field>
+            <field name="model">hr.expense</field>
+            <field name="arch" type="xml">
+                <form string="Expenses" class="o_expense_form">
+                <header>
+                  <button name="action_submit_expenses" string="Create Report" type="object" class="oe_highlight o_expense_submit" invisible="attachment_number &lt;= 0 or sheet_id"/>
+                  <widget name="attach_document" string="Attach Receipt" action="message_post" invisible="attachment_number &lt; 1 or not id"/>
+                  <widget name="attach_document" string="Attach Receipt" action="message_post" highlight="1" invisible="attachment_number &gt;= 1 or not id"/>
+                  <button name="action_submit_expenses" string="Create Report" type="object" class="o_expense_submit" invisible="attachment_number &gt;= 1 or sheet_id"/>
+                  <field name="state" widget="statusbar" statusbar_visible="draft,reported,approved,done,refused"/>
+                  <button name="action_view_sheet" type="object" string="View Report" class="oe_highlight" invisible="not sheet_id"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_attachment_view"
+                            class="oe_stat_button"
+                            icon="fa-file-text-o"
+                            type="object">
+                            <field name="attachment_number" widget="statinfo" string="Receipts" options="{'reload_on_button': true}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Lunch with Customer"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_editable" invisible="1"/>
+                            <field name="is_ref_editable" invisible="1"/>
+                            <field name="product_id" required="1" context="{'default_can_be_expensed': 1, 'tree_view_ref': 'hr_expense.product_product_expense_tree_view'}"
+                                   widget="many2one_barcode"
+                            />
+                            <field name="unit_amount" required="1" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+                            <label for="quantity"/>
+                            <div class="o_row">
+                                <field name="quantity" class="oe_inline"/>
+                                <field name="product_uom_id" required="1" widget="selection" class="oe_inline" groups="uom.group_uom"/>
+                            </div>
+                            <field name="tax_ids" widget="many2many_tags" groups="account.group_account_readonly" readonly="not is_editable" context="{'default_company_id': company_id}"/>
+                            <field name="total_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        </group><group>
+                            <field name="reference" readonly="not is_ref_editable"/>
+                            <field name="date"/>
+                            <field name="accounting_date" invisible="not accounting_date or state not in ('approved', 'done')" />
+                            <field name="account_id" options="{'no_create': True}" domain="[('internal_type', '=', 'other'), ('company_id', '=', company_id)]" groups="account.group_account_readonly" readonly="not is_editable" context="{'default_company_id': company_id}"/>
+                            <field name="employee_id" groups="hr_expense.group_hr_expense_team_approver" context="{'default_company_id': company_id}"/>
+                            <field name="sheet_id" invisible="1"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="analytic_account_id" domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]" groups="analytic.group_analytic_accounting" readonly="not is_editable"/>
+                            <field name="analytic_tag_ids" widget="many2many_tags" groups="analytic.group_analytic_tags" readonly="not is_editable"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group><group>
+                            <label for="payment_mode"/>
+                            <div>
+                                <field name="payment_mode" widget="radio"/>
+                            </div>
+                        </group>
+                    </group>
+                    <div>
+                        <field name="description" class="oe_inline" placeholder="Notes..."/>
+                    </div>
+                </sheet>
+                <div class="o_attachment_preview"/>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+
+
+    <record model="ir.ui.view" id="hr_expense_view_form">
+        <field name="name">hr_expense_view_form</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form" />
+        <field name="arch" type="xml">
+            <field name="employee_id" position="replace">
+                <field name="employee_id" groups="hr_expense.group_hr_expense_team_approver" context="{'default_company_id': company_id,'open_all_employee':1}"  options="{'no_create': True,'no_open':True,'always_reload':True}"/>
+            </field>
+<!--             <xpath expr="//sheet" position="inside">
+                <field name="line_expense_ids" nolabel="1">
+                    <tree editable="bottom">
+                        <field name="product_id" />
+                        <field name="name" required="1"/>
+                        <field name="quantity" />
+                        <field name="product_uom_id" groups="uom.group_uom" widget="selection"/>
+                        <field name="unit_price"/>
+                        <field name="tax_ids" readonly="0" widget="many2many_tags" groups="account.group_account_readonly"/>
+                        <field name="subtotal" readonly="1" force_save="1"/>
+                        <field name="product_uom_category_id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                    </tree>
+                </field>
+                <group class="oe_subtotal_footer oe_right" colspan="2" name="expense_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_amount"/>
+                                </div>
+                                <field name="total_amount" nolabel="1" class="oe_subtotal_footer_separator"/>
+               
+                            </group>
+
+            </xpath> -->
+
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_form">
+        <field name="name">view_employee_form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[hasclass('oe_title')]/h1[hasclass('d-flex')]" position="after">
+                <h2>
+                                <field name="initial_name" placeholder="Initial Name"/>
+                            </h2>
+            </xpath>
+            <field name="parent_id" position="replace">
+                <field name="parent_id" invisible="1"/>
+            </field>
+            <field name="coach_id" position="replace">
+                <field name="coach_id" string="Manager"/>
+            </field>
+            <group name="managers" position="replace">
+                <group string="Approvers">
+                    <group string="Time off">
+                  
+                            <field name="approver_time_off_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name" />
+                                </tree>
+                            </field>
+                    
+                    </group>
+                    <group string="Expense">
+                        
+                            <field name="approver_expense_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name" />
+                                </tree>
+                            </field>
+                 
+                    </group>
+                </group>
+            </group> 
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_form_parent2">
+        <field name="name">view_employee_form_parent2</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="sg_hr_employee.view_employee_form_parent2" />
+        <field name="arch" type="xml">
+            <field name="leave_manager" position="replace">
+                <field name="leave_manager" invisible="1"/>
+            </field>
+            <field name="parent_id" position="replace">
+                <field name="parent_id" invisible="1"/>
+            </field>
+            
+        </field>
+    </record>
+
+    <record id="hr_timesheet_line_tree" model="ir.ui.view">
+        <field name="name">hr_timesheet_line_tree</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="unit_amount" position="before">
+               <field name="start_datetime" string="Start Time" required="1"/>
+               <field name="end_datetime"  string="End Time" required="1"/> 
+                
+            </field> 
+            <field name="unit_amount" position="replace">
+               <field name="duration" readonly="1" force_save="1" widget="float_time"/>
+                <field name="unit_amount" invisible="1"/>
+            </field> 
+            
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_timesheet.view_task_form2_inherited">
+            <field name="name">project.task.form.inherited</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2" />
+            <field name="groups_id" eval="[(6,0, (ref('hr_timesheet.group_hr_timesheet_user'),))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='description_page']" position="after">
+                    <field name="analytic_account_active" invisible="1"/>
+                    <field name="allow_timesheets" invisible="1"/>
+                    <field name="allow_subtasks" invisible="1"/>
+                    <field name="encode_uom_in_days" invisible="1"/>
+                    <page string="Timesheets" id="timesheets_tab" invisible="not allow_timesheets">
+                        <group>
+                            <group>
+                                <div class="o_td_label">
+                                    <label for="planned_hours" string="Initially Planned Hours" invisible="encode_uom_in_days"/>
+                                    <label for="planned_hours" string="Initially Planned Days" invisible="not encode_uom_in_days"/>
+                                </div>
+                                <field name="planned_hours" widget="timesheet_uom_no_toggle" nolabel="1"/>
+                                <div class="o_td_label" groups="project.group_subtask_project" invisible="not allow_subtasks or subtask_count == 0">
+                                    <label for="subtask_planned_hours" string="Sub-tasks Planned Hours" invisible="encode_uom_in_days"/>
+                                    <label for="subtask_planned_hours" string="Sub-tasks Planned Days" invisible="not encode_uom_in_days"/>
+                                </div>
+                                <field name="subtask_planned_hours" widget="timesheet_uom_no_toggle" nolabel="1" groups="project.group_subtask_project" invisible="not allow_subtasks or subtask_count == 0"/>
+                            </group>
+                            <group>
+                                <field name="progress" widget="progressbar"/>
+                            </group>
+                        </group>
+                        <group name="timesheet_error" invisible="analytic_account_active">
+                            <div class="alert alert-warning" role="alert">
+                                You cannot log timesheets on this project since it is linked to an inactive analytic account. Please change this account, or reactivate the current one to timesheet on the project.
+                            </div>
+                        </group>
+                    <field name="timesheet_ids" mode="tree,kanban" invisible="not analytic_account_active" context="{'default_project_id': project_id, 'default_name':''}">
+                        <tree editable="bottom" string="Timesheet Activities" default_order="date">
+                            <field name="date"/>
+                            <field name="user_id" invisible="1"/>
+                            <field name="employee_id" required="1" widget="many2one_avatar_employee"/>
+                            <field name="name" required="0"/>
+                            <field name="timer_start" optional="show" string="Start Time"/>
+               <field name="timer_pause" optional="show" string="End Time"/> 
+                            <field name="unit_amount" widget="timesheet_uom" decoration-danger="unit_amount &gt; 24"/>
+                            <field name="project_id" invisible="1"/>
+                            <field name="task_id" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </tree>
+                        <kanban class="o_kanban_mobile">
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="employee_id" widget="many2one_avatar_employee"/>
+                            <field name="name"/>
+                            <field name="unit_amount" decoration-danger="unit_amount &gt; 24"/>
+                            <field name="project_id"/>
+                            <field name="task_id" invisible="1"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <strong><span><t t-esc="record.employee_id.value"/></span></strong>
+                                            </div>
+                                            <div class="col-6 pull-right text-right">
+                                                <strong><t t-esc="record.date.value"/></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 text-muted">
+                                                <span><t t-esc="record.name.value"/></span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="pull-right text-right">
+                                                    <field name="unit_amount" widget="float_time"/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form  string="Timesheet Activities">
+                            <sheet>
+                                 <group>
+                                    <field name="date"/>
+                                    <field name="user_id" invisible="1"/>
+                                    <field name="employee_id" required="1" widget="many2one_avatar_employee"/>
+                                    <field name="name"/>
+                                    <field name="unit_amount" string="Duration" widget="float_time" decoration-danger="unit_amount &gt; 24"/>
+                                    <field name="project_id" invisible="1"/>
+                                    <field name="task_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                    <group invisible="not analytic_account_active">
+                        <group class="oe_subtotal_footer oe_right" name="project_hours">
+                            <span>
+                                <label class="font-weight-bold" for="effective_hours" string="Hours Spent" invisible="encode_uom_in_days"/>
+                                <label class="font-weight-bold" for="effective_hours" string="Days Spent" invisible="not encode_uom_in_days"/>
+                            </span>
+                            <field name="effective_hours" widget="timesheet_uom" nolabel="1"/>
+
+                            <button name="action_view_subtask_timesheet" type="object" class="o_td_label o_form_label o_form_subtask_button oe_inline oe_link mr-0" invisible="not allow_subtasks or subtask_effective_hours == 0.0">
+                                <span class="text-nowrap" invisible="encode_uom_in_days">Sub-tasks Hours Spent</span>
+                                <span class="text-nowrap" invisible="not encode_uom_in_days">Sub-tasks Days Spent</span>
+                            </button>
+                            <field name="subtask_effective_hours" class="mt-2" widget="timesheet_uom"
+                                   invisible="not allow_subtasks or subtask_effective_hours == 0.0" nolabel="1"/>
+                            <span>
+                                <label class="font-weight-bold" for="total_hours_spent" string="Total Hours"
+                                       invisible="(not allow_subtasks or subtask_effective_hours == 0.0) or encode_uom_in_days"/>
+                                <label class="font-weight-bold" for="total_hours_spent" string="Total Days"
+                                       invisible="(not allow_subtasks or subtask_effective_hours == 0.0) or not encode_uom_in_days"/>
+                            </span>
+                            <field name="total_hours_spent" widget="timesheet_uom" class="oe_subtotal_footer_separator" nolabel="1"
+                                   invisible="not allow_subtasks or subtask_effective_hours == 0.0" />
+                            <span>
+                                <label class="font-weight-bold" for="remaining_hours" string="Remaining Hours"
+                                       invisible="planned_hours == 0.0 or encode_uom_in_days"/>
+                                <label class="font-weight-bold" for="remaining_hours" string="Remaining Days"
+                                       invisible="planned_hours == 0.0 or not encode_uom_in_days"/>
+                            </span>
+                            <field name="remaining_hours" widget="timesheet_uom" class="oe_subtotal_footer_separator"
+                                   invisible="planned_hours == 0.0" nolabel="1"/>
+                        </group>
+                    </group>
+                </page>
+                </xpath>
+            </field>
+        </record>
+
+
+</odoo>

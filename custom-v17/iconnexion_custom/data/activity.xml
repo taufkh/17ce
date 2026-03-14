@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_activity_pi_order_status_notification" model="mail.activity.type">
+        <field name="name">Confirmed PI Payment</field>
+        <field name="icon">fa-mobile</field>
+        <!-- v16: res_model_id → res_model (Char/Selection) -->
+        <field name="res_model">account.payment</field>
+        <field name="delay_count">30</field>
+    </record>
+</odoo>

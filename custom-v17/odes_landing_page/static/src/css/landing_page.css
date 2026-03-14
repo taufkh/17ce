@@ -1,0 +1,115 @@
+
+
+
+/*///////////////////////////LANDING PAGE INTELLIGENT AUTOMATION/////////////////////////*/
+#landing_page_dialog{
+    outline: 0px;
+    z-index: 999999;
+    position: fixed;
+    text-align: center;
+    font-size: 19px;
+    height: auto;
+    width: 100%;
+    color: white;
+    top: 46px;
+    left: 0px;
+    border: 2px solid white;
+    display: block;
+    background: #005ca0;
+    padding: 15px;
+    display: none;
+}
+#landing_page_dialog_warning{
+    outline: 0px;
+    z-index: 999999;
+    position: fixed;
+    text-align: center;
+    font-size: 19px;
+    height: auto;
+    width: 100%;
+    color: white;
+    top: 46px;
+    left: 0px;
+    border: 2px solid white;
+    display: block;
+    background: #f0c130;
+    padding: 15px;
+    display: none;
+}
+.landing_page_intelligent_automation .header_p {
+    font-size: 54px;
+    line-height: 58px;
+}
+.landing_page_intelligent_automation .text_in_bottom {
+    font-size: 21px;
+    margin:unset;
+}
+.landing_page_intelligent_automation .text_in_top {
+    font-size: 21px;
+    width: 65%;
+    margin: unset;
+}
+.landing_page_intelligent_automation .div_content_bottom {
+    padding: 0 13%;
+}
+.landing_page_intelligent_automation .content_in_bg {
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    color: white;
+    width: 100%;
+    padding: 0px 6%;
+}
+.landing_page_intelligent_automation .content_in_bg .header_p {
+    font-size: 84px;
+    line-height: 80px;
+}
+.landing_page_intelligent_automation .box_form_data input {
+    background-color: transparent;
+    border-style: solid;
+    border-width: 2px;
+    font-size: 16px;
+    outline: 1px solid transparent;
+    padding-top: .65rem;
+    padding-bottom: .65rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    color: white;
+    border: 1px solid white;
+    margin: 7px 0;
+}
+.landing_page_intelligent_automation .box_form_data input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 0.9; /* Firefox */
+}
+.landing_page_intelligent_automation .box_form_data button{
+    background: #fdb72f;
+    border: unset;
+    border-radius: 30px;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 10px 16%;
+    margin-top: 23px;
+    margin-bottom: 13px;
+}
+.landing_page_intelligent_automation .box_form_data button:hover{
+        background: white;
+}
+@media (max-width: 1197px){
+    .landing_page_intelligent_automation .content_in_bg {
+        background-repeat: repeat-y;
+        background-size: auto;
+    }
+}
+@media (max-width: 767px){
+    .landing_page_intelligent_automation .content_in_bg .row{
+        padding-top: 42px;
+    }
+    .landing_page_intelligent_automation .content_in_bg form{
+            margin-top: 40px !important;
+    }
+    .landing_page_intelligent_automation .div_content_bottom {
+         padding: unset; 
+    }
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////*/

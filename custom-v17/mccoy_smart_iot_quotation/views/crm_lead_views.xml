@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="crm_lead_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="odes_crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='nda_id']" position="after">
+                <field name="is_skip_nda" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_create_user']" position="after">
+                <button name="skip_nda" string="Skip NDA" type="object" invisible="not is_skip_nda or is_nda_confirmed"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,265 @@
+var user = $("select[id='user_selection']").val();
+var company = $("select[id='company_selection']").val();
+
+$.ajax({
+    type: 'GET', 
+    url: '/odes_custom/fetch_chart_data', 
+    data: {
+        'user' : user,
+        'company' : company
+    },
+    dataType: 'json',
+    success: function (data) {
+
+        var ctx = document.getElementById('lead_chart');
+        var lead_chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.lead_label,
+                datasets: [{
+                    label: 'Possibility',
+                    data: data.lead_data,
+                    backgroundColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 10,
+                            min: 0,
+                            beginAtZero: true,
+                            maxTicksLimit: 10,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx = document.getElementById('opp_chart');
+        var opp_chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.opp_label,
+                datasets: [{
+                    label: 'Possibility',
+                    data: data.opp_data,
+                    backgroundColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 10,
+                            min: 0,
+                            beginAtZero: true,
+                            maxTicksLimit: 10,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx = document.getElementById('crm_chart');
+        var crm_chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.crm_label,
+                datasets: [{
+                    label: 'Stages',
+                    data: data.crm_data,
+                    backgroundColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(29, 156, 225, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 63, 111, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(29, 156, 225, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 63, 111, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            maxTicksLimit: 10,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx = document.getElementById('revenue_chart');
+        var revenue_chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.revenue_label,
+                datasets: [{
+                    label: 'Expected Revenue',
+                    data: data.revenue_data,
+                    backgroundColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(39, 175, 238, 1)',
+                        'rgba(19, 136, 211, 1)',
+                        'rgba(0, 98, 185, 1)',
+                        'rgba(0, 81, 142, 1)',
+                        'rgba(0, 45, 79, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true,
+                        }
+                    }]
+                }
+            }
+        });
+
+
+        Highcharts.setOptions({
+            colors: ['#07D6DB', '#FED130', '#66CC00', '#5E5E5E']
+        });
+
+        Highcharts.chart('chart-container', {
+            chart: {
+                type: 'funnel'
+            },
+            title: {
+                text: ' '
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b> ({point.y:,.0f})',
+                        softConnector: true
+                    },
+                    center: ['40%', '50%'],
+                    neckWidth: '30%',
+                    neckHeight: '1%',
+                    width: '80%',
+                    height: '100%'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            series: [{
+                name: 'Count',
+                data: data.funnel_data
+            }],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    inside: true
+                                },
+                                center: ['50%', '50%'],
+                                width: '50%'
+                            }
+                        }
+                    }
+                }]
+            }
+        });
+
+
+
+        }
+    });
+
+
+
+$.ajax({ 
+    type: 'GET', 
+    url: '/odes_custom/fetch_user_data', 
+    data: {}, 
+    dataType: 'json',
+    success: function (data) {
+
+        var options_user = data.user_data;
+        var selectBox_user = document.getElementById('user_selection');
+        $("#user_selection").empty();
+        for(var i = 0, l = options_user.length; i < l; i++){
+          var option_user = options_user[i];
+          selectBox_user.options.add( new Option(option_user.text, option_user.value) );
+        }
+        if (user !== null){
+            $("#user_selection").val(user);
+        }
+
+
+        var options_company = data.company_data;
+        var selectBox_company = document.getElementById('company_selection');
+        $("#company_selection").empty();
+        for(var i = 0, l = options_company.length; i < l; i++){
+          var option_company = options_company[i];
+          selectBox_company.options.add( new Option(option_company.text, option_company.value) );
+        }
+        if (company !== null){
+            $("#company_selection").val(company);
+        }
+
+    }
+});
