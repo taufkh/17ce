@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="odes_job_view_form_onboarding_template" model="ir.ui.view">
+        <field name="name">odes.hr.job.form.onboarding.template</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field
+                    name="onboarding_mail_template_id"
+                    options="{'no_create': 0}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

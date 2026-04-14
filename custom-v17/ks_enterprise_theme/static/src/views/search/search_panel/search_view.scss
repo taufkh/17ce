@@ -1,0 +1,17 @@
+// = Search View
+// ============================================================================
+
+.o_mobile_search {
+    --mobileSearch-bg: #{mix($o-gray-100, $white, 65%)};
+    --mobileSearch__header-bg: #{mix($o-brand-odoo, $white, 12%)};
+
+    .o_mobile_search_header {
+        box-shadow: inset 0 -1px 0 rgba($o-black, 0.06);
+    }
+
+    .o_mobile_search_button {
+        color: $o-brand-odoo;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+}

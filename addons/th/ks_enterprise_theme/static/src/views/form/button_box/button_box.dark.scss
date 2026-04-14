@@ -1,0 +1,21 @@
+.o-form-buttonbox { 
+  --o-stat-button-color: currentColor;
+  --o-stat-text-color: #{o-text-color('primary')};
+
+  > * + * {
+    margin-left: 0;
+  }
+
+  .oe_stat_button {
+    border-color: rgba($white, 0.08);
+    background:
+      linear-gradient(180deg, rgba($o-gray-100, 0.12), rgba($o-gray-100, 0.05));
+    box-shadow:
+      0 18px 30px -28px rgba($black, 0.34),
+      0 1px 0 rgba($white, 0.04) inset;
+  }
+
+  .o_bottom_sheet & {
+    --o-stat-button-border-color: #{$o-gray-400};
+  }
+}

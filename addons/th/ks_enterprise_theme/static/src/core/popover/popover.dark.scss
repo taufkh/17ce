@@ -1,0 +1,40 @@
+// = Popovers
+// ============================================================================
+// No CSS hacks, variables overrides only
+
+.o_popover {
+    --border-color: #{$popover-border-color};
+
+    .table {
+        --table-bg: #{$popover-bg};
+    }
+
+    .o_input {
+        --o-input-border-color: #{$popover-border-color};
+    }
+
+    .form-range {
+        &::-moz-range-track {
+            background: darken($popover-bg, 10%);
+        }
+        &::-webkit-slider-runnable-track {
+            background: darken($popover-bg, 10%);
+        }
+    }
+
+    border: 1px solid rgba($white, 0.08);
+    border-radius: 1rem;
+    background:
+        linear-gradient(180deg, rgba($o-gray-900, 0.985), rgba($o-gray-800, 0.96));
+    box-shadow:
+        0 22px 44px -28px rgba($o-black, 0.52),
+        0 1px 0 rgba($white, 0.04) inset;
+
+    .popover-header {
+        border-bottom: 1px solid rgba($white, 0.08);
+        background:
+            linear-gradient(180deg, rgba($o-gray-900, 0.9), rgba($o-gray-900, 0.72));
+        border-top-left-radius: calc(1rem - 1px);
+        border-top-right-radius: calc(1rem - 1px);
+    }
+}

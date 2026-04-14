@@ -75,8 +75,28 @@ class HrPeriod(models.Model):
     payslip_ids = fields.One2many(
         "hr.payslip", "hr_period_id", "Payslips", readonly=True
     )
+    timesheet_locked = fields.Boolean(
+        string="Timesheets Locked",
+        default=False,
+        copy=False,
+        help="Prevents non-admin users from creating, editing, or deleting "
+        "timesheets that fall inside this period.",
+    )
 
     type_id = fields.Many2one(domain=[("hr_period", "=", True)], default=_default_type)
+
+    @api.model
+    def get_period_for_date(self, company_id, target_date):
+        target_date = fields.Date.to_date(target_date)
+        return self.search(
+            [
+                ("company_id", "=", company_id),
+                ("date_start", "<=", target_date),
+                ("date_end", ">=", target_date),
+            ],
+            order="date_start desc",
+            limit=1,
+        )
 
     @api.model
     def get_next_period(self, company_id, schedule_pay):
@@ -129,10 +149,10 @@ class HrPeriod(models.Model):
         self.write({"state": "draft"})
 
     def button_open(self):
-        self.write({"state": "open"})
+        self.write({"state": "open", "timesheet_locked": False})
 
     def button_close(self):
-        self.write({"state": "done"})
+        self.write({"state": "done", "timesheet_locked": True})
         for period in self:
             fy = period.fiscalyear_id
 
@@ -141,8 +161,14 @@ class HrPeriod(models.Model):
                 fy.write({"state": "done"})
 
     def button_re_open(self):
-        self.write({"state": "open"})
+        self.write({"state": "open", "timesheet_locked": False})
         for period in self:
             fy = period.fiscalyear_id
             if fy.state != "open":
                 fy.write({"state": "open"})
+
+    def button_lock_timesheets(self):
+        self.write({"timesheet_locked": True})
+
+    def button_unlock_timesheets(self):
+        self.write({"timesheet_locked": False})

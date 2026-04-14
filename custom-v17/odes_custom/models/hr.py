@@ -5,6 +5,19 @@ from odoo.exceptions import UserError, ValidationError
 from datetime import datetime, timedelta
 from dateutil.parser import parse
 
+
+class HrJob(models.Model):
+    _inherit = "hr.job"
+
+    onboarding_mail_template_id = fields.Many2one(
+        "mail.template",
+        string="Onboarding Email Template",
+        domain="[('model_id.model', '=', 'hr.employee')]",
+        help="Template that will be sent automatically when a new employee is "
+        "created for this job position.",
+    )
+
+
 class HrApplicant(models.Model):
     _inherit = "hr.applicant"
 
@@ -45,6 +58,42 @@ class HrApplicant(models.Model):
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
+
+    onboarding_email_sent = fields.Boolean(
+        string="Onboarding Email Sent", copy=False, readonly=True
+    )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        employees = super(HrEmployee, self).create(vals_list)
+        if not self.env.context.get('skip_job_onboarding_email'):
+            employees._send_job_onboarding_email()
+        return employees
+
+    def _get_onboarding_email_to(self):
+        self.ensure_one()
+        email_to = self.work_email or self.private_email
+        if email_to:
+            return email_to
+        applicant_id = self.env.context.get('default_applicant_id')
+        if applicant_id:
+            return self.env['hr.applicant'].browse(applicant_id).email_from
+        return False
+
+    def _send_job_onboarding_email(self):
+        for employee in self:
+            template = employee.job_id.onboarding_mail_template_id
+            if not template or employee.onboarding_email_sent:
+                continue
+            email_to = employee._get_onboarding_email_to()
+            if not email_to:
+                continue
+            template.sudo().send_mail(
+                employee.id, force_send=True, email_values={'email_to': email_to}
+            )
+            employee.with_context(skip_job_onboarding_email=True).sudo().write(
+                {'onboarding_email_sent': True}
+            )
 
     def write(self, vals):
         res = super(HrEmployee, self).write(vals)

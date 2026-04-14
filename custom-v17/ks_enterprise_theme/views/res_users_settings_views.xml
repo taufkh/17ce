@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+            Add "Theme" color scheme toggle to the user Preferences dialog.
+
+            In Community 17, view_users_form_simple_modif has group[@name='preferences']
+            (NOT 'other_preferences' — that group is added by web_enterprise itself).
+            We insert a new group with the color_scheme field after the preferences group.
+        -->
+        <record id="view_users_form_simple_modif_color_scheme" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.color_scheme</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='preferences']" position="after">
+                    <group name="ks_theme_preferences" string="Appearance">
+                        <field name="color_scheme" widget="radio" string="Theme"
+                               options="{'horizontal': true}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!--
+            Add "Theme" color scheme toggle to the full User admin form.
+            In Community 17, view_users_form preferences page has group[@name='preferences']
+            (string="Localization"). We append after it.
+        -->
+        <record id="view_users_form_color_scheme" model="ir.ui.view">
+            <field name="name">res.users.form.color_scheme</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <!--
+                    Use group[@name='messaging'] as anchor — it's uniquely named
+                    and sits after the localization group on the Preferences page.
+                -->
+                <xpath expr="//group[@name='messaging']" position="before">
+                    <group name="ks_theme_preferences" string="Appearance">
+                        <field name="color_scheme" widget="radio" string="Theme"
+                               options="{'horizontal': true}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

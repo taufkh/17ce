@@ -49,6 +49,9 @@
 	    		<tree string="Sample Request">
 	    			<field name="name"/>
 	    			<field name="state"/>
+	    			<field name="brand_id" optional="show"/>
+	    			<field name="supplier_id" optional="show"/>
+	    			<field name="traceability_summary" optional="show"/>
 	    		</tree>
 	    	</field>
 	    </record>
@@ -125,6 +128,18 @@
 		    				<field name="project_desc"/>
 		    				<field name="project_start_date"/>
 	    					<field name="project_reference_no"/>
+	    					<field name="traceability_summary" readonly="1"/>
+			    		</group>
+			    		<group string="Request Fit-Gap">
+			    			<group>
+			    				<field name="brand_id"/>
+			    				<field name="supplier_id"/>
+			    				<field name="factory_reference"/>
+			    			</group>
+			    			<group>
+			    				<field name="follow_up_notes" placeholder="Next action, customer feedback, or pending clarification..."/>
+			    				<field name="rejection_reason" invisible="state not in ('inprocess', 'decline')"/>
+			    			</group>
 			    		</group>
 			    		<group string="Product Information">
 			    			<field name="product_line" nolabel="1">

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!-- Community 17 list renderer — no Enterprise extensions needed here.
+     The Studio "Add Custom Field" button requires web_studio / Enterprise
+     and is intentionally not present in Community Edition. -->
+
+</templates>

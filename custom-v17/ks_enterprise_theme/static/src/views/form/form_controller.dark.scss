@@ -1,0 +1,60 @@
+// = Form View Dark
+// ============================================================================
+
+.o_form_view {
+    --KsForm-shell-shadow: #{rgba($black, 0.34)};
+    --KsForm-shell-border: #{rgba($white, 0.08)};
+    --KsForm-shell-surface: #{rgba($o-gray-100, 0.08)};
+    --KsForm-subtle-surface: #{rgba($o-gray-100, 0.14)};
+    --KsForm-accent: #{rgba($o-action, 0.16)};
+    --KsForm-accent-border: #{rgba($o-action, 0.26)};
+
+    background-image:
+        radial-gradient(circle at top right, rgba($o-action, 0.08), transparent 30%),
+        linear-gradient(180deg, rgba($o-gray-100, 0.04), rgba($o-gray-100, 0));
+
+    .o_form_sheet {
+        border-color: var(--KsForm-shell-border);
+        background:
+            linear-gradient(180deg, rgba($o-gray-100, 0.1), rgba($o-gray-100, 0.05));
+        box-shadow:
+            0 24px 48px -40px var(--KsForm-shell-shadow),
+            0 1px 0 rgba($white, 0.04) inset;
+    }
+
+    .o_form_statusbar {
+        border-color: rgba($white, 0.08);
+        background: var(--KsForm-subtle-surface);
+        box-shadow: inset 0 1px 0 rgba($white, 0.04);
+
+        > .o_statusbar_status > .o_arrow_button:hover,
+        > .o_statusbar_status > .o_arrow_button:focus-visible {
+            box-shadow: inset 0 0 0 1px rgba($o-action, 0.22);
+        }
+    }
+
+    .o_form_sheet_bg > .alert {
+        border-color: rgba($white, 0.08);
+        box-shadow: 0 16px 28px -28px rgba($black, 0.34);
+    }
+
+    .o-mail-ChatterContainer,
+    .o-mail-Form-chatter {
+        .o-mail-Chatter {
+            border-color: rgba($white, 0.08);
+            background:
+                linear-gradient(180deg, rgba($o-gray-100, 0.11), rgba($o-gray-100, 0.05));
+            box-shadow: 0 24px 48px -40px rgba($black, 0.32);
+        }
+
+        .o-mail-Chatter-top {
+            border-bottom-color: rgba($white, 0.08);
+            background:
+                linear-gradient(180deg, rgba($o-gray-100, 0.12), rgba($o-gray-100, 0.06));
+        }
+
+        .o-mail-Chatter-content {
+            color: rgba($white, 0.86);
+        }
+    }
+}

@@ -1,0 +1,60 @@
+// = Dropdowns
+// ============================================================================
+
+.o-dropdown--menu,
+.dropdown-menu {
+    --KsDropdown-border: #{rgba($o-black, 0.08)};
+    --KsDropdown-shadow: #{rgba($o-black, 0.18)};
+    --KsDropdown-hover: #{rgba($o-brand-odoo, 0.08)};
+
+    padding: 0.35rem;
+    border: 1px solid var(--KsDropdown-border);
+    border-radius: 1rem;
+    background:
+        linear-gradient(180deg, rgba($white, 0.985), rgba($o-gray-100, 0.96));
+    box-shadow:
+        0 22px 44px -28px var(--KsDropdown-shadow),
+        0 1px 0 rgba($white, 0.92) inset;
+    backdrop-filter: blur(14px);
+
+    .dropdown-item,
+    .o-dropdown-item {
+        min-height: 2.1rem;
+        border-radius: 0.75rem;
+        font-weight: 500;
+        transition:
+            background-color 0.18s ease,
+            color 0.18s ease,
+            transform 0.18s ease;
+
+        &:hover,
+        &:focus,
+        &:focus-visible {
+            background: var(--KsDropdown-hover);
+            color: $o-main-text-color;
+            transform: translateX(1px);
+        }
+
+        &.active,
+        &:active,
+        &[aria-checked="true"],
+        &[aria-selected="true"] {
+            background: $o-component-active-bg;
+            color: $o-component-active-color;
+        }
+    }
+
+    .dropdown-divider {
+        margin-block: 0.35rem;
+        border-color: rgba($o-black, 0.08);
+    }
+
+    .dropdown-header {
+        padding-inline: 0.75rem;
+        color: $o-gray-600;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+}

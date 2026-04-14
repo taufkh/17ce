@@ -1,0 +1,35 @@
+// = Popovers
+// ============================================================================
+
+.o_popover {
+    --KsPopover-border: #{rgba($o-black, 0.08)};
+    --KsPopover-shadow: #{rgba($o-black, 0.18)};
+
+    border: 1px solid var(--KsPopover-border);
+    border-radius: 1rem;
+    background:
+        linear-gradient(180deg, rgba($white, 0.985), rgba($o-gray-100, 0.96));
+    box-shadow:
+        0 22px 44px -28px var(--KsPopover-shadow),
+        0 1px 0 rgba($white, 0.92) inset;
+    backdrop-filter: blur(14px);
+
+    .popover-header {
+        border-bottom: 1px solid rgba($o-black, 0.06);
+        background: linear-gradient(180deg, rgba($white, 0.96), rgba($white, 0.76));
+        border-top-left-radius: calc(1rem - 1px);
+        border-top-right-radius: calc(1rem - 1px);
+    }
+
+    .popover-body {
+        padding: 0.85rem 1rem 1rem;
+    }
+
+    .table {
+        --table-bg: transparent;
+    }
+
+    .o_input {
+        --o-input-border-color: #{rgba($o-black, 0.12)};
+    }
+}

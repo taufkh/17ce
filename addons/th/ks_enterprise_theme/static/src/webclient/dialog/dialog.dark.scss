@@ -1,0 +1,33 @@
+// = Dialogs Dark
+// ============================================================================
+
+.modal-backdrop.show {
+    opacity: 0.46;
+}
+
+.o_dialog,
+.modal {
+    .modal-content {
+        border-color: rgba($white, 0.08);
+        background:
+            linear-gradient(180deg, rgba($o-gray-900, 0.985), rgba($o-gray-800, 0.96));
+        box-shadow:
+            0 28px 64px -40px rgba($o-black, 0.55),
+            0 1px 0 rgba($white, 0.05) inset;
+    }
+
+    .modal-header {
+        border-bottom-color: rgba($white, 0.08);
+        background:
+            linear-gradient(180deg, rgba($o-gray-900, 0.92), rgba($o-gray-900, 0.7));
+    }
+
+    .modal-footer {
+        border-top-color: rgba($white, 0.08);
+        background: rgba($o-gray-900, 0.5);
+    }
+
+    .btn-close {
+        filter: invert(1) grayscale(1);
+    }
+}

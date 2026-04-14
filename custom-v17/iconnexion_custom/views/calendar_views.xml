@@ -9,8 +9,33 @@
             <xpath expr="//field[@name='allday']" position="after">
                     <field name="is_visit"/>
                      <field name="visit_type" invisible="not is_visit"/>
+                     <field name="customer_id" invisible="not is_visit"/>
                      <field name="opportunity_id"/>
                 </xpath>
+            <xpath expr="//field[@name='location']" position="after">
+                    <field name="internal_user_ids" widget="many2many_tags" invisible="not is_visit"/>
+                </xpath>
+            <xpath expr="//field[@name='description']" position="after">
+                <group string="Visit Tracking" invisible="not is_visit">
+                    <group>
+                        <field name="meeting_agenda" placeholder="Topics discussed during the visit"/>
+                        <field name="minutes_record" placeholder="Meeting minutes / visit notes"/>
+                        <field name="next_followup_plan" placeholder="Next follow-up plan"/>
+                    </group>
+                    <group>
+                        <field name="action_item_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="owner_id"/>
+                                <field name="due_date"/>
+                                <field name="is_done"/>
+                                <field name="note"/>
+                            </tree>
+                        </field>
+                    </group>
+                </group>
+            </xpath>
         </field>
     </record>
 

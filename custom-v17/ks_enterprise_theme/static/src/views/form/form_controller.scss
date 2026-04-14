@@ -1,0 +1,118 @@
+// = Form View
+// ============================================================================
+// Add a more deliberate surface hierarchy to sheets, status bars, alerts, and
+// chatter while keeping the original Odoo layout behavior intact.
+
+.o_form_view {
+    --KsForm-shell-shadow: #{rgba($o-black, 0.12)};
+    --KsForm-shell-border: #{rgba($o-black, 0.06)};
+    --KsForm-shell-surface: #{rgba($white, 0.96)};
+    --KsForm-subtle-surface: #{rgba($white, 0.78)};
+    --KsForm-accent: #{mix($o-brand-odoo, $white, 10%)};
+    --KsForm-accent-border: #{rgba($o-brand-odoo, 0.16)};
+
+    background-image:
+        radial-gradient(circle at top right, rgba($o-brand-odoo, 0.05), transparent 30%),
+        linear-gradient(180deg, rgba($white, 0.42), rgba($white, 0));
+
+    .o_form_sheet_bg {
+        padding-top: map-get($spacers, 3);
+    }
+
+    .o_form_sheet {
+        border-color: var(--KsForm-shell-border);
+        border-width: 1px;
+        border-radius: 1.05rem;
+        background:
+            linear-gradient(180deg, rgba($white, 0.985), rgba($o-gray-100, 0.96));
+        box-shadow:
+            0 24px 48px -40px var(--KsForm-shell-shadow),
+            0 1px 0 rgba($white, 0.98) inset;
+    }
+
+    .o_form_statusbar {
+        margin-bottom: map-get($spacers, 3);
+        padding: 0.6rem 0.75rem;
+        border: 1px solid rgba($o-black, 0.05);
+        border-radius: 0.95rem;
+        background: var(--KsForm-subtle-surface);
+        box-shadow: inset 0 1px 0 rgba($white, 0.95);
+
+        > .o_statusbar_status {
+            gap: 0.35rem;
+
+            > .o_arrow_button {
+                min-height: 2.1rem;
+                padding-inline: 0.9rem;
+                border-radius: 999px;
+                transition:
+                    background-color 0.18s ease,
+                    box-shadow 0.18s ease;
+
+                &:hover,
+                &:focus-visible {
+                    box-shadow: inset 0 0 0 1px rgba($o-brand-odoo, 0.14);
+                }
+            }
+        }
+    }
+
+    .o_form_sheet_bg > .alert {
+        border-color: rgba($o-black, 0.06);
+        border-radius: 0.95rem;
+        box-shadow: 0 12px 26px -28px rgba($o-black, 0.2);
+    }
+
+    .oe_title {
+        > h1,
+        > h2 {
+            letter-spacing: -0.02em;
+        }
+    }
+
+    .o_group {
+        .o_form_label {
+            color: $headings-color;
+            font-weight: 500;
+        }
+    }
+
+    .o-mail-ChatterContainer,
+    .o-mail-Form-chatter {
+        padding-top: map-get($spacers, 3);
+        padding-bottom: map-get($spacers, 4);
+
+        .o-mail-Chatter {
+            border: 1px solid rgba($o-black, 0.06);
+            border-radius: 1rem;
+            background:
+                linear-gradient(180deg, rgba($white, 0.98), rgba($o-gray-100, 0.92));
+            box-shadow: 0 24px 48px -40px rgba($o-black, 0.16);
+        }
+
+        .o-mail-Chatter-top {
+            border-bottom: 1px solid rgba($o-black, 0.06);
+            background:
+                linear-gradient(180deg, rgba($white, 0.96), rgba($white, 0.72));
+        }
+
+        .o-mail-Chatter-topbar {
+            gap: 0.35rem;
+            padding-top: 0.35rem;
+            padding-bottom: 0.35rem;
+
+            .btn {
+                border-radius: 999px;
+            }
+        }
+
+        .o-mail-Chatter-content {
+            padding: 0 map-get($spacers, 2) map-get($spacers, 2);
+        }
+
+        .o-mail-Message,
+        .o-mail-Composer {
+            border-radius: 0.9rem;
+        }
+    }
+}

@@ -23,3 +23,4 @@ access_sample_request_wizard,access.sample.request.wizard,model_sample_request_w
 access_icon_committed_date_wizard,access.icon.committed.date.wizard,model_icon_committed_date_wizard,,1,1,1,1
 access_icon_committeddate_history,access.icon.committeddate.history,model_icon_committeddate_history,,1,1,1,1
 access_icon_pipeline_remark,access.icon.pipeline.remark,model_icon_pipeline_remark,,1,1,1,1
+access_calendar_event_visit_action,access.calendar.event.visit.action,model_calendar_event_visit_action,,1,1,1,1

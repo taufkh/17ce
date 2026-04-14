@@ -1,0 +1,102 @@
+// = Search Panel
+// ============================================================================
+// Give the left sidebar a stronger hierarchy so filters feel like a distinct
+// workspace rather than default list-group markup.
+
+.o_component_with_search_panel,
+.o_controller_with_searchpanel {
+    gap: map-get($spacers, 2);
+}
+
+.o_search_panel {
+    --KsSearchPanel-surface: #{rgba($white, 0.82)};
+    --KsSearchPanel-surface-strong: #{rgba($white, 0.94)};
+    --KsSearchPanel-border: #{rgba($o-black, 0.06)};
+    --KsSearchPanel-accent: #{mix($o-brand-odoo, $white, 10%)};
+    --KsSearchPanel-accent-border: #{rgba($o-brand-odoo, 0.16)};
+
+    padding-top: map-get($spacers, 2);
+    border-right: 0;
+    border-radius: 1rem;
+    background:
+        linear-gradient(180deg, rgba($white, 0.95), rgba($o-gray-100, 0.88));
+    box-shadow:
+        inset 0 0 0 1px var(--KsSearchPanel-border),
+        0 16px 36px -30px rgba($o-black, 0.16);
+
+    .o_search_panel_section_header {
+        padding-top: map-get($spacers, 2) !important;
+        padding-bottom: map-get($spacers, 1) !important;
+        color: $o-main-color-muted;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+    }
+
+    .list-group {
+        gap: 0.3rem;
+    }
+
+    .o_search_panel_group_header,
+    .o_search_panel_filter_value .form-check,
+    .o_search_panel_category_value > header {
+        border-radius: 0.85rem;
+        background: var(--KsSearchPanel-surface);
+        box-shadow: inset 0 0 0 1px rgba($o-black, 0.05);
+        transition:
+            background-color 0.18s ease,
+            box-shadow 0.18s ease,
+            color 0.18s ease;
+    }
+
+    .o_search_panel_category_value > header {
+        min-height: 2.4rem;
+        padding-inline: 0.35rem;
+
+        &:hover,
+        &:focus-within {
+            background: var(--KsSearchPanel-surface-strong);
+        }
+
+        &.active {
+            background: var(--KsSearchPanel-accent);
+            box-shadow: inset 0 0 0 1px var(--KsSearchPanel-accent-border);
+        }
+    }
+
+    .o_search_panel_filter_value .form-check,
+    .o_search_panel_group_header .form-check {
+        margin-bottom: 0;
+        padding: 0.55rem 0.7rem 0.55rem 1.9rem;
+    }
+
+    .o_search_panel_label {
+        gap: 0.45rem;
+    }
+
+    .o_search_panel_label_title {
+        font-weight: 500;
+    }
+
+    .o_search_panel_counter {
+        padding: 0.1rem 0.45rem;
+        border-radius: 999px;
+        background: rgba($o-black, 0.04);
+    }
+
+    .o_toggle_fold {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5rem;
+        border-radius: 999px;
+        color: $o-main-color-muted;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .o_search_panel {
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+    }
+}

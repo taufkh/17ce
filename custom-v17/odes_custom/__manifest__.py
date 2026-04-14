@@ -30,6 +30,7 @@ This module is using for customization of McCoy ODES System.
         'security/odes_security.xml',
         'security/ir.model.access.csv',
         'data/odes_data.xml',
+        'data/odes_hr_onboarding_data.xml',
         'wizard/odes_crm_lead_history_wizard_views.xml',
         'wizard/odes_revenue_history_wizard_views.xml',
         'wizard/odes_crm_backward_stage_wizard_views.xml',
@@ -43,6 +44,7 @@ This module is using for customization of McCoy ODES System.
         'views/sale_views.xml',
         'views/company_views.xml',
         'views/project_task_views.xml',
+        'views/hr_job_views.xml',
         'views/hr_views.xml',
         # v16: odes_dashboard_templates.xml removed — assets are declared in the 'assets' dict below
         'views/odes_dashboard_views.xml',

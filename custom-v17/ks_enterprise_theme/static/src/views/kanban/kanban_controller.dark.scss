@@ -1,0 +1,41 @@
+// = Kanban Rendered
+// ============================================================================
+// No CSS hacks, variables overrides only
+
+.o_kanban_renderer {
+    --KanbanGroup-grouped-bg: #{$o-view-background-color};
+    --KanbanRecord__image-bg-color: #{$o-gray-900};
+    --KanbanColumn__highlight-background: #{mix($o-action, $o-gray-100, 15%)};
+    --KanbanColumn__highlight-border: #{$o-component-active-border};
+    --KanbanColumn__highlight-selected: #20364b;
+    --Kanban-background: #{$gray-100};
+
+    .o_kanban_group {
+        border-color: rgba($white, 0.08);
+        background:
+            linear-gradient(180deg, rgba($white, 0.05), rgba($white, 0.02));
+        box-shadow: 0 20px 36px -32px rgba($black, 0.34);
+    }
+
+    .o_kanban_group:not(.o_column_folded) .o_kanban_header {
+        border-bottom-color: rgba($white, 0.08);
+        background: rgba($white, 0.03);
+    }
+
+    .o_kanban_record > div:not(.o_dropdown_kanban),
+    .o_kanban_quick_create {
+        border-color: rgba($white, 0.08);
+        background:
+            linear-gradient(180deg, rgba($white, 0.08), rgba($white, 0.03));
+        box-shadow:
+            0 20px 34px -30px rgba($black, 0.32),
+            0 1px 0 rgba($white, 0.04) inset;
+    }
+
+    .o_kanban_record:hover > div:not(.o_dropdown_kanban) {
+        border-color: rgba($o-action, 0.24);
+        box-shadow:
+            0 22px 38px -30px rgba($black, 0.36),
+            inset 0 0 0 1px rgba($o-action, 0.12);
+    }
+}

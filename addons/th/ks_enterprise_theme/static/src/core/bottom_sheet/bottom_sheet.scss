@@ -1,0 +1,26 @@
+// = Bottom Sheet
+// ============================================================================
+
+.o_bottom_sheet_backdrop {
+    background: rgba($o-black, 0.22);
+    backdrop-filter: blur(3px);
+}
+
+.o_bottom_sheet {
+    .o_bottom_sheet_sheet {
+        --BottomSheetStatusBar__entry-background--active: #{rgba($o-brand-odoo, 0.12)};
+        --BottomSheetStatusBar__entry-color--active: #{$o-main-text-color};
+
+        border: 1px solid rgba($o-black, 0.06);
+        border-radius: 1.2rem 1.2rem 0 0;
+        background:
+            linear-gradient(180deg, rgba($white, 0.985), rgba($o-gray-100, 0.97));
+        box-shadow:
+            0 -24px 48px -34px rgba($o-black, 0.26),
+            0 1px 0 rgba($white, 0.94) inset;
+
+        .o_cp_switch_buttons .o-dropdown-item {
+            --#{$prefix}btn-bg: #{rgba($o-brand-odoo, 0.12)};
+        }
+    }
+}

@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-
-
         <record id="group_see_all_record_hr" model="res.groups">
             <field name="name">See All Record HR</field>
         </record>
 
         <record id="group_department_time_off_manager" model="res.groups">
             <field name="name">Time Off Department Manager</field>
+        </record>
+
+        <record id="rule_hr_leave_department_manager" model="ir.rule">
+            <field name="name">Department manager leave visibility</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="groups" eval="[(4, ref('odes_hr2_custom.group_department_time_off_manager'))]"/>
+            <field name="domain_force">['|', '|',
+                ('employee_id.user_id', '=', user.id),
+                ('employee_id.department_id.manager_id.user_id', '=', user.id),
+                ('employee_ids.department_id.manager_id.user_id', '=', user.id)
+            ]</field>
+        </record>
+
+        <record id="rule_hr_leave_allocation_department_manager" model="ir.rule">
+            <field name="name">Department manager leave allocation visibility</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+            <field name="groups" eval="[(4, ref('odes_hr2_custom.group_department_time_off_manager'))]"/>
+            <field name="domain_force">['|', '|',
+                ('employee_id.user_id', '=', user.id),
+                ('employee_id.department_id.manager_id.user_id', '=', user.id),
+                ('employee_ids.department_id.manager_id.user_id', '=', user.id)
+            ]</field>
+        </record>
+
+        <record id="rule_hr_leave_see_all_record_hr" model="ir.rule">
+            <field name="name">HR full leave visibility</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="groups" eval="[(4, ref('odes_hr2_custom.group_see_all_record_hr'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_hr_leave_allocation_see_all_record_hr" model="ir.rule">
+            <field name="name">HR full leave allocation visibility</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+            <field name="groups" eval="[(4, ref('odes_hr2_custom.group_see_all_record_hr'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
         </record>
     </data>
 </odoo>

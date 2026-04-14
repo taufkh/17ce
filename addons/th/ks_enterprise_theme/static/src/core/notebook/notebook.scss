@@ -1,0 +1,58 @@
+// Custom SCSS for enterprise version of notebook tabs
+
+.o_notebook {
+    --Notebook__link-border-color: #{$border-color};
+    --Notebook__link-border-color--hover: #{$border-color};
+    --Notebook__link-border-top-color--active: #{$o-brand-odoo};
+    --Notebook__surface: #{rgba($white, 0.84)};
+    --Notebook__surface-active: #{rgba($white, 0.97)};
+    --Notebook__border: #{rgba($o-black, 0.06)};
+
+    .modal & {
+        --Notebook-padding-x: #{$modal-inner-padding};
+        --Notebook-margin-x: -#{$modal-inner-padding};
+    }
+
+    .nav-tabs {
+        gap: 0.35rem;
+        padding-bottom: 0.35rem;
+        border-bottom-color: var(--Notebook__border);
+
+        .nav-link {
+            position: relative;
+            border-radius: 0.95rem 0.95rem 0 0;
+            background: var(--Notebook__surface);
+            box-shadow: inset 0 0 0 1px rgba($o-black, 0.04);
+            font-weight: 500;
+
+            &:not(.active) {
+                background-color: var(--Notebook__link-background-color, #{$o-gray-100});
+                color: inherit;
+
+                &:hover {
+                    background-color: var(--Notebook__link-background-color--hover, #{$o-gray-200});
+                }
+            }
+
+            &.active {
+                --#{$prefix}nav-tabs-link-active-color: var(--Notebook__link-color--active, #{$o-brand-odoo});
+                background: var(--Notebook__surface-active);
+                box-shadow:
+                    0 14px 24px -22px rgba($o-brand-odoo, 0.24),
+                    inset 0 0 0 1px rgba($o-black, 0.04);
+
+                &::after {
+                    position: absolute;
+                    inset: -$border-width;
+                    height: $border-width * 3;
+                    background-color: var(--Notebook__link-border-top-color--active);
+                    content: '';
+                }
+            }
+        }
+    }
+
+    .o_notebook_content {
+        border-radius: 0 0 1rem 1rem;
+    }
+}

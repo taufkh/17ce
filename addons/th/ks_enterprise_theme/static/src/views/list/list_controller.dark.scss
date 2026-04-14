@@ -1,0 +1,40 @@
+// = ListRenderer
+// ============================================================================
+// No CSS hacks, variables overrides only
+
+.o_list_view {
+    .o_list_renderer {
+        .o_list_table {
+            thead th {
+                color: rgba($white, 0.7);
+                border-bottom-color: rgba($white, 0.08);
+            }
+
+            tbody > tr:not(.o_group_header) > td {
+                border-top-color: rgba($white, 0.06);
+                background: rgba($white, 0.03);
+            }
+
+            tbody > tr:not(.o_group_header):hover > td {
+                background: rgba($o-action, 0.08);
+            }
+
+            .o_selected_row > td {
+                background: rgba($o-action, 0.14);
+            }
+
+            tbody > tr.o_group_header {
+                > th,
+                > td {
+                    border-top-color: rgba($white, 0.08);
+                    background: rgba($white, 0.05);
+                }
+            }
+
+            tfoot > tr > td {
+                background: rgba($white, 0.06);
+                border-top-color: rgba($white, 0.08);
+            }
+        }
+    }
+}

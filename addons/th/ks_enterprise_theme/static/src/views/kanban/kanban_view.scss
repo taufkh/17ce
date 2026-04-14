@@ -1,0 +1,115 @@
+.o_kanban_view {
+    --KsKanban-surface: #{rgba($white, 0.84)};
+    --KsKanban-surface-strong: #{rgba($white, 0.96)};
+    --KsKanban-border: #{rgba($o-black, 0.06)};
+    --KsKanban-shadow: #{rgba($o-black, 0.12)};
+
+    .o_column_quick_create .o_kanban_quick_create {
+        border-style: dashed;
+        border-color: rgba($o-brand-odoo, 0.16);
+
+        input {
+            &, &:focus, &:hover {
+                background: transparent;
+                border-bottom: 1px solid map-get($grays, '600');
+            }
+        }
+        .input-group-append, .input-group-prepend {
+            border-left: 10px solid map-get($grays, '200');
+        }
+    }
+
+    .o_kanban_renderer {
+        --Kanban-background: #{mix($o-gray-100, $white, 60%)};
+        --Kanban-gap: #{map-get($spacers, 2)};
+        --Kanban-padding: #{map-get($spacers, 2)};
+        --KanbanGroup-background: transparent;
+
+        .o_kanban_group {
+            border: 1px solid var(--KsKanban-border);
+            border-radius: 1.05rem;
+            background:
+                linear-gradient(180deg, rgba($white, 0.78), rgba($o-gray-100, 0.62));
+            box-shadow: 0 18px 34px -32px var(--KsKanban-shadow);
+        }
+
+        .o_kanban_group:not(.o_column_folded) .o_kanban_header {
+            padding: 0.85rem 1rem 0.75rem;
+            border-bottom: 1px solid rgba($o-black, 0.05);
+            background: rgba($white, 0.34);
+        }
+
+        .o_kanban_record > div:not(.o_dropdown_kanban),
+        .o_kanban_quick_create {
+            border-color: var(--KsKanban-border);
+            border-radius: 0.95rem;
+            background:
+                linear-gradient(180deg, var(--KsKanban-surface-strong), var(--KsKanban-surface));
+            box-shadow:
+                0 16px 30px -28px rgba($o-black, 0.18),
+                0 1px 0 rgba($white, 0.95) inset;
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
+        }
+
+        .o_kanban_record:hover > div:not(.o_dropdown_kanban) {
+            transform: translateY(-1px);
+            border-color: rgba($o-brand-odoo, 0.14);
+            box-shadow:
+                0 20px 36px -30px rgba($o-brand-odoo, 0.24),
+                0 1px 0 rgba($white, 0.95) inset;
+        }
+
+        .o_kanban_record_title {
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+    }
+}
+
+.o_kanban_view.o_modules_kanban {
+    .o_kanban_renderer {
+        .oe_module_vignette {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+        }
+
+        .oe_module_icon {
+            flex: 0 0 3.125rem;
+            width: 3.125rem;
+            max-width: 3.125rem;
+            max-height: 3.125rem;
+            float: none;
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .oe_module_desc {
+            flex: 1 1 auto;
+            width: auto;
+            min-width: 0;
+            padding-left: 0;
+        }
+
+        .oe_module_desc > h4,
+        .oe_module_desc .o_kanban_record_title {
+            margin: 0 1.25rem 0.25rem 0;
+            line-height: 1.2;
+        }
+
+        .oe_module_desc p {
+            margin: 0.25rem 0 0;
+        }
+
+        .oe_module_name > span {
+            min-height: 0;
+        }
+    }
+}

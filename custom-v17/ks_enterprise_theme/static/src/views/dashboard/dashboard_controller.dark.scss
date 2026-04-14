@@ -1,0 +1,30 @@
+// = Dashboard View
+// ============================================================================
+// No CSS hacks, variables overrides only
+
+.o_dashboard_view {
+    --DashboardView-background-color: #{$o-gray-100};
+    --DashboardView__controlPanel-background-color: transparent;
+    --DashboardView__pieChart-background-color: transparent;
+
+    background-image:
+        radial-gradient(circle at top right, rgba($o-action, 0.14), transparent 30%),
+        linear-gradient(180deg, rgba($o-gray-100, 0.04), rgba($o-gray-100, 0));
+
+    .o_kanban_dashboard .o_kanban_renderer {
+        .o_kanban_record > div:not(.o_dropdown_kanban) {
+            border: 1px solid rgba($white, 0.08);
+            border-radius: 1rem;
+            background:
+                linear-gradient(180deg, rgba($o-gray-900, 0.985), rgba($o-gray-800, 0.96));
+            box-shadow:
+                0 22px 44px -30px rgba($o-black, 0.48),
+                0 1px 0 rgba($white, 0.04) inset;
+        }
+
+        .o_kanban_record .o_kanban_primary_bottom.bottom_block {
+            border-top-color: rgba($white, 0.08);
+            background: rgba($white, 0.04);
+        }
+    }
+}

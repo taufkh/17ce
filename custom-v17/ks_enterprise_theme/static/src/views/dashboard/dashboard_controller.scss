@@ -1,0 +1,33 @@
+// = Dashboard View
+// ============================================================================
+
+.o_dashboard_view {
+    --DashboardView-background-color: transparent;
+    --DashboardView__controlPanel-background-color: transparent;
+    --DashboardView__pieChart-background-color: #{rgba($white, 0.82)};
+
+    background-image:
+        radial-gradient(circle at top right, rgba($o-brand-odoo, 0.06), transparent 28%),
+        linear-gradient(180deg, rgba($white, 0.4), rgba($white, 0));
+
+    .o_kanban_dashboard .o_kanban_renderer {
+        .o_kanban_record > div:not(.o_dropdown_kanban) {
+            border: 1px solid rgba($o-black, 0.06);
+            border-radius: 1rem;
+            background:
+                linear-gradient(180deg, rgba($white, 0.985), rgba($o-gray-100, 0.96));
+            box-shadow:
+                0 22px 44px -30px rgba($o-black, 0.18),
+                0 1px 0 rgba($white, 0.92) inset;
+        }
+
+        .o_kanban_record .o_kanban_primary_bottom.bottom_block {
+            border-top-color: rgba($o-black, 0.06);
+            background: rgba($o-gray-100, 0.8);
+        }
+
+        .o_dashboard_graph {
+            border-radius: 0.85rem;
+        }
+    }
+}

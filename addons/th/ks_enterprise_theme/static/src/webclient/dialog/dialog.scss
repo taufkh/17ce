@@ -1,0 +1,53 @@
+// = Dialogs
+// ============================================================================
+
+.modal-backdrop.show {
+    opacity: 0.3;
+    backdrop-filter: blur(3px);
+}
+
+.o_dialog,
+.modal {
+    .modal-content {
+        border: 1px solid rgba($o-black, 0.08);
+        border-radius: 1.1rem;
+        background:
+            linear-gradient(180deg, rgba($white, 0.985), rgba($o-gray-100, 0.96));
+        box-shadow:
+            0 28px 64px -38px rgba($o-black, 0.28),
+            0 1px 0 rgba($white, 0.94) inset;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        padding: 1rem 1.25rem 0.9rem;
+        border-bottom: 1px solid rgba($o-black, 0.06);
+        background:
+            linear-gradient(180deg, rgba($white, 0.98), rgba($white, 0.78));
+
+        .modal-title {
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+    }
+
+    .modal-body {
+        padding: 1rem 1.25rem 1.25rem;
+    }
+
+    .modal-footer {
+        gap: 0.5rem;
+        padding: 0.9rem 1.25rem 1.2rem;
+        border-top: 1px solid rgba($o-black, 0.06);
+        background: rgba($white, 0.7);
+
+        .btn {
+            border-radius: 999px;
+        }
+    }
+
+    .btn-close {
+        border-radius: 999px;
+        box-shadow: none;
+    }
+}

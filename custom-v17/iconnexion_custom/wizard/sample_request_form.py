@@ -24,6 +24,12 @@ class SampleRequest(models.Model):
 	email = fields.Char("Email",compute='_compute_email')
 	state = fields.Selection([('request', 'Request'),('inprocess', 'In Process'),('decline', 'Decline'),('approved', 'Approved'),('done', 'Done')], string="Status", default="request")
 	product_line = fields.One2many('sample.request.line', 'request_id', string="Lines")
+	brand_id = fields.Many2one('product.brand', string='Brand')
+	supplier_id = fields.Many2one('res.partner', string='Supplier / Factory', domain=[('supplier_rank', '>', 0)])
+	factory_reference = fields.Char('Factory Reference')
+	rejection_reason = fields.Text('Rejection Reason')
+	follow_up_notes = fields.Text('Follow-up Notes')
+	traceability_summary = fields.Char(compute='_compute_traceability_summary', string='Traceability')
 	quantity_1 = fields.Float(string="Year 1 (QTY)")
 	quantity_2 = fields.Float(string="Year 2 (QTY)")
 	prototype_quantity =fields.Float(string="Prototype Quantity")
@@ -36,6 +42,22 @@ class SampleRequest(models.Model):
 	picking_out_count = fields.Integer('# Picking Out', compute='_compute_picking_count')
 	given_date = fields.Date('Given Date', compute='_compute_given_date')
 	received_date = fields.Date('Receive Date', compute='_compute_received_date')
+
+	@api.depends('crm_id', 'opportunity_id', 'product_line.product_id')
+	def _compute_traceability_summary(self):
+		for sample in self:
+			parts = []
+			if sample.crm_id:
+				parts.append(sample.crm_id.display_name)
+			elif sample.opportunity_id:
+				parts.append(sample.opportunity_id.display_name)
+			product_names = sample.product_line.mapped('product_id.display_name')
+			if product_names:
+				label = ', '.join(product_names[:3])
+				if len(product_names) > 3:
+					label += _(' + %s more') % (len(product_names) - 3)
+				parts.append(label)
+			sample.traceability_summary = ' / '.join(parts)
 
 	def _compute_given_date(self):
 		for i in self:
@@ -55,6 +77,19 @@ class SampleRequest(models.Model):
 				[('sample_request_id', '=', self.id)])
 			sample.picking_out_count = self.env['stock.picking'].search_count(
 				[('sample_request_out_id', '=', self.id)])
+
+	@api.onchange('product_line')
+	def _onchange_product_line_metadata(self):
+		for sample in self:
+			brands = sample.product_line.mapped('product_id.product_tmpl_id.product_brand_id')
+			brands = brands.filtered(lambda brand: brand)
+			if len(brands) == 1 and not sample.brand_id:
+				sample.brand_id = brands.id
+
+			suppliers = sample.product_line.mapped('product_id.seller_ids.partner_id')
+			suppliers = suppliers.filtered(lambda partner: partner and partner.supplier_rank > 0)
+			if len(suppliers) == 1 and not sample.supplier_id:
+				sample.supplier_id = suppliers.id
 
 	def action_view_picking(self):
 		""" This function returns an action that display existing picking orders of given purchase order ids. When only one found, show the picking immediately.
@@ -142,6 +177,9 @@ class SampleRequest(models.Model):
 		return res
 
 	def button_confirm(self):
+		for sample in self:
+			if not sample.brand_id and not sample.supplier_id:
+				raise ValidationError(_("Please define at least a Brand or Supplier / Factory before confirming the sample request."))
 		for product in self.product_line:
 			if product.qty <= 0:
 				raise ValidationError("Please make sure all product have quantity before proceeding !")
@@ -165,6 +203,8 @@ class SampleRequest(models.Model):
 
 
 	def button_reject(self):
+		if not self.rejection_reason:
+			raise ValidationError(_("Please capture the rejection reason before rejecting the sample request."))
 		self.state = 'decline'
 
 	def button_sample_crm(self):

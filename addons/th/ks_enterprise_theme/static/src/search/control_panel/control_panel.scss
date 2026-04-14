@@ -1,0 +1,177 @@
+// = Control Panel
+// ============================================================================
+// Refine the backend chrome around breadcrumbs, search, pager, and view switcher
+// so the main work area feels as polished as the navbar/home menu.
+
+.o_control_panel {
+    --ControlPanel-border-bottom: transparent;
+    --KsControlPanel-surface: #{rgba($white, 0.92)};
+    --KsControlPanel-surface-raised: #{rgba($white, 0.74)};
+    --KsControlPanel-border: #{rgba($o-black, 0.06)};
+    --KsControlPanel-shadow: #{rgba($o-black, 0.06)};
+    --KsControlPanel-accent: #{mix($o-brand-odoo, $white, 10%)};
+    --KsControlPanel-accent-border: #{rgba($o-brand-odoo, 0.14)};
+
+    background-color: transparent;
+    background-image: linear-gradient(180deg, rgba($white, 0.7), rgba($white, 0));
+
+    .o_control_panel_main {
+        position: relative;
+        padding: map-get($spacers, 2);
+        border: 1px solid var(--KsControlPanel-border);
+        border-radius: 1rem;
+        background:
+            linear-gradient(180deg, rgba($white, 0.97), rgba($o-gray-100, 0.96));
+        box-shadow:
+            0 16px 36px -26px var(--KsControlPanel-shadow),
+            0 1px 0 rgba($white, 0.95) inset;
+    }
+
+    .o_control_panel_breadcrumbs {
+        gap: map-get($spacers, 2);
+    }
+
+    .o_breadcrumb {
+        min-width: 0;
+        padding: 0.35rem 0.45rem;
+        border-radius: 0.9rem;
+        background: var(--KsControlPanel-surface-raised);
+        box-shadow: inset 0 0 0 1px rgba($o-black, 0.04);
+        backdrop-filter: blur(14px);
+
+        .breadcrumb {
+            margin-bottom: 0;
+            gap: 0.1rem;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            opacity: 0.45;
+        }
+
+        .breadcrumb-item a,
+        .o_back_button {
+            color: $o-main-text-color;
+            text-decoration: none;
+            transition: color 0.18s ease, background-color 0.18s ease;
+        }
+
+        .breadcrumb-item a:hover,
+        .breadcrumb-item a:focus-visible {
+            color: $o-brand-odoo;
+        }
+
+        .o_back_button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2rem;
+            min-height: 2rem;
+            border-radius: 0.75rem;
+            background: rgba($white, 0.9);
+        }
+
+        .o_last_breadcrumb_item {
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+    }
+
+    .o_cp_pager,
+    .o_cp_switch_buttons {
+        padding: 0.2rem;
+        border-radius: 0.85rem;
+        background: var(--KsControlPanel-surface-raised);
+        box-shadow: inset 0 0 0 1px rgba($o-black, 0.05);
+    }
+
+    .o_cp_switch_buttons {
+        .btn,
+        .dropdown-toggle {
+            min-width: 2.35rem;
+            min-height: 2.35rem;
+            border: 0;
+            border-radius: 0.7rem;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .btn.active,
+        .dropdown-item.selected {
+            background: var(--KsControlPanel-accent);
+            box-shadow: inset 0 0 0 1px var(--KsControlPanel-accent-border);
+        }
+    }
+
+    .o_cp_searchview {
+        width: 100%;
+        max-width: 32rem;
+    }
+
+    .o_searchview {
+        --SearchBar-background-color: transparent;
+
+        border-color: rgba($o-black, 0.07);
+        border-radius: 0.9rem 0 0 0.9rem;
+        background:
+            linear-gradient(180deg, rgba($white, 0.95), rgba($white, 0.82));
+        box-shadow:
+            0 1px 0 rgba($white, 0.95) inset,
+            0 10px 24px -24px rgba($o-black, 0.3);
+    }
+
+    .o_searchview_input_container {
+        gap: 0.35rem !important;
+    }
+
+    .o_searchview_input {
+        min-height: 2rem;
+    }
+
+    .o_searchview_dropdown_toggler {
+        border-color: rgba($o-black, 0.07);
+        border-radius: 0 0.9rem 0.9rem 0;
+        background:
+            linear-gradient(180deg, rgba($white, 0.95), rgba($white, 0.82));
+        box-shadow: 0 1px 0 rgba($white, 0.95) inset;
+    }
+
+    .o_searchview_facet {
+        background: rgba($o-brand-odoo, 0.09) !important;
+        box-shadow: inset 0 0 0 1px rgba($o-brand-odoo, 0.1);
+
+        .o_facet_values {
+            background: rgba($white, 0.72);
+        }
+    }
+
+    &.o_mobile_sticky .o_control_panel_main {
+        box-shadow:
+            0 20px 40px -28px rgba($o-black, 0.16),
+            0 1px 0 rgba($white, 0.95) inset;
+        backdrop-filter: blur(18px);
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .o_control_panel {
+        .o_control_panel_main {
+            padding: map-get($spacers, 2) map-get($spacers, 2) map-get($spacers, 1);
+            border-radius: 0.9rem;
+        }
+
+        .o_control_panel_breadcrumbs {
+            gap: map-get($spacers, 1);
+        }
+
+        .o_cp_searchview,
+        .o_control_panel_actions,
+        .o_control_panel_navigation {
+            width: 100%;
+        }
+
+        .o_searchview,
+        .o_searchview_dropdown_toggler {
+            min-height: 2.45rem;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+// = Dropdowns
+// ============================================================================
+// No CSS hacks, variables overrides only
+
+.o-dropdown {
+  --border-color: #{$dropdown-border-color};
+  --o-input-border-color: #{$dropdown-border-color};
+}
+
+.o-dropdown--menu,
+.dropdown-menu {
+    padding: 0.35rem;
+    border: 1px solid rgba($white, 0.08);
+    border-radius: 1rem;
+    background:
+        linear-gradient(180deg, rgba($o-gray-900, 0.98), rgba($o-gray-800, 0.96));
+    box-shadow:
+        0 22px 44px -28px rgba($o-black, 0.52),
+        0 1px 0 rgba($white, 0.04) inset;
+
+    .dropdown-item,
+    .o-dropdown-item {
+        min-height: 2.1rem;
+        border-radius: 0.75rem;
+        transition:
+            background-color 0.18s ease,
+            color 0.18s ease,
+            transform 0.18s ease;
+
+        &:hover,
+        &:focus,
+        &:focus-visible {
+            background: rgba($white, 0.06);
+            transform: translateX(1px);
+        }
+
+        &.active,
+        &:active,
+        &[aria-checked="true"],
+        &[aria-selected="true"] {
+            background: rgba($o-brand-odoo, 0.28);
+        }
+    }
+
+    .dropdown-divider {
+        margin-block: 0.35rem;
+        border-color: rgba($white, 0.08);
+    }
+}

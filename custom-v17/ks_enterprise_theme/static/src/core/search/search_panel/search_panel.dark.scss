@@ -1,0 +1,33 @@
+// = Search Panel
+// ============================================================================
+// No CSS hacks, variables overrides only
+
+.o_search_panel_section {
+    .o_bottom_sheet & .list-group {
+        --#{$prefix}list-group-active-bg: #{$o-gray-400};
+    }
+}
+
+.o_search_panel {
+    background:
+        linear-gradient(180deg, rgba($o-gray-100, 0.1), rgba($o-gray-100, 0.04));
+    box-shadow:
+        inset 0 0 0 1px rgba($white, 0.06),
+        0 18px 34px -30px rgba($black, 0.34);
+
+    .o_search_panel_group_header,
+    .o_search_panel_filter_value .form-check,
+    .o_search_panel_category_value > header {
+        background: rgba($white, 0.04);
+        box-shadow: inset 0 0 0 1px rgba($white, 0.05);
+    }
+
+    .o_search_panel_category_value > header.active {
+        background: rgba($o-action, 0.18);
+        box-shadow: inset 0 0 0 1px rgba($o-action, 0.24);
+    }
+
+    .o_search_panel_counter {
+        background: rgba($white, 0.06);
+    }
+}

@@ -25,6 +25,18 @@
                         type="object"
                         invisible="state not in ('open')"
                     />
+                    <button
+                        name="button_lock_timesheets"
+                        string="Lock Timesheets"
+                        type="object"
+                        invisible="timesheet_locked"
+                    />
+                    <button
+                        name="button_unlock_timesheets"
+                        string="Unlock Timesheets"
+                        type="object"
+                        invisible="not timesheet_locked"
+                    />
                     <field
                         name="state"
                         widget="statusbar"
@@ -51,6 +63,7 @@
                             <field name="schedule_pay" />
                             <field name="type_id" domain="[('hr_period','=',True)]" />
                             <field name="number" />
+                            <field name="timesheet_locked" />
                             <field
                                 name="company_id"
                                 widget="selection"
@@ -79,6 +92,7 @@
                 <field name="date_start" />
                 <field name="date_end" />
                 <field name="date_payment" />
+                <field name="timesheet_locked" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="state" />
             </tree>
