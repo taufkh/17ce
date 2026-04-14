@@ -1,3 +1,15 @@
 enterprise/
 
 enterprise.zip
+
+# macOS / office temporary files
+.DS_Store
+**/.DS_Store
+.~lock.*
+**/.~lock.*
+~$*
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
