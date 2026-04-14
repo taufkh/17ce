@@ -3,7 +3,7 @@
 
 {
     "name": "HR Employee Document from Applicant",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
     "summary": "HR Employee Document from Applicant",
     "author": "Odoo Community Association (OCA), Open Source Integrators",

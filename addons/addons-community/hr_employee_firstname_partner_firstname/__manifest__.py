@@ -3,7 +3,7 @@
 
 {
     "name": "Partner and HR Employee First Name, Last Name",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "author": "GRAP, Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
     "website": "https://github.com/OCA/hr",

@@ -19,7 +19,6 @@
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "web_tree_hover_tooltip/static/src/scss/common.scss",
             "web_tree_hover_tooltip/static/src/js/tooltip.js",
         ],
     },

@@ -13,13 +13,12 @@ class Partner(models.Model):
     @api.depends('country_id')
     @api.depends_context('company')
     def _compute_product_pricelist(self):
-        company = self.env.company.id
-        res = self.env['product.pricelist']._get_partner_pricelist_multi(self.ids, company_id=company)
+        res = self.env['product.pricelist']._get_partner_pricelist_multi(self._ids)
         for p in self:
             p.property_product_pricelist = res.get(p.id)
-            if not p._origin.id :
+            if not p._origin.id:
                 if self.env.company.property_product_pricelist:
-                    p.property_product_pricelist = self.env.company.property_product_pricelist.id
+                    p.property_product_pricelist = self.env.company.property_product_pricelist
                     
     bill_to_contact_person_id = fields.Many2one('res.partner',string="Bill-to Contact Person")
     bill_to_street = fields.Char('Bill-to Street')
@@ -180,7 +179,7 @@ class Partner(models.Model):
         return super(Partner, self)._name_search(name, args=args, operator=operator, limit=limit)
 
     @api.model
-    def search(self, args, offset=0, limit=None, order=None, count=False):
+    def search(self, args, offset=0, limit=None, order=None):
         context = self._context
         ctx = {'disable_search': True}
         # if self._context.get('disable_search'): 
@@ -193,7 +192,7 @@ class Partner(models.Model):
 
         if ctx.get('disable_search') and allow_search:
             if self.user_has_groups('iconnexion_custom.group_iconnexion_sales_hod'):
-                return super(Partner, self).search(args, offset=offset,  limit=limit, order=order, count=count)
+                return super(Partner, self).search(args, offset=offset, limit=limit, order=order)
             
             report_to_user_ids = self.env.user.report_to_user_ids
             
@@ -214,7 +213,7 @@ class Partner(models.Model):
                 args += ['|','|',('company_id','=',_main_co_id),('company_id','=',False),('user_id','in',user_domain)]
             else:
                 args += ['|',('user_id','in',user_domain),('supplier_rank','>', 0)]
-        res = super(Partner, self).search(args, offset=offset, limit=limit, order=order, count=count)
+        res = super(Partner, self).search(args, offset=offset, limit=limit, order=order)
         return res
 
     @api.model

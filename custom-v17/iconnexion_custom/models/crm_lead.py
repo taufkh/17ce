@@ -324,14 +324,14 @@ class Lead(models.Model):
 			i.given_date = sample_given.given_date
 
 	@api.model
-	def search(self, args, offset=0, limit=None, order=None, count=False):
+	def search(self, args, offset=0, limit=None, order=None):
 		context = self._context
 		ctx = {'disable_search': True}
 		# if self._context.get('disable_search'): 
 		
 		if ctx.get('disable_search'):
 			if self.user_has_groups('iconnexion_custom.group_iconnexion_sales_hod') or self.user_has_groups('odes_crm.group_odes_customer'):
-				return super(Lead, self).search(args, offset=offset, limit=limit, order=order, count=count)
+				return super(Lead, self).search(args, offset=offset, limit=limit, order=order)
 			
 			report_to_user_ids = self.env.user.report_to_user_crm_ids
 			r_ids = [ n.id for n in report_to_user_ids]
@@ -346,7 +346,7 @@ class Lead(models.Model):
 				args += ['|','|',('company_id','=',_main_co_id),('company_id','=',False),('user_id','in',user_domain)]
 			else:
 				args += [('user_id','in',user_domain)]
-		res = super(Lead, self).search(args, offset=offset, limit=limit, order=order, count=count)
+		res = super(Lead, self).search(args, offset=offset, limit=limit, order=order)
 		return res
 
 	@api.model

@@ -6,7 +6,7 @@ from odoo import api, models
 class HrEmployeeBase(models.AbstractModel):
     _inherit = "hr.employee.base"
 
-    def search(self, args, offset=0, limit=None, order=None, count=False):
+    def search(self, args, offset=0, limit=None, order=None):
         params = self.env.context.get("params")
         if params:
             model = params.get("model")
@@ -26,9 +26,7 @@ class HrEmployeeBase(models.AbstractModel):
                             ("department_id", "=", employee_id[0].department_id.id)
                         ]
 
-        return super().search(
-            args, offset=offset, limit=limit, order=order, count=count
-        )
+        return super().search(args, offset=offset, limit=limit, order=order)
 
     @api.model
     def name_search(self, name="", args=None, operator="ilike", limit=100):

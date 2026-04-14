@@ -1,3 +1,26 @@
+// Odoo 17 Community doesn't provide the old web_gantt variable set.
+// Keep the custom styling by defining the legacy variables locally.
+$gantt-border-color: $gray-400 !default;
+$gantt-highlight-today-bg: #fffaeb !default;
+$gantt-row-open-bg: $gray-100 !default;
+$gantt-pill-consolidated-height: 24px !default;
+
+// Odoo 17 dropped a few legacy web_gantt helpers used by this customization.
+// Reintroduce small local fallbacks so the old theme rules still compile.
+@mixin o-gantt-hover() {
+    &:hover {
+        @content;
+    }
+}
+
+@mixin gantt-gradient-decorations($color) {
+    background-image: linear-gradient(
+        135deg,
+        rgba($color, 0.18),
+        rgba($color, 0.36)
+    );
+}
+
 // Generate background and text for each color.
 @mixin o-gantt-hoverable-colors($color) {
     $color-subdle: mix($color, white, 60%);
@@ -263,4 +286,3 @@
     color: white !important;
     border-right: 0.5px solid #dbd7d7 !important;
 } 
-

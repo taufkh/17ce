@@ -4,7 +4,7 @@
 
 {
     "name": "Employee Phone PIN",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Human Resources",
     "author": "Binhex, Odoo Community Association (OCA)",
     "maintainers": ["arielbarreiros96"],

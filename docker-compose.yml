@@ -1,7 +1,8 @@
 
 services:
   web:
-    image: odoo:16.0
+    build: .
+    image: odoo17-iconn-web:17.0
     depends_on:
       - db
     ports:
@@ -9,7 +10,7 @@ services:
     restart: always
     volumes:
       - ./addons:/mnt/extra-addons
-      - ./enterprise:/mnt/enterprise
+      - ./custom-v17:/mnt/custom-v17
       - ./config:/etc/odoo
       - odoo-data:/var/lib/odoo
       - ./logs:/var/log/odoo

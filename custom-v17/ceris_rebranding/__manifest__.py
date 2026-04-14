@@ -16,9 +16,6 @@
             'ceris_rebranding/static/src/js/ceris_rebranding.js',
             'ceris_rebranding/static/src/scss/ceris_rebranding.scss',
         ],
-        'web.assets_backend': [
-            'ceris_rebranding/static/src/xml/res_config_edition.xml',
-        ],
         'web.assets_frontend': [
             'ceris_rebranding/static/src/js/ceris_rebranding.js',
             'ceris_rebranding/static/src/scss/ceris_rebranding.scss',

@@ -92,11 +92,11 @@ class icon_old_sales_history(models.Model):
 	company_id = fields.Many2one('res.company',string='Company',default=lambda self: self.env.company.id)
 
 	@api.model
-	def search(self, args, offset=0, limit=None, order=None, count=False):
+	def search(self, args, offset=0, limit=None, order=None):
 		context = self._context
 		if self._context.get('disable_search'):   
 			if self.user_has_groups('iconnexion_custom.group_iconnexion_sales_hod'):
-				return super(icon_old_sales_history, self).search(args, offset=offset, limit=limit, order=order, count=count)
+				return super(icon_old_sales_history, self).search(args, offset=offset, limit=limit, order=order)
 			
 			report_to_user_ids = self.env.user.report_to_user_ids
 			r_ids = [ n.id for n in report_to_user_ids]
@@ -106,7 +106,7 @@ class icon_old_sales_history(models.Model):
 				for r in r_ids:
 					user_domain.append(r)
 			args += [('partner_id.user_id','in',user_domain)]
-		res = super(icon_old_sales_history, self).search(args, offset=offset, limit=limit, order=order, count=count)
+		res = super(icon_old_sales_history, self).search(args, offset=offset, limit=limit, order=order)
 		return res
 
 	@api.model
@@ -169,11 +169,11 @@ class icon_old_quote_history(models.Model):
 	company_id = fields.Many2one('res.company',string='Company',default=lambda self: self.env.company.id)
 
 	@api.model
-	def search(self, args, offset=0, limit=None, order=None, count=False):
+	def search(self, args, offset=0, limit=None, order=None):
 		context = self._context
 		if self._context.get('disable_search'):   
 			if self.user_has_groups('iconnexion_custom.group_iconnexion_sales_hod'):
-				return super(icon_old_quote_history, self).search(args, offset=offset, limit=limit, order=order, count=count)
+				return super(icon_old_quote_history, self).search(args, offset=offset, limit=limit, order=order)
 			
 			report_to_user_ids = self.env.user.report_to_user_ids
 			r_ids = [ n.id for n in report_to_user_ids]
@@ -183,8 +183,8 @@ class icon_old_quote_history(models.Model):
 				for r in r_ids:
 					user_domain.append(r)
 			args += [('partner_id.user_id','in',user_domain)]
-		res = super(icon_old_quote_history, self).search(args, offset=offset, limit=limit, order=order, count=count)
-		return arch, view
+		res = super(icon_old_quote_history, self).search(args, offset=offset, limit=limit, order=order)
+		return res
 
 	@api.model
 	def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
