@@ -1202,13 +1202,15 @@ class SaleOrderLine(models.Model):
 			line.total_a_margin = (line.quote_price_unit - cost_price) * line.product_uom_qty
 
 	def _compute_rcode(self):
+		sol_fields = self._fields
+		has_moq_id = 'moq_id' in sol_fields
 		for line in self:
 			line.brand = ''
 			line.r_code = ''
 			line.customer_request_date2 = line.customer_request_date
 			if line.product_id.product_tmpl_id.product_brand_id:
 				line.brand = line.product_id.product_tmpl_id.product_brand_id.name
-			if line.moq_id:
+			if has_moq_id and line.moq_id:
 				line.r_code = line.moq_id.r_code
 
 

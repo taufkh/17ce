@@ -444,7 +444,18 @@ class AccountTax(models.Model):
 
         return all_taxes
 
-    def compute_all(self, price_unit, currency=None, quantity=1.0, product=None, partner=None, is_refund=False, handle_price_include=True):
+    def compute_all(
+        self,
+        price_unit,
+        currency=None,
+        quantity=1.0,
+        product=None,
+        partner=None,
+        is_refund=False,
+        handle_price_include=True,
+        include_caba_tags=False,
+        fixed_multiplicator=1,
+    ):
         """ Returns all information required to apply taxes (in self + their children in case of a tax group).
             We consider the sequence of the parent for group of taxes.
                 Eg. considering letters as taxes and alphabetic order as sequence :

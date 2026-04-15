@@ -49,9 +49,9 @@ class StockMove(models.Model):
 		for move in (self - not_product_moves):
 			picking_type = move.picking_type_id or move.picking_id.picking_type_id
 			is_unreserved = move.state in ('waiting', 'confirmed', 'partially_available')
-			if picking_type.code in self._consuming_picking_types() and is_unreserved:
+			if move._is_consuming() and is_unreserved:
 				outgoing_unreserved_moves_per_warehouse[picking_type.warehouse_id] |= move
-			elif picking_type.code in self._consuming_picking_types():
+			elif move._is_consuming():
 				move.forecast_availability = move.quantity
 
 		for warehouse, moves in outgoing_unreserved_moves_per_warehouse.items():
